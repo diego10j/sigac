@@ -11,29 +11,41 @@
 
     <ui:define name="opciones">        
     </ui:define>
-    
+
     <ui:define name="contenido">
         <h1>Formulario para Ingreso de Alumnos</h1> 
 
         <h:form>
-            <h:panelGrid columns="2">
+
+            <h:panelGrid columns="4">
                 <h:outputText value="Cédula :"/>
-                <p:inputText />                   
-
-                <h:outputText value="Nombres :*"/>
-                <p:inputText required="true" requiredMessage="Debe ingresar los Nombres del Alumno"/>
-
-                <h:outputText value="Apellidos :*"/>
-                <p:inputText required="true" requiredMessage="Debe ingresar los Apellidos del Alumno"/>
+                <p:inputText size="10" maxlength="10"/>                    
 
                 <h:outputText value="Sexo :*"/>
-                <p:inputText  maxlength="1" size="2" required="true" requiredMessage="Debe ingresar el sexo del Alumno"/>
+                <p:selectOneMenu >
+                    <f:selectItem itemValue="M" itemLabel="MASCULINO"/> 
+                    <f:selectItem itemValue="F" itemLabel="FEMENINO"/>
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+
+
+                <h:outputText value="Nombres :*"/>
+                <p:inputText required="true" size="45" requiredMessage="Debe ingresar los Nombres del Alumno"/>
+
+                <h:outputText value="Apellidos :*"/>
+                <p:inputText required="true" size="45" requiredMessage="Debe ingresar los Apellidos del Alumno"/>
+
 
                 <h:outputText value="Dirección :*"/>
-                <p:inputText required="true" requiredMessage="Debe ingresar la Dirección del Alumno"/>
+                <p:inputText size="60" required="true" requiredMessage="Debe ingresar la Dirección del Alumno"/>
+            </h:panelGrid>
 
+            <h:panelGrid columns="4">
                 <h:outputText value="Fecha de Nacimiento :*"/>
-                <p:calendar required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Alumno"/>
+                <p:calendar pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Alumno"/>
 
                 <h:outputText value="Lugar de Nacimiento :"/>
                 <p:inputText />
@@ -52,9 +64,9 @@
                 </h:panelGrid>
             </p:fieldset>
 
-            
-           <p:fieldset legend="DATOS DEL REPRESENTANTE">
-                <h:panelGrid columns="2">
+
+            <p:fieldset legend="DATOS DEL REPRESENTANTE">
+                <h:panelGrid columns="4">
                     <h:outputText value="Nombre del Representante :*"/>
                     <p:inputText required="true" requiredMessage="Debe ingresar el Nombre del Representante"/>
                     <h:outputText value="Parentesco del Representante :*"/>
@@ -65,7 +77,7 @@
                     <p:inputText required="true" requiredMessage="Debe ingresar el Nombre del Representante"/>
                 </h:panelGrid>
             </p:fieldset>
-            
+
             <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
