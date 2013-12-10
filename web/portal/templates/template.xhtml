@@ -29,10 +29,13 @@
             <p:layoutUnit id="north" position="north" size="130">
                 <div class="cabecera">
                     <h:panelGrid columns="4" style="width: 99%" >
-                        <h:outputLink hreflang="index.jsf">
-                            <h:graphicImage value="../imagenes/logo.png" height="73"/>
-                        </h:outputLink>  
-                        <p>Sistema de Gestión Académica</p>
+                        <h:panelGrid columns="2">
+                            <h:outputLink hreflang="index.jsf">
+                                <h:graphicImage value="../imagenes/logo.png" height="73"/>
+                            </h:outputLink>  
+                            <p>INSTITUTO “NIÑO JESUS DE PRAGA”</p>
+                        </h:panelGrid>
+
                         <h:panelGrid columns="2">
                             <h:graphicImage value="../imagenes/im_usuario.png"/>
                             <p:outputLabel value="#{controladorLogin.strNick}"/>
@@ -54,7 +57,7 @@
                     <p:menubar>                       
                         <p:menuitem value="Cambiar Clave"  icon="ui-clave" onclick="diaClave.show();" />                         
                     </p:menubar>
-                     <p:commandLink title="Cerrar Sesión" style="position:fixed;right:2px;top:1px;" action="#{controladorLogin.salir}">
+                    <p:commandLink title="Cerrar Sesión" style="position:fixed;right:2px;top:1px;" action="#{controladorLogin.salir}">
                         <h:graphicImage value="../imagenes/im_salir_sistema.png" width="32" height="32"/>
                     </p:commandLink>
 
