@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Formulario Docentes</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Formulario para Ingreso de Docentes</h1> 
+
+        <h:form>
+
+            <p:fieldset legend="DATOS DE LOS DOCENTES">
+
+                <h:panelGrid columns="4">
+                    <h:outputText value="Cédula :*"/>
+                    <p:inputText maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
+
+                    <h:outputText value="Fecha de Nacimiento :*"/>
+                    <p:calendar pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
+
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+
+
+                    <h:outputText value="Nombres :*"/>
+                    <p:inputText maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
+
+                    <h:outputText value="Dirección :*"/>
+                    <p:inputText maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
+
+                    <h:outputText value="Email :*"/>
+                    <p:inputText maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
+
+
+                </h:panelGrid>
+
+                <h:panelGrid columns="4">
+
+                    <h:outputText value="Teléfono :"/>
+                    <p:inputText maxlength="100" size="10"/>
+
+                    <h:outputText value="Celular :*"/>
+                    <p:inputText maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+                    <h:outputText value="Hoja de Vida :*"/>
+                    <p:fileUpload label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                </h:panelGrid>
+
+            </p:fieldset>
+
+
+
+            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
