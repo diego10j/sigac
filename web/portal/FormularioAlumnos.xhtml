@@ -52,6 +52,20 @@
                 </h:panelGrid>
             </p:fieldset>
 
+            
+           <p:fieldset legend="DATOS DEL REPRESENTANTE">
+                <h:panelGrid columns="4">
+                    <h:outputText value="Nombre del Representante :"/>
+                    <p:inputText />
+                    <h:outputText value="Parentesco del Representante :"/>
+                    <p:inputText />
+                    <h:outputText value="Teléfono del Representante :"/>
+                    <p:inputText />
+                    <h:outputText value="Celular del Representante :"/>
+                    <p:inputText />
+                </h:panelGrid>
+            </p:fieldset>
+            
             <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
