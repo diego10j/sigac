@@ -15,7 +15,8 @@
         <h:outputScript library="sistema" name="sistema.js"/>      
     </h:head>
     <h:body>     
-
+        <p:growl id="groMensajes" autoUpdate="true" />
+        
         <p:idleMonitor timeout="#{session.maxInactiveInterval * 500}" >            
             <p:ajax event="idle" listener="#{controladorLogin.salir}" onstart="diaCaduco.show();"  />  
         </p:idleMonitor>  
