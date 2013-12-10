@@ -54,15 +54,15 @@
 
             
            <p:fieldset legend="DATOS DEL REPRESENTANTE">
-                <h:panelGrid columns="4">
-                    <h:outputText value="Nombre del Representante :"/>
-                    <p:inputText />
-                    <h:outputText value="Parentesco del Representante :"/>
-                    <p:inputText />
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nombre del Representante :*"/>
+                    <p:inputText required="true" requiredMessage="Debe ingresar el Nombre del Representante"/>
+                    <h:outputText value="Parentesco del Representante :*"/>
+                    <p:inputText required="true" requiredMessage="Debe ingresar el Nombre del Representante"/>
                     <h:outputText value="Teléfono del Representante :"/>
                     <p:inputText />
-                    <h:outputText value="Celular del Representante :"/>
-                    <p:inputText />
+                    <h:outputText value="Celular del Representante :*"/>
+                    <p:inputText required="true" requiredMessage="Debe ingresar el Nombre del Representante"/>
                 </h:panelGrid>
             </p:fieldset>
             
