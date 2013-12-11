@@ -4,6 +4,7 @@
  */
 package servcios;
 
+import aplicacion.Utilitario;
 import javax.ejb.Stateless;
 
 /**
@@ -13,9 +14,11 @@ import javax.ejb.Stateless;
 @Stateless
 public class ServicioSeguridad {
 
+    private Utilitario utilitario = new Utilitario();
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     public String ingresar(String usuaro, String clave) {
+        utilitario.crearVariable("IDE_USUA", "0");
         return "";
     }
 

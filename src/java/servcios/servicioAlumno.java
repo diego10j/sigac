@@ -4,6 +4,7 @@
  */
 package servcios;
 
+import aplicacion.Utilitario;
 import entidades.Alumnos;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -26,11 +27,14 @@ public class servicioAlumno {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
+    
+    private Utilitario utilitario=new Utilitario();
 
     public String guardarAluno(Alumnos alumno) {
-
         try {
             utx.begin();
+            long lon_codigo=utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
+            alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
             manejador.merge(alumno);
             utx.commit();
