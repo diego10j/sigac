@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Formulario Asignaturas</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Formulario para Ingreso de Asignaturas</h1> 
+
+        <h:form>
+
+            <p:fieldset legend="DATOS DE LAS ASIGNATURAS">
+
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nombre :*"/>
+                    <p:inputText maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
+                    
+                    <h:outputText value="Observaciones :*"/>
+                    <p:inputText maxlength="250" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+
+                    <h:outputText value="Tipo de Asignatura :*"/>
+                    <p:inputText maxlength="32" size="45" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />
+                   
+
+                </h:panelGrid>
+
+               
+
+            </p:fieldset>
+
+
+
+            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
