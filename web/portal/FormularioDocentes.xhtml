@@ -21,10 +21,10 @@
 
                 <h:panelGrid columns="4">
                     <h:outputText value="Cédula :*"/>
-                    <p:inputText maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
+                    <p:inputText value="#{controladorDocente.docente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
 
                     <h:outputText value="Fecha de Nacimiento :*"/>
-                    <p:calendar pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
+                    <p:calendar value="#{controladorDocente.docente.docFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
 
                 </h:panelGrid>
 
@@ -32,13 +32,13 @@
 
 
                     <h:outputText value="Nombres :*"/>
-                    <p:inputText maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
+                    <p:inputText value="#{controladorDocente.docente.docNombres}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
 
                     <h:outputText value="Dirección :*"/>
-                    <p:inputText maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
+                    <p:inputText value="#{controladorDocente.docente.docDireccion}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
 
                     <h:outputText value="Email :*"/>
-                    <p:inputText maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
+                    <p:inputText value="#{controladorDocente.docente.docEmail}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
 
 
                 </h:panelGrid>
@@ -46,10 +46,10 @@
                 <h:panelGrid columns="4">
 
                     <h:outputText value="Teléfono :"/>
-                    <p:inputText maxlength="100" size="10"/>
+                    <p:inputText value="#{controladorDocente.docente.docTelefono}" maxlength="100" size="10"/>
 
                     <h:outputText value="Celular :*"/>
-                    <p:inputText maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+                    <p:inputText value="#{controladorDocente.docente.docCelular}" maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
 
                 </h:panelGrid>
 
@@ -62,7 +62,7 @@
 
 
 
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorDocente.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 
