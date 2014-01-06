@@ -6,6 +6,8 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Docentes;
+import entidades.Representante;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -21,7 +23,7 @@ import javax.transaction.UserTransaction;
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class servicioAlumno {
+public class servicioRepresentante {
 
     @PersistenceContext
     private EntityManager manejador;
@@ -30,13 +32,15 @@ public class servicioAlumno {
     
     private Utilitario utilitario=new Utilitario();
 
-    public String guardarAlumno(Alumnos alumno) {
+    public String guardarRepresentante(Representante representante) {
         try {
             utx.begin();
-            long lon_codigo=utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
-            alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
+            //nombre tabla y atributo
+            long lon_codigo=utilitario.getConexion().getMaximo("representante", "rep_codigo", 1);
+            System.out.println("ide "+lon_codigo);
+            representante.setRepCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(alumno);            
+            manejador.persist(representante);
             utx.commit();
         } catch (Exception e) {
             try {
@@ -49,11 +53,11 @@ public class servicioAlumno {
         return "";
     }
 
-    public String elimnarAlumno(String aluCodigo) {
+    public String elimnarRepresentante(String repCodigo) {
         try {
             utx.begin();
-            Alumnos borraAlumno = manejador.find(Alumnos.class, new Integer(aluCodigo));
-            manejador.remove(borraAlumno);
+            Representante borraRepresentante = manejador.find(Representante.class, new Integer(repCodigo));
+            manejador.remove(borraRepresentante);
             utx.commit();
         } catch (Exception e) {
             try {
@@ -65,12 +69,12 @@ public class servicioAlumno {
         return "";
     }
 
-    public Alumnos getAlumno(String aluCodigo) {
+    public Representante getRepresentante(String repCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Alumnos.findByAluCodigo");
-            q.setParameter("aluCodigo", new Integer(aluCodigo));
-            return (Alumnos) q.getSingleResult();
+            Query q = manejador.createNamedQuery("Representante.findByDocCodigo");
+            q.setParameter("repCodigo", new Integer(repCodigo));
+            return (Representante) q.getSingleResult();
         } catch (Exception e) {
         }
         return null;

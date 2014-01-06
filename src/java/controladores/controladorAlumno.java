@@ -6,10 +6,12 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Representante;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioAlumno;
+import servcios.servicioRepresentante;
 
 /**
  *
@@ -22,13 +24,24 @@ public class controladorAlumno {
     @EJB
     private servicioAlumno servAlumno;
     private Alumnos aluAlumno = new Alumnos();
+     @EJB
+    private servicioRepresentante servRepresentante;
+    private Representante repRepresentante = new Representante();
     private Utilitario utilitario = new Utilitario();
 
     public void guardar() {
         if (utilitario.validarCedula(aluAlumno.getAluCedula())) {
-            String str_mensaje = servAlumno.guardarAluno(aluAlumno);
+            String str_mensaje = servAlumno.guardarAlumno(aluAlumno);
+            
+            if (str_mensaje.isEmpty()) {
+                
+                str_mensaje = servRepresentante.guardarRepresentante(repRepresentante);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
+                repRepresentante = new Representante();
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+            }
                 aluAlumno = new Alumnos();
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
@@ -45,4 +58,13 @@ public class controladorAlumno {
     public void setAluAlumno(Alumnos aluAlumno) {
         this.aluAlumno = aluAlumno;
     }
+
+    public Representante getRepRepresentante() {
+        return repRepresentante;
+    }
+
+    public void setRepRepresentante(Representante repRepresentante) {
+        this.repRepresentante = repRepresentante;
+    }
+    
 }
