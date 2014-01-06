@@ -34,9 +34,9 @@ public class controladorAlumno {
             String str_mensaje = servAlumno.guardarAlumno(aluAlumno);
             
             if (str_mensaje.isEmpty()) {
-                
+                repRepresentante.setAluCodigo(aluAlumno);
                 str_mensaje = servRepresentante.guardarRepresentante(repRepresentante);
-            if (str_mensaje.isEmpty()) {
+            if (str_mensaje.isEmpty()) {                
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 repRepresentante = new Representante();
             } else {
