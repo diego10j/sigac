@@ -36,7 +36,7 @@ public class servicioAlumno {
             long lon_codigo=utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
             alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.merge(alumno);
+            manejador.persist(alumno);            
             utx.commit();
         } catch (Exception e) {
             try {
