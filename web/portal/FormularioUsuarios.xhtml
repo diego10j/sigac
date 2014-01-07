@@ -21,38 +21,25 @@
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Nombre :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
-                    
-                    <h:outputText value="Apellido :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Apellido" />
+                    <p:inputText value="#{controladorUsuarios.usuUsuario.usuNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
+                  
                     
                     <h:outputText value="Nick :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />
+                    <p:inputText value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />
                     
-                    <h:outputText value="Sexo :*" />
-                    <p:selectOneMenu value="">
-                        <f:selectItem itemValue="M" itemLabel="MASCULINO"/> 
-                        <f:selectItem itemValue="F" itemLabel="FEMENINO"/>
-                    </p:selectOneMenu>
+                     <h:outputText value="Password:*"/>
+                     <p:inputText value="#{controladorUsuarios.usuUsuario.usuClave}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Password" />
                     
                     <h:outputText value="Fecha de creación :*"/>
-                    <p:calendar pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
-                    
-                    <h:outputText value="E-mail :*"/>
-                    <p:inputText maxlength="200" size="30" required="true" requiredMessage="Debe ingresar el E-mail" />
-                    
-                    <h:outputText value="Password:*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Password" />
-                    
-                    <h:outputText value="Confirmación de password :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar la confirmación de password" />
+                    <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
+                  
                 </h:panelGrid>
 
 
             </p:fieldset>
 
 
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorUsuarios.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 

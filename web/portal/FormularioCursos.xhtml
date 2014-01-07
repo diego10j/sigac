@@ -20,33 +20,35 @@
             <p:fieldset legend="DATOS DE LOS CURSOS">
 
                 <h:panelGrid columns="4">
-                    <h:outputText value="Añio :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Añio" />                   
-
-                   <h:outputText value="Observación :"/>
-                    <p:inputText maxlength="250" size="60"/>  
+                    <h:outputText value="Nombre :*"/>
+                    <p:inputText value="#{controladorCursos.curCursos.curAnio}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Añio" />                   
+                   <h:outputText value="Observaciones :"/>
+                   <p:inputText value="#{controladorCursos.curCursos.curObservaciones}" maxlength="250" size="60"/>  
                  
                 </h:panelGrid>
 
 
             </p:fieldset>
 
+            <p:commandButton action="#{controladorCursos.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
+            
+            </h:form>
+        <h:form>
+            
               <p:fieldset legend="DATOS DEL PARALELO">
 
                 <h:panelGrid columns="4">
                     <h:outputText value="Nombre :"/>
-                    <p:selectOneMenu >
-                        <f:selectItem itemValue="A" itemLabel="A"/> 
-                        <f:selectItem itemValue="B" itemLabel="B"/>
-                    </p:selectOneMenu>    
-                 
+                    <p:inputText value="#{controladorParalelo.parParalelo.parNombre}" maxlength="150" size="10"/>  
+                    
+                  
                 </h:panelGrid>
 
 
             </p:fieldset>
 
 
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorParalelo.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 

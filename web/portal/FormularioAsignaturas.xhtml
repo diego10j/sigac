@@ -21,18 +21,16 @@
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Nombre :*"/>
-                    <p:inputText maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
+                    <p:inputText value="#{controladorAsignaturas.asiAsignaturas.asiNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
                     
                     <h:outputText value="Observaciones :*"/>
-                    <p:inputText maxlength="250" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+                    <p:inputText value="#{controladorAsignaturas.asiAsignaturas.asiObservaciones}" maxlength="250" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
 
                     <h:outputText value="Tipo de Asignatura :*"/>
                     <p:inputText maxlength="32" size="45" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />
                    
 
                 </h:panelGrid>
-
-               
 
             </p:fieldset>
 

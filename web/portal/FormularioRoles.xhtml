@@ -21,17 +21,17 @@
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Nombre :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
+                    <p:inputText value="#{controladorRoles.rolRoles.rolNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
                     
                     <h:outputText value="Descripción :*"/>
-                    <p:inputText maxlength="150" size="30" required="true" requiredMessage="Debe ingresar la descripción" />
+                    <p:inputText value="#{controladorRoles.rolRoles.rolDescripcion}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar la descripción" />
                    
                 </h:panelGrid>
 
             </p:fieldset>
 
 
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorRoles.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 
