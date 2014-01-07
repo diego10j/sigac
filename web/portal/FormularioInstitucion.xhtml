@@ -21,38 +21,38 @@
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Nombre :*"/>
-                    <p:inputText maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Nombre de la Institución" />                   
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insNombre}" maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Nombre de la Institución" />                   
 
                     <h:outputText value="Dirección :*"/>
-                    <p:inputText maxlength="200" size="60" required="true" requiredMessage="Debe ingresar la Dirección de la Institución" />
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insDireccion}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar la Dirección de la Institución" />
 
                     <h:outputText value="Tipo de Escuela :*"/>
-                    <p:inputText maxlength="150" size="14" required="true" requiredMessage="Debe ingresar el Tipo de Escuela" />
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insTipoescuela}" maxlength="150" size="14" required="true" requiredMessage="Debe ingresar el Tipo de Escuela" />
 
                 </h:panelGrid>
 
                 <h:panelGrid columns="4">
                     <h:outputText value="Teléfono :*"/>
-                    <p:inputText maxlength="30" size="25" required="true" requiredMessage="Debe ingresar el Teléfono de la Institución" />
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insTelefono}" maxlength="30" size="25" required="true" requiredMessage="Debe ingresar el Teléfono de la Institución" />
 
                     <h:outputText value="Email :*"/>
-                    <p:inputText maxlength="250" size="25" required="true" requiredMessage="Debe ingresar el Email de la Institución" />
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insCorreo}" maxlength="250" size="25" required="true" requiredMessage="Debe ingresar el Email de la Institución" />
 
                 </h:panelGrid>
 
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Rector:*"/>
-                    <p:inputText maxlength="200" size="70" required="true" requiredMessage="Debe ingresar el Nombre de Rector" />
+                    <p:inputText value="#{controladorInstitucion.insInstitucion.insRector}" maxlength="200" size="70" required="true" requiredMessage="Debe ingresar el Nombre de Rector" />
 
                     <h:outputText value="Logo:*"/>
-                    <p:fileUpload label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                    <p:fileUpload value="#{controladorInstitucion.insInstitucion.insLogo}" label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
                 </h:panelGrid>
             </p:fieldset>
 
 
 
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorInstitucion.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 

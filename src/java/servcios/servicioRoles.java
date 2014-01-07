@@ -1,0 +1,83 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package servcios;
+
+import aplicacion.Utilitario;
+import entidades.Roles;
+import entidades.Docentes;
+import entidades.Cursos;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Diego
+ */
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class servicioRoles {
+
+    @PersistenceContext
+    private EntityManager manejador;
+    @Resource
+    private UserTransaction utx;
+    
+    private Utilitario utilitario=new Utilitario();
+
+    public String guardarRoles(Roles rol) {
+        try {
+            utx.begin();
+            //nombre tabla y atributo
+            long lon_codigo=utilitario.getConexion().getMaximo("Roles", "rol_codigo", 1);
+             rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
+            System.out.println("ide "+lon_codigo);
+            rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
+            manejador.joinTransaction();
+            manejador.persist(rol);
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return "";
+    }
+
+    public String elimnarRoles(String rolCodigo) {
+        try {
+            utx.begin();
+            Roles borraRol = manejador.find(Roles.class, new Integer(rolCodigo));
+            manejador.remove(borraRol);
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            return e.getMessage();
+        }
+        return "";
+    }
+
+    public Roles getRoles(String rolCodigo) {
+
+        try {
+            Query q = manejador.createNamedQuery("Roles.findByDocCodigo");
+            q.setParameter("rolCodigo", new Integer(rolCodigo));
+            return (Roles) q.getSingleResult();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+}
