@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_cabecera" language="groovy" pageWidth="595" pageHeight="130" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f9af50b7-354d-421c-84be-aa41715a2d87">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM institucion WHERE ins_codigo=0]]>
+	</queryString>
+	<field name="ins_codigo" class="java.lang.Integer"/>
+	<field name="ins_nombre" class="java.lang.String"/>
+	<field name="ins_direccion" class="java.lang.String"/>
+	<field name="ins_telefono" class="java.lang.String"/>
+	<field name="ins_correo" class="java.lang.String"/>
+	<field name="ins_tipoescuela" class="java.lang.String"/>
+	<field name="ins_rector" class="java.lang.String"/>
+	<field name="ins_logo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<image>
+				<reportElement uuid="1f7bdc69-b902-4946-9e96-80494fc0789e" x="3" y="2" width="68" height="68"/>
+				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\imagenes\\logo.png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="ffe1aee2-86b2-45d5-a96c-18f69fb50d18" x="82" y="0" width="473" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ins_tipoescuela}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="660dfba8-ba57-4ed4-b6d1-9a223f8d8cac" x="82" y="20" width="473" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ins_nombre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="104f2e48-698b-48ff-a552-fd3392f67f2b" x="82" y="40" width="473" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ins_direccion} +"   "+$F{ins_correo} +"   "+$F{ins_telefono}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="99744b67-6747-4127-a2d7-6733e696e910" x="41" y="76" width="479" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
