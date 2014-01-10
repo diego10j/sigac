@@ -25,7 +25,6 @@ public class controladorAsignaturas {
     @EJB
     private servicioAsignaturas servAsignaturas;
     private Asignaturas asiAsignaturas = new Asignaturas();
-   
     private Utilitario utilitario = new Utilitario();
 
     public void guardar() {

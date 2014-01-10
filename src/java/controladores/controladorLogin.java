@@ -88,7 +88,6 @@ public class controladorLogin {
             return;
         }
 
-
         if (!strClaveActua.isEmpty()) {
             Encriptar encriptar = new Encriptar();
             if (ser_seguridad.getClaveUsuario(utilitario.getVariable("IDE_USUA")).equals(encriptar.getEncriptar(strClaveActua))) {

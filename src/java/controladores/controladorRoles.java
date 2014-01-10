@@ -6,12 +6,9 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Roles;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import servcios.servicioAlumno;
-import servcios.servicioRepresentante;
 import servcios.servicioRoles;
 
 
@@ -38,8 +35,7 @@ public class controladorRoles {
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        
-    }
+        }
 
     public Roles getRolRoles() {
         return rolRoles;
@@ -48,7 +44,5 @@ public class controladorRoles {
     public void setRolRoles(Roles rolRoles) {
         this.rolRoles = rolRoles;
     }
-   
-   
    
 }

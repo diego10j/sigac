@@ -5,12 +5,13 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.EquivalenciaConducta;
 
-import entidades.Paralelo;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import servcios.servicioParalelo;
+import servcios.servicioConducta;
+
 
 /**
  *
@@ -18,35 +19,34 @@ import servcios.servicioParalelo;
  */
 @ManagedBean
 @ViewScoped
-public class controladorParalelo {
+public class controladorConducta {
 
-    
-     @EJB
-    private servicioParalelo servParalelo;
-    private Paralelo parParalelo = new Paralelo();
+    @EJB
+    private servicioConducta servConducta;
+    private EquivalenciaConducta eqvConducta = new EquivalenciaConducta();
+   
     private Utilitario utilitario = new Utilitario();
 
     public void guardar() {
         
-            String str_mensaje = servParalelo.guardarParalelo(parParalelo);
-            
+           String str_mensaje = servConducta.guardarConducta(eqvConducta);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
-                parParalelo = new Paralelo();
-               } 
-             
-            else {
+                eqvConducta= new EquivalenciaConducta();
+            } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-       }
+        
+    }
+
+    public EquivalenciaConducta getEqvConducta() {
+        return eqvConducta;
+    }
+
+    public void setEqvConducta(EquivalenciaConducta eqvConducta) {
+        this.eqvConducta = eqvConducta;
+    }
+   
   
-
-    public Paralelo getParParalelo() {
-        return parParalelo;
-    }
-
-    public void setParParalelo(Paralelo parParalelo) {
-        this.parParalelo = parParalelo;
-    }
    
 }
