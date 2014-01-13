@@ -5,8 +5,11 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 
 import entidades.Paralelo;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -25,6 +28,13 @@ public class controladorParalelo {
     private servicioParalelo servParalelo;
     private Paralelo parParalelo = new Paralelo();
     private Utilitario utilitario = new Utilitario();
+     private List<Paralelo> listaParalelo;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaParalelo = servParalelo.getParalelo();
+    }
+
 
     public void guardar() {
         
@@ -47,6 +57,14 @@ public class controladorParalelo {
 
     public void setParParalelo(Paralelo parParalelo) {
         this.parParalelo = parParalelo;
+    }
+
+    public List<Paralelo> getListaParalelo() {
+        return listaParalelo;
+    }
+
+    public void setListaParalelo(List<Paralelo> listaParalelo) {
+        this.listaParalelo = listaParalelo;
     }
    
 }

@@ -5,7 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.Institucion;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -23,6 +26,13 @@ public class controladorInstitucion {
     private servicioInstitucion servInstitucion;
     private Institucion insInstitucion = new Institucion();
     private Utilitario utilitario = new Utilitario();
+    private List<Institucion> listaInstitucion;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaInstitucion = servInstitucion.getInstitucion();
+    }
+
 
     public void guardar() {
         
@@ -43,5 +53,14 @@ public class controladorInstitucion {
     public void setInsInstitucion(Institucion insInstitucion) {
         this.insInstitucion = insInstitucion;
     }
+
+    public List<Institucion> getListaInstitucion() {
+        return listaInstitucion;
+    }
+
+    public void setListaInstitucion(List<Institucion> listaInstitucion) {
+        this.listaInstitucion = listaInstitucion;
+    }
+    
     
 }

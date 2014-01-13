@@ -5,7 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Roles;
 import entidades.Usuario;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,6 +27,12 @@ public class controladorUsuarios {
     private servicioUsuarios servUsuarios;
     private Usuario usuUsuario = new Usuario();
     private Utilitario utilitario = new Utilitario();
+      private List<Usuario> listaUsuario;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaUsuario = servUsuarios.getUsuario();
+    }
 
     public void guardar() {
         
@@ -43,4 +52,14 @@ public class controladorUsuarios {
     public void setUsuUsuario(Usuario usuUsuario) {
         this.usuUsuario = usuUsuario;
     }
+
+    public List<Usuario> getListaUsuario() {
+        return listaUsuario;
+    }
+
+    public void setListaUsuario(List<Usuario> listaUsuario) {
+        this.listaUsuario = listaUsuario;
+    }
+    
+    
    }

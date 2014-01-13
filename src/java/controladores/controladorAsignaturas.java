@@ -7,6 +7,8 @@ package controladores;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Asignaturas;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -27,6 +29,14 @@ public class controladorAsignaturas {
     private Asignaturas asiAsignaturas = new Asignaturas();
     private Utilitario utilitario = new Utilitario();
 
+     private List<Asignaturas> listaAsignaturas;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaAsignaturas = servAsignaturas.getEquivalenciaAsignaturas();
+    }
+
+
     public void guardar() {
         
            String str_mensaje = servAsignaturas.guardarAsignaturas(asiAsignaturas);
@@ -45,6 +55,14 @@ public class controladorAsignaturas {
 
     public void setAsiAsignaturas(Asignaturas asiAsignaturas) {
         this.asiAsignaturas = asiAsignaturas;
+    }
+
+    public List<Asignaturas> getListaAsignaturas() {
+        return listaAsignaturas;
+    }
+
+    public void setListaAsignaturas(List<Asignaturas> listaAsignaturas) {
+        this.listaAsignaturas = listaAsignaturas;
     }
    
    

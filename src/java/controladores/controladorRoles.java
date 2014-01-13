@@ -5,7 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.Roles;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -25,6 +28,13 @@ public class controladorRoles {
     private Roles rolRoles = new Roles();
    
     private Utilitario utilitario = new Utilitario();
+     private List<Roles> listaRoles;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaRoles = servRoles.getRoles();
+    }
+
 
     public void guardar() {
         
@@ -43,6 +53,14 @@ public class controladorRoles {
 
     public void setRolRoles(Roles rolRoles) {
         this.rolRoles = rolRoles;
+    }
+
+    public List<Roles> getListaRoles() {
+        return listaRoles;
+    }
+
+    public void setListaRoles(List<Roles> listaRoles) {
+        this.listaRoles = listaRoles;
     }
    
 }

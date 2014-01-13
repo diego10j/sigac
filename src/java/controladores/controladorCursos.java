@@ -5,16 +5,11 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Representante;
 import entidades.Cursos;
-import entidades.Docentes;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import servcios.servicioAlumno;
-import servcios.servicioRepresentante;
 import servcios.servicioCursos;
 
 
