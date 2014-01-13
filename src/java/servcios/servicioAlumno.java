@@ -6,6 +6,7 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -22,18 +23,17 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class servicioAlumno {
-
+    
     @PersistenceContext
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
+    private Utilitario utilitario = new Utilitario();
     
-    private Utilitario utilitario=new Utilitario();
-
     public String guardarAlumno(Alumnos alumno) {
         try {
             utx.begin();
-            long lon_codigo=utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
+            long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
             alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
             manejador.persist(alumno);            
@@ -48,7 +48,7 @@ public class servicioAlumno {
         }
         return "";
     }
-
+    
     public String elimnarAlumno(String aluCodigo) {
         try {
             utx.begin();
@@ -64,15 +64,24 @@ public class servicioAlumno {
         }
         return "";
     }
-
+    
     public Alumnos getAlumno(String aluCodigo) {
-
+        
         try {
             Query q = manejador.createNamedQuery("Alumnos.findByAluCodigo");
             q.setParameter("aluCodigo", new Integer(aluCodigo));
             return (Alumnos) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+    public List<Alumnos> getAlumnos() {        
+        try {
+            Query q = manejador.createNamedQuery("Alumnos.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }
