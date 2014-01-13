@@ -5,7 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.EquivalenciaConducta;
+import java.util.List;
+import javax.annotation.PostConstruct;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -26,6 +29,13 @@ public class controladorConducta {
     private EquivalenciaConducta eqvConducta = new EquivalenciaConducta();
    
     private Utilitario utilitario = new Utilitario();
+     private List<EquivalenciaConducta> listaEquivalenciaConducta;
+
+    @PostConstruct
+    public void cargarDatos() {
+        listaEquivalenciaConducta = servConducta.getEquivalenciaConducta();
+    }
+
 
     public void guardar() {
         
@@ -45,6 +55,14 @@ public class controladorConducta {
 
     public void setEqvConducta(EquivalenciaConducta eqvConducta) {
         this.eqvConducta = eqvConducta;
+    }
+
+    public List<EquivalenciaConducta> getListaEquivalenciaConducta() {
+        return listaEquivalenciaConducta;
+    }
+
+    public void setListaEquivalenciaConducta(List<EquivalenciaConducta> listaEquivalenciaConducta) {
+        this.listaEquivalenciaConducta = listaEquivalenciaConducta;
     }
    
   

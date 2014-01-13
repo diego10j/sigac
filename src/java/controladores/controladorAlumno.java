@@ -30,11 +30,11 @@ public class controladorAlumno {
     private servicioRepresentante servRepresentante;
     private Representante repRepresentante = new Representante();
     private Utilitario utilitario = new Utilitario();
-    private List<Alumnos> listaAlimnos;
+    private List<Alumnos> listaAlumnos;
 
     @PostConstruct
     public void cargarDatos() {
-        listaAlimnos = servAlumno.getAlumnos();
+        listaAlumnos = servAlumno.getAlumnos();
     }
 
     public void guardar() {
@@ -73,4 +73,13 @@ public class controladorAlumno {
     public void setRepRepresentante(Representante repRepresentante) {
         this.repRepresentante = repRepresentante;
     }
+
+    public List<Alumnos> getListaAlumnos() {
+        return listaAlumnos;
+    }
+
+    public void setListaAlumnos(List<Alumnos> listaAlumnos) {
+        this.listaAlumnos = listaAlumnos;
+    }
+    
 }
