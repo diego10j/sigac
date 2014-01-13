@@ -7,7 +7,9 @@ package servcios;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Docentes;
+import entidades.Paralelo;
 import entidades.Representante;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -77,6 +79,15 @@ public class servicioRepresentante {
             return (Representante) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+      public List<Representante> getRepresentante() {        
+        try {
+            Query q = manejador.createNamedQuery("Representante.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

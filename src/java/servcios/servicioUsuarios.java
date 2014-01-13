@@ -8,7 +8,9 @@ import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Docentes;
 import entidades.Cursos;
+import entidades.Roles;
 import entidades.Usuario;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -79,6 +81,15 @@ public class servicioUsuarios {
             return (Cursos) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+     public List<Usuario> getUsuario() {        
+        try {
+            Query q = manejador.createNamedQuery("Usuario.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

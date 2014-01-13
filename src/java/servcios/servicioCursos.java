@@ -8,6 +8,8 @@ import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Docentes;
 import entidades.Cursos;
+import entidades.EquivalenciaConducta;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -78,6 +80,15 @@ public class servicioCursos {
             return (Cursos) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+       public List<Cursos> getCursos() {        
+        try {
+            Query q = manejador.createNamedQuery("Cursos.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

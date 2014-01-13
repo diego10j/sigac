@@ -5,7 +5,9 @@
 package servcios;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.EquivalenciaAprovechamiento;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -77,6 +79,15 @@ public class servicioAprovechamiento {
             return (EquivalenciaAprovechamiento) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+    public List<EquivalenciaAprovechamiento> getEquivalenciaAprovechamiento() {        
+        try {
+            Query q = manejador.createNamedQuery("EquivalenciaAprovechamiento.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }
