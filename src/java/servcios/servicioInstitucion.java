@@ -8,6 +8,7 @@ import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Docentes;
 import entidades.Institucion;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -77,6 +78,14 @@ public class servicioInstitucion {
             return (Institucion) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+     public List<Institucion> getInstitucion() {        
+        try {
+            Query q = manejador.createNamedQuery("Institucion.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

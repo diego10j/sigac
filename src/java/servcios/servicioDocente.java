@@ -6,7 +6,9 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Cursos;
 import entidades.Docentes;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -76,6 +78,15 @@ public class servicioDocente {
             return (Alumnos) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+      public List<Docentes> getDocentes() {        
+        try {
+            Query q = manejador.createNamedQuery("Docentes.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

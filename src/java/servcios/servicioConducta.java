@@ -5,8 +5,10 @@
 package servcios;
 
 import aplicacion.Utilitario;
+import entidades.Asignaturas;
 
 import entidades.EquivalenciaConducta;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -78,6 +80,15 @@ public class servicioConducta {
             return (EquivalenciaConducta) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+    public List<EquivalenciaConducta> getEquivalenciaConducta() {        
+        try {
+            Query q = manejador.createNamedQuery("EquivalenciaConducta.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

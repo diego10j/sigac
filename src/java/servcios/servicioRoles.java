@@ -8,6 +8,8 @@ import aplicacion.Utilitario;
 import entidades.Roles;
 import entidades.Docentes;
 import entidades.Cursos;
+import entidades.Representante;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -78,6 +80,14 @@ public class servicioRoles {
             return (Roles) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    public List<Roles> getRoles() {        
+        try {
+            Query q = manejador.createNamedQuery("Roles.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

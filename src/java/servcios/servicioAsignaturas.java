@@ -7,6 +7,8 @@ package servcios;
 import aplicacion.Utilitario;
 import entidades.Cursos;
 import entidades.Asignaturas;
+import entidades.EquivalenciaAprovechamiento;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -77,6 +79,15 @@ public class servicioAsignaturas {
             return (Asignaturas) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+      public List<Asignaturas> getEquivalenciaAsignaturas() {        
+        try {
+            Query q = manejador.createNamedQuery("Asignaturas.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }

@@ -7,7 +7,9 @@ package servcios;
 import aplicacion.Utilitario;
 
 import entidades.Cursos;
+import entidades.Institucion;
 import entidades.Paralelo;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -77,6 +79,15 @@ public class servicioParalelo {
             return (Paralelo) q.getSingleResult();
         } catch (Exception e) {
         }
+        return null;
+    }
+    
+     public List<Paralelo> getParalelo() {        
+        try {
+            Query q = manejador.createNamedQuery("Paralelo.findAll");
+            return q.getResultList();
+        } catch (Exception e) {
+        }        
         return null;
     }
 }
