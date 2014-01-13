@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Alumnos</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Listado de Alumnos</h1> 
+
+        <h:form>
+
+            <p:dataTable value="#{controladorAlumno.listaAlumnos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+                <p:column headerText="CODIGO" filterBy="#{tabla.aluCodigo}" sortBy="#{tabla.aluCodigo}" >
+                    <h:outputText value="#{tabla.aluCodigo}"/>
+                </p:column>
+                <p:column headerText="CEDULA" filterBy="#{tabla.aluCedula}">
+                    <h:outputText value="#{tabla.aluCedula}"/>                     
+                </p:column>
+                <p:column headerText="NOMBRES" filterBy="#{tabla.aluNombres}" sortBy="#{tabla.aluNombres}" >
+                    <h:outputText value="#{tabla.aluNombres}"/>
+                </p:column>
+                <p:column headerText="APELLIDOS" filterBy="#{tabla.aluApellidos}" sortBy="#{tabla.aluApellidos}" >
+                    <h:outputText value="#{tabla.aluApellidos}"/>
+                </p:column>
+                <p:column headerText="DIRECCIÓN">
+                    <h:outputText value="#{tabla.aluDireccion}"/>
+                </p:column>
+                <p:column headerText="SEXO" sortBy="#{tabla.aluSexo}" >
+                    <h:outputText value="#{tabla.aluSexo}"/>
+                </p:column>
+                <p:column headerText="FECHA DE NACIMIENTO" sortBy="#{tabla.aluFechanacimiento}" >
+                    <h:outputText value="#{tabla.aluFechanacimiento}">
+                        <f:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="LUGAR NACIMIENTO" sortBy="#{tabla.aluLugarnacimiento}" >
+                    <h:outputText value="#{tabla.aluLugarnacimiento}"/>
+                </p:column>
+                <p:column headerText="NOMBRE PADRE" sortBy="#{tabla.aluPadre}">
+                    <h:outputText value="#{tabla.aluPadre}"/>
+                </p:column>
+                <p:column headerText="PROFESIÓN PADRE">
+                    <h:outputText value="#{tabla.aluPrfpadre}"/>
+                </p:column>
+                <p:column headerText="NOMBRE MADRE" sortBy="#{tabla.aluMadre}" >
+                    <h:outputText value="#{tabla.aluMadre}"/>
+                </p:column>
+                <p:column headerText="PROFESIÓN MADRE">
+                    <h:outputText value="#{tabla.aluPrfmadre}"/>
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
