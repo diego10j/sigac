@@ -76,7 +76,7 @@ public class servicioUsuarios {
     public Cursos getUsuarios(String usuCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Usuario.findAll");
+            Query q = manejador.createNamedQuery("Usuario.findByDocCodigo");
             q.setParameter("usuCodigo", new Integer(usuCodigo));
             return (Cursos) q.getSingleResult();
         } catch (Exception e) {
