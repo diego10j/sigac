@@ -17,7 +17,8 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+            <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                         selection="#{controladorUsuarios.usuUsuario}" selectionMode="single" rowKey="#{tabla.usuCodigo}">
                 <p:column headerText="CODIGO" filterBy="#{tabla.usuCodigo}" sortBy="#{tabla.usuCodigo}" >
                     <h:outputText value="#{tabla.usuCodigo}"/>
                 </p:column>

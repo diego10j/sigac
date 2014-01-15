@@ -17,7 +17,9 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorRoles.listaRoles}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+            <p:dataTable value="#{controladorRoles.listaRoles}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                         selection="#{controladorRoles.rolRoles}" selectionMode="single" rowKey="#{tabla.rolCodigo}">
+                
                 <p:column headerText="CÓDIGO" filterBy="#{tabla.rolCodigo}" sortBy="#{tabla.rolCodigo}" >
                     <h:outputText value="#{tabla.rolCodigo}"/>
                 </p:column>

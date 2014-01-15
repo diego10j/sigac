@@ -17,7 +17,9 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorInstitucion.listaInstitucion}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+            <p:dataTable value="#{controladorInstitucion.listaInstitucion}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                         selection="#{controladorInstitucion.insInstitucion}" selectionMode="single" rowKey="#{tabla.insCodigo}">
+                
                 <p:column headerText="CODIGO" filterBy="#{tabla.insCodigo}">
                     <h:outputText value="#{tabla.insCodigo}"/>
                 </p:column>

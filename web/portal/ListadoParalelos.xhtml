@@ -17,7 +17,8 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorParalelo.listaParalelo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+            <p:dataTable value="#{controladorParalelo.listaParalelo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false" 
+                         selection="#{controladorParalelo.parParalelo}" selectionMode="single" rowKey="#{tabla.parCodigo}">
                 <p:column headerText="CÓDIGO" filterBy="#{tabla.parCodigo}" sortBy="#{tabla.parCodigo}" >
                     <h:outputText value="#{tabla.parCodigo}"/>
                 </p:column>
