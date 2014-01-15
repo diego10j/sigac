@@ -28,25 +28,24 @@ public class servicioCursos {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarCursos(Cursos cursos) {
         try {
             utx.begin();
             manejador.joinTransaction();
             //nombre tabla y atributo
-            if(cursos.getCurCodigo()== null){
-                  long lon_codigo=utilitario.getConexion().getMaximo("Cursos", "cur_codigo", 1);
-             cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.persist(cursos);
-            }else{
+            if (cursos.getCurCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Cursos", "cur_codigo", 1);
+                cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(cursos);
+            } else {
                 manejador.merge(cursos);
             }
-          
-            
+
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -85,13 +84,13 @@ public class servicioCursos {
         }
         return null;
     }
-    
-       public List<Cursos> getCursos() {        
+
+    public List<Cursos> getCursos() {
         try {
             Query q = manejador.createNamedQuery("Cursos.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

@@ -29,23 +29,22 @@ public class servicioDocente {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarDocente(Docentes docente) {
         try {
             utx.begin();
-              manejador.joinTransaction();
+            manejador.joinTransaction();
             //nombre tabla y atributo
-              if(docente.getDocCodigo()== null){
-            long lon_codigo=utilitario.getConexion().getMaximo("docentes", "doc_codigo", 1);
-            System.out.println("ide "+lon_codigo);
-            docente.setDocCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.persist(docente);
-              }else{
-                  manejador.merge(docente);
-              }
-            
+            if (docente.getDocCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("docentes", "doc_codigo", 1);
+                System.out.println("ide " + lon_codigo);
+                docente.setDocCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(docente);
+            } else {
+                manejador.merge(docente);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -84,13 +83,13 @@ public class servicioDocente {
         }
         return null;
     }
-    
-      public List<Docentes> getDocentes() {        
+
+    public List<Docentes> getDocentes() {
         try {
             Query q = manejador.createNamedQuery("Docentes.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }
