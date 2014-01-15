@@ -41,6 +41,10 @@ public class controladorAlumno {
         aluAlumno = new Alumnos();
         repRepresentante = new Representante();
     }
+    
+    public void modificar(){
+        
+    }
 
     public void guardar() {
         if (utilitario.validarCedula(aluAlumno.getAluCedula())) {
