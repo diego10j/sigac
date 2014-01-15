@@ -17,7 +17,9 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+            <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                         selection="#{controladorConducta.eqvConducta}" selectionMode="single" rowKey="#{tabla.eqcCodigo}">
+                
                 <p:column headerText="CODIGO" filterBy="#{tabla.eqcCodigo}" sortBy="#{tabla.eqcCodigo}" >
                     <h:outputText value="#{tabla.eqcCodigo}"/>
                 </p:column>

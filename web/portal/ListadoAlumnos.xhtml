@@ -17,8 +17,10 @@
 
         <h:form>
 
-            <p:dataTable value="#{controladorAlumno.listaAlumnos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
-                <p:column headerText="CODIGO" filterBy="#{tabla.aluCodigo}" sortBy="#{tabla.aluCodigo}" >
+            <p:dataTable value="#{controladorAlumno.listaAlumnos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                         selection="#{controladorAlumno.aluAlumno}" selectionMode="single" rowKey="#{tabla.aluCodigo}">
+                
+                <p:column headerText="CODIGO" filterBy="#{tabla.aluCodigo}" sortBy="#{tabla.aluCodigo}">
                     <h:outputText value="#{tabla.aluCodigo}"/>
                 </p:column>
                 <p:column headerText="CEDULA" filterBy="#{tabla.aluCedula}">
