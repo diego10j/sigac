@@ -5,9 +5,6 @@
 package servcios;
 
 import aplicacion.Utilitario;
-
-import entidades.Cursos;
-import entidades.Institucion;
 import entidades.Paralelo;
 import java.util.List;
 import javax.annotation.Resource;
@@ -31,18 +28,22 @@ public class servicioParalelo {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarParalelo(Paralelo paralelo) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Paralelo", "par_codigo", 1);
-            System.out.println("ide "+lon_codigo);
-            paralelo.setParCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(paralelo);
+            //nombre tabla y atributo
+            if (paralelo.getParCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Paralelo", "par_codigo", 1);
+                System.out.println("ide " + lon_codigo);
+                paralelo.setParCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(paralelo);
+            } else {
+                manejador.merge(paralelo);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -81,13 +82,13 @@ public class servicioParalelo {
         }
         return null;
     }
-    
-     public List<Paralelo> getParalelo() {        
+
+    public List<Paralelo> getParalelo() {
         try {
             Query q = manejador.createNamedQuery("Paralelo.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

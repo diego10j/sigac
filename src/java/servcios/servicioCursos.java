@@ -5,10 +5,7 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Docentes;
 import entidades.Cursos;
-import entidades.EquivalenciaConducta;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -37,13 +34,19 @@ public class servicioCursos {
     public String guardarCursos(Cursos cursos) {
         try {
             utx.begin();
+            manejador.joinTransaction();
             //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Cursos", "cur_codigo", 1);
+            if(cursos.getCurCodigo()== null){
+                  long lon_codigo=utilitario.getConexion().getMaximo("Cursos", "cur_codigo", 1);
              cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
             System.out.println("ide "+lon_codigo);
             cursos.setCurCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.joinTransaction();
             manejador.persist(cursos);
+            }else{
+                manejador.merge(cursos);
+            }
+          
+            
             utx.commit();
         } catch (Exception e) {
             try {

@@ -5,10 +5,7 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Docentes;
 import entidades.Cursos;
-import entidades.Roles;
 import entidades.Usuario;
 import java.util.List;
 import javax.annotation.Resource;
@@ -32,19 +29,23 @@ public class servicioUsuarios {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarUsuarios(Usuario usuario) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Usuario", "cur_codigo", 1);
-             usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(usuario);
+            //nombre tabla y atributo
+            if (usuario.getUsuCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Usuario", "cur_codigo", 1);
+                usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(usuario);
+            } else {
+                manejador.merge(usuario);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -83,13 +84,13 @@ public class servicioUsuarios {
         }
         return null;
     }
-    
-     public List<Usuario> getUsuario() {        
+
+    public List<Usuario> getUsuario() {
         try {
             Query q = manejador.createNamedQuery("Usuario.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

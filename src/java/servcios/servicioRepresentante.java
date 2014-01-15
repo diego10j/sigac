@@ -31,18 +31,22 @@ public class servicioRepresentante {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarRepresentante(Representante representante) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("representante", "rep_codigo", 1);
-            System.out.println("ide "+lon_codigo);
-            representante.setRepCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(representante);
+            //nombre tabla y atributo
+            if (representante.getRepCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("representante", "rep_codigo", 1);
+                System.out.println("ide " + lon_codigo);
+                representante.setRepCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(representante);
+            } else {
+                manejador.merge(representante);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -81,13 +85,13 @@ public class servicioRepresentante {
         }
         return null;
     }
-    
-      public List<Representante> getRepresentante() {        
+
+    public List<Representante> getRepresentante() {
         try {
             Query q = manejador.createNamedQuery("Representante.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

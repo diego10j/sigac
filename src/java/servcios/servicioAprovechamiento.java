@@ -36,13 +36,19 @@ public class servicioAprovechamiento {
     public String guardarAprovechamiento(EquivalenciaAprovechamiento aprovechamiento) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_Aprovechamiento", "eqa_codigo", 1);
-             aprovechamiento.setEqaCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            aprovechamiento.setEqaCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(aprovechamiento);
+            //nombre tabla y atributo
+           
+            if(aprovechamiento.getEqaCodigo()==null){
+                long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_Aprovechamiento", "eqa_codigo", 1);
+             aprovechamiento.setEqaCodigo(new Integer(String.valueOf(lon_codigo)));
+              System.out.println("ide "+lon_codigo);
+             manejador.persist(aprovechamiento);
+            }else{
+                manejador.merge(aprovechamiento);
+            }
+            
+           
             utx.commit();
         } catch (Exception e) {
             try {

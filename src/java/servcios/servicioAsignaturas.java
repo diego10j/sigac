@@ -36,13 +36,19 @@ public class servicioAsignaturas {
     public String guardarAsignaturas(Asignaturas asignatura) {
         try {
             utx.begin();
+              manejador.joinTransaction();
             //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Asignaturas", "asi_codigo", 1);
+             if(asignatura.getAsiCodigo()==null){
+                 long lon_codigo=utilitario.getConexion().getMaximo("Asignaturas", "asi_codigo", 1);
              asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
             System.out.println("ide "+lon_codigo);
             asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.joinTransaction();
             manejador.persist(asignatura);
+             }else{
+                 manejador.merge(asignatura);
+             }
+  
+            
             utx.commit();
         } catch (Exception e) {
             try {

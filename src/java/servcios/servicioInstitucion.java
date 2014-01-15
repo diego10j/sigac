@@ -5,8 +5,6 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Docentes;
 import entidades.Institucion;
 import java.util.List;
 import javax.annotation.Resource;
@@ -36,12 +34,18 @@ public class servicioInstitucion {
     public String guardarInstitucion(Institucion instituto) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("institucion", "doc_codigo", 1);
+            manejador.joinTransaction();
+            if(instituto.getInsCodigo()== null){
+                //nombre tabla y atributo
+                long lon_codigo=utilitario.getConexion().getMaximo("institucion", "doc_codigo", 1);
             System.out.println("ide "+lon_codigo);
             instituto.setInsCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.joinTransaction();
             manejador.persist(instituto);
+            }else{
+                manejador.merge(instituto);
+            }
+            
+            
             utx.commit();
         } catch (Exception e) {
             try {
