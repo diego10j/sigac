@@ -6,9 +6,6 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Roles;
-import entidades.Docentes;
-import entidades.Cursos;
-import entidades.Representante;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -31,19 +28,23 @@ public class servicioRoles {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarRoles(Roles rol) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Roles", "rol_codigo", 1);
-             rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(rol);
+            //nombre tabla y atributo
+            if (rol.getRolCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Roles", "rol_codigo", 1);
+                rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(rol);
+            } else {
+                manejador.merge(rol);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -82,12 +83,13 @@ public class servicioRoles {
         }
         return null;
     }
-    public List<Roles> getRoles() {        
+
+    public List<Roles> getRoles() {
         try {
             Query q = manejador.createNamedQuery("Roles.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

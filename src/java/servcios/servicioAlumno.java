@@ -33,10 +33,18 @@ public class servicioAlumno {
     public String guardarAlumno(Alumnos alumno) {
         try {
             utx.begin();
-            long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
-            alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
+            
             manejador.joinTransaction();
-            manejador.persist(alumno);            
+            if(alumno.getAluCodigo()== null){
+                //Guardo
+                 long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
+            alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
+            manejador.persist(alumno);  
+            }else{
+                //modifica
+                manejador.merge(alumno);
+            }
+                      
             utx.commit();
         } catch (Exception e) {
             try {

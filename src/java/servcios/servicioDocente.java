@@ -6,7 +6,6 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
-import entidades.Cursos;
 import entidades.Docentes;
 import java.util.List;
 import javax.annotation.Resource;
@@ -36,12 +35,17 @@ public class servicioDocente {
     public String guardarDocente(Docentes docente) {
         try {
             utx.begin();
+              manejador.joinTransaction();
             //nombre tabla y atributo
+              if(docente.getDocCodigo()== null){
             long lon_codigo=utilitario.getConexion().getMaximo("docentes", "doc_codigo", 1);
             System.out.println("ide "+lon_codigo);
             docente.setDocCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.joinTransaction();
             manejador.persist(docente);
+              }else{
+                  manejador.merge(docente);
+              }
+            
             utx.commit();
         } catch (Exception e) {
             try {

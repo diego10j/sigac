@@ -28,19 +28,23 @@ public class servicioTipoAsignaturas {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarTipoAsignaturas(Tipoasignaturas tipoasignaturas) {
         try {
             utx.begin();
-            //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Tipoasignaturas", "tip_codigo", 1);
-             tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(tipoasignaturas);
+            //nombre tabla y atributo
+            if (tipoasignaturas.getTipCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Tipoasignaturas", "tip_codigo", 1);
+                tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(tipoasignaturas);
+            } else {
+                manejador.merge(tipoasignaturas);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -79,13 +83,13 @@ public class servicioTipoAsignaturas {
         }
         return null;
     }
-    
-      public List<Tipoasignaturas> getTipoasignaturas() {        
+
+    public List<Tipoasignaturas> getTipoasignaturas() {
         try {
             Query q = manejador.createNamedQuery("Tipoasignaturas.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

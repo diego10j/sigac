@@ -37,13 +37,18 @@ public class servicioConducta {
     public String guardarConducta(EquivalenciaConducta conducta) {
         try {
             utx.begin();
+             manejador.joinTransaction();
             //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_conducta", "eqc_codigo", 1);
+             if(conducta.getEqcCodigo()== null){
+                    long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_conducta", "eqc_codigo", 1);
              conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
             System.out.println("ide "+lon_codigo);
             conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.joinTransaction();
-            manejador.persist(conducta);
+           manejador.persist(conducta);
+             }else{
+                 manejador.merge(conducta);
+             }
+           
             utx.commit();
         } catch (Exception e) {
             try {
