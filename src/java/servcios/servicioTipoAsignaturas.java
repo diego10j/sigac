@@ -5,10 +5,8 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.EquivalenciaAprovechamiento;
+import entidades.Tipoasignaturas;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -24,7 +22,7 @@ import javax.transaction.UserTransaction;
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class servicioAprovechamiento {
+public class servicioTipoAsignaturas {
 
     @PersistenceContext
     private EntityManager manejador;
@@ -33,16 +31,16 @@ public class servicioAprovechamiento {
     
     private Utilitario utilitario=new Utilitario();
 
-    public String guardarAprovechamiento(EquivalenciaAprovechamiento aprovechamiento) {
+    public String guardarTipoAsignaturas(Tipoasignaturas tipoasignaturas) {
         try {
             utx.begin();
             //nombre tabla y atributo
-            long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_Aprovechamiento", "eqa_codigo", 1);
-             aprovechamiento.setEqaCodigo(new Integer(String.valueOf(lon_codigo)));
+            long lon_codigo=utilitario.getConexion().getMaximo("Tipoasignaturas", "tip_codigo", 1);
+             tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
             System.out.println("ide "+lon_codigo);
-            aprovechamiento.setEqaCodigo(new Integer(String.valueOf(lon_codigo)));
+            tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
             manejador.joinTransaction();
-            manejador.persist(aprovechamiento);
+            manejador.persist(tipoasignaturas);
             utx.commit();
         } catch (Exception e) {
             try {
@@ -55,11 +53,11 @@ public class servicioAprovechamiento {
         return "";
     }
 
-    public String elimnarAprovechamiento(String eqvCodigo) {
+    public String elimnarTipoAsignaturas(String tipCodigo) {
         try {
             utx.begin();
-            EquivalenciaAprovechamiento borraAprovechamiento = manejador.find(EquivalenciaAprovechamiento.class, new Integer(eqvCodigo));
-            manejador.remove(borraAprovechamiento);
+            Tipoasignaturas borraTipoasignaturas = manejador.find(Tipoasignaturas.class, new Integer(tipCodigo));
+            manejador.remove(borraTipoasignaturas);
             utx.commit();
         } catch (Exception e) {
             try {
@@ -71,20 +69,20 @@ public class servicioAprovechamiento {
         return "";
     }
 
-    public EquivalenciaAprovechamiento getAprovechamiento(String eqvCodigo) {
+    public Tipoasignaturas getTipoasignaturas(String tipCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Equivalencia_Aprovechamiento.findByDocCodigo");
-            q.setParameter("eqvCodigo", new Integer(eqvCodigo));
-            return (EquivalenciaAprovechamiento) q.getSingleResult();
+            Query q = manejador.createNamedQuery("Tipoasignaturas.findByDocCodigo");
+            q.setParameter("tipCodigo", new Integer(tipCodigo));
+            return (Tipoasignaturas) q.getSingleResult();
         } catch (Exception e) {
         }
         return null;
     }
     
-    public List<EquivalenciaAprovechamiento> getEquivalenciaAprovechamiento() {        
+      public List<Tipoasignaturas> getTipoasignaturas() {        
         try {
-            Query q = manejador.createNamedQuery("EquivalenciaAprovechamiento.findAll");
+            Query q = manejador.createNamedQuery("Tipoasignaturas.findAll");
             return q.getResultList();
         } catch (Exception e) {
         }        

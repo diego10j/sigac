@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Usuarios</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Listado de Usuarios</h1> 
+
+        <h:form>
+
+            <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+                <p:column headerText="CODIGO" filterBy="#{tabla.usuCodigo}" sortBy="#{tabla.usuCodigo}" >
+                    <h:outputText value="#{tabla.usuCodigo}"/>
+                </p:column>
+                <p:column headerText="NOMBRE" filterBy="#{tabla.usuNombre}" sortBy="#{tabla.usuNombre}">
+                    <h:outputText value="#{tabla.usuNombre}"/>                     
+                </p:column>
+                <p:column headerText="NICK" filterBy="#{tabla.usuNick}" sortBy="#{tabla.usuNick}">
+                    <h:outputText value="#{tabla.usuNick}"/>
+               </p:column>
+                <p:column headerText="CLAVE" filterBy="#{tabla.usuClave}" sortBy="#{tabla.usuClave}">
+                    <h:outputText value="#{tabla.usuClave}"/>
+               </p:column>
+                <p:column headerText="FECHA DE CREACIÓN" sortBy="#{tabla.usuFechacreacion}" >
+                    <h:outputText value="#{tabla.usuFechacreacion}">
+                        <f:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </p:column>
+                
+                
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
