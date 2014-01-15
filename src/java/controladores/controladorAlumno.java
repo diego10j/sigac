@@ -36,6 +36,11 @@ public class controladorAlumno {
     public void cargarDatos() {
         listaAlumnos = servAlumno.getAlumnos();
     }
+    
+    public void insertar(){
+        aluAlumno = new Alumnos();
+        repRepresentante = new Representante();
+    }
 
     public void guardar() {
         if (utilitario.validarCedula(aluAlumno.getAluCedula())) {
@@ -81,5 +86,4 @@ public class controladorAlumno {
     public void setListaAlumnos(List<Alumnos> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
-    
 }

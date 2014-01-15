@@ -36,7 +36,10 @@ public class controladorConducta {
         listaEquivalenciaConducta = servConducta.getEquivalenciaConducta();
     }
 
-
+    public void insertar(){
+        eqvConducta = new EquivalenciaConducta();
+    }
+    
     public void guardar() {
         
            String str_mensaje = servConducta.guardarConducta(eqvConducta);

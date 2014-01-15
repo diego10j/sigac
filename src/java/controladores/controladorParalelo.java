@@ -35,7 +35,10 @@ public class controladorParalelo {
         listaParalelo = servParalelo.getParalelo();
     }
 
-
+    public void insertar(){
+        parParalelo = new Paralelo();
+    }
+    
     public void guardar() {
         
             String str_mensaje = servParalelo.guardarParalelo(parParalelo);

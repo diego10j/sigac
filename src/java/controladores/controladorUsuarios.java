@@ -33,7 +33,11 @@ public class controladorUsuarios {
     public void cargarDatos() {
         listaUsuario = servUsuarios.getUsuario();
     }
-
+    
+    public void insertar(){
+        usuUsuario = new Usuario();
+    }
+    
     public void guardar() {
         
            String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);

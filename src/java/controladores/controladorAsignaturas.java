@@ -35,7 +35,10 @@ public class controladorAsignaturas {
     public void cargarDatos() {
         listaAsignaturas = servAsignaturas.getEquivalenciaAsignaturas();
     }
-
+    
+    public void insertar(){
+        asiAsignaturas = new Asignaturas();
+    }
 
     public void guardar() {
         

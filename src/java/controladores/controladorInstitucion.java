@@ -32,7 +32,10 @@ public class controladorInstitucion {
     public void cargarDatos() {
         listaInstitucion = servInstitucion.getInstitucion();
     }
-
+    
+    public void insertar(){
+        insInstitucion = new Institucion();
+    }
 
     public void guardar() {
         

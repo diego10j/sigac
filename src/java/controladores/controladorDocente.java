@@ -35,6 +35,9 @@ public class controladorDocente {
         listaDocentes = servDocente.getDocentes();
     }
 
+    public void insertar(){
+        docDocente = new Docentes();
+    }
     
     public void guardar() {
         if (utilitario.validarCedula(docDocente.getDocCedula())) {

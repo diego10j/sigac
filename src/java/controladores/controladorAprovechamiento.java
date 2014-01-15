@@ -5,18 +5,13 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Cursos;
 import entidades.EquivalenciaAprovechamiento;
 import entidades.Institucion;
 import java.util.List;
 import javax.annotation.PostConstruct;
-
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import servcios.servicioAprovechamiento;
 import servcios.servicioInstitucion;
 
@@ -43,6 +38,11 @@ public class controladorAprovechamiento {
         listaEquivalenciaAprovechamiento = servAprovechamiento.getEquivalenciaAprovechamiento();
     }
     
+    
+    public void insertar(){
+        eqvAprovechamiento = new EquivalenciaAprovechamiento();
+        
+    }
       public void guardar() {
         
            String str_mensaje = servAprovechamiento.guardarAprovechamiento(eqvAprovechamiento);
