@@ -31,24 +31,23 @@ public class servicioConducta {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarConducta(EquivalenciaConducta conducta) {
         try {
             utx.begin();
-             manejador.joinTransaction();
+            manejador.joinTransaction();
             //nombre tabla y atributo
-             if(conducta.getEqcCodigo()== null){
-                    long lon_codigo=utilitario.getConexion().getMaximo("Equivalencia_conducta", "eqc_codigo", 1);
-             conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
-           manejador.persist(conducta);
-             }else{
-                 manejador.merge(conducta);
-             }
-           
+            if (conducta.getEqcCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Equivalencia_conducta", "eqc_codigo", 1);
+                conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                conducta.setEqcCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(conducta);
+            } else {
+                manejador.merge(conducta);
+            }
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -87,13 +86,13 @@ public class servicioConducta {
         }
         return null;
     }
-    
-    public List<EquivalenciaConducta> getEquivalenciaConducta() {        
+
+    public List<EquivalenciaConducta> getEquivalenciaConducta() {
         try {
             Query q = manejador.createNamedQuery("EquivalenciaConducta.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }
