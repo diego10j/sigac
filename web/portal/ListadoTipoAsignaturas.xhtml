@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Tipo de Asignaturas</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Listado de Tipo de Asignaturas</h1> 
+
+        <h:form>
+
+            <p:dataTable value="#{controladorTipoAsignaturas.listaTipoasignaturas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+                <p:column headerText="CÓDIGO" filterBy="#{tabla.tipCodigo}" sortBy="#{tabla.tipCodigo}" >
+                    <h:outputText value="#{tabla.tipCodigo}"/>
+                </p:column>
+                <p:column headerText="NOMBRE" filterBy="#{tabla.tipNombre}" sortBy="#{tabla.tipNombre}">
+                    <h:outputText value="#{tabla.tipNombre}"/>                     
+                </p:column>
+                
+                             
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

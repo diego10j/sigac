@@ -7,25 +7,25 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">Listado Asignaturas</ui:define>
+    <ui:define name="tituloPagina">Listado Roles</ui:define>
 
     <ui:define name="opciones">        
     </ui:define>
 
     <ui:define name="contenido">
-        <h1>Listado de Asignaturas</h1> 
+        <h1>Listado de Roles</h1> 
 
         <h:form>
 
-            <p:dataTable value="#{controladorAsignaturas.listaAsignaturas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
-                <p:column headerText="CODIGO" filterBy="#{tabla.asiCodigo}" sortBy="#{tabla.asiCodigo}" >
-                    <h:outputText value="#{tabla.asiCodigo}"/>
+            <p:dataTable value="#{controladorRoles.listaRoles}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+                <p:column headerText="CÓDIGO" filterBy="#{tabla.rolCodigo}" sortBy="#{tabla.rolCodigo}" >
+                    <h:outputText value="#{tabla.rolCodigo}"/>
                 </p:column>
-                <p:column headerText="NOMBRE" filterBy="#{tabla.asiNombre}" sortBy="#{tabla.asiNombre}">
-                    <h:outputText value="#{tabla.asiNombre}"/>                     
+                <p:column headerText="NOMBRE" filterBy="#{tabla.rolNombre}" sortBy="#{tabla.rolNombre}">
+                    <h:outputText value="#{tabla.rolNombre}"/>                     
                 </p:column>
-                <p:column headerText="OBSERVACIONES" filterBy="#{tabla.asiObservaciones}" sortBy="#{tabla.asiObservaciones}">
-                    <h:outputText value="#{tabla.asiObservaciones}"/>
+                <p:column headerText="DESCRIPCIÓN" filterBy="#{tabla.rolDescripcion}" sortBy="#{tabla.rolDescripcion}">
+                    <h:outputText value="#{tabla.rolDescripcion}"/>
                </p:column>
                 
             </p:dataTable>

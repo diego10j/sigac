@@ -21,15 +21,13 @@
 
                 <h:panelGrid columns="2">
                     <h:outputText value="Nombre :*"/>
-                    <p:inputText maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre" />
+                    <p:inputText value="#{controladorTipoAsignaturas.tipoasignaturas.tipNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre" />
            
                 </h:panelGrid>
 
             </p:fieldset>
 
-
-
-            <p:commandButton value="Guardar" icon="ui-guardar" update="@form" />
+            <p:commandButton action="#{controladorTipoAsignaturas.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
 
         </h:form>
 

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Docentes</ui:define>
+
+    <ui:define name="opciones">        
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h1>Listado de Docentes</h1> 
+
+        <h:form>
+
+            <p:dataTable value="#{controladorDocente.listaDocentes}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false">
+                <p:column headerText="CODIGO" filterBy="#{tabla.docCodigo}" sortBy="#{tabla.docCodigo}" >
+                    <h:outputText value="#{tabla.docCodigo}"/>
+                </p:column>
+                <p:column headerText="CÉDULA" filterBy="#{tabla.docCedula}" sortBy="#{tabla.docCedula}">
+                    <h:outputText value="#{tabla.docCedula}"/>                     
+                </p:column>
+                <p:column headerText="NOMBRES" filterBy="#{tabla.docNombres}" sortBy="#{tabla.docNombres}">
+                    <h:outputText value="#{tabla.docNombres}"/>
+               </p:column>
+                <p:column headerText="FECHA DE NACIMIENTO" sortBy="#{tabla.docFechanacimiento}" >
+                    <h:outputText value="#{tabla.docFechanacimiento}">
+                        <f:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="DIRECCIÓN" filterBy="#{tabla.docDireccion}" sortBy="#{tabla.docDireccion}">
+                    <h:outputText value="#{tabla.docDireccion}"/>
+               </p:column>
+                
+                <p:column headerText="TELÉFONO" filterBy="#{tabla.docTelefono}">
+                     <h:outputText value="#{tabla.docTelefono}"/>
+               </p:column>
+                <p:column headerText="CELULAR" filterBy="#{tabla.docCelular}" >
+                    <h:outputText value="#{tabla.docCelular}"/>
+               </p:column>
+                <p:column headerText="E-MAIL" filterBy="#{tabla.docEmail}" sortBy="#{tabla.docEmail}" >
+                    <h:outputText value="#{tabla.docEmail}"/>
+               </p:column>
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
