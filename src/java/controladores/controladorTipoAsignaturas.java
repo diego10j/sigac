@@ -36,6 +36,9 @@ public class controladorTipoAsignaturas {
         listaTipoasignaturas = servTipoAsignaturas.getTipoasignaturas();
     }
 
+    public void insertar(){
+        tipoasignaturas = new Tipoasignaturas();
+    }
 
     public void guardar() {
         

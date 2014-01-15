@@ -35,6 +35,11 @@ public class controladorCursos {
     public void cargarDatos() {
         listaCursos = servCursos.getCursos();
     }
+    
+    public void insertar(){
+        curCursos = new Cursos();
+    }
+    
     public void guardar() {
         
            String str_mensaje = servCursos.guardarCursos(curCursos);

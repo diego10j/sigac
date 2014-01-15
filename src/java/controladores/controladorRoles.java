@@ -34,8 +34,11 @@ public class controladorRoles {
     public void cargarDatos() {
         listaRoles = servRoles.getRoles();
     }
-
-
+    
+    public void insertar(){
+      rolRoles = new Roles();
+    }
+    
     public void guardar() {
         
            String str_mensaje = servRoles.guardarRoles(rolRoles);
