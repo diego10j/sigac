@@ -5,6 +5,7 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.Tipoasignaturas;
 import entidades.Asignaturas;
 import java.util.List;
@@ -38,6 +39,22 @@ public class controladorTipoAsignaturas {
 
     public void insertar(){
         tipoasignaturas = new Tipoasignaturas();
+    }
+    
+     public void modificar(Tipoasignaturas tipoasignaturas) {
+        tipoasignaturas=tipoasignaturas;
+    }
+
+    public void eliminar(Tipoasignaturas tipoasignaturas) {
+        if (tipoasignaturas.getTipCodigo() != null) {
+            String str_mensaje = servTipoAsignaturas.elimnarTipoAsignaturas(tipoasignaturas.getTipCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
     }
 
     public void guardar() {

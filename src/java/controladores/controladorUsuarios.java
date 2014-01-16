@@ -5,7 +5,7 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Roles;
+import entidades.Alumnos;
 import entidades.Usuario;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -38,6 +38,21 @@ public class controladorUsuarios {
         usuUsuario = new Usuario();
     }
     
+     public void modificar(Usuario usuario) {
+        usuUsuario=usuario;
+    }
+
+    public void eliminar(Usuario usuario) {
+        if (usuario.getRolCodigo() != null) {
+            String str_mensaje = servUsuarios.elimnarUsuarios(usuario.getRolCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
     public void guardar() {
         
            String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);

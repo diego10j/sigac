@@ -39,6 +39,22 @@ public class controladorDocente {
         docDocente = new Docentes();
     }
     
+     public void modificar(Docentes docentes) {
+        docDocente=docentes;
+    }
+
+    public void eliminar(Docentes docentes) {
+        if (docentes.getDocCodigo() != null) {
+            String str_mensaje = servDocente.elimnarDocente(docentes.getDocCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+    
     public void guardar() {
         if (utilitario.validarCedula(docDocente.getDocCedula())) {
             String str_mensaje = servDocente.guardarDocente(docDocente);
