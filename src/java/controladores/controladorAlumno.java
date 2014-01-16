@@ -60,14 +60,14 @@ public class controladorAlumno {
         }
     }
 
-    public void guardar(Alumnos alumno) {
-        if (alumno.getAluCedula() != null && utilitario.validarCedula(alumno.getAluCedula())) {
+    public void guardar() {
+        if (aluAlumno.getAluCedula() != null && utilitario.validarCedula(aluAlumno.getAluCedula())) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
         }
-        String str_mensaje = servAlumno.guardarAlumno(alumno);
+        String str_mensaje = servAlumno.guardarAlumno(aluAlumno);
         if (str_mensaje.isEmpty()) {
-            repRepresentante.setAluCodigo(alumno);
+            repRepresentante.setAluCodigo(aluAlumno);
             str_mensaje = servRepresentante.guardarRepresentante(repRepresentante);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
@@ -80,7 +80,6 @@ public class controladorAlumno {
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
-
     }
 
     public Alumnos getAluAlumno() {
