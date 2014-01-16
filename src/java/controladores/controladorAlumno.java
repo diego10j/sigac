@@ -25,7 +25,7 @@ public class controladorAlumno {
 
     @EJB
     private servicioAlumno servAlumno;
-    private Alumnos aluAlumno = new Alumnos();
+    private Alumnos aluAlumno;
     @EJB
     private servicioRepresentante servRepresentante;
     private Representante repRepresentante = new Representante();
@@ -35,36 +35,52 @@ public class controladorAlumno {
     @PostConstruct
     public void cargarDatos() {
         listaAlumnos = servAlumno.getAlumnos();
-    }
-    
-    public void insertar(){
         aluAlumno = new Alumnos();
         repRepresentante = new Representante();
     }
-    
-    public void modificar(){
-        
+
+    public void insertar() {
+        aluAlumno = new Alumnos();
+        repRepresentante = new Representante();
     }
 
-    public void guardar() {
-        if (utilitario.validarCedula(aluAlumno.getAluCedula())) {
-            String str_mensaje = servAlumno.guardarAlumno(aluAlumno);
+    public void modificar(Alumnos alumno) {
+        aluAlumno=alumno;
+    }
+
+    public void eliminar(Alumnos alumno) {
+        if (alumno.getAluCodigo() != null) {
+            String str_mensaje = servAlumno.elimnarAlumno(alumno.getAluCodigo().toString());
             if (str_mensaje.isEmpty()) {
-                repRepresentante.setAluCodigo(aluAlumno);
-                str_mensaje = servRepresentante.guardarRepresentante(repRepresentante);
-                if (str_mensaje.isEmpty()) {
-                    utilitario.agregarMensaje("Se guardo correctamente", "");
-                    repRepresentante = new Representante();
-                } else {
-                    utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-                }
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+
+    public void guardar(Alumnos alumno) {
+        if (alumno.getAluCedula() != null && utilitario.validarCedula(alumno.getAluCedula())) {
+            utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
+            return;
+        }
+        String str_mensaje = servAlumno.guardarAlumno(alumno);
+        if (str_mensaje.isEmpty()) {
+            repRepresentante.setAluCodigo(alumno);
+            str_mensaje = servRepresentante.guardarRepresentante(repRepresentante);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+                repRepresentante = new Representante();
                 aluAlumno = new Alumnos();
+                cargarDatos();
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
         } else {
-            utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
+
     }
 
     public Alumnos getAluAlumno() {
