@@ -44,13 +44,9 @@ public class controladorAlumno {
         repRepresentante = new Representante();
     }
 
-    public void modificar(Alumnos alumno) {
-        aluAlumno=alumno;
-    }
-
-    public void eliminar(Alumnos alumno) {
-        if (alumno.getAluCodigo() != null) {
-            String str_mensaje = servAlumno.elimnarAlumno(alumno.getAluCodigo().toString());
+    public void eliminar() {
+        if (aluAlumno.getAluCodigo() != null) {
+            String str_mensaje = servAlumno.elimnarAlumno(aluAlumno.getAluCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
@@ -61,7 +57,8 @@ public class controladorAlumno {
     }
 
     public void guardar() {
-        if (aluAlumno.getAluCedula() != null && utilitario.validarCedula(aluAlumno.getAluCedula())) {
+        System.out.println("....  "+aluAlumno.getAluCedula());
+        if (aluAlumno.getAluCedula() != null && utilitario.validarCedula(aluAlumno.getAluCedula())==false) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
         }
@@ -74,6 +71,7 @@ public class controladorAlumno {
                 repRepresentante = new Representante();
                 aluAlumno = new Alumnos();
                 cargarDatos();
+                utilitario.ejecutarJavaScript("wdlgDetalhe.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
