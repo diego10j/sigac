@@ -40,6 +40,22 @@ public class controladorConducta {
         eqvConducta = new EquivalenciaConducta();
     }
     
+     public void modificar(EquivalenciaConducta conducta) {
+        eqvConducta=conducta;
+    }
+
+    public void eliminar(EquivalenciaConducta conducta) {
+        if (conducta.getEqcCodigo() != null) {
+            String str_mensaje = servConducta.elimnarConducta(conducta.getEqcCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+    
     public void guardar() {
         
            String str_mensaje = servConducta.guardarConducta(eqvConducta);

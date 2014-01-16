@@ -5,8 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.EquivalenciaAprovechamiento;
 import entidades.Institucion;
+import entidades.Representante;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,6 +45,25 @@ public class controladorAprovechamiento {
         eqvAprovechamiento = new EquivalenciaAprovechamiento();
         
     }
+    
+    public void modificar(EquivalenciaAprovechamiento aprovechamiento) {
+        eqvAprovechamiento=aprovechamiento;
+    }
+
+    public void eliminar(EquivalenciaAprovechamiento aprovechamiento) {
+        if (aprovechamiento.getEqaCodigo() != null) {
+            String str_mensaje = servAprovechamiento.elimnarAprovechamiento(aprovechamiento.getEqaCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+
+   
+    
       public void guardar() {
         
            String str_mensaje = servAprovechamiento.guardarAprovechamiento(eqvAprovechamiento);

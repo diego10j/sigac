@@ -36,6 +36,22 @@ public class controladorInstitucion {
     public void insertar(){
         insInstitucion = new Institucion();
     }
+    
+     public void modificar(Institucion institucion) {
+        insInstitucion=institucion;
+    }
+
+    public void eliminar(Institucion institucion) {
+        if (institucion.getInsCodigo() != null) {
+            String str_mensaje = servInstitucion.elimnarIntitucion(institucion.getInsCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
 
     public void guardar() {
         

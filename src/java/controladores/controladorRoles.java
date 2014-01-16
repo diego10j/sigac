@@ -39,6 +39,22 @@ public class controladorRoles {
       rolRoles = new Roles();
     }
     
+     public void modificar(Roles roles) {
+        rolRoles=roles;
+    }
+
+    public void eliminar(Roles roles) {
+        if (roles.getRolCodigo() != null) {
+            String str_mensaje = servRoles.elimnarRoles(roles.getRolCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+    
     public void guardar() {
         
            String str_mensaje = servRoles.guardarRoles(rolRoles);

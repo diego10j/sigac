@@ -39,6 +39,22 @@ public class controladorParalelo {
         parParalelo = new Paralelo();
     }
     
+     public void modificar(Paralelo paralelo) {
+        parParalelo=paralelo;
+    }
+
+    public void eliminar(Paralelo paralelo) {
+        if (paralelo.getParCodigo() != null) {
+            String str_mensaje = servParalelo.elimnarParalelo(paralelo.getParCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+    
     public void guardar() {
         
             String str_mensaje = servParalelo.guardarParalelo(parParalelo);

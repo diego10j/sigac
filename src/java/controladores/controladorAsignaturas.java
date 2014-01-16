@@ -7,6 +7,7 @@ package controladores;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Asignaturas;
+import entidades.EquivalenciaAprovechamiento;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -40,6 +41,22 @@ public class controladorAsignaturas {
         asiAsignaturas = new Asignaturas();
     }
 
+      public void modificar(Asignaturas asignaturas) {
+        asiAsignaturas=asignaturas;
+    }
+
+    public void eliminar(Asignaturas asignaturas) {
+        if (asignaturas.getAsiCodigo() != null) {
+            String str_mensaje = servAsignaturas.elimnarAsignaturas(asignaturas.getAsiCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDatos();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+    
     public void guardar() {
         
            String str_mensaje = servAsignaturas.guardarAsignaturas(asiAsignaturas);
