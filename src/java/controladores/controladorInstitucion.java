@@ -37,13 +37,9 @@ public class controladorInstitucion {
         insInstitucion = new Institucion();
     }
     
-     public void modificar(Institucion institucion) {
-        insInstitucion=institucion;
-    }
-
-    public void eliminar(Institucion institucion) {
-        if (institucion.getInsCodigo() != null) {
-            String str_mensaje = servInstitucion.elimnarIntitucion(institucion.getInsCodigo().toString());
+     public void eliminar() {
+        if (insInstitucion.getInsCodigo() != null) {
+            String str_mensaje = servInstitucion.elimnarIntitucion(insInstitucion.getInsCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();

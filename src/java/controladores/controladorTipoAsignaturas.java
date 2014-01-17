@@ -41,11 +41,7 @@ public class controladorTipoAsignaturas {
         tipoasignaturas = new Tipoasignaturas();
     }
     
-     public void modificar(Tipoasignaturas tipoasignaturas) {
-        tipoasignaturas=tipoasignaturas;
-    }
-
-    public void eliminar(Tipoasignaturas tipoasignaturas) {
+    public void eliminar() {
         if (tipoasignaturas.getTipCodigo() != null) {
             String str_mensaje = servTipoAsignaturas.elimnarTipoAsignaturas(tipoasignaturas.getTipCodigo().toString());
             if (str_mensaje.isEmpty()) {

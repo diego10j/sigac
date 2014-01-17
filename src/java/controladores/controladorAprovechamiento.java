@@ -46,13 +46,10 @@ public class controladorAprovechamiento {
         
     }
     
-    public void modificar(EquivalenciaAprovechamiento aprovechamiento) {
-        eqvAprovechamiento=aprovechamiento;
-    }
-
-    public void eliminar(EquivalenciaAprovechamiento aprovechamiento) {
-        if (aprovechamiento.getEqaCodigo() != null) {
-            String str_mensaje = servAprovechamiento.elimnarAprovechamiento(aprovechamiento.getEqaCodigo().toString());
+    
+    public void eliminar() {
+        if (eqvAprovechamiento.getEqaCodigo() != null) {
+            String str_mensaje = servAprovechamiento.elimnarAprovechamiento(eqvAprovechamiento.getEqaCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
@@ -61,6 +58,7 @@ public class controladorAprovechamiento {
             }
         }
     }
+
 
    
     

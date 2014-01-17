@@ -5,7 +5,6 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
 import entidades.EquivalenciaConducta;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -40,13 +39,9 @@ public class controladorConducta {
         eqvConducta = new EquivalenciaConducta();
     }
     
-     public void modificar(EquivalenciaConducta conducta) {
-        eqvConducta=conducta;
-    }
-
-    public void eliminar(EquivalenciaConducta conducta) {
-        if (conducta.getEqcCodigo() != null) {
-            String str_mensaje = servConducta.elimnarConducta(conducta.getEqcCodigo().toString());
+public void eliminar() {
+        if (eqvConducta.getEqcCodigo() != null) {
+            String str_mensaje = servConducta.elimnarConducta(eqvConducta.getEqcCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();

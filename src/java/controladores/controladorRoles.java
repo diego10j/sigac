@@ -39,13 +39,9 @@ public class controladorRoles {
       rolRoles = new Roles();
     }
     
-     public void modificar(Roles roles) {
-        rolRoles=roles;
-    }
-
-    public void eliminar(Roles roles) {
-        if (roles.getRolCodigo() != null) {
-            String str_mensaje = servRoles.elimnarRoles(roles.getRolCodigo().toString());
+    public void eliminar() {
+        if (rolRoles.getRolCodigo() != null) {
+            String str_mensaje = servRoles.elimnarRoles(rolRoles.getRolCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
