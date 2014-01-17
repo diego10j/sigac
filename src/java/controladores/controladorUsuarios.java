@@ -38,13 +38,9 @@ public class controladorUsuarios {
         usuUsuario = new Usuario();
     }
     
-     public void modificar(Usuario usuario) {
-        usuUsuario=usuario;
-    }
-
-    public void eliminar(Usuario usuario) {
-        if (usuario.getRolCodigo() != null) {
-            String str_mensaje = servUsuarios.elimnarUsuarios(usuario.getRolCodigo().toString());
+     public void eliminar() {
+        if (usuUsuario.getUsuCodigo() != null) {
+            String str_mensaje = servUsuarios.elimnarUsuarios(usuUsuario.getUsuCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
@@ -53,6 +49,7 @@ public class controladorUsuarios {
             }
         }
     }
+     
     public void guardar() {
         
            String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);

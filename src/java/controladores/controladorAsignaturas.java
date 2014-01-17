@@ -41,13 +41,11 @@ public class controladorAsignaturas {
         asiAsignaturas = new Asignaturas();
     }
 
-      public void modificar(Asignaturas asignaturas) {
-        asiAsignaturas=asignaturas;
-    }
+      
 
-    public void eliminar(Asignaturas asignaturas) {
-        if (asignaturas.getAsiCodigo() != null) {
-            String str_mensaje = servAsignaturas.elimnarAsignaturas(asignaturas.getAsiCodigo().toString());
+public void eliminar() {
+        if (asiAsignaturas.getAsiCodigo()!= null) {
+            String str_mensaje = servAsignaturas.elimnarAsignaturas(asiAsignaturas.getAsiCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();

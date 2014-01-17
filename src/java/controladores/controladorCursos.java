@@ -5,8 +5,6 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.Asignaturas;
 import entidades.Cursos;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -40,13 +38,11 @@ public class controladorCursos {
     public void insertar(){
         curCursos = new Cursos();
     }
-     public void modificar(Cursos cursos) {
-        curCursos=cursos;
-    }
+  
 
-    public void eliminar(Cursos cursos) {
-        if (cursos.getCurCodigo() != null) {
-            String str_mensaje = servCursos.elimnarCursos(cursos.getCurCodigo().toString());
+   public void eliminar() {
+        if (curCursos.getCurCodigo() != null) {
+            String str_mensaje = servCursos.elimnarCursos(curCursos.getCurCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
