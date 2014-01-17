@@ -57,7 +57,7 @@ public class controladorAlumno {
     }
 
     public void guardar() {       
-        if (aluAlumno.getAluCedula() != null && utilitario.validarCedula(aluAlumno.getAluCedula())==false) {
+        if (aluAlumno.getAluCedula() != null && aluAlumno.getAluCedula().isEmpty()==false && utilitario.validarCedula(aluAlumno.getAluCedula())==false) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
         }
@@ -70,7 +70,7 @@ public class controladorAlumno {
                 repRepresentante = new Representante();
                 aluAlumno = new Alumnos();
                 cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalhe.hide()");
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }

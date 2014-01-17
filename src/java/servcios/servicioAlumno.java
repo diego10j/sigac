@@ -41,8 +41,7 @@ public class servicioAlumno {
             } else {
                 //modifica             
                 manejador.merge(alumno);
-            }
-            manejador.flush();
+            }            
             utx.commit();
         } catch (Exception e) {
             try {
