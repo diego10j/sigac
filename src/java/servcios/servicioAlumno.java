@@ -6,6 +6,7 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Representante;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -81,6 +82,16 @@ public class servicioAlumno {
         return null;
     }
 
+     public Representante getRepresentanteAlumno(String aluCodigo) {
+
+        try {
+            Query q = manejador.createQuery("SELECT r FROM Representante r WHERE r.aluCodigo.aluCodigo =" + aluCodigo);
+            return (Representante) q.getSingleResult();            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public List<Alumnos> getAlumnos() {
         try {
             Query q = manejador.createNamedQuery("Alumnos.findAll");
