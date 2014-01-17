@@ -39,8 +39,7 @@ public class servicioRepresentante {
             manejador.joinTransaction();
             //nombre tabla y atributo
             if (representante.getRepCodigo() == null) {
-                long lon_codigo = utilitario.getConexion().getMaximo("representante", "rep_codigo", 1);
-                System.out.println("ide " + lon_codigo);
+                long lon_codigo = utilitario.getConexion().getMaximo("representante", "rep_codigo", 1);                
                 representante.setRepCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(representante);
             } else {

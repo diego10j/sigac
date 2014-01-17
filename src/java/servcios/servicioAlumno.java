@@ -23,28 +23,26 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class servicioAlumno {
-    
+
     @PersistenceContext
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
-    
+
     public String guardarAlumno(Alumnos alumno) {
         try {
-            utx.begin();
-            
-            manejador.joinTransaction();
-            if(alumno.getAluCodigo()== null){
+            utx.begin();           
+            if (alumno.getAluCodigo() == null) {
                 //Guardo
-                 long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
-            alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.persist(alumno);  
-            }else{
-                //modifica
+                long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
+                alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(alumno);
+            } else {
+                //modifica             
                 manejador.merge(alumno);
             }
-                      
+            manejador.flush();
             utx.commit();
         } catch (Exception e) {
             try {
@@ -56,7 +54,7 @@ public class servicioAlumno {
         }
         return "";
     }
-    
+
     public String elimnarAlumno(String aluCodigo) {
         try {
             utx.begin();
@@ -72,9 +70,9 @@ public class servicioAlumno {
         }
         return "";
     }
-    
+
     public Alumnos getAlumno(String aluCodigo) {
-        
+
         try {
             Query q = manejador.createNamedQuery("Alumnos.findByAluCodigo");
             q.setParameter("aluCodigo", new Integer(aluCodigo));
@@ -83,13 +81,13 @@ public class servicioAlumno {
         }
         return null;
     }
-    
-    public List<Alumnos> getAlumnos() {        
+
+    public List<Alumnos> getAlumnos() {
         try {
             Query q = manejador.createNamedQuery("Alumnos.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }
