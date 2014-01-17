@@ -31,6 +31,7 @@ public class controladorAlumno {
     private Representante repRepresentante = new Representante();
     private Utilitario utilitario = new Utilitario();
     private List<Alumnos> listaAlumnos;
+    
 
     @PostConstruct
     public void cargarDatos() {
@@ -58,6 +59,10 @@ public class controladorAlumno {
 
     public void cargarRepresentante() {
         repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");
+        if(repRepresentante==null){
+            repRepresentante=new Representante();
+                    
+        }
     }
 
     public void guardar() {
@@ -102,7 +107,7 @@ public class controladorAlumno {
     public List<Alumnos> getListaAlumnos() {
         return listaAlumnos;
     }
-
+    
     public void setListaAlumnos(List<Alumnos> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
