@@ -56,8 +56,12 @@ public class controladorAlumno {
         }
     }
 
-    public void guardar() {       
-        if (aluAlumno.getAluCedula() != null && aluAlumno.getAluCedula().isEmpty()==false && utilitario.validarCedula(aluAlumno.getAluCedula())==false) {
+    public void cargarRepresentante() {
+        repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");
+    }
+
+    public void guardar() {
+        if (aluAlumno.getAluCedula() != null && aluAlumno.getAluCedula().isEmpty() == false && utilitario.validarCedula(aluAlumno.getAluCedula()) == false) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
         }
