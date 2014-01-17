@@ -56,8 +56,7 @@ public class controladorAlumno {
         }
     }
 
-    public void guardar() {
-        System.out.println("....  "+aluAlumno.getAluCedula());
+    public void guardar() {       
         if (aluAlumno.getAluCedula() != null && utilitario.validarCedula(aluAlumno.getAluCedula())==false) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
