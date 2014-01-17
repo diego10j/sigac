@@ -5,14 +5,12 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
 import entidades.Docentes;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import servcios.servicioAlumno;
 import servcios.servicioDocente;
 
 /**
@@ -65,9 +63,11 @@ public class controladorDocente {
         }
     }
 
-    public Docentes getDocente() {
+    public Docentes getDocDocente() {
         return docDocente;
     }
+
+    
 
     public void setDocDocente(Docentes docDocente) {
         this.docDocente = docDocente;
