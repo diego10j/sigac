@@ -21,7 +21,7 @@
             <!-- CONFIGURACIÓN TABLA -->
             <h:panelGroup id="pnlTabela"> 
 
-                <p:dataTable widgetVar="tabTabla" value="#{controladorCursos.listaCursos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                <p:dataTable value="#{controladorCursos.listaCursos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
                              rowIndexVar="rowNumber" filteredValue="#{controladorCursos.filtroCursos}" >
 
                     <p:column width="60">
@@ -37,8 +37,7 @@
                         <p:spacer width="10"/>
                         <p:commandLink action="#{controladorCursos.eliminar}" 
                                        title="Eliminar"
-                                       update=":frmPrincipal:pnlTabela"
-                                       onclick="tabTabla.clearFilters();">
+                                       update="@form">
                             <p:graphicImage url="../imagenes/im_eliminar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
