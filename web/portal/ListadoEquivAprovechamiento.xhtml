@@ -10,14 +10,14 @@
     <ui:define name="tituloPagina">Listado Equivalencia Aprovechamiento</ui:define>
 
     <ui:define name="contenido">
-        
+
         <h:form prependId="false" id="frmPrincipal">
             <!-- CONFIGURACIÓN TABLA -->
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorAprovechamiento.listaEquivalenciaAprovechamiento}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
                              rowIndexVar="rowNumber" >
-                    
+
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
@@ -38,23 +38,23 @@
                                 target="#{controladorAprovechamiento.eqvAprovechamiento}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                    
+
                     <p:column headerText="CÓDIGO" filterBy="#{tabla.eqaCodigo}" sortBy="#{tabla.eqaCodigo}" >
-                    <h:outputText value="#{tabla.eqaCodigo}"/>
-                </p:column>
-                <p:column headerText="ESCALA CUALITATIVA" filterBy="#{tabla.eqaEscalacualitativa}" sortBy="#{tabla.eqaEscalacualitativa}">
-                    <h:outputText value="#{tabla.eqaEscalacualitativa}"/>                     
-                </p:column>
-                <p:column headerText="ESCALA CUANTITATIVA" filterBy="#{tabla.eqaEscalacuantiva}" sortBy="#{tabla.eqaEscalacuantiva}">
-                    <h:outputText value="#{tabla.eqaEscalacuantiva}"/>
-                </p:column>
-                    </p:dataTable>
+                        <h:outputText value="#{tabla.eqaCodigo}"/>
+                    </p:column>
+                    <p:column headerText="ESCALA CUALITATIVA" filterBy="#{tabla.eqaEscalacualitativa}" sortBy="#{tabla.eqaEscalacualitativa}">
+                        <h:outputText value="#{tabla.eqaEscalacualitativa}"/>                     
+                    </p:column>
+                    <p:column headerText="ESCALA CUANTITATIVA" filterBy="#{tabla.eqaEscalacuantiva}" sortBy="#{tabla.eqaEscalacuantiva}">
+                        <h:outputText value="#{tabla.eqaEscalacuantiva}"/>
+                    </p:column>
+                </p:dataTable>
             </h:panelGroup>
 
         </h:form> 
-                    
-              <!-- CONFIGURACIÓN FORMULARIO -->       
-                    
+
+        <!-- CONFIGURACIÓN FORMULARIO -->       
+
         <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
                   modal="true" 
@@ -64,40 +64,38 @@
                   header="Datos de Equivalencia Aprovechamiento" 
                   styleClass="dialogoSemScroll" >
 
+
             <h:form id="frmFormulario">
                 <p:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
 
-                     <p:fieldset legend="DATOS DE EQUIVALENCIA APROVECHAMIENTO">
+                    <p:fieldset legend="DATOS DE EQUIVALENCIA APROVECHAMIENTO">
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Código de equivalencia :*"/>
-                    <p:inputText required="true" value="#{controladorAprovechamiento.eqvAprovechamiento.eqaCodigo}" size="5" requiredMessage="Debe ingresar el código de equivalrncia"/>
+                        <h:panelGrid columns="2">
+                           
+                            <h:outputText value="Escala Cualitativa :*"/>
+                            <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacualitativa}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cualitativa"/>
 
-                    <h:outputText value="Escala Cualitativa :*"/>
-                    <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacualitativa}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cualitativa"/>
-                    
-                     <h:outputText value="Escala Cuantitativa:*"/>
-                     <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacuantiva}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cuantitativa"/>
-                    
-                   
-                </h:panelGrid>
+                            <h:outputText value="Escala Cuantitativa:*"/>
+                            <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacuantiva}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cuantitativa"/>
 
-            </p:fieldset>
-                    
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
 
-                                <p:commandButton action="#{controladorAprovechamiento.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                                <p:commandButton action="#{controladorAprovechamiento.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
 
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                    
-                    </p:panelGrid>
+                </p:panelGrid>
             </h:form>
         </p:dialog>
+
     </ui:define>
 </ui:composition>

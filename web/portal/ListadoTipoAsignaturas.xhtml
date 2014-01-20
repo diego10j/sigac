@@ -9,27 +9,89 @@
 
     <ui:define name="tituloPagina">Listado Tipo de Asignaturas</ui:define>
 
-    <ui:define name="opciones">        
-    </ui:define>
-
     <ui:define name="contenido">
-        <h1>Listado de Tipo de Asignaturas</h1> 
+        <h:form prependId="false" id="frmPrincipal">
+            <!-- CONFIGURACIÓN TABLA -->
 
-        <h:form>
+            <h:panelGroup id="pnlTabela"> 
 
-            <p:dataTable value="#{controladorTipoAsignaturas.listaTipoasignaturas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         selection="#{controladorTipoAsignaturas.tipoasignaturas}" selectionMode="single" rowKey="#{tabla.tipCodigo}">
-                <p:column headerText="CÓDIGO" filterBy="#{tabla.tipCodigo}" sortBy="#{tabla.tipCodigo}" >
-                    <h:outputText value="#{tabla.tipCodigo}"/>
-                </p:column>
-                <p:column headerText="NOMBRE" filterBy="#{tabla.tipNombre}" sortBy="#{tabla.tipNombre}">
-                    <h:outputText value="#{tabla.tipNombre}"/>                     
-                </p:column>
-                
-                             
-            </p:dataTable>
+                <p:dataTable value="#{controladorTipoAsignaturas.listaTipoasignaturas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber">
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorTipoAsignaturas.tipoasignaturas}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorTipoAsignaturas.eliminar}" 
+                                       title="Eliminar"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorTipoAsignaturas.tipoasignaturas}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+                    <p:column headerText="CÓDIGO" filterBy="#{tabla.tipCodigo}" sortBy="#{tabla.tipCodigo}" >
+                        <h:outputText value="#{tabla.tipCodigo}"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE" filterBy="#{tabla.tipNombre}" sortBy="#{tabla.tipNombre}">
+                        <h:outputText value="#{tabla.tipNombre}"/>                     
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
 
         </h:form>
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos del Tipo de Asignatura" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+
+                    <p:fieldset legend="DATOS DEL TIPO DE ASIGNATURA">
+
+                        <h:panelGrid columns="2">
+                            
+                            
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorTipoAsignaturas.tipoasignaturas.tipNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre" />
+
+                        </h:panelGrid>
+
+                    </p:fieldset>
+
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorTipoAsignaturas.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

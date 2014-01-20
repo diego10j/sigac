@@ -76,7 +76,7 @@ public class servicioInstitucion {
     public Institucion getIntitucion(String insCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Institucion.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Institucion.findByInsCodigo");
             q.setParameter("insCodigo", new Integer(insCodigo));
             return (Institucion) q.getSingleResult();
         } catch (Exception e) {

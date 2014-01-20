@@ -36,7 +36,7 @@ public class servicioTipoAsignaturas {
             manejador.joinTransaction();
             //nombre tabla y atributo
             if (tipoasignaturas.getTipCodigo() == null) {
-                long lon_codigo = utilitario.getConexion().getMaximo("Tipoasignaturas", "tip_codigo", 1);
+                long lon_codigo = utilitario.getConexion().getMaximo("tipoasignaturas", "tip_codigo", 1);
                 tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
                 System.out.println("ide " + lon_codigo);
                 tipoasignaturas.setTipCodigo(new Integer(String.valueOf(lon_codigo)));
@@ -76,7 +76,7 @@ public class servicioTipoAsignaturas {
     public Tipoasignaturas getTipoasignaturas(String tipCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Tipoasignaturas.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Tipoasignaturas.findByTipCodigo");
             q.setParameter("tipCodigo", new Integer(tipCodigo));
             return (Tipoasignaturas) q.getSingleResult();
         } catch (Exception e) {

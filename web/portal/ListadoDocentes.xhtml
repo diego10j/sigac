@@ -10,16 +10,16 @@
     <ui:define name="tituloPagina">Listado Docentes</ui:define>
 
     <ui:define name="contenido">
-        
+
         <h:form prependId="false" id="frmPrincipal">
             <!-- CONFIGURACIÓN TABLA -->
-            
-             <h:panelGroup id="pnlTabela"> 
 
-                     <p:dataTable value="#{controladorDocente.listaDocentes}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         rowIndexVar="rowNumber">
-                
-            
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorDocente.listaDocentes}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber">
+
+
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
@@ -40,42 +40,42 @@
                                 target="#{controladorDocente.docDocente}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                    
+
                     <p:column headerText="CODIGO" filterBy="#{tabla.docCodigo}" sortBy="#{tabla.docCodigo}" >
-                    <h:outputText value="#{tabla.docCodigo}"/>
-                </p:column>
-                <p:column headerText="CÉDULA" filterBy="#{tabla.docCedula}" sortBy="#{tabla.docCedula}">
-                    <h:outputText value="#{tabla.docCedula}"/>                     
-                </p:column>
-                <p:column headerText="NOMBRES" filterBy="#{tabla.docNombres}" sortBy="#{tabla.docNombres}">
-                    <h:outputText value="#{tabla.docNombres}"/>
-               </p:column>
-                <p:column headerText="FECHA DE NACIMIENTO" sortBy="#{tabla.docFechanacimiento}" >
-                    <h:outputText value="#{tabla.docFechanacimiento}">
-                        <f:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </p:column>
-                
-                <p:column headerText="DIRECCIÓN" filterBy="#{tabla.docDireccion}" sortBy="#{tabla.docDireccion}">
-                    <h:outputText value="#{tabla.docDireccion}"/>
-               </p:column>
-                
-                <p:column headerText="TELÉFONO" filterBy="#{tabla.docTelefono}">
-                     <h:outputText value="#{tabla.docTelefono}"/>
-               </p:column>
-                <p:column headerText="CELULAR" filterBy="#{tabla.docCelular}" >
-                    <h:outputText value="#{tabla.docCelular}"/>
-               </p:column>
-                <p:column headerText="E-MAIL" filterBy="#{tabla.docEmail}" sortBy="#{tabla.docEmail}" >
-                    <h:outputText value="#{tabla.docEmail}"/>
-               </p:column>
-                
-                     </p:dataTable>
+                        <h:outputText value="#{tabla.docCodigo}"/>
+                    </p:column>
+                    <p:column headerText="CÉDULA" filterBy="#{tabla.docCedula}" sortBy="#{tabla.docCedula}">
+                        <h:outputText value="#{tabla.docCedula}"/>                     
+                    </p:column>
+                    <p:column headerText="NOMBRES" filterBy="#{tabla.docNombres}" sortBy="#{tabla.docNombres}">
+                        <h:outputText value="#{tabla.docNombres}"/>
+                    </p:column>
+                    <p:column headerText="FECHA DE NACIMIENTO" sortBy="#{tabla.docFechanacimiento}" >
+                        <h:outputText value="#{tabla.docFechanacimiento}">
+                            <f:convertDateTime type="date" dateStyle="short"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="DIRECCIÓN" filterBy="#{tabla.docDireccion}" sortBy="#{tabla.docDireccion}">
+                        <h:outputText value="#{tabla.docDireccion}"/>
+                    </p:column>
+
+                    <p:column headerText="TELÉFONO" filterBy="#{tabla.docTelefono}">
+                        <h:outputText value="#{tabla.docTelefono}"/>
+                    </p:column>
+                    <p:column headerText="CELULAR" filterBy="#{tabla.docCelular}" >
+                        <h:outputText value="#{tabla.docCelular}"/>
+                    </p:column>
+                    <p:column headerText="E-MAIL" filterBy="#{tabla.docEmail}" sortBy="#{tabla.docEmail}" >
+                        <h:outputText value="#{tabla.docEmail}"/>
+                    </p:column>
+
+                </p:dataTable>
             </h:panelGroup>
 
         </h:form>
-                    
-                 
+
+
         <!-- CONFIGURACIÓN FORMULARIO -->
         <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
@@ -92,46 +92,46 @@
                              styleClass="panelGridSemBorda">
                     <p:fieldset legend="DATOS DE LOS DOCENTES">
 
-                <h:panelGrid columns="4">
-                    <h:outputText value="Cédula :*"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Cédula :*"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
 
-                    <h:outputText value="Fecha de Nacimiento :*"/>
-                    <p:calendar value="#{controladorDocente.docDocente.docFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
+                            <h:outputText value="Fecha de Nacimiento :*"/>
+                            <p:calendar value="#{controladorDocente.docDocente.docFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
 
-                </h:panelGrid>
+                        </h:panelGrid>
 
-                <h:panelGrid columns="2">
-
-
-                    <h:outputText value="Nombres :*"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docNombres}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
-
-                    <h:outputText value="Dirección :*"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docDireccion}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
-
-                    <h:outputText value="Email :*"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docEmail}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
+                        <h:panelGrid columns="2">
 
 
-                </h:panelGrid>
+                            <h:outputText value="Nombres :*"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docNombres}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
 
-                <h:panelGrid columns="4">
+                            <h:outputText value="Dirección :*"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docDireccion}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
 
-                    <h:outputText value="Teléfono :"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docTelefono}" maxlength="100" size="10"/>
+                            <h:outputText value="Email :*"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docEmail}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
 
-                    <h:outputText value="Celular :*"/>
-                    <p:inputText value="#{controladorDocente.docDocente.docCelular}" maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
 
-                </h:panelGrid>
+                        </h:panelGrid>
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Hoja de Vida :*"/>
-                    <p:fileUpload label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
-                </h:panelGrid>
+                        <h:panelGrid columns="4">
 
-            </p:fieldset>
+                            <h:outputText value="Teléfono :"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docTelefono}" maxlength="100" size="10"/>
+
+                            <h:outputText value="Celular :*"/>
+                            <p:inputText value="#{controladorDocente.docDocente.docCelular}" maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Hoja de Vida :*"/>
+                            <p:fileUpload label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                        </h:panelGrid>
+
+                    </p:fieldset>
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
@@ -140,7 +140,7 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                    </p:panelGrid>
+                </p:panelGrid>
             </h:form>
         </p:dialog>
 

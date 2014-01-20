@@ -80,7 +80,7 @@ public class servicioAsignaturas {
     public Asignaturas getAsignaturas(String asiCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Asignaturas.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Asignaturas.findByAsiCodigo");
             q.setParameter("asiCodigo", new Integer(asiCodigo));
             return (Asignaturas) q.getSingleResult();
         } catch (Exception e) {
