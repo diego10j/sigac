@@ -35,6 +35,7 @@ public class controladorCursos {
     @PostConstruct
     public void cargarDatos() {
         listaCursos = servCursos.getCursos();
+        filtroCursos=null;
     }
     
     public void insertar(){
@@ -48,6 +49,7 @@ public class controladorCursos {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
+                
                 } else {
                 utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
             }
