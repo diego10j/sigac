@@ -58,7 +58,7 @@ public class controladorAlumno {
     }
 
     public void cargarRepresentante() {
-        repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");
+        repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");        
         if(repRepresentante==null){
             repRepresentante=new Representante();
                     
