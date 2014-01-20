@@ -5,7 +5,6 @@
 package entidades;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Diego
+ * @author usuario
  */
 @Entity
 @Table(name = "equivalencia_aprovechamiento", catalog = "injp", schema = "public", uniqueConstraints = {
@@ -43,9 +42,9 @@ public class EquivalenciaAprovechamiento implements Serializable {
     @Size(max = 150)
     @Column(name = "eqa_escalacualitativa", length = 150)
     private String eqaEscalacualitativa;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "eqa_escalacuantiva", precision = 4, scale = 2)
-    private BigDecimal eqaEscalacuantiva;
+    @Size(max = 150)
+    @Column(name = "eqa_escalacuantiva", length = 150)
+    private String eqaEscalacuantiva;
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
@@ -73,11 +72,11 @@ public class EquivalenciaAprovechamiento implements Serializable {
         this.eqaEscalacualitativa = eqaEscalacualitativa;
     }
 
-    public BigDecimal getEqaEscalacuantiva() {
+    public String getEqaEscalacuantiva() {
         return eqaEscalacuantiva;
     }
 
-    public void setEqaEscalacuantiva(BigDecimal eqaEscalacuantiva) {
+    public void setEqaEscalacuantiva(String eqaEscalacuantiva) {
         this.eqaEscalacuantiva = eqaEscalacuantiva;
     }
 

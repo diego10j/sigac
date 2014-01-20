@@ -77,7 +77,7 @@ public class servicioRepresentante {
     public Representante getRepresentante(String repCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Representante.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Representante.findByRepCodigo");
             q.setParameter("repCodigo", new Integer(repCodigo));
             return (Representante) q.getSingleResult();
         } catch (Exception e) {

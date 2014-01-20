@@ -75,7 +75,7 @@ public class servicioParalelo {
     public Paralelo getParalelo(String parCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Paralelo.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Paralelo.findByParCodigo");
             q.setParameter("parCodigo", new Integer(parCodigo));
             return (Paralelo) q.getSingleResult();
         } catch (Exception e) {

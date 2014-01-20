@@ -79,7 +79,7 @@ public class servicioConducta {
     public EquivalenciaConducta getConducta(String eqvCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("EquivalenciaConducta.findByDocCodigo");
+            Query q = manejador.createNamedQuery("EquivalenciaConducta.findByEqcCodigo");
             q.setParameter("eqvCodigo", new Integer(eqvCodigo));
             return (EquivalenciaConducta) q.getSingleResult();
         } catch (Exception e) {

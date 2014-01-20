@@ -9,38 +9,108 @@
 
     <ui:define name="tituloPagina">Listado Usuarios</ui:define>
 
-    <ui:define name="opciones">        
-    </ui:define>
-
     <ui:define name="contenido">
-        <h1>Listado de Usuarios</h1> 
 
-        <h:form>
+        <h:form prependId="false" id="frmPrincipal">
+            <!-- CONFIGURACIÓN TABLA -->
 
-            <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         selection="#{controladorUsuarios.usuUsuario}" selectionMode="single" rowKey="#{tabla.usuCodigo}">
-                <p:column headerText="CODIGO" filterBy="#{tabla.usuCodigo}" sortBy="#{tabla.usuCodigo}" >
-                    <h:outputText value="#{tabla.usuCodigo}"/>
-                </p:column>
-                <p:column headerText="NOMBRE" filterBy="#{tabla.usuNombre}" sortBy="#{tabla.usuNombre}">
-                    <h:outputText value="#{tabla.usuNombre}"/>                     
-                </p:column>
-                <p:column headerText="NICK" filterBy="#{tabla.usuNick}" sortBy="#{tabla.usuNick}">
-                    <h:outputText value="#{tabla.usuNick}"/>
-               </p:column>
-                <p:column headerText="CLAVE" filterBy="#{tabla.usuClave}" sortBy="#{tabla.usuClave}">
-                    <h:outputText value="#{tabla.usuClave}"/>
-               </p:column>
-                <p:column headerText="FECHA DE CREACIÓN" sortBy="#{tabla.usuFechacreacion}" >
-                    <h:outputText value="#{tabla.usuFechacreacion}">
-                        <f:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </p:column>
-                
-                
-            </p:dataTable>
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber">
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorUsuarios.usuUsuario}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorUsuarios.eliminar}" 
+                                       title="Eliminar"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorUsuarios.usuUsuario}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+                    <p:column headerText="CODIGO" filterBy="#{tabla.usuCodigo}" sortBy="#{tabla.usuCodigo}" >
+                        <h:outputText value="#{tabla.usuCodigo}"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE" filterBy="#{tabla.usuNombre}" sortBy="#{tabla.usuNombre}">
+                        <h:outputText value="#{tabla.usuNombre}"/>                     
+                    </p:column>
+                    <p:column headerText="NICK" filterBy="#{tabla.usuNick}" sortBy="#{tabla.usuNick}">
+                        <h:outputText value="#{tabla.usuNick}"/>
+                    </p:column>
+                    <p:column headerText="CLAVE" filterBy="#{tabla.usuClave}" sortBy="#{tabla.usuClave}">
+                        <h:outputText value="#{tabla.usuClave}"/>
+                    </p:column>
+                    <p:column headerText="FECHA DE CREACIÓN" sortBy="#{tabla.usuFechacreacion}" >
+                        <h:outputText value="#{tabla.usuFechacreacion}">
+                            <f:convertDateTime type="date" dateStyle="short"/>
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
 
         </h:form>
+
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos del Usuario" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS DE LOS USUARIOS">
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorUsuarios.usuUsuario.usuNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
+
+                            <h:outputText value="Nick :*"/>
+                            <p:inputText value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />
+
+                            <h:outputText value="Password:*"/>
+                            <p:inputText value="#{controladorUsuarios.usuUsuario.usuClave}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Password" />
+
+                            <h:outputText value="Fecha de creación :*"/>
+                            <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
+
+                        </h:panelGrid>
+
+                    </p:fieldset>
+
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorUsuarios.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

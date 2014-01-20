@@ -7,6 +7,7 @@ package servcios;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.EquivalenciaAprovechamiento;
+import entidades.EquivalenciaAprovechamiento;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -80,7 +81,7 @@ public class servicioAprovechamiento {
     public EquivalenciaAprovechamiento getAprovechamiento(String eqvCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Equivalencia_Aprovechamiento.findByDocCodigo");
+            Query q = manejador.createNamedQuery("EquivalenciaAprovechamiento.findByEqaCodigo");
             q.setParameter("eqvCodigo", new Integer(eqvCodigo));
             return (EquivalenciaAprovechamiento) q.getSingleResult();
         } catch (Exception e) {

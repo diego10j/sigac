@@ -76,7 +76,7 @@ public class servicioRoles {
     public Roles getRoles(String rolCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Roles.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Roles.findByRolCodigo");
             q.setParameter("rolCodigo", new Integer(rolCodigo));
             return (Roles) q.getSingleResult();
         } catch (Exception e) {

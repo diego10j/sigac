@@ -9,18 +9,37 @@
 
     <ui:define name="tituloPagina">Listado de Equivalencia de Conducta</ui:define>
 
-    <ui:define name="opciones">        
-    </ui:define>
 
     <ui:define name="contenido">
-        <h1>Listado de Equivalencia de Conducta</h1> 
-
-        <h:form>
-
+     <h:form prependId="false" id="frmPrincipal">
+            <!-- CONFIGURACIÓN TABLA -->
+             <h:panelGroup id="pnlTabela"> 
+                 
             <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         selection="#{controladorConducta.eqvConducta}" selectionMode="single" rowKey="#{tabla.eqcCodigo}">
+                         rowIndexVar="rowNumber">
                 
-                <p:column headerText="CODIGO" filterBy="#{tabla.eqcCodigo}" sortBy="#{tabla.eqcCodigo}" >
+            
+                  <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorConducta.eqvConducta}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorConducta.eliminar}" 
+                                       title="Eliminar"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorConducta.eqvConducta}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+                  <p:column headerText="CODIGO" filterBy="#{tabla.eqcCodigo}" sortBy="#{tabla.eqcCodigo}" >
                     <h:outputText value="#{tabla.eqcCodigo}"/>
                 </p:column>
                 <p:column headerText="ALTERNO" filterBy="#{tabla.eqcAlterno}" sortBy="#{tabla.eqcAlterno}">
@@ -32,11 +51,54 @@
                 <p:column headerText="DESCRIPCIÓN" sortBy="#{tabla.eqcDescripcion}" >
                     <h:outputText value="#{tabla.eqcDescripcion}"/>
                     
-                </p:column>
-                
-            </p:dataTable>
+                </p:column>   
+                </p:dataTable>
+            </h:panelGroup>
 
         </h:form>
+        
+      
+             <!-- CONFIGURACIÓN FORMULARIO -->
+             <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos de Equivalencia Conducta" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+                    <p:fieldset legend="DATOS DE EQUIVALENCIA CONDUCTA">
+
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Alterno :*"/>
+                    <p:inputText value="#{controladorConducta.eqvConducta.eqcAlterno}" size="5" required="true" requiredMessage="Debe ingresar el Alterno"/>
+                    
+                     <h:outputText value="Escala :*"/>
+                     <p:inputText value="#{controladorConducta.eqvConducta.eqcEscala}" size="45" required="true" requiredMessage="Debe ingresar la Escala"/>
+                    
+                     <h:outputText value="Descripción :*"/>
+                     <p:inputText value="#{controladorConducta.eqvConducta.eqcDescripcion}" size="45" required="true" requiredMessage="Debe ingresar la Descripción"/>
+                </h:panelGrid>
+
+            </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorConducta.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+            </p:panelGrid>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

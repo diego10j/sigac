@@ -77,7 +77,7 @@ public class servicioCursos {
     public Cursos getCursos(String curCodigo) {
 
         try {
-            Query q = manejador.createNamedQuery("Cursos.findByDocCodigo");
+            Query q = manejador.createNamedQuery("Cursos.findByCurCodigo");
             q.setParameter("curCodigo", new Integer(curCodigo));
             return (Cursos) q.getSingleResult();
         } catch (Exception e) {
