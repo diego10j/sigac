@@ -30,25 +30,22 @@ public class servicioAsignaturas {
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
-    
-    private Utilitario utilitario=new Utilitario();
+    private Utilitario utilitario = new Utilitario();
 
     public String guardarAsignaturas(Asignaturas asignatura) {
         try {
             utx.begin();
-              manejador.joinTransaction();
+            manejador.joinTransaction();
             //nombre tabla y atributo
-             if(asignatura.getAsiCodigo()==null){
-                 long lon_codigo=utilitario.getConexion().getMaximo("Asignaturas", "asi_codigo", 1);
-             asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
-            System.out.println("ide "+lon_codigo);
-            asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
-            manejador.persist(asignatura);
-             }else{
-                 manejador.merge(asignatura);
-             }
-  
-            
+            if (asignatura.getAsiCodigo() == null || asignatura.getAsiCodigo().toString().isEmpty()) {
+                long lon_codigo = utilitario.getConexion().getMaximo("Asignaturas", "asi_codigo", 1);
+                asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                asignatura.setAsiCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(asignatura);
+            } else {
+                manejador.merge(asignatura);
+            }
             utx.commit();
         } catch (Exception e) {
             try {
@@ -87,13 +84,13 @@ public class servicioAsignaturas {
         }
         return null;
     }
-    
-      public List<Asignaturas> getEquivalenciaAsignaturas() {        
+
+    public List<Asignaturas> getEquivalenciaAsignaturas() {
         try {
             Query q = manejador.createNamedQuery("Asignaturas.findAll");
             return q.getResultList();
         } catch (Exception e) {
-        }        
+        }
         return null;
     }
 }

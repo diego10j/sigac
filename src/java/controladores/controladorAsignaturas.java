@@ -31,6 +31,7 @@ public class controladorAsignaturas {
     private Utilitario utilitario = new Utilitario();
 
      private List<Asignaturas> listaAsignaturas;
+     private List<Asignaturas> filtroAsignaturas;
 
     @PostConstruct
     public void cargarDatos() {
@@ -61,7 +62,9 @@ public void eliminar() {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 asiAsignaturas = new Asignaturas();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                 
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
@@ -82,6 +85,14 @@ public void eliminar() {
 
     public void setListaAsignaturas(List<Asignaturas> listaAsignaturas) {
         this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public List<Asignaturas> getFiltroAsignaturas() {
+        return filtroAsignaturas;
+    }
+
+    public void setFiltroAsignaturas(List<Asignaturas> filtroAsignaturas) {
+        this.filtroAsignaturas = filtroAsignaturas;
     }
    
    

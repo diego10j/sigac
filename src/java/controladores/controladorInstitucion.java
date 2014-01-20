@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.EquivalenciaConducta;
 import entidades.Institucion;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,6 +28,7 @@ public class controladorInstitucion {
     private Institucion insInstitucion = new Institucion();
     private Utilitario utilitario = new Utilitario();
     private List<Institucion> listaInstitucion;
+    private List<Institucion> filtroInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
@@ -55,6 +57,7 @@ public class controladorInstitucion {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 insInstitucion = new Institucion();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);

@@ -59,6 +59,7 @@ public class controladorTipoAsignaturas {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 tipoasignaturas = new Tipoasignaturas();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
