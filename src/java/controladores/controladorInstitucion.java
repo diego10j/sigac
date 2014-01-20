@@ -55,6 +55,7 @@ public class controladorInstitucion {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 insInstitucion = new Institucion();
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
