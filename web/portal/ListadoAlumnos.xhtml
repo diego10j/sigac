@@ -23,7 +23,7 @@
             <!-- CONFIGURACIÓN TABLA -->
             <h:panelGroup id="pnlTabela">                
                 <p:dataTable value="#{controladorAlumno.listaAlumnos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber"                             >
+                             rowIndexVar="rowNumber"  filteredValue="#{controladorAlumno.filtroAlumnos}"                           >
 
                     <p:column width="60">
                         <p:commandLink     title="Modificar" action="#{controladorAlumno.cargarRepresentante}"
