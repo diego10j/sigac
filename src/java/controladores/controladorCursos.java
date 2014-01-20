@@ -58,6 +58,7 @@ public class controladorCursos {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 curCursos = new Cursos();
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
