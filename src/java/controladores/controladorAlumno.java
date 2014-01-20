@@ -31,6 +31,7 @@ public class controladorAlumno {
     private Representante repRepresentante = new Representante();
     private Utilitario utilitario = new Utilitario();
     private List<Alumnos> listaAlumnos;
+    private List<Alumnos> filtroAlumnos;
     
 
     @PostConstruct
@@ -115,4 +116,13 @@ public class controladorAlumno {
     public void setListaAlumnos(List<Alumnos> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
+
+    public List<Alumnos> getFiltroAlumnos() {
+        return filtroAlumnos;
+    }
+
+    public void setFiltroAlumnos(List<Alumnos> filtroAlumnos) {
+        this.filtroAlumnos = filtroAlumnos;
+    }
+    
 }
