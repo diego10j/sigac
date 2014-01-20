@@ -12,6 +12,11 @@
     <ui:define name="contenido">
         
         <h:form prependId="false" id="frmPrincipal">
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <p:commandButton value="Insertar" icon="ui-guardar" action="#{controladorParalelo.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                </p:toolbarGroup>
+            </p:toolbar>
               <!-- CONFIGURACIÓN TABLA -->
               
               

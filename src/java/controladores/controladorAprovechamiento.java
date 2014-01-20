@@ -34,6 +34,7 @@ public class controladorAprovechamiento {
     private Institucion insInstitucion = new Institucion();
     private Utilitario utilitario = new Utilitario();
     private List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento;
+     private List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos;
 
     @PostConstruct
     public void cargarDatos() {
@@ -68,6 +69,7 @@ public class controladorAprovechamiento {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 eqvAprovechamiento = new EquivalenciaAprovechamiento();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
@@ -89,6 +91,14 @@ public class controladorAprovechamiento {
 
     public void setListaEquivalenciaAprovechamiento(List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento) {
         this.listaEquivalenciaAprovechamiento = listaEquivalenciaAprovechamiento;
+    }
+
+    public List<EquivalenciaAprovechamiento> getFiltroEquivalenciaAprovechamientos() {
+        return filtroEquivalenciaAprovechamientos;
+    }
+
+    public void setFiltroEquivalenciaAprovechamientos(List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos) {
+        this.filtroEquivalenciaAprovechamientos = filtroEquivalenciaAprovechamientos;
     }
    
    

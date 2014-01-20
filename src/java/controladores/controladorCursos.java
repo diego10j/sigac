@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Cursos;
+import entidades.EquivalenciaConducta;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -29,6 +30,7 @@ public class controladorCursos {
    
     private Utilitario utilitario = new Utilitario();
     private List<Cursos> listaCursos;
+    private List<Cursos> filtroCursos;
 
     @PostConstruct
     public void cargarDatos() {
@@ -46,7 +48,7 @@ public class controladorCursos {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
-            } else {
+                } else {
                 utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
             }
         }
@@ -58,6 +60,7 @@ public class controladorCursos {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 curCursos = new Cursos();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
@@ -79,6 +82,14 @@ public class controladorCursos {
 
     public void setListaCursos(List<Cursos> listaCursos) {
         this.listaCursos = listaCursos;
+    }
+
+    public List<Cursos> getFiltroCursos() {
+        return filtroCursos;
+    }
+
+    public void setFiltroCursos(List<Cursos> filtroCursos) {
+        this.filtroCursos = filtroCursos;
     }
    
 }

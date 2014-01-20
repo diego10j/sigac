@@ -5,6 +5,7 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.EquivalenciaConducta;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -29,6 +30,7 @@ public class controladorConducta {
    
     private Utilitario utilitario = new Utilitario();
      private List<EquivalenciaConducta> listaEquivalenciaConducta;
+      private List<EquivalenciaConducta> filtroEquivalenciaConducta;
 
     @PostConstruct
     public void cargarDatos() {
@@ -57,6 +59,7 @@ public void eliminar() {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 eqvConducta= new EquivalenciaConducta();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
@@ -78,6 +81,14 @@ public void eliminar() {
 
     public void setListaEquivalenciaConducta(List<EquivalenciaConducta> listaEquivalenciaConducta) {
         this.listaEquivalenciaConducta = listaEquivalenciaConducta;
+    }
+
+    public List<EquivalenciaConducta> getFiltroEquivalenciaConducta() {
+        return filtroEquivalenciaConducta;
+    }
+
+    public void setFiltroEquivalenciaConducta(List<EquivalenciaConducta> filtroEquivalenciaConducta) {
+        this.filtroEquivalenciaConducta = filtroEquivalenciaConducta;
     }
    
   

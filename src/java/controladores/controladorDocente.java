@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Docentes;
+import entidades.EquivalenciaConducta;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,6 +28,7 @@ public class controladorDocente {
     private Utilitario utilitario = new Utilitario();
 
      private List<Docentes> listaDocentes;
+     private List<Docentes> filtroDocentes;
 
     @PostConstruct
     public void cargarDatos() {
@@ -55,6 +57,7 @@ public class controladorDocente {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 docDocente = new Docentes();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
@@ -80,6 +83,14 @@ public class controladorDocente {
 
     public void setListaDocentes(List<Docentes> listaDocentes) {
         this.listaDocentes = listaDocentes;
+    }
+
+    public List<Docentes> getFiltroDocentes() {
+        return filtroDocentes;
+    }
+
+    public void setFiltroDocentes(List<Docentes> filtroDocentes) {
+        this.filtroDocentes = filtroDocentes;
     }
     
 }

@@ -58,6 +58,7 @@ public class controladorParalelo {
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 parParalelo = new Paralelo();
+                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
                } 
              
