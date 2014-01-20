@@ -47,6 +47,10 @@ public class controladorAlumno {
 
     public void eliminar() {
         if (aluAlumno.getAluCodigo() != null) {
+            cargarRepresentante();
+            if(repRepresentante.getRepCodigo()!=null){
+                servRepresentante.elimnarRepresentante(repRepresentante.getRepCodigo()+"");
+            }
             String str_mensaje = servAlumno.elimnarAlumno(aluAlumno.getAluCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
