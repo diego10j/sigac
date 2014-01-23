@@ -15,14 +15,14 @@
          
          <p:toolbar >
                 <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-guardar" action="#{controladorConducta.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorConducta.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
              <h:panelGroup id="pnlTabela"> 
                  
             <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         rowIndexVar="rowNumber" filteredValue="#{controladorConducta.filtroEquivalenciaConducta}" >
+                         rowIndexVar="rowNumber"  >
                 
             
                   <p:column width="60">
@@ -45,13 +45,13 @@
                                 target="#{controladorConducta.eqvConducta}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                  <p:column headerText="CODIGO" filterBy="#{tabla.eqcCodigo}" sortBy="#{tabla.eqcCodigo}" >
+                  <p:column headerText="CODIGO" sortBy="#{tabla.eqcCodigo}" >
                     <h:outputText value="#{tabla.eqcCodigo}"/>
                 </p:column>
-                <p:column headerText="ALTERNO" filterBy="#{tabla.eqcAlterno}" sortBy="#{tabla.eqcAlterno}">
+                <p:column headerText="ALTERNO" sortBy="#{tabla.eqcAlterno}">
                     <h:outputText value="#{tabla.eqcAlterno}"/>                     
                 </p:column>
-                <p:column headerText="ESCALA" filterBy="#{tabla.eqcEscala}" sortBy="#{tabla.eqcEscala}">
+                <p:column headerText="ESCALA" sortBy="#{tabla.eqcEscala}">
                     <h:outputText value="#{tabla.eqcEscala}"/>
                </p:column>
                 <p:column headerText="DESCRIPCIÓN" sortBy="#{tabla.eqcDescripcion}" >

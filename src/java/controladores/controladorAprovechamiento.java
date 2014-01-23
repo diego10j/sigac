@@ -33,7 +33,7 @@ public class controladorAprovechamiento {
    
     private Utilitario utilitario = new Utilitario();
     private List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento;
-    private List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos;
+  
     
     @PostConstruct
     public void cargarDatos() {
@@ -87,11 +87,5 @@ public class controladorAprovechamiento {
         this.listaEquivalenciaAprovechamiento = listaEquivalenciaAprovechamiento;
     }
 
-    public List<EquivalenciaAprovechamiento> getFiltroEquivalenciaAprovechamientos() {
-        return filtroEquivalenciaAprovechamientos;
-    }
-
-    public void setFiltroEquivalenciaAprovechamientos(List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos) {
-        this.filtroEquivalenciaAprovechamientos = filtroEquivalenciaAprovechamientos;
-    }
+    
 }
