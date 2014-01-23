@@ -36,15 +36,18 @@ public class servicioCrearCurso {
      * @return
      */
     public List<CrearCurso> getCursosCreados(String per_codigo) {
-        try {
-            Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo);
-            return q.getResultList();
-        } catch (Exception e) {
+        if (per_codigo != null) {
+            try {
+                Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo+" order by c.curCodigo.curCodigo,c.parCodigo.parCodigo");
+                return q.getResultList();
+            } catch (Exception e) {
+            }
         }
+
         return null;
     }
 
-    public String guardarcrearCurso(CrearCurso curso) {
+    public String guardarCrearCurso(CrearCurso curso) {
         try {
             utx.begin();
             manejador.joinTransaction();

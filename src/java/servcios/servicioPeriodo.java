@@ -100,7 +100,7 @@ public class servicioPeriodo {
      *
      * @return
      */
-    public List getListaCursos() {
+    public List getListaPeriodos() {
         return utilitario.getConexion().consultar("select per_codigo, per_nombre FROM periodo_lectivo order by per_activo desc,per_nombre");
     }
 
@@ -112,9 +112,10 @@ public class servicioPeriodo {
     public PeriodoLectivo getPeriodoActivo() {
         try {
             Query q = manejador.createNamedQuery("PeriodoLectivo.findByPerActivo");
-            q.setParameter("perActivo", new Boolean(true));
+            q.setParameter("perActivo", true);
             return (PeriodoLectivo) q.getSingleResult();
         } catch (Exception e) {
+            System.out.println(" ...,,,ssss    "+e.getMessage());
         }
         return null;
     }
