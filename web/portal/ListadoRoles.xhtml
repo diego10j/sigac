@@ -22,7 +22,7 @@
              <h:panelGroup id="pnlTabela"> 
 
                  <p:dataTable value="#{controladorRoles.listaRoles}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         rowIndexVar="rowNumber">
+                              rowIndexVar="rowNumber" filteredValue="#{controladorRoles.filtroRoles}">
                 
             
                     <p:column width="60">

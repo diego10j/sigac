@@ -80,6 +80,15 @@ public class controladorInstitucion {
     public void setListaInstitucion(List<Institucion> listaInstitucion) {
         this.listaInstitucion = listaInstitucion;
     }
+
+    public List<Institucion> getFiltroInstitucion() {
+        return filtroInstitucion;
+    }
+
+    public void setFiltroInstitucion(List<Institucion> filtroInstitucion) {
+        this.filtroInstitucion = filtroInstitucion;
+    }
+    
     
     
 }

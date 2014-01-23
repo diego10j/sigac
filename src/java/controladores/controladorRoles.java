@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Institucion;
 import entidades.Roles;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -29,6 +30,7 @@ public class controladorRoles {
    
     private Utilitario utilitario = new Utilitario();
      private List<Roles> listaRoles;
+     private List<Roles> filtroRoles;
 
     @PostConstruct
     public void cargarDatos() {
@@ -78,6 +80,14 @@ public class controladorRoles {
 
     public void setListaRoles(List<Roles> listaRoles) {
         this.listaRoles = listaRoles;
+    }
+
+    public List<Roles> getFiltroRoles() {
+        return filtroRoles;
+    }
+
+    public void setFiltroRoles(List<Roles> filtroRoles) {
+        this.filtroRoles = filtroRoles;
     }
    
 }
