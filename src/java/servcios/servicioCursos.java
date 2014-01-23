@@ -5,6 +5,7 @@
 package servcios;
 
 import aplicacion.Utilitario;
+import entidades.CrearCurso;
 import entidades.Cursos;
 import java.util.List;
 import javax.annotation.Resource;
@@ -93,4 +94,53 @@ public class servicioCursos {
         }
         return null;
     }
+
+    public String crearCurso(CrearCurso curso) {
+        try {
+            utx.begin();
+            manejador.joinTransaction();
+            //nombre tabla y atributo
+            if (curso.getCurCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("crear_curso", "cre_codigo", 1);
+                curso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(curso);
+            } else {
+                manejador.merge(curso);
+            }
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return "";
+    }
+
+    /**
+     * Retorna Los cursos de un periodo
+     *
+     * @param per_codigo
+     * @return
+     */
+    public List<CrearCurso> getCursosCreados(String per_codigo) {
+        try {
+            Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo);
+            return q.getResultList();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaCursos() {
+        return utilitario.getConexion().consultar("select cur_codigo,cur_anio from cursos");
+    }
+    
 }

@@ -93,4 +93,14 @@ public class servicioAsignaturas {
         }
         return null;
     }
+    
+      /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaAsignaturas() {
+        return utilitario.getConexion().consultar("select asi_codigo,asi_nombre ||' - '|| tip_nombre as nombre from asignaturas mat\n"
+                + "left JOIN tipoasignaturas tip on mat.tip_codigo=tip.tip_codigo");
+    }
 }
