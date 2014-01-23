@@ -6,6 +6,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PeriodoLectivo.findByPerFechafin", query = "SELECT p FROM PeriodoLectivo p WHERE p.perFechafin = :perFechafin"),
     @NamedQuery(name = "PeriodoLectivo.findByPerActivo", query = "SELECT p FROM PeriodoLectivo p WHERE p.perActivo = :perActivo")})
 public class PeriodoLectivo implements Serializable {
+    @OneToMany(mappedBy = "perCodigo")
+    private List<CrearCurso> crearCursoList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -137,6 +142,15 @@ public class PeriodoLectivo implements Serializable {
     @Override
     public String toString() {
         return "entidades.PeriodoLectivo[ perCodigo=" + perCodigo + " ]";
+    }
+
+    @XmlTransient
+    public List<CrearCurso> getCrearCursoList() {
+        return crearCursoList;
+    }
+
+    public void setCrearCursoList(List<CrearCurso> crearCursoList) {
+        this.crearCursoList = crearCursoList;
     }
     
 }

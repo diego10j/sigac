@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CrearCurso.findByCreCodigo", query = "SELECT c FROM CrearCurso c WHERE c.creCodigo = :creCodigo"),
     @NamedQuery(name = "CrearCurso.findByCreObservacion", query = "SELECT c FROM CrearCurso c WHERE c.creObservacion = :creObservacion")})
 public class CrearCurso implements Serializable {
+    @JoinColumn(name = "per_codigo", referencedColumnName = "per_codigo")
+    @ManyToOne
+    private PeriodoLectivo perCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -146,6 +149,14 @@ public class CrearCurso implements Serializable {
     @Override
     public String toString() {
         return "entidades.CrearCurso[ creCodigo=" + creCodigo + " ]";
+    }
+
+    public PeriodoLectivo getPerCodigo() {
+        return perCodigo;
+    }
+
+    public void setPerCodigo(PeriodoLectivo perCodigo) {
+        this.perCodigo = perCodigo;
     }
     
 }
