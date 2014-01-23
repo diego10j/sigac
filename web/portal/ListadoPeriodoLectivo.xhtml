@@ -15,7 +15,7 @@
             
             <p:toolbar >
                 <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-guardar" action="#{controladorPeridoLectivo.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorPeridoLectivo.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
@@ -52,12 +52,12 @@
                     <p:column headerText="NOMBRE" filterBy="#{tabla.perNombre}" sortBy="#{tabla.perNombre}">
                         <h:outputText value="#{tabla.perNombre}"/>                     
                     </p:column>
-                    <p:column headerText="FECHA DE INICIO" sortBy="#{tabla.perFechainicio}" >
+                    <p:column headerText="FECHA DE INICIO" filterBy="#{tabla.perFechainicio}" sortBy="#{tabla.perFechainicio}" >
                         <h:outputText value="#{tabla.perFechainicio}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="FECHA FIN" sortBy="#{tabla.perFechafin}" >
+                    <p:column headerText="FECHA FIN" filterBy="#{tabla.perFechafin}" sortBy="#{tabla.perFechafin}" >
                         <h:outputText value="#{tabla.perFechafin}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
@@ -94,9 +94,9 @@
                             <h:outputText value="Nombre :*"/>
                             <p:inputText value="#{controladorPeridoLectivo.perPeriodo.perNombre}" maxlength="250" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />                   
                             <h:outputText value="Fecha de Inicio :*"/>
-                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fecha de Inicio"/>
+                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Inicio"/>
                             <h:outputText value="Fecha de Fin :*"/>
-                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fin"/>
+                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechafin}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fin"/>
                             <h:outputText value="Estado :*"/>
                             <p:selectBooleanCheckbox value="#{controladorPeridoLectivo.perPeriodo.perActivo}" required="true" requiredMessage="Debe ingresar el Estado" />                   
                             

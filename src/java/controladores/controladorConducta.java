@@ -31,7 +31,7 @@ public class controladorConducta {
    
     private Utilitario utilitario = new Utilitario();
      private List<EquivalenciaConducta> listaEquivalenciaConducta;
-      private List<EquivalenciaConducta> filtroEquivalenciaConducta;
+      
 
        @EJB
     private servicioInstitucion servInstitucion;
@@ -86,13 +86,7 @@ public void eliminar() {
         this.listaEquivalenciaConducta = listaEquivalenciaConducta;
     }
 
-    public List<EquivalenciaConducta> getFiltroEquivalenciaConducta() {
-        return filtroEquivalenciaConducta;
-    }
-
-    public void setFiltroEquivalenciaConducta(List<EquivalenciaConducta> filtroEquivalenciaConducta) {
-        this.filtroEquivalenciaConducta = filtroEquivalenciaConducta;
-    }
+ 
    
   
    
