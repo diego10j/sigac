@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Periodo Lectivo</ui:define>
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+            
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <p:commandButton value="Insertar" icon="ui-guardar" action="#{controladorPeridoLectivo.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <!-- CONFIGURACIÓN TABLA -->
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorPeridoLectivo.listaPeriodoLectivo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" filteredValue="#{controladorPeridoLectivo.filtroPeriodoLectivo}" >
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorPeridoLectivo.perPeriodo}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorPeridoLectivo.eliminar}" 
+                                       title="Eliminar"
+                                       update="@form">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorPeridoLectivo.perPeriodo}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+                    <p:column headerText="CODIGO" filterBy="#{tabla.perCodigo}" sortBy="#{tabla.perCodigo}" >
+                        <h:outputText value="#{tabla.perCodigo}"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE" filterBy="#{tabla.perNombre}" sortBy="#{tabla.perNombre}">
+                        <h:outputText value="#{tabla.perNombre}"/>                     
+                    </p:column>
+                    <p:column headerText="FECHA DE INICIO" sortBy="#{tabla.perFechainicio}" >
+                        <h:outputText value="#{tabla.perFechainicio}">
+                            <f:convertDateTime type="date" dateStyle="short"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="FECHA FIN" sortBy="#{tabla.perFechafin}" >
+                        <h:outputText value="#{tabla.perFechafin}">
+                            <f:convertDateTime type="date" dateStyle="short"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="ESTADO DEL PERIODO" filterBy="#{tabla.perActivo}" sortBy="#{tabla.perActivo}">
+                        <h:outputText value="#{tabla.perActivo}"/>                     
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos del Periodo Lectivo" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS DEL PERIODO LECTIVO">
+
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorPeridoLectivo.perPeriodo.perNombre}" maxlength="250" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />                   
+                            <h:outputText value="Fecha de Inicio :*"/>
+                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fecha de Inicio"/>
+                            <h:outputText value="Fecha de Fin :*"/>
+                            <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fin"/>
+                            <h:outputText value="Estado :*"/>
+                            <p:inputText value="#{controladorPeridoLectivo.perPeriodo.perActivo}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Estado" />                   
+                            
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorPeridoLectivo.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+</ui:composition>
