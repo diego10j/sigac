@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import servcios.servicioInstitucion;
 import servcios.servicioRoles;
 
 
@@ -31,7 +32,9 @@ public class controladorRoles {
     private Utilitario utilitario = new Utilitario();
      private List<Roles> listaRoles;
      private List<Roles> filtroRoles;
-
+      @EJB
+    private servicioInstitucion servInstitucion;
+      
     @PostConstruct
     public void cargarDatos() {
         listaRoles = servRoles.getRoles();
@@ -54,7 +57,7 @@ public class controladorRoles {
     }
     
     public void guardar() {
-        
+           rolRoles.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servRoles.guardarRoles(rolRoles);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");

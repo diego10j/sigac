@@ -5,8 +5,6 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
-import entidades.EquivalenciaConducta;
 import entidades.Institucion;
 import java.util.List;
 import javax.annotation.PostConstruct;

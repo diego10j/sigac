@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioCursos;
+import servcios.servicioInstitucion;
 
 
 /**
@@ -31,6 +32,8 @@ public class controladorCursos {
     private Utilitario utilitario = new Utilitario();
     private List<Cursos> listaCursos;
     private List<Cursos> filtroCursos;
+     @EJB
+    private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
@@ -57,7 +60,7 @@ public class controladorCursos {
     }
     
     public void guardar() {
-        
+        curCursos.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servCursos.guardarCursos(curCursos);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");

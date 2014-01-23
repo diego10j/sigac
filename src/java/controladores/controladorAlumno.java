@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioAlumno;
+import servcios.servicioInstitucion;
 import servcios.servicioRepresentante;
 
 /**
@@ -32,7 +33,8 @@ public class controladorAlumno {
     private Utilitario utilitario = new Utilitario();
     private List<Alumnos> listaAlumnos;
     private List<Alumnos> filtroAlumnos;
-    
+    @EJB
+    private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
@@ -49,8 +51,8 @@ public class controladorAlumno {
     public void eliminar() {
         if (aluAlumno.getAluCodigo() != null) {
             cargarRepresentante();
-            if(repRepresentante.getRepCodigo()!=null){
-                servRepresentante.elimnarRepresentante(repRepresentante.getRepCodigo()+"");
+            if (repRepresentante.getRepCodigo() != null) {
+                servRepresentante.elimnarRepresentante(repRepresentante.getRepCodigo() + "");
             }
             String str_mensaje = servAlumno.elimnarAlumno(aluAlumno.getAluCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -63,14 +65,15 @@ public class controladorAlumno {
     }
 
     public void cargarRepresentante() {
-        repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");        
-        if(repRepresentante==null){
-            repRepresentante=new Representante();
-                    
+        repRepresentante = servAlumno.getRepresentanteAlumno(aluAlumno.getAluCodigo() + "");
+        if (repRepresentante == null) {
+            repRepresentante = new Representante();
+
         }
     }
 
     public void guardar() {
+        aluAlumno.setInsCodigo(servInstitucion.getIntitucion());
         if (aluAlumno.getAluCedula() != null && aluAlumno.getAluCedula().isEmpty() == false && utilitario.validarCedula(aluAlumno.getAluCedula()) == false) {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
@@ -112,7 +115,7 @@ public class controladorAlumno {
     public List<Alumnos> getListaAlumnos() {
         return listaAlumnos;
     }
-    
+
     public void setListaAlumnos(List<Alumnos> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
@@ -124,5 +127,4 @@ public class controladorAlumno {
     public void setFiltroAlumnos(List<Alumnos> filtroAlumnos) {
         this.filtroAlumnos = filtroAlumnos;
     }
-    
 }

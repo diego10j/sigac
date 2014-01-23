@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioConducta;
+import servcios.servicioInstitucion;
 
 
 /**
@@ -32,6 +33,8 @@ public class controladorConducta {
      private List<EquivalenciaConducta> listaEquivalenciaConducta;
       private List<EquivalenciaConducta> filtroEquivalenciaConducta;
 
+       @EJB
+    private servicioInstitucion servInstitucion;
     @PostConstruct
     public void cargarDatos() {
         listaEquivalenciaConducta = servConducta.getEquivalenciaConducta();
@@ -54,7 +57,7 @@ public void eliminar() {
     }
     
     public void guardar() {
-        
+         eqvConducta.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servConducta.guardarConducta(eqvConducta);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
