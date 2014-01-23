@@ -92,4 +92,13 @@ public class servicioDocente {
         }
         return null;
     }
+    
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaDocentes() {
+        return utilitario.getConexion().consultar("select doc_codigo,doc_nombres,doc_cedula from docentes");
+    }
 }
