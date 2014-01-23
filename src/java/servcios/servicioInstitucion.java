@@ -73,11 +73,11 @@ public class servicioInstitucion {
         return "";
     }
 
-    public Institucion getIntitucion(String insCodigo) {
+    public Institucion getIntitucion() {
 
         try {
             Query q = manejador.createNamedQuery("Institucion.findByInsCodigo");
-            q.setParameter("insCodigo", new Integer(insCodigo));
+            q.setParameter("insCodigo", new Integer("0"));
             return (Institucion) q.getSingleResult();
         } catch (Exception e) {
         }
