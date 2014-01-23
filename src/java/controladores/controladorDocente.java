@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioDocente;
+import servcios.servicioInstitucion;
 
 /**
  *
@@ -26,20 +27,21 @@ public class controladorDocente {
     private servicioDocente servDocente;
     private Docentes docDocente = new Docentes();
     private Utilitario utilitario = new Utilitario();
-
-     private List<Docentes> listaDocentes;
-     private List<Docentes> filtroDocentes;
+    private List<Docentes> listaDocentes;
+    private List<Docentes> filtroDocentes;
+    @EJB
+    private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
         listaDocentes = servDocente.getDocentes();
     }
 
-    public void insertar(){
+    public void insertar() {
         docDocente = new Docentes();
     }
-    
-     public void eliminar() {
+
+    public void eliminar() {
         if (docDocente.getDocCodigo() != null) {
             String str_mensaje = servDocente.elimnarDocente(docDocente.getDocCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -50,8 +52,9 @@ public class controladorDocente {
             }
         }
     }
-    
+
     public void guardar() {
+        docDocente.setInsCodigo(servInstitucion.getIntitucion());
         if (utilitario.validarCedula(docDocente.getDocCedula())) {
             String str_mensaje = servDocente.guardarDocente(docDocente);
             if (str_mensaje.isEmpty()) {
@@ -70,8 +73,6 @@ public class controladorDocente {
     public Docentes getDocDocente() {
         return docDocente;
     }
-
-    
 
     public void setDocDocente(Docentes docDocente) {
         this.docDocente = docDocente;
@@ -92,5 +93,4 @@ public class controladorDocente {
     public void setFiltroDocentes(List<Docentes> filtroDocentes) {
         this.filtroDocentes = filtroDocentes;
     }
-    
 }

@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import servcios.servicioInstitucion;
 import servcios.servicioPeriodo;
 
 
@@ -30,6 +31,8 @@ public class controladorPeridoLectivo {
     private Utilitario utilitario = new Utilitario();
     private List<PeriodoLectivo> listaPeriodoLectivo;
     private List<PeriodoLectivo> filtroPeriodoLectivo;
+     @EJB
+    private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
@@ -56,7 +59,7 @@ public class controladorPeridoLectivo {
     }
     
     public void guardar() {
-        
+           perPeriodo.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servPeriodo.guardarPeriodoLectivo(perPeriodo);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");

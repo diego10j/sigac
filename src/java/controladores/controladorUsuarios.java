@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import servcios.servicioInstitucion;
 import servcios.servicioUsuarios;
 
 
@@ -29,7 +30,9 @@ public class controladorUsuarios {
     private Utilitario utilitario = new Utilitario();
       private List<Usuario> listaUsuario;
       private List<Usuario> filtroUsuarios;
-
+   @EJB
+    private servicioInstitucion servInstitucion;
+      
     @PostConstruct
     public void cargarDatos() {
         listaUsuario = servUsuarios.getUsuario();
@@ -52,7 +55,7 @@ public class controladorUsuarios {
     }
      
     public void guardar() {
-        
+            usuUsuario.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");

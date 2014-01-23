@@ -17,7 +17,6 @@ import javax.faces.bean.ViewScoped;
 import servcios.servicioAprovechamiento;
 import servcios.servicioInstitucion;
 
-
 /**
  *
  * @author Diego
@@ -31,23 +30,21 @@ public class controladorAprovechamiento {
     private EquivalenciaAprovechamiento eqvAprovechamiento = new EquivalenciaAprovechamiento();
     @EJB
     private servicioInstitucion servInstitucion;
-    private Institucion insInstitucion = new Institucion();
+   
     private Utilitario utilitario = new Utilitario();
     private List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento;
-     private List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos;
-
+    private List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos;
+    
     @PostConstruct
     public void cargarDatos() {
         listaEquivalenciaAprovechamiento = servAprovechamiento.getEquivalenciaAprovechamiento();
     }
-    
-    
-    public void insertar(){
+
+    public void insertar() {
         eqvAprovechamiento = new EquivalenciaAprovechamiento();
-        
+
     }
-    
-    
+
     public void eliminar() {
         if (eqvAprovechamiento.getEqaCodigo() != null) {
             String str_mensaje = servAprovechamiento.elimnarAprovechamiento(eqvAprovechamiento.getEqaCodigo().toString());
@@ -60,21 +57,18 @@ public class controladorAprovechamiento {
         }
     }
 
+    public void guardar() {
+   eqvAprovechamiento.setInsCodigo(servInstitucion.getIntitucion());
+        String str_mensaje = servAprovechamiento.guardarAprovechamiento(eqvAprovechamiento);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            eqvAprovechamiento = new EquivalenciaAprovechamiento();
+            cargarDatos();
+            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
 
-   
-    
-      public void guardar() {
-        
-           String str_mensaje = servAprovechamiento.guardarAprovechamiento(eqvAprovechamiento);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                eqvAprovechamiento = new EquivalenciaAprovechamiento();
-                cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-            }
-        
     }
 
     public EquivalenciaAprovechamiento getEqvAprovechamiento() {
@@ -100,7 +94,4 @@ public class controladorAprovechamiento {
     public void setFiltroEquivalenciaAprovechamientos(List<EquivalenciaAprovechamiento> filtroEquivalenciaAprovechamientos) {
         this.filtroEquivalenciaAprovechamientos = filtroEquivalenciaAprovechamientos;
     }
-   
-   
-   
 }
