@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Cursos</ui:define>
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <h:outputText value="Periódo Lectivo :"/>
+                    <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}">
+                        <f:selectItems value="#{controladorCrearCurso.lisPeriodos}"/>
+                        <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}"/>
+                    </p:selectOneMenu>
+                    <p:separator/>
+                    <p:commandButton value="Insertar" icon="ui-guardar"  oncomplete="wdlgDetalle.show()" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <!-- CONFIGURACIÓN TABLA -->
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorCrearCurso.lisCrearCursos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" >
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorCursos.curCursos}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorCursos.eliminar}" 
+                                       title="Eliminar"
+                                       update="@form">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorCursos.curCursos}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column headerText="CODIGO"   >
+                        <h:outputText value="#{tabla.creCodigo}"/>
+                    </p:column>
+                  
+                    <p:column headerText="CURSO"   >
+                        <h:outputText value="#{tabla.curCodigo.curAnio}"/>
+                    </p:column>
+                    
+                    <p:column headerText="PARALELO"   >
+                        <h:outputText value="#{tabla.parCodigo.parNombre}"/>
+                    </p:column>
+                    
+                     <p:column headerText="DOCENTE"   >
+                         <h:outputText value="#{tabla.docCodigo.docNombres}"/>
+                    </p:column>
+                    
+                     <p:column headerText="OBSERVACIONES"   >
+                         <h:outputText value="#{tabla.creObservacion}"/>
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
