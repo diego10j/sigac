@@ -5,6 +5,7 @@
 package servcios;
 
 import aplicacion.Utilitario;
+import entidades.Alumnos;
 import entidades.Cursos;
 import entidades.Institucion;
 import entidades.PeriodoLectivo;
@@ -25,14 +26,14 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class servicioPeriodo {
-    
+
     @PersistenceContext
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
-    
-     public String guardarPeriodoLectivo(PeriodoLectivo periodoLectivo) {
+
+    public String guardarPeriodoLectivo(PeriodoLectivo periodoLectivo) {
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -45,8 +46,8 @@ public class servicioPeriodo {
             } else {
                 manejador.merge(periodoLectivo);
             }
-            
-            
+
+
             utx.commit();
         } catch (Exception e) {
             try {
@@ -58,7 +59,7 @@ public class servicioPeriodo {
         }
         return "";
     }
-    
+
     public String elimnarPeriodoLectivo(String perCodigo) {
         try {
             utx.begin();
@@ -74,9 +75,9 @@ public class servicioPeriodo {
         }
         return "";
     }
-    
+
     public PeriodoLectivo getPeriodoLectivo(String perCodigo) {
-        
+
         try {
             Query q = manejador.createNamedQuery("PeriodoLectivo.findByPerCodigo");
             q.setParameter("perCodigo", new Integer(perCodigo));
@@ -85,7 +86,7 @@ public class servicioPeriodo {
         }
         return null;
     }
-    
+
     public List<PeriodoLectivo> getPeriodoLectivo() {
         try {
             Query q = manejador.createNamedQuery("PeriodoLectivo.findAll");
@@ -115,7 +116,7 @@ public class servicioPeriodo {
             q.setParameter("perActivo", true);
             return (PeriodoLectivo) q.getSingleResult();
         } catch (Exception e) {
-            System.out.println(" ...,,,ssss    "+e.getMessage());
+            System.out.println(" ...,,,ssss    " + e.getMessage());
         }
         return null;
     }
