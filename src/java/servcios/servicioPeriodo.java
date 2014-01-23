@@ -6,6 +6,7 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Cursos;
+import entidades.Institucion;
 import entidades.PeriodoLectivo;
 import java.util.List;
 import javax.annotation.Resource;
@@ -31,19 +32,18 @@ public class servicioPeriodo {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarPeriodoLectivo(PeriodoLectivo periodolectivo) {
+     public String guardarPeriodoLectivo(PeriodoLectivo periodoLectivo) {
         try {
             utx.begin();
             manejador.joinTransaction();
-            //nombre tabla y atributo
-            if (periodolectivo.getPerCodigo() == null) {
-                long lon_codigo = utilitario.getConexion().getMaximo("PeriodoLectivo", "per_codigo", 1);
-                periodolectivo.setPerCodigo(new Integer(String.valueOf(lon_codigo)));
+            if (periodoLectivo.getPerCodigo() == null) {
+                //nombre tabla y atributo
+                long lon_codigo = utilitario.getConexion().getMaximo("periodo_lectivo", "per_codigo", 1);
                 System.out.println("ide " + lon_codigo);
-                periodolectivo.setPerCodigo(new Integer(String.valueOf(lon_codigo)));
-                manejador.persist(periodolectivo);
+                periodoLectivo.setPerCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(periodoLectivo);
             } else {
-                manejador.merge(periodolectivo);
+                manejador.merge(periodoLectivo);
             }
 
 
