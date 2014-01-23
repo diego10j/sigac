@@ -17,11 +17,11 @@
                 <p:toolbarGroup>
                     <h:outputText value="Periódo Lectivo :"/>
                     <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}">
-                        <f:selectItems value="#{controladorCrearCurso.lisPeriodos}"/>
-                        <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}"/>
+                        <f:selectItems value="#{controladorCrearCurso.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}" update="@form"/>
                     </p:selectOneMenu>
                     <p:separator/>
-                    <p:commandButton value="Insertar" icon="ui-guardar"  oncomplete="wdlgDetalle.show()" />
+                    <p:commandButton value="Insertar" icon="ui-agregar"  oncomplete="wdlgDetalle.show()" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
@@ -33,7 +33,7 @@
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
-                                           update=":frmFormulario">
+                                           >
                             <p:graphicImage url="../imagenes/im_modificar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
@@ -51,10 +51,7 @@
                         </p:commandLink>
                     </p:column>
 
-                    <p:column headerText="CODIGO"   >
-                        <h:outputText value="#{tabla.creCodigo}"/>
-                    </p:column>
-                  
+                                   
                     <p:column headerText="CURSO"   >
                         <h:outputText value="#{tabla.curCodigo.curAnio}"/>
                     </p:column>
