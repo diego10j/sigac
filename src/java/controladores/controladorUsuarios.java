@@ -5,7 +5,7 @@
 package controladores;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
+import entidades.Institucion;
 import entidades.Usuario;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -28,6 +28,7 @@ public class controladorUsuarios {
     private Usuario usuUsuario = new Usuario();
     private Utilitario utilitario = new Utilitario();
       private List<Usuario> listaUsuario;
+      private List<Usuario> filtroUsuarios;
 
     @PostConstruct
     public void cargarDatos() {
@@ -77,6 +78,14 @@ public class controladorUsuarios {
 
     public void setListaUsuario(List<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
+    }
+
+    public List<Usuario> getFiltroUsuarios() {
+        return filtroUsuarios;
+    }
+
+    public void setFiltroUsuarios(List<Usuario> filtroUsuarios) {
+        this.filtroUsuarios = filtroUsuarios;
     }
     
     

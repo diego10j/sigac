@@ -22,7 +22,7 @@
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber">
+                             rowIndexVar="rowNumber" filteredValue="#{controladorUsuarios.filtroUsuarios}">
 
                     <p:column width="60">
                         <p:commandLink     title="Modificar"

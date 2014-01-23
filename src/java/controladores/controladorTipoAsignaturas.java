@@ -5,6 +5,7 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Institucion;
 
 import entidades.Tipoasignaturas;
 
@@ -31,6 +32,7 @@ public class controladorTipoAsignaturas {
     private Utilitario utilitario = new Utilitario();
 
      private List<Tipoasignaturas> listaTipoasignaturas;
+     private List<Tipoasignaturas> filtroTipoasignaturas;
 
     @PostConstruct
     public void cargarDatos() {
@@ -82,6 +84,15 @@ public class controladorTipoAsignaturas {
     public void setListaTipoasignaturas(List<Tipoasignaturas> listaTipoasignaturas) {
         this.listaTipoasignaturas = listaTipoasignaturas;
     }
+
+    public List<Tipoasignaturas> getFiltroTipoasignaturas() {
+        return filtroTipoasignaturas;
+    }
+
+    public void setFiltroTipoasignaturas(List<Tipoasignaturas> filtroTipoasignaturas) {
+        this.filtroTipoasignaturas = filtroTipoasignaturas;
+    }
    
+    
    
 }

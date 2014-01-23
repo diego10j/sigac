@@ -22,7 +22,7 @@
               
               <h:panelGroup id="pnlTabela">       
                    <p:dataTable value="#{controladorParalelo.listaParalelo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false" 
-                         rowIndexVar="rowNumber">
+                                rowIndexVar="rowNumber" filteredValue="#{controladorParalelo.filtroParalelo}">
                         
                        
                      <p:column width="60">

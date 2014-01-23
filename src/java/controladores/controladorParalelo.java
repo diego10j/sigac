@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Alumnos;
+import entidades.Institucion;
 
 import entidades.Paralelo;
 import java.util.List;
@@ -29,6 +30,7 @@ public class controladorParalelo {
     private Paralelo parParalelo = new Paralelo();
     private Utilitario utilitario = new Utilitario();
      private List<Paralelo> listaParalelo;
+     private List<Paralelo> filtroParalelo;
 
     @PostConstruct
     public void cargarDatos() {
@@ -82,6 +84,14 @@ public class controladorParalelo {
 
     public void setListaParalelo(List<Paralelo> listaParalelo) {
         this.listaParalelo = listaParalelo;
+    }
+
+    public List<Paralelo> getFiltroParalelo() {
+        return filtroParalelo;
+    }
+
+    public void setFiltroParalelo(List<Paralelo> filtroParalelo) {
+        this.filtroParalelo = filtroParalelo;
     }
    
 }
