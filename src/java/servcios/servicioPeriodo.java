@@ -25,13 +25,13 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class servicioPeriodo {
-
+    
     @PersistenceContext
     private EntityManager manejador;
     @Resource
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
-
+    
      public String guardarPeriodoLectivo(PeriodoLectivo periodoLectivo) {
         try {
             utx.begin();
@@ -45,8 +45,8 @@ public class servicioPeriodo {
             } else {
                 manejador.merge(periodoLectivo);
             }
-
-
+            
+            
             utx.commit();
         } catch (Exception e) {
             try {
@@ -58,7 +58,7 @@ public class servicioPeriodo {
         }
         return "";
     }
-
+    
     public String elimnarPeriodoLectivo(String perCodigo) {
         try {
             utx.begin();
@@ -74,9 +74,9 @@ public class servicioPeriodo {
         }
         return "";
     }
-
+    
     public PeriodoLectivo getPeriodoLectivo(String perCodigo) {
-
+        
         try {
             Query q = manejador.createNamedQuery("PeriodoLectivo.findByPerCodigo");
             q.setParameter("perCodigo", new Integer(perCodigo));
@@ -85,11 +85,35 @@ public class servicioPeriodo {
         }
         return null;
     }
-
+    
     public List<PeriodoLectivo> getPeriodoLectivo() {
         try {
             Query q = manejador.createNamedQuery("PeriodoLectivo.findAll");
             return q.getResultList();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaCursos() {
+        return utilitario.getConexion().consultar("select per_codigo, per_nombre FROM periodo_lectivo order by per_activo desc,per_nombre");
+    }
+
+    /**
+     * Retorna el período lectivo que esta activo
+     *
+     * @return
+     */
+    public PeriodoLectivo getPeriodoActivo() {
+        try {
+            Query q = manejador.createNamedQuery("PeriodoLectivo.findByPerActivo");
+            q.setParameter("perActivo", new Boolean(true));
+            return (PeriodoLectivo) q.getSingleResult();
         } catch (Exception e) {
         }
         return null;

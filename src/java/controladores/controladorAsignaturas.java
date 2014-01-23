@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioAlumno;
 import servcios.servicioAsignaturas;
+import servcios.servicioInstitucion;
 
 
 /**
@@ -32,6 +33,8 @@ public class controladorAsignaturas {
 
      private List<Asignaturas> listaAsignaturas;
      private List<Asignaturas> filtroAsignaturas;
+     @EJB
+     private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
@@ -57,7 +60,7 @@ public void eliminar() {
     }
     
     public void guardar() {
-        
+           asiAsignaturas.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servAsignaturas.guardarAsignaturas(asiAsignaturas);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
