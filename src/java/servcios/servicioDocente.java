@@ -99,6 +99,6 @@ public class servicioDocente {
      * @return
      */
     public List getListaDocentes() {
-        return utilitario.getConexion().consultar("select doc_codigo,doc_nombres,doc_cedula from docentes");
+        return utilitario.getConexion().consultar("select doc_codigo,doc_nombres,doc_cedula from docentes order by doc_nombres");
     }
 }

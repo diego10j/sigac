@@ -91,4 +91,13 @@ public class servicioParalelo {
         }
         return null;
     }
+    
+       /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaParalelos() {
+        return utilitario.getConexion().consultar("select par_codigo,par_nombre from paralelo");
+    }
 }

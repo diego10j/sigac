@@ -17,7 +17,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import servcios.servicioAsignaturas;
 import servcios.servicioCrearCurso;
+import servcios.servicioCursos;
+import servcios.servicioDocente;
+import servcios.servicioParalelo;
 import servcios.servicioPeriodo;
 
 /**
@@ -34,11 +38,21 @@ public class controladorCrearCurso {
     private servicioCrearCurso servCrearCurso;
     @EJB
     private servicioPeriodo servPeriodo;
+     @EJB
+    private servicioCursos servCursos;
+      @EJB
+    private servicioParalelo servParalelos;
+     @EJB
+    private servicioDocente servDocente;
     
     
     private List lisPeriodos;
     private List<CrearCurso> lisCrearCursos;
     private String strPeriodoSeleccionado;
+    
+    private List listaCursos;
+    private List listaParalelos;
+    private List listaDocentes;
 
     @PostConstruct
     public void cargarDatos() {
@@ -48,6 +62,14 @@ public class controladorCrearCurso {
             strPeriodoSeleccionado = servPeriodo.getPeriodoActivo().getPerCodigo().toString();
         }      
         lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
+        
+        listaCursos=servCursos.getListaCursos();
+        listaParalelos=servParalelos.getListaParalelos();
+        listaDocentes=servDocente.getListaDocentes();
+        creCrearc = new CrearCurso();
+        creCrearc.setCurCodigo(new Cursos());
+        creCrearc.setParCodigo(new Paralelo());
+        creCrearc.setDocCodigo(new Docentes());
     }
 
      public void insertar() {
@@ -141,6 +163,30 @@ public class controladorCrearCurso {
 
     public void setCreCrearc(CrearCurso creCrearc) {
         this.creCrearc = creCrearc;
+    }
+
+    public List getListaCursos() {
+        return listaCursos;
+    }
+
+    public void setListaCursos(List listaCursos) {
+        this.listaCursos = listaCursos;
+    }
+
+    public List getListaParalelos() {
+        return listaParalelos;
+    }
+
+    public void setListaParalelos(List listaParalelos) {
+        this.listaParalelos = listaParalelos;
+    }
+
+    public List getListaDocentes() {
+        return listaDocentes;
+    }
+
+    public void setListaDocentes(List listaDocentes) {
+        this.listaDocentes = listaDocentes;
     }
 
     
