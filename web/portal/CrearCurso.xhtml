@@ -92,21 +92,21 @@
 
                         <h:panelGrid columns="2">
                             <h:outputText value="Curso :*"/>
-                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}" filter="true"  filterMatchMode="startsWith">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Curso ..."/>
-                                <f:selectItems value="#{controladorCrearCurso.listaCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Curso">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Curso ..." />
+                                <f:selectItems value="#{controladorCrearCurso.listaCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"  />
                             </p:selectOneMenu>
 
                             <h:outputText value="Paralelo :*"/>
-                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.parCodigo.parCodigo}">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Paralelo ..."/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.parCodigo.parCodigo}" required="true" requiredMessage="Debe ingresar el Paralelo">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Paralelo ..." />
                                 <f:selectItems value="#{controladorCrearCurso.listaParalelos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
 
 
                             <h:outputText value="Docente :*"/>
-                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Docente ..."/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Docente">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
                                 <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
 
