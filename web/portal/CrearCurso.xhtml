@@ -41,13 +41,13 @@
 
                         </p:commandLink>
                         <p:spacer width="10"/>
-                        <p:commandLink action="#{controladorCursos.eliminar}" 
+                        <p:commandLink action="#{controladorCrearCurso.eliminar}" 
                                        title="Eliminar"
                                        update="@form">
                             <p:graphicImage url="../imagenes/im_eliminar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
-                                target="#{controladorCursos.curCursos}" value="#{tabla}" />
+                                target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
 
