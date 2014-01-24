@@ -5,8 +5,10 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import entidades.Asignaturas;
 import entidades.CrearCurso;
 import entidades.Cursos;
+import entidades.Distributivomxc;
 import entidades.Docentes;
 import entidades.EquivalenciaConducta;
 import entidades.Institucion;
@@ -44,12 +46,18 @@ public class controladorCrearCurso {
     private servicioParalelo servParalelos;
     @EJB
     private servicioDocente servDocente;
+    @EJB
+    private servicioAsignaturas servAsignatura;
     private List lisPeriodos;
     private List<CrearCurso> lisCrearCursos;
     private String strPeriodoSeleccionado;
     private List listaCursos;
     private List listaParalelos;
     private List listaDocentes;
+    //DISTRIBUTIVO
+    private List<Distributivomxc> lisDistributivo;
+    private Distributivomxc disDistributivo;
+    private List listaMaterias;
 
     @PostConstruct
     public void cargarDatos() {
@@ -68,6 +76,58 @@ public class controladorCrearCurso {
         creCrearc.setCurCodigo(new Cursos());
         creCrearc.setParCodigo(new Paralelo());
         creCrearc.setDocCodigo(new Docentes());
+
+        disDistributivo = new Distributivomxc();
+        disDistributivo.setDocCodigo(new Docentes());
+        disDistributivo.setAsiCodigo(new Asignaturas());
+        listaMaterias = servAsignatura.getListaAsignaturas();
+    }
+
+    public void insertarDistributivo() {
+        disDistributivo = new Distributivomxc();
+        disDistributivo.setDocCodigo(new Docentes());
+        disDistributivo.setAsiCodigo(new Asignaturas());
+    }
+
+    public void guardarDistributivo() {
+
+        if (disDistributivo.getDocCodigo().getDocCodigo() != null) {
+            disDistributivo.setDocCodigo(servDocente.getDocente(disDistributivo.getDocCodigo().getDocCodigo().toString()));
+        }
+        if (disDistributivo.getAsiCodigo().getAsiCodigo() != null) {
+            disDistributivo.setAsiCodigo(servAsignatura.getAsignaturas(disDistributivo.getAsiCodigo().getAsiCodigo().toString()));
+        }
+        disDistributivo.setCreCodigo(creCrearc);
+
+        String str_mensaje = servCrearCurso.guardarDistributivo(disDistributivo);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            disDistributivo = new Distributivomxc();
+            disDistributivo.setDocCodigo(new Docentes());
+            disDistributivo.setAsiCodigo(new Asignaturas());
+            cargarDistributivo();
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
+    }
+
+    public void eliminarDistributivo() {
+        if (disDistributivo.getDisCodigo() != null) {
+            String str_mensaje = servCrearCurso.elimnarDistributivo(disDistributivo.getDisCodigo().toString());
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se elimino correctamente", "");
+                cargarDistributivo();
+            } else {
+                utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
+            }
+        }
+    }
+
+    public void cargarDistributivo() {
+       
+        lisDistributivo = servCrearCurso.getDistributivoCurso(creCrearc.getCreCodigo().toString());
+       
     }
 
     public void insertar() {
@@ -195,5 +255,29 @@ public class controladorCrearCurso {
 
     public void setListaDocentes(List listaDocentes) {
         this.listaDocentes = listaDocentes;
+    }
+
+    public List<Distributivomxc> getLisDistributivo() {
+        return lisDistributivo;
+    }
+
+    public void setLisDistributivo(List<Distributivomxc> lisDistributivo) {
+        this.lisDistributivo = lisDistributivo;
+    }
+
+    public Distributivomxc getDisDistributivo() {
+        return disDistributivo;
+    }
+
+    public void setDisDistributivo(Distributivomxc disDistributivo) {
+        this.disDistributivo = disDistributivo;
+    }
+
+    public List getListaMaterias() {
+        return listaMaterias;
+    }
+
+    public void setListaMaterias(List listaMaterias) {
+        this.listaMaterias = listaMaterias;
     }
 }
