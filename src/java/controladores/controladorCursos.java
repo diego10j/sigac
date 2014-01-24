@@ -60,6 +60,7 @@ public class controladorCursos {
     }
     
     public void guardar() {
+        //ins_codigo
         curCursos.setInsCodigo(servInstitucion.getIntitucion());
            String str_mensaje = servCursos.guardarCursos(curCursos);
             if (str_mensaje.isEmpty()) {

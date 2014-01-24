@@ -35,29 +35,22 @@ public class servicioCrearCurso {
      * @param per_codigo
      * @return
      */
-    public List<CrearCurso> getCursosCreados(String per_codigo) {
-        if (per_codigo != null) {
-            try {
-                Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo+" order by c.curCodigo.curCodigo,c.parCodigo.parCodigo");
-                return q.getResultList();
-            } catch (Exception e) {
-            }
-        }
+   
 
-        return null;
-    }
-
-    public String guardarCrearCurso(CrearCurso curso) {
+   
+      public String guardarCrearCurso(CrearCurso crearcurso) {
         try {
             utx.begin();
             manejador.joinTransaction();
             //nombre tabla y atributo
-            if (curso.getCurCodigo() == null) {
+            if (crearcurso.getCreCodigo() == null) {
                 long lon_codigo = utilitario.getConexion().getMaximo("crear_curso", "cre_codigo", 1);
-                curso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
-                manejador.persist(curso);
+                crearcurso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
+                System.out.println("ide " + lon_codigo);
+                crearcurso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(crearcurso);
             } else {
-                manejador.merge(curso);
+                manejador.merge(crearcurso);
             }
             utx.commit();
         } catch (Exception e) {
@@ -70,4 +63,49 @@ public class servicioCrearCurso {
         }
         return "";
     }
+    
+
+    public String elimnarCrearCurso(String creCodigo) {
+        try {
+            utx.begin();
+            CrearCurso borraCrearCurso = manejador.find(CrearCurso.class, new Integer(creCodigo));
+            manejador.remove(borraCrearCurso);
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            return e.getMessage();
+        }
+        return "";
+    }
+    
+      public CrearCurso getCrearCurso(String creCodigo) {
+
+        try {
+            Query q = manejador.createNamedQuery("CrearCurso.findByCreCodigo");
+            q.setParameter("creCodigo", new Integer(creCodigo));
+            return (CrearCurso) q.getSingleResult();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+   
+
+     public List<CrearCurso> getCursosCreados(String per_codigo) {
+        if (per_codigo != null) {
+            try {
+                Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo+" order by c.curCodigo.curCodigo,c.parCodigo.parCodigo");
+                return q.getResultList();
+            } catch (Exception e) {
+            }
+        }
+
+        return null;
+    }
+    
+  
+
 }
