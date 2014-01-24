@@ -21,7 +21,7 @@
                         <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}" update="@form"/>
                     </p:selectOneMenu>
                     <p:separator/>
-                    <p:commandButton value="Insertar" icon="ui-agregar"  oncomplete="wdlgDetalle.show()" />
+                    <p:commandButton value="Insertar" icon="ui-agregar"  oncomplete="wdlgDetalle.show()"  update=":frmFormulario" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
@@ -33,11 +33,11 @@
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
-                                           >
+                                           update=":frmFormulario">
                             <p:graphicImage url="../imagenes/im_modificar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
-                                target="#{controladorCursos.curCursos}" value="#{tabla}" />
+                                target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
 
                         </p:commandLink>
                         <p:spacer width="10"/>
@@ -51,29 +51,29 @@
                         </p:commandLink>
                     </p:column>
 
-                                   
+
                     <p:column headerText="CURSO"   >
                         <h:outputText value="#{tabla.curCodigo.curAnio}"/>
                     </p:column>
-                    
+
                     <p:column headerText="PARALELO"   >
                         <h:outputText value="#{tabla.parCodigo.parNombre}"/>
                     </p:column>
-                    
-                     <p:column headerText="DOCENTE"   >
-                         <h:outputText value="#{tabla.docCodigo.docNombres}"/>
+
+                    <p:column headerText="DOCENTE"   >
+                        <h:outputText value="#{tabla.docCodigo.docNombres}"/>
                     </p:column>
-                    
-                     <p:column headerText="OBSERVACIONES"   >
-                         <h:outputText value="#{tabla.creObservacion}"/>
+
+                    <p:column headerText="OBSERVACIONES"   >
+                        <h:outputText value="#{tabla.creObservacion}"/>
                     </p:column>
-                    
+
                 </p:dataTable>
             </h:panelGroup>
         </h:form>
 
-        
-         <!-- CONFIGURACIÓN FORMULARIO -->
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
         <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
                   modal="true" 
@@ -87,27 +87,38 @@
                 <p:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
-                    
+
                     <p:fieldset legend="DATOS CREAR CURSO">
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Curso :*"/>
-                    <p:inputText value="#{controladorCrearCurso.creCrearc.curCodigo}" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
-                    
-                    <h:outputText value="Paralelo :*"/>
-                    <p:inputText value="#{controladorCrearCurso.creCrearc.parCodigo}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
-                    
-                    <h:outputText value="Docente :*"/>
-                    <p:inputText value="#{controladorCrearCurso.creCrearc.docCodigo}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
-                    
-                    <h:outputText value="Observaciones :*"/>
-                    <p:inputText value="#{controladorCrearCurso.creCrearc.creObservacion}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Curso :*"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}">
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Curso"/>
+                                <f:selectItems value="#{controladorCrearCurso.listaCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
 
-                   
-                </h:panelGrid>
+                            <h:outputText value="Paralelo :*"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.parCodigo.parCodigo}">
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Paralelo"/>
+                                <f:selectItems value="#{controladorCrearCurso.listaParalelos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
 
-            </p:fieldset>
-                    
+
+                            <h:outputText value="Docente :*"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}">
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Docente"/>
+                                <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Observaciones :*"/>
+                            <p:inputText value="#{controladorCrearCurso.creCrearc.creObservacion}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+
+
+                        </h:panelGrid>
+
+                    </p:fieldset>
+
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
@@ -116,8 +127,8 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                    
-                    </p:panelGrid>
+
+                </p:panelGrid>
             </h:form>
         </p:dialog>
     </ui:define>
