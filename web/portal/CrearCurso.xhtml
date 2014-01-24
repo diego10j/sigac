@@ -51,6 +51,17 @@
                         </p:commandLink>
                     </p:column>
 
+                    <p:column width="60" headerText="ASIGNATURAS">
+                        <p:commandLink action="#{controladorCrearCurso.cargarDistributivo}" 
+                                       value="Distributivo"
+                                       title="Distributivo"
+                                       update=":formDistri"
+                                       oncomplete="wdldlgDistri.show();">
+                            <f:setPropertyActionListener
+                                target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
 
                     <p:column headerText="CURSO"   >
                         <h:outputText value="#{tabla.curCodigo.curAnio}"/>
@@ -131,5 +142,90 @@
                 </p:panelGrid>
             </h:form>
         </p:dialog>
+
+        <!-- DISTRIBUTIVO DE MATERIAS Y DOCENTES--> 
+        <p:dialog id="dlgDistri" 
+                  widgetVar="wdldlgDistri" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Distributivo" 
+                  styleClass="dialogoSemScroll" >
+            <h:form id="formDistri">
+                <p:panelGrid  id="panDistr"
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Asignatura :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.disDistributivo.asiCodigo.asiCodigo}"  filterMatchMode="startsWith"  required="true" requiredMessage="Debe ingresar una Asignatura">
+                            <f:selectItem itemValue="null" itemLabel="Seleccione una Asignatura ..."/>
+                            <f:selectItems value="#{controladorCrearCurso.listaMaterias}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+
+
+                        <h:outputText value="Docente :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.disDistributivo.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Docente">
+                            <f:selectItem itemValue="null" itemLabel="Seleccione un Docente ..."/>
+                            <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton action="#{controladorCrearCurso.insertarDistributivo}" value="Insertar" icon="ui-insertar" process="@this" update=":formDistri:panDistr">
+                                <p:resetInput target=":formDistri:panDistr" />  
+                                </p:commandButton>
+                                <p:commandButton action="#{controladorCrearCurso.guardarDistributivo}" value="Guardar" icon="ui-guardar" update=":formDistri" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+                </p:panelGrid>    
+
+                <p:separator/>
+
+                <p:dataTable id="tabDistri" value="#{controladorCrearCurso.lisDistributivo}" var="tabla" scrollable="true" scrollHeight="300" scrollWidth="700"
+                             rowIndexVar="rowNumber" >
+
+                    <p:column width="30">
+                        <p:commandLink     title="Modificar"                                           
+                                           update=":formDistri:panDistr"
+                                           process=":formDistri:tabDistri">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorCrearCurso.disDistributivo}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorCrearCurso.eliminarDistributivo}" 
+                                       title="Eliminar"
+                                       update=":formDistri:tabDistri"
+                                       process=":formDistri:tabDistri">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorCrearCurso.disDistributivo}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+
+                    <p:column headerText="ASIGNATURA" width="100"   >
+                        <h:outputText value="#{tabla.asiCodigo.asiNombre}"/>
+                    </p:column>
+
+                    <p:column headerText="DOCENTE" width="100"  >
+                        <h:outputText value="#{tabla.docCodigo.docNombres}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
