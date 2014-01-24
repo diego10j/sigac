@@ -54,11 +54,13 @@ public class controladorCrearCurso {
     @PostConstruct
     public void cargarDatos() {
         lisPeriodos = servPeriodo.getListaPeriodos();
-        //Carga el periodo activo por defecto      
-        if (servPeriodo.getPeriodoActivo() != null) {
-            strPeriodoSeleccionado = servPeriodo.getPeriodoActivo().getPerCodigo().toString();
+        //Carga el periodo activo por defecto   
+        if (strPeriodoSeleccionado == null) {
+            if (servPeriodo.getPeriodoActivo() != null) {
+                strPeriodoSeleccionado = servPeriodo.getPeriodoActivo().getPerCodigo().toString();
+            }
+            lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
         }
-        lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
 
         listaCursos = servCursos.getListaCursos();
         listaParalelos = servParalelos.getListaParalelos();
@@ -98,6 +100,10 @@ public class controladorCrearCurso {
         if (creCrearc.getDocCodigo().getDocCodigo() != null) {
             creCrearc.setDocCodigo(servDocente.getDocente(creCrearc.getDocCodigo().getDocCodigo().toString()));
         }
+        if (strPeriodoSeleccionado != null) {
+            creCrearc.setPerCodigo(servPeriodo.getPeriodoLectivo(strPeriodoSeleccionado));
+        }
+
 
         String str_mensaje = servCrearCurso.guardarCrearCurso(creCrearc);
         if (str_mensaje.isEmpty()) {
