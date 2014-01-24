@@ -9,6 +9,8 @@ import entidades.CrearCurso;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -19,6 +21,7 @@ import javax.transaction.UserTransaction;
  * @author Diego
  */
 @Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
 public class servicioCrearCurso {
 
     @PersistenceContext
