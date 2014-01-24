@@ -35,18 +35,13 @@ public class servicioCrearCurso {
      * @param per_codigo
      * @return
      */
-   
-
-   
-      public String guardarCrearCurso(CrearCurso crearcurso) {
+    public String guardarCrearCurso(CrearCurso crearcurso) {
         try {
             utx.begin();
             manejador.joinTransaction();
             //nombre tabla y atributo
             if (crearcurso.getCreCodigo() == null) {
                 long lon_codigo = utilitario.getConexion().getMaximo("crear_curso", "cre_codigo", 1);
-                crearcurso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
-                System.out.println("ide " + lon_codigo);
                 crearcurso.setCreCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(crearcurso);
             } else {
@@ -63,7 +58,6 @@ public class servicioCrearCurso {
         }
         return "";
     }
-    
 
     public String elimnarCrearCurso(String creCodigo) {
         try {
@@ -80,8 +74,8 @@ public class servicioCrearCurso {
         }
         return "";
     }
-    
-      public CrearCurso getCrearCurso(String creCodigo) {
+
+    public CrearCurso getCrearCurso(String creCodigo) {
 
         try {
             Query q = manejador.createNamedQuery("CrearCurso.findByCreCodigo");
@@ -92,12 +86,10 @@ public class servicioCrearCurso {
         return null;
     }
 
-   
-
-     public List<CrearCurso> getCursosCreados(String per_codigo) {
+    public List<CrearCurso> getCursosCreados(String per_codigo) {
         if (per_codigo != null) {
             try {
-                Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo+" order by c.curCodigo.curCodigo,c.parCodigo.parCodigo");
+                Query q = manejador.createQuery("SELECT c FROM CrearCurso c WHERE c.perCodigo.perCodigo=" + per_codigo + " order by c.curCodigo.curCodigo,c.parCodigo.parCodigo");
                 return q.getResultList();
             } catch (Exception e) {
             }
@@ -105,7 +97,4 @@ public class servicioCrearCurso {
 
         return null;
     }
-    
-  
-
 }

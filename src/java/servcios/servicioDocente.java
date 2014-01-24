@@ -73,12 +73,12 @@ public class servicioDocente {
         return "";
     }
 
-    public Alumnos getDocente(String aluCodigo) {
+    public Docentes getDocente(String docCodigo) {
 
         try {
             Query q = manejador.createNamedQuery("Docentes.findByDocCodigo");
-            q.setParameter("docCodigo", new Integer(aluCodigo));
-            return (Alumnos) q.getSingleResult();
+            q.setParameter("docCodigo", new Integer(docCodigo));
+            return (Docentes) q.getSingleResult();
         } catch (Exception e) {
         }
         return null;
