@@ -33,23 +33,20 @@ import servcios.servicioPeriodo;
 public class controladorCrearCurso {
 
     private Utilitario utilitario = new Utilitario();
-    private CrearCurso creCrearc= new CrearCurso() ;
-    @EJB     
+    private CrearCurso creCrearc = new CrearCurso();
+    @EJB
     private servicioCrearCurso servCrearCurso;
     @EJB
     private servicioPeriodo servPeriodo;
-     @EJB
+    @EJB
     private servicioCursos servCursos;
-      @EJB
+    @EJB
     private servicioParalelo servParalelos;
-     @EJB
+    @EJB
     private servicioDocente servDocente;
-    
-    
     private List lisPeriodos;
     private List<CrearCurso> lisCrearCursos;
     private String strPeriodoSeleccionado;
-    
     private List listaCursos;
     private List listaParalelos;
     private List listaDocentes;
@@ -60,19 +57,19 @@ public class controladorCrearCurso {
         //Carga el periodo activo por defecto      
         if (servPeriodo.getPeriodoActivo() != null) {
             strPeriodoSeleccionado = servPeriodo.getPeriodoActivo().getPerCodigo().toString();
-        }      
+        }
         lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
-        
-        listaCursos=servCursos.getListaCursos();
-        listaParalelos=servParalelos.getListaParalelos();
-        listaDocentes=servDocente.getListaDocentes();
+
+        listaCursos = servCursos.getListaCursos();
+        listaParalelos = servParalelos.getListaParalelos();
+        listaDocentes = servDocente.getListaDocentes();
         creCrearc = new CrearCurso();
         creCrearc.setCurCodigo(new Cursos());
         creCrearc.setParCodigo(new Paralelo());
         creCrearc.setDocCodigo(new Docentes());
     }
 
-     public void insertar() {
+    public void insertar() {
         creCrearc = new CrearCurso();
         creCrearc.setCurCodigo(new Cursos());
         creCrearc.setParCodigo(new Paralelo());
@@ -91,23 +88,29 @@ public class controladorCrearCurso {
         }
     }
 
-      public void guardar() {
-               
-           String str_mensaje = servCrearCurso.guardarCrearCurso(creCrearc);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                creCrearc = new CrearCurso();
-                cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-            }
-        
+    public void guardar() {
+        if (creCrearc.getCurCodigo().getCurCodigo() != null) {
+            creCrearc.setCurCodigo(servCursos.getCursos(creCrearc.getCurCodigo().getCurCodigo().toString()));
+        }
+        if (creCrearc.getParCodigo().getParCodigo() != null) {
+            creCrearc.setParCodigo(servParalelos.getParalelo(creCrearc.getParCodigo().getParCodigo().toString()));
+        }
+        if (creCrearc.getDocCodigo().getDocCodigo() != null) {
+            creCrearc.setDocCodigo(servDocente.getDocente(creCrearc.getDocCodigo().getDocCodigo().toString()));
+        }
+
+        String str_mensaje = servCrearCurso.guardarCrearCurso(creCrearc);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            creCrearc = new CrearCurso();
+            cargarDatos();
+            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
     }
-    
-   
-    
-    
+
     /**
      * Filtra los cursos creados del periodo seleccionado
      *
@@ -188,9 +191,4 @@ public class controladorCrearCurso {
     public void setListaDocentes(List listaDocentes) {
         this.listaDocentes = listaDocentes;
     }
-
-    
-    
-  
-    
 }
