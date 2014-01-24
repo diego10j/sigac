@@ -72,5 +72,53 @@
             </h:panelGroup>
         </h:form>
 
+        
+         <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos Crear Curso" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+                    
+                    <p:fieldset legend="DATOS CREAR CURSO">
+
+                <h:panelGrid columns="2">
+                    <h:outputText value="Curso :*"/>
+                    <p:inputText value="#{controladorCrearCurso.creCrearc.curCodigo}" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
+                    
+                    <h:outputText value="Paralelo :*"/>
+                    <p:inputText value="#{controladorCrearCurso.creCrearc.parCodigo}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+                    
+                    <h:outputText value="Docente :*"/>
+                    <p:inputText value="#{controladorCrearCurso.creCrearc.docCodigo}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+                    
+                    <h:outputText value="Observaciones :*"/>
+                    <p:inputText value="#{controladorCrearCurso.creCrearc.creObservacion}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+
+                   
+                </h:panelGrid>
+
+            </p:fieldset>
+                    
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorAsignaturas.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+                    
+                    </p:panelGrid>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>
