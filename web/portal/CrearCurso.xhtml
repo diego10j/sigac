@@ -92,27 +92,27 @@
 
                         <h:panelGrid columns="2">
                             <h:outputText value="Curso :*"/>
-                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Curso"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}" filter="true"  filterMatchMode="startsWith">
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Curso ..."/>
                                 <f:selectItems value="#{controladorCrearCurso.listaCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
 
                             <h:outputText value="Paralelo :*"/>
                             <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.parCodigo.parCodigo}">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Paralelo"/>
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Paralelo ..."/>
                                 <f:selectItems value="#{controladorCrearCurso.listaParalelos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
 
 
                             <h:outputText value="Docente :*"/>
-                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}">
-                                <f:selectItem itemValue="null" itemLabel="Seleccione un Docente"/>
+                            <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
+                                <f:selectItem itemValue="null" itemLabel="Seleccione un Docente ..."/>
                                 <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
 
 
                             <h:outputText value="Observaciones :*"/>
-                            <p:inputText value="#{controladorCrearCurso.creCrearc.creObservacion}" size="45" required="true" requiredMessage="Debe ingresar la Observacion" />
+                            <p:inputTextarea style="width: 98%" value="#{controladorCrearCurso.creCrearc.creObservacion}" required="true" requiredMessage="Debe ingresar la Observacion" />
 
 
                         </h:panelGrid>
