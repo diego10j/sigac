@@ -59,9 +59,8 @@ public class controladorCrearCurso {
             if (servPeriodo.getPeriodoActivo() != null) {
                 strPeriodoSeleccionado = servPeriodo.getPeriodoActivo().getPerCodigo().toString();
             }
-            lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
         }
-
+        lisCrearCursos = servCrearCurso.getCursosCreados(strPeriodoSeleccionado);
         listaCursos = servCursos.getListaCursos();
         listaParalelos = servParalelos.getListaParalelos();
         listaDocentes = servDocente.getListaDocentes();
