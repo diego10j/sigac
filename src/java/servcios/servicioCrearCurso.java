@@ -6,6 +6,7 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.CrearCurso;
+import entidades.Distributivomxc;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -97,7 +98,58 @@ public class servicioCrearCurso {
             } catch (Exception e) {
             }
         }
-
         return null;
     }
+
+    public List<Distributivomxc> getDistributivoCurso(String cre_codigo) {
+        if (cre_codigo != null) {
+            try {
+                Query q = manejador.createQuery("SELECT d FROM Distributivomxc d WHERE d.creCodigo.creCodigo =" + cre_codigo + "  order by d.asiCodigo.asiNombre");
+                return q.getResultList();
+            } catch (Exception e) {             
+            }
+        }
+        return null;
+    }
+
+    public String guardarDistributivo(Distributivomxc distri) {
+        try {
+            utx.begin();
+            manejador.joinTransaction();
+            //nombre tabla y atributo
+            if (distri.getDisCodigo() == null) {
+                long lon_codigo = utilitario.getConexion().getMaximo("distributivomxc", "dis_codigo", 1);
+                distri.setDisCodigo(new Integer(String.valueOf(lon_codigo)));
+                manejador.persist(distri);
+            } else {
+                manejador.merge(distri);
+            }
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return "";
+    }
+
+     public String elimnarDistributivo(String disCodigo) {
+        try {
+            utx.begin();
+            Distributivomxc borra = manejador.find(Distributivomxc.class, new Integer(disCodigo));
+            manejador.remove(borra);
+            utx.commit();
+        } catch (Exception e) {
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+            }
+            return e.getMessage();
+        }
+        return "";
+    }
+
 }
