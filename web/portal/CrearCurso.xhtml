@@ -113,21 +113,14 @@
                                 <f:selectItem itemValue="" itemLabel="Seleccione un Paralelo ..." />
                                 <f:selectItems value="#{controladorCrearCurso.listaParalelos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
-
-
                             <h:outputText value="Docente :*"/>
                             <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Docente">
                                 <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
                                 <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
-
-
                             <h:outputText value="Observaciones :*"/>
                             <p:inputTextarea style="width: 98%" value="#{controladorCrearCurso.creCrearc.creObservacion}" required="true" requiredMessage="Debe ingresar la Observacion" />
-
-
                         </h:panelGrid>
-
                     </p:fieldset>
 
                     <f:facet name="footer">
@@ -198,7 +191,6 @@
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
                                 target="#{controladorCrearCurso.disDistributivo}" value="#{tabla}" />
-
                         </p:commandLink>
                         <p:spacer width="10"/>
                         <p:commandLink action="#{controladorCrearCurso.eliminarDistributivo}" 
