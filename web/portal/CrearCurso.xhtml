@@ -22,6 +22,8 @@
                     </p:selectOneMenu>
                     <p:separator/>
                     <p:commandButton value="Insertar" icon="ui-agregar"  oncomplete="wdlgDetalle.show()"  update=":frmFormulario" />
+                    <p:separator/>                     
+                    <p:commandButton value="REPORTE DISTRIBUTIVO" action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
@@ -127,9 +129,8 @@
                         <p:toolbar>
                             <p:toolbarGroup>
                                 <p:commandButton action="#{controladorCrearCurso.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
-                                <p:commandButton value="REPORTE DISTRIBUTIVO" action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
-                             </p:toolbarGroup>
-                            
+                            </p:toolbarGroup>
+
                         </p:toolbar>
                     </f:facet>
 
@@ -148,8 +149,8 @@
                   styleClass="dialogoSemScroll" >
             <h:form id="formDistri">
                 <p:panelGrid  id="panDistr"
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
+                              columns="1" 
+                              styleClass="panelGridSemBorda">
 
 
                     <h:panelGrid columns="2">
@@ -171,7 +172,7 @@
                         <p:toolbar>
                             <p:toolbarGroup>
                                 <p:commandButton action="#{controladorCrearCurso.insertarDistributivo}" value="Insertar" icon="ui-insertar" process="@this" update=":formDistri:panDistr">
-                                <p:resetInput target=":formDistri:panDistr" />  
+                                    <p:resetInput target=":formDistri:panDistr" />  
                                 </p:commandButton>
                                 <p:commandButton action="#{controladorCrearCurso.guardarDistributivo}" value="Guardar" icon="ui-guardar" update=":formDistri" />
                             </p:toolbarGroup>
