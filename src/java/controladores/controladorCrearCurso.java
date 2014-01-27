@@ -10,8 +10,6 @@ import entidades.CrearCurso;
 import entidades.Cursos;
 import entidades.Distributivomxc;
 import entidades.Docentes;
-import entidades.EquivalenciaConducta;
-import entidades.Institucion;
 import entidades.Paralelo;
 import java.util.List;
 import javax.annotation.PostConstruct;
