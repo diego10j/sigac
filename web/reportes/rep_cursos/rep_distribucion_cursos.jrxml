@@ -50,7 +50,16 @@ ORDER BY b.per_nombre,a.cre_observacion,d.pararelo,c.docentes]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="e2bf52a6-8ffc-4b8c-a405-c448dc2dc28f" x="1" y="0" width="554" height="20"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
