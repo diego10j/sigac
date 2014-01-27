@@ -8,6 +8,7 @@ import aplicacion.Utilitario;
 import entidades.Cursos;
 import entidades.Asignaturas;
 import entidades.EquivalenciaAprovechamiento;
+import entidades.Permisos;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -93,8 +94,8 @@ public class servicioAsignaturas {
         }
         return null;
     }
-    
-      /**
+
+    /**
      * Lista para combos
      *
      * @return
@@ -102,5 +103,25 @@ public class servicioAsignaturas {
     public List getListaAsignaturas() {
         return utilitario.getConexion().consultar("select asi_codigo,asi_nombre ||' - '|| tip_nombre as nombre from asignaturas mat\n"
                 + "left JOIN tipoasignaturas tip on mat.tip_codigo=tip.tip_codigo");
+    }
+
+    public List<Asignaturas> getAsignaturasPadre() {
+        try {
+            Query q = manejador.createQuery("SELECT a FROM Asignaturas a WHERE a.asiAsiCodigo is null");
+            return q.getResultList();
+        } catch (Exception e) {
+            System.out.println("ERROR SQL ASIGNATURAS:  " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Asignaturas> getAsignaturasHijas(String asiCodigo) {
+        try {
+            Query q = manejador.createQuery("SELECT a FROM Asignaturas a WHERE a.asiAsiCodigo=" + asiCodigo);
+            return q.getResultList();
+        } catch (Exception e) {
+            System.out.println("ERROR SQL ASIGNATURAS Hijas:  " + e.getMessage());
+        }
+        return null;
     }
 }
