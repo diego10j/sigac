@@ -11,9 +11,11 @@
 
     <ui:define name="contenido">
 
-        <h:form prependId="false" id="frmPrincipal">     
-            <p:tabView id="tabulador">
-                <p:tab id="tba1" title="Pantallas">                    
+
+        <p:tabView id="tabulador">
+
+            <p:tab id="tba1" title="Pantallas">                    
+                <h:form prependId="false" id="frmPrincipal">     
                     <p:layout style="height: 100%;width: 100%;display: block;">
                         <p:layoutUnit position="west" size="26%" header="Estructura de las Pantallas" resizable="true">
 
@@ -21,7 +23,7 @@
                                     selectionMode="single"  style="width:99%;height:99.6%;overflow: hidden;display: block;" cache="true" dynamic="true"
                                     selection="#{controladorAdministracion.nodoSeleccionad0}">  
 
-                                <p:ajax event="select" update=":frmPrincipal:tabulador:pnlTabela"  listener="#{controladorAdministracion.seleccionarArbol}" /> 
+                                <p:ajax event="select" update="@form"  listener="#{controladorAdministracion.seleccionarArbol}" /> 
 
                                 <p:treeNode expandedIcon="ui-icon-folder-open"  
                                             collapsedIcon="ui-icon-folder-collapsed">  
@@ -83,16 +85,71 @@
                         </p:layoutUnit>
                     </p:layout>
 
+                </h:form>
+            </p:tab> 
 
-                </p:tab> 
-                <p:tab id="tba2" title="Perfiles - Permisos">
+            <p:tab id="tba2" title="Perfiles/Roles">
 
-                </p:tab>
+                <h:form prependId="false" id="frmRol">
+                    <p:toolbar >
+                        <p:toolbarGroup>
+                            <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorRoles.insertar}" oncomplete="wdlgDetalleRol.show()" update=":frmFormularioRol" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <!-- CONFIGURACIÓN TABLA -->
+
+                    <h:panelGroup id="pnlTabelaRol"> 
+
+                        <p:dataTable value="#{controladorRoles.listaRoles}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                                     rowIndexVar="rowNumber" filteredValue="#{controladorRoles.filtroRoles}">
 
 
-            </p:tabView>  
+                            <p:column width="60">
+                                <p:commandLink     title="Modificar"
+                                                   oncomplete="wdlgDetalleRol.show()" 
+                                                   update=":frmFormularioRol">
+                                    <p:graphicImage url="../imagenes/im_modificar.png" 
+                                                    style="vertical-align: middle; border: none"/>
+                                    <f:setPropertyActionListener
+                                        target="#{controladorRoles.rolRoles}" value="#{tabla}" />
 
-        </h:form>
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:commandLink action="#{controladorRoles.eliminar}" 
+                                               title="Eliminar"
+                                               update="@form">
+                                    <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                                    style="vertical-align: middle; border: none"/>
+                                    <f:setPropertyActionListener
+                                        target="#{controladorRoles.rolRoles}" value="#{tabla}" />
+                                </p:commandLink>
+                            </p:column>
+
+
+
+                            <p:column headerText="CÓDIGO" filterBy="#{tabla.rolCodigo}" sortBy="#{tabla.rolCodigo}" >
+                                <h:outputText value="#{tabla.rolCodigo}"/>
+                            </p:column>
+                            <p:column headerText="NOMBRE" filterBy="#{tabla.rolNombre}" sortBy="#{tabla.rolNombre}">
+                                <h:outputText value="#{tabla.rolNombre}"/>                     
+                            </p:column>
+                            <p:column headerText="DESCRIPCIÓN" filterBy="#{tabla.rolDescripcion}" sortBy="#{tabla.rolDescripcion}">
+                                <h:outputText value="#{tabla.rolDescripcion}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGroup>
+
+                </h:form>
+
+
+
+            </p:tab>
+
+
+        </p:tabView>  
+
+
 
 
         <!-- CONFIGURACIÓN FORMULARIO PANTALLA-->
@@ -120,10 +177,54 @@
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
-                                <p:commandButton action="#{controladorAdministracion.guardarPantalla}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                                <p:commandButton action="#{controladorAdministracion.guardarPantalla}" value="Guardar" icon="ui-guardar" update="@form" />
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>  
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+
+
+
+        <!-- CONFIGURACIÓN FORMULARIO ROLES-->
+        <p:dialog id="dlgDetalheRol" 
+                  widgetVar="wdlgDetalleRol" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos del Rol" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormularioRol">
+                <p:panelGrid id="pnlDetalheRol" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS DE LOS ROLES">
+
+                        <h:panelGrid columns="2">
+
+
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorRoles.rolRoles.rolNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
+
+                            <h:outputText value="Descripción :*"/>
+                            <p:inputTextarea style="width: 95%" value="#{controladorRoles.rolRoles.rolDescripcion}" maxlength="150" required="true" requiredMessage="Debe ingresar la descripción" />
+
+                        </h:panelGrid>
+
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorRoles.guardar()}" value="Guardar" icon="ui-guardar" update=":tabulador:frmRol" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
                 </p:panelGrid>
             </h:form>
         </p:dialog>
