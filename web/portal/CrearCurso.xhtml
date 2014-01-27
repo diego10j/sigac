@@ -126,9 +126,10 @@
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
-
                                 <p:commandButton action="#{controladorCrearCurso.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
-                            </p:toolbarGroup>
+                                <p:commandButton value="REPORTE DISTRIBUTIVO" action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
+                             </p:toolbarGroup>
+                            
                         </p:toolbar>
                     </f:facet>
 
