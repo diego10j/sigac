@@ -185,7 +185,7 @@ public class controladorCrearCurso {
             Map p = new HashMap();
             p.put("per_codigo", strPeriodoSeleccionado);
             GenerarReporte generar = new GenerarReporte();       
-            generar.generar(p, "/reportes/rep_docentes/rep_distribucion_cursos.jasper");
+            generar.generar(p, "/reportes/rep_cursos/rep_distribucion_cursos.jasper");
         }
     }
 
