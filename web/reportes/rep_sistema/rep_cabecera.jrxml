@@ -22,7 +22,7 @@
 		<band height="84" splitType="Stretch">
 			<image>
 				<reportElement uuid="1f7bdc69-b902-4946-9e96-80494fc0789e" x="3" y="2" width="68" height="68"/>
-				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\imagenes\\logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+$F{ins_logo}]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="ffe1aee2-86b2-45d5-a96c-18f69fb50d18" x="82" y="0" width="473" height="20"/>
