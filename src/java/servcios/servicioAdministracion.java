@@ -5,9 +5,6 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Cursos;
-import entidades.Asignaturas;
-import entidades.EquivalenciaAprovechamiento;
 import entidades.Pantalla;
 import entidades.Permisos;
 import entidades.Roles;

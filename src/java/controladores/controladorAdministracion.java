@@ -51,10 +51,10 @@ public class controladorAdministracion {
             }
         }
         nodos.setExpanded(true);
-        nodoSeleccionad0 = nodos;
-
+        if (nodoSeleccionad0 == null) {
+            nodoSeleccionad0 = nodos;
+        }
         panPantalla = new Pantalla();
-
         cargarPantallas();
 
     }
