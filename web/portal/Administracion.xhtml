@@ -73,6 +73,10 @@
                                         <h:outputText value="#{tabla.panNombre}"/>
                                     </p:column>
 
+                                    <p:column headerText="PATH"   >
+                                        <h:outputText value="#{tabla.panPath}"/>
+                                    </p:column>
+
                                 </p:dataTable>
                             </h:panelGroup>
 
@@ -108,6 +112,8 @@
                         <h:panelGrid columns="2">
                             <h:outputText value="Nombre :"/>
                             <p:inputText value="#{controladorAdministracion.panPantalla.panNombre}" maxlength="150" size="55"/>  
+                            <h:outputText value="Path :"/>
+                            <p:inputText value="#{controladorAdministracion.panPantalla.panPath}" maxlength="200" size="75"/>  
                         </h:panelGrid>
                     </p:fieldset>
 
