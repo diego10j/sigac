@@ -16,6 +16,8 @@
             <p:toolbar >
                 <p:toolbarGroup>
                     <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorAlumno.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                    <p:separator/>
+                    <p:commandButton value="Ver Listado Alumnos" action="#{controladorAlumno.verReporteListadoAlumnos}" oncomplete="window.open('#{controladorAlumno.str_path_reporte}');" />
                 </p:toolbarGroup>
             </p:toolbar>
 
