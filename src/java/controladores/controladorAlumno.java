@@ -7,7 +7,10 @@ package controladores;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Representante;
+import framework.reportes.GenerarReporte;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -35,12 +38,14 @@ public class controladorAlumno {
     private List<Alumnos> filtroAlumnos;
     @EJB
     private servicioInstitucion servInstitucion;
+    private String str_path_reporte;
 
     @PostConstruct
     public void cargarDatos() {
         listaAlumnos = servAlumno.getAlumnos();
         aluAlumno = new Alumnos();
         repRepresentante = new Representante();
+        str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
     }
 
     public void insertar() {
@@ -95,6 +100,13 @@ public class controladorAlumno {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
     }
+    
+    public void verReporteListadoAlumnos(){
+        Map p=new HashMap();
+        p.put("", null);
+        GenerarReporte generar=new GenerarReporte();
+        generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
+    }
 
     public Alumnos getAluAlumno() {
         return aluAlumno;
@@ -127,4 +139,12 @@ public class controladorAlumno {
     public void setFiltroAlumnos(List<Alumnos> filtroAlumnos) {
         this.filtroAlumnos = filtroAlumnos;
     }
+
+    public String getStr_path_reporte() {
+        return str_path_reporte;
+    }
+
+    public void setStr_path_reporte(String str_path_reporte) {
+        this.str_path_reporte = str_path_reporte;
+    }    
 }
