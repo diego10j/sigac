@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Permisos</ui:define>
+
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorPermisos.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <!-- CONFIGURACIÓN TABLA -->
+
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorPermisos.listaPermisos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" filteredValue="#{controladorPermisos.filtroPermisos}">
+
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorPermisos.eliminar}" 
+                                       title="Eliminar"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+                    <p:column headerText="CODIGO ROL" filterBy="#{tabla.rolCodigo}">
+                        <h:outputText value="#{tabla.rolCodigo}"/>
+                    </p:column>
+                    <p:column headerText="CODIGO DE PANTALLA" filterBy="#{tabla.panCodigo}">
+                        <h:outputText value="#{tabla.panCodigo}"/>                     
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos Permisos" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS PERMISOS">
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rol :*"/>
+                            <p:inputText value="#{controladorPermisos.perPermisos.rolCodigo}" maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Codigo Rol" />                   
+
+                            <h:outputText value="Pantalla:*"/>
+                            <p:inputText value="#{controladorPermisos.perPermisos.panCodigo}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Codigo Pantalla" />
+
+                        </h:panelGrid>
+
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorPermisos.guardar()}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>
