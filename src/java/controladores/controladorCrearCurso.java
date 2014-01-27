@@ -181,12 +181,11 @@ public class controladorCrearCurso {
     }
 
     public void verReporteCursos() {
-        if (strPeriodoSeleccionado != null) {
-            GenerarReporte genera = new GenerarReporte();
+        if (strPeriodoSeleccionado != null) {            
             Map p = new HashMap();
             p.put("per_codigo", strPeriodoSeleccionado);
             GenerarReporte generar = new GenerarReporte();
-            generar.generar(p, "/reportes/rep_docente/rep_distribucion_cursos.jasper");
+            generar.generar(p, "/reportes/rep_docentes/rep_distribucion_cursos.jasper");
         }
     }
 
