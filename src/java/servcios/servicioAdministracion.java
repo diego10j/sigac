@@ -40,7 +40,7 @@ public class servicioAdministracion {
             utx.begin();
             manejador.joinTransaction();
             //nombre tabla y atributo
-            if (pantalla.getPanCodigo() != null) {
+            if (pantalla.getPanCodigo() == null) {
                 long lon_codigo = utilitario.getConexion().getMaximo("pantalla", "pan_codigo", 1);
                 pantalla.setPanCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(pantalla);

@@ -76,7 +76,7 @@ public class controladorAdministracion {
         }
     }
 
-    public void guardar() {
+    public void guardarPantalla() {
         //ins_codigo
         Pantalla pan_padre = null;
         if (nodoSeleccionad0 != null) {
