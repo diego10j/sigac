@@ -79,16 +79,21 @@ public class controladorAdministracion {
     public void guardarPantalla() {
         //ins_codigo
         Pantalla pan_padre = null;
-        if (nodoSeleccionad0 != null) {
-            pan_padre = (Pantalla) nodoSeleccionad0.getData();
-            if (pan_padre != null) {
-                panPantalla.setPanPanCodigo(servAdministracion.getPantalla(pan_padre.getPanCodigo().toString()));
+        try {
+            if (nodoSeleccionad0 != null) {
+                pan_padre = (Pantalla) nodoSeleccionad0.getData();
+                if (pan_padre != null) {
+                    panPantalla.setPanPanCodigo(servAdministracion.getPantalla(pan_padre.getPanCodigo().toString()));
+                } else {
+                    panPantalla.setPanPanCodigo(null);
+                }
             } else {
                 panPantalla.setPanPanCodigo(null);
             }
-        } else {
+        } catch (Exception e) {
             panPantalla.setPanPanCodigo(null);
         }
+
 
         String str_mensaje = servAdministracion.guardarPantalla(panPantalla);
         if (str_mensaje.isEmpty()) {
