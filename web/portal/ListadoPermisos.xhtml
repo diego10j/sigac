@@ -46,18 +46,14 @@
                                 target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-
-
                     <p:column headerText="CODIGO ROL" filterBy="#{tabla.rolCodigo}">
-                        <h:outputText value="#{tabla.rolCodigo}"/>
+                        <h:outputText value="#{tabla.rolCodigo.rolNombre}"/>
                     </p:column>
                     <p:column headerText="CODIGO DE PANTALLA" filterBy="#{tabla.panCodigo}">
-                        <h:outputText value="#{tabla.panCodigo}"/>                     
+                        <h:outputText value="#{tabla.panCodigo.panNombre}    -    #{tabla.panCodigo.panPath}"/>                     
                     </p:column>
-
                 </p:dataTable>
             </h:panelGroup>
-
         </h:form>
 
         <!-- CONFIGURACIÓN FORMULARIO -->

@@ -37,9 +37,7 @@ public class servicioRoles {
             //nombre tabla y atributo
             if (rol.getRolCodigo() == null) {
                 long lon_codigo = utilitario.getConexion().getMaximo("Roles", "rol_codigo", 1);
-                rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
-                System.out.println("ide " + lon_codigo);
-                rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));
+                rol.setRolCodigo(new Integer(String.valueOf(lon_codigo)));              
                 manejador.persist(rol);
             } else {
                 manejador.merge(rol);

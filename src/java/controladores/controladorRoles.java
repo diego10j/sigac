@@ -63,7 +63,7 @@ public class controladorRoles {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 rolRoles = new Roles();
                 cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                utilitario.ejecutarJavaScript("wdlgDetalleRol.hide()");
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
