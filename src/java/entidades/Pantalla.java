@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pantalla.findByPanCodigo", query = "SELECT p FROM Pantalla p WHERE p.panCodigo = :panCodigo"),
     @NamedQuery(name = "Pantalla.findByPanNombre", query = "SELECT p FROM Pantalla p WHERE p.panNombre = :panNombre")})
 public class Pantalla implements Serializable {
+    @Size(max = 200)
+    @Column(name = "pan_path", length = 200)
+    private String panPath;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -135,6 +138,14 @@ public class Pantalla implements Serializable {
     @Override
     public String toString() {
         return "entidades.Pantalla[ panCodigo=" + panCodigo + " ]";
+    }
+
+    public String getPanPath() {
+        return panPath;
+    }
+
+    public void setPanPath(String panPath) {
+        this.panPath = panPath;
     }
     
 }
