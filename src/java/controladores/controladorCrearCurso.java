@@ -11,7 +11,10 @@ import entidades.Cursos;
 import entidades.Distributivomxc;
 import entidades.Docentes;
 import entidades.Paralelo;
+import framework.reportes.GenerarReporte;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -56,6 +59,7 @@ public class controladorCrearCurso {
     private List<Distributivomxc> lisDistributivo;
     private Distributivomxc disDistributivo;
     private List listaMaterias;
+    private String str_path_reporte;
 
     @PostConstruct
     public void cargarDatos() {
@@ -79,6 +83,8 @@ public class controladorCrearCurso {
         disDistributivo.setDocCodigo(new Docentes());
         disDistributivo.setAsiCodigo(new Asignaturas());
         listaMaterias = servAsignatura.getListaAsignaturas();
+        
+        str_path_reporte=utilitario.getURL()+"/reportes/reporte"+utilitario.getVariable("ide_usua")+".pdf";
     }
 
     public void insertarDistributivo() {
@@ -123,9 +129,9 @@ public class controladorCrearCurso {
     }
 
     public void cargarDistributivo() {
-       
+
         lisDistributivo = servCrearCurso.getDistributivoCurso(creCrearc.getCreCodigo().toString());
-       
+
     }
 
     public void insertar() {
@@ -172,6 +178,16 @@ public class controladorCrearCurso {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
 
+    }
+
+    public void verReporteCursos() {
+        if (strPeriodoSeleccionado != null) {
+            GenerarReporte genera = new GenerarReporte();
+            Map p = new HashMap();
+            p.put("per_codigo", strPeriodoSeleccionado);
+            GenerarReporte generar = new GenerarReporte();
+            generar.generar(p, "/reportes/rep_docente/rep_distribucion_cursos.jasper");
+        }
     }
 
     /**
@@ -278,4 +294,12 @@ public class controladorCrearCurso {
     public void setListaMaterias(List listaMaterias) {
         this.listaMaterias = listaMaterias;
     }
+
+    public String getStr_path_reporte() {
+        return str_path_reporte;
+    }
+
+    public void setStr_path_reporte(String str_path_reporte) {
+        this.str_path_reporte = str_path_reporte;
+    }    
 }
