@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_distribucion_alumnos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="525bc9ed-aae4-46e6-87f1-5922507893a1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cur_codigo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\reportes\\rep_alumnos\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT mat_codigo,d.cur_codigo,d.curso,b.estudiantes,b.alu_codigo FROM matricula a
+INNER JOIN (
+SELECT alu_codigo, alu_apellidos || ' ' || alu_nombres as estudiantes  FROM alumnos
+)b on b.alu_codigo=a.alu_codigo
+INNER JOIN (
+SELECT cre_codigo,cur_codigo FROM crear_curso
+)c on c.cre_codigo=a.cre_codigo
+LEFT JOIN (
+SELECT cur_codigo,cur_anio as curso FROM cursos
+)d on d.cur_codigo=c.cur_codigo
+where d.cur_codigo in ($P!{cur_codigo})
+ORDER BY d.cur_codigo,b.estudiantes ]]>
+	</queryString>
+	<field name="mat_codigo" class="java.lang.Integer"/>
+	<field name="cur_codigo" class="java.lang.Integer"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="estudiantes" class="java.lang.String"/>
+	<field name="alu_codigo" class="java.lang.Integer"/>
+	<variable name="alu_codigo_1" class="java.lang.Integer" resetType="Group" resetGroup="cur_codigo" calculation="Count">
+		<variableExpression><![CDATA[$F{alu_codigo}]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<group name="cur_codigo">
+		<groupExpression><![CDATA[$F{cur_codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField>
+					<reportElement uuid="a624fabe-6faa-4c43-8962-c97d445c72a3" x="0" y="0" width="555" height="16"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="8809bef8-d63d-4ecf-9c6f-88f8113ce551" x="0" y="0" width="555" height="20"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="bc1dcd62-9011-4842-ace5-601fb04da88d" x="60" y="0" width="495" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTUDIANTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8d55305-80e4-48df-906d-cbe6f78fb4b1" x="0" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement uuid="148216a1-3b61-4ac0-837d-eef109d43483" x="60" y="0" width="495" height="14"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estudiantes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d296138c-4d6f-4f4f-a930-c53dae426342" x="0" y="0" width="60" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{alu_codigo_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4e0c0dd4-eacc-42bd-b4a7-d7a6058761cc" x="434" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="0bd62e39-3378-4737-a4ea-bc95f076ae1e" x="514" y="0" width="40" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
