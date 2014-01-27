@@ -18,7 +18,7 @@
                         <p:layoutUnit position="west" size="26%" header="Estructura de las Pantallas" resizable="true">
 
                             <p:tree id="arbPantalla" value="#{controladorAdministracion.raiz}" var="node"  
-                                    selectionMode="single"  style="width:99%;height:99.6%;overflow: hidden;display: block;"
+                                    selectionMode="single"  style="width:99%;height:99.6%;overflow: hidden;display: block;" cache="true" dynamic="true"
                                     selection="#{controladorAdministracion.nodoSeleccionad0}">  
 
                                 <p:ajax event="select" update=":frmPrincipal:tabulador:pnlTabela"  listener="#{controladorAdministracion.seleccionarArbol}" /> 
@@ -114,7 +114,7 @@
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
-                                <p:commandButton action="#{controladorAdministracion.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                                <p:commandButton action="#{controladorAdministracion.guardarPantalla}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>  
