@@ -83,8 +83,8 @@ public class controladorCrearCurso {
         disDistributivo.setDocCodigo(new Docentes());
         disDistributivo.setAsiCodigo(new Asignaturas());
         listaMaterias = servAsignatura.getListaAsignaturas();
-        
-        str_path_reporte=utilitario.getURL()+"/reportes/reporte"+utilitario.getVariable("ide_usua")+".pdf";
+
+        str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
     }
 
     public void insertarDistributivo() {
@@ -181,11 +181,20 @@ public class controladorCrearCurso {
     }
 
     public void verReporteCursos() {
-        if (strPeriodoSeleccionado != null) {            
+        if (strPeriodoSeleccionado != null) {
             Map p = new HashMap();
             p.put("per_codigo", strPeriodoSeleccionado);
-            GenerarReporte generar = new GenerarReporte();       
+            GenerarReporte generar = new GenerarReporte();
             generar.generar(p, "/reportes/rep_cursos/rep_distribucion_cursos.jasper");
+        }
+    }
+
+    public void verReporteAlumnosCursos() {
+        if (creCrearc != null) {
+            Map p = new HashMap();
+            p.put("cur_codigo", creCrearc.getCurCodigo().getCurCodigo().toString());
+            GenerarReporte generar = new GenerarReporte();
+            generar.generar(p, "/reportes/rep_cursos/rep_distribucion_alumnos.jasper");
         }
     }
 
@@ -300,5 +309,5 @@ public class controladorCrearCurso {
 
     public void setStr_path_reporte(String str_path_reporte) {
         this.str_path_reporte = str_path_reporte;
-    }    
+    }
 }
