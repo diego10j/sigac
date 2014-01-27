@@ -51,7 +51,7 @@ public class controladorAdministracion {
             }
         }
         nodos.setExpanded(true);
-        nodoSeleccionad0 = raiz;
+        nodoSeleccionad0 = nodos;
 
         panPantalla = new Pantalla();
 
@@ -81,8 +81,15 @@ public class controladorAdministracion {
         Pantalla pan_padre = null;
         if (nodoSeleccionad0 != null) {
             pan_padre = (Pantalla) nodoSeleccionad0.getData();
+            if (pan_padre != null) {
+                panPantalla.setPanPanCodigo(servAdministracion.getPantalla(pan_padre.getPanCodigo().toString()));
+            } else {
+                panPantalla.setPanPanCodigo(null);
+            }
+        } else {
+            panPantalla.setPanPanCodigo(null);
         }
-        panPantalla.setPanPanCodigo(pan_padre);
+
         String str_mensaje = servAdministracion.guardarPantalla(panPantalla);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
@@ -100,7 +107,7 @@ public class controladorAdministracion {
         cargarPantallas();
     }
 
-    private void cargarPantallas() {        
+    private void cargarPantallas() {
         if (nodoSeleccionad0 != null) {
             Pantalla pantalla = (Pantalla) nodoSeleccionad0.getData();
             if (pantalla == null || pantalla.getPanCodigo() == null) {
