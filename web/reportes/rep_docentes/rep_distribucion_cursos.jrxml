@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_distribucion_cursos" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="35d9bed3-dfd3-4c25-be16-0d53890031fa">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\reportes\\rep_docentes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="per_codigo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT a.cre_codigo,b.per_codigo,b.per_nombre,a.cre_observacion,d.pararelo,c.docentes from crear_curso a
@@ -17,6 +20,7 @@ SELECT doc_codigo,doc_nombres as docentes FROM  docentes
 LEFT JOIN(
 SELECT par_codigo,par_nombre as pararelo FROM paralelo
 )d on d.par_codigo=a.par_codigo
+where b.per_codigo in ($P!{per_codigo})
 ORDER BY b.per_nombre,a.cre_observacion,d.pararelo,c.docentes]]>
 	</queryString>
 	<field name="cre_codigo" class="java.lang.Integer"/>
