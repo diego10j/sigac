@@ -63,6 +63,14 @@
                                 target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
+                    <p:column width="60" headerText="ALUMNOS">
+                        <p:commandLink action="#{controladorCrearCurso.verReporteAlumnosCursos}" 
+                                       value="Alumnos"
+                                       title="Lista de Alumnos Inscritos" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');">
+                            <f:setPropertyActionListener
+                                target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
 
 
                     <p:column headerText="CURSO"   >
