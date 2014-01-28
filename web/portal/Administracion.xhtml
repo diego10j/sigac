@@ -12,7 +12,7 @@
     <ui:define name="contenido">
 
 
-        <p:tabView id="tabulador">
+        <p:tabView id="tabulador" style="height: 100%;display: block">
 
             <p:tab id="tba1" title="Pantallas">                    
                 <h:form prependId="false" id="frmPrincipal">     
@@ -125,9 +125,6 @@
                                 </p:commandLink>
                             </p:column>
 
-                            <p:column headerText="CÓDIGO" filterBy="#{tabla.rolCodigo}" sortBy="#{tabla.rolCodigo}" >
-                                <h:outputText value="#{tabla.rolCodigo}"/>
-                            </p:column>
                             <p:column headerText="NOMBRE" filterBy="#{tabla.rolNombre}" sortBy="#{tabla.rolNombre}">
                                 <h:outputText value="#{tabla.rolNombre}"/>                     
                             </p:column>
@@ -142,10 +139,76 @@
             </p:tab>
 
             <p:tab id="tba3" title="Permisos">
-                
+
+
+                <p:layout style="height: 100%;width: 100%;display: block;">
+                    <p:layoutUnit position="west" size="40%" header="Seleccione un Rol/Perfil" resizable="true">
+                        <h:form id="frmRolPermi">
+                            <p:dataTable value="#{controladorPermisos.lisRoles}" var="tabla" selectionMode="single"
+                                         selection="#{controladorPermisos.rolSeleccionado}" rowKey="#{tabla.rolCodigo}">
+                                <p:ajax event="rowSelect"  update=":tabulador:frmPermiso"  listener="#{controladorPermisos.seleccionarRol}"/>
+
+                                <p:column headerText="ROL/PERFIL">
+                                    <h:outputText value="#{tabla.rolNombre}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>
+                    </p:layoutUnit>
+
+
+                    <p:layoutUnit position="center">
+
+                        <h:form prependId="false" id="frmPermiso">
+                            <p:toolbar >
+                                <p:toolbarGroup>
+                                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorPermisos.insertar}" oncomplete="wdlgPermiso.show()" update=":frmFormularioPermiso" />
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                            <!-- CONFIGURACIÓN TABLA -->
+
+                            <h:panelGroup id="pnlTabelaPermiso"> 
+
+                                <p:dataTable value="#{controladorPermisos.listaPermisos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                                             rowIndexVar="rowNumber" filteredValue="#{controladorPermisos.filtroPermisos}">
+
+
+                                    <p:column width="60">
+                                        <p:commandLink     title="Modificar"
+                                                           oncomplete="wdlgPermiso.show()" 
+                                                           update=":frmFormularioPermiso">
+                                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                                            style="vertical-align: middle; border: none"/>
+                                            <f:setPropertyActionListener
+                                                target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
+
+                                        </p:commandLink>
+                                        <p:spacer width="10"/>
+                                        <p:commandLink action="#{controladorPermisos.eliminar}" 
+                                                       title="Eliminar"
+                                                       update=":tabulador:frmPermiso:pnlTabelaPermiso">
+                                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                                            style="vertical-align: middle; border: none"/>
+                                            <f:setPropertyActionListener
+                                                target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
+                                        </p:commandLink>
+                                    </p:column>               
+                                    <p:column headerText="NOMBRE PANTALLA" filterBy="#{tabla.panCodigo}">
+                                        <h:outputText value="#{tabla.panCodigo.panNombre}    -    #{tabla.panCodigo.panPath}"/>                     
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+
+
+
+
             </p:tab>
-            
-            
+
+
         </p:tabView>  
 
 
@@ -228,6 +291,50 @@
             </h:form>
         </p:dialog>
 
+
+
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhePermiso" 
+                  widgetVar="wdlgPermiso" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos Permisos" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormularioPermiso">
+                <p:panelGrid id="pnlPermi" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS PERMISOS">
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rol :"/>
+                            <h:outputText value="#{controladorPermisos.rolSeleccionado.rolNombre}"  />                   
+
+                            <h:outputText value="Pantalla:*"/>
+                            <p:selectOneMenu value="#{controladorPermisos.perPermisos.panCodigo.panCodigo}">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..."/>
+                                <f:selectItems value="#{controladorPermisos.comPantallas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>                                
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorPermisos.guardar()}" value="Guardar" icon="ui-guardar" update=":tabulador:frmPermiso" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
 
 
     </ui:define>
