@@ -85,22 +85,22 @@ public class servicioPermisos {
         return null;
     }
 
-    public List<Permisos> getPermisos() {
-        try {
-            Query q = manejador.createNamedQuery("Permisos.findAll");
-            return q.getResultList();
-        } catch (Exception e) {
+    public List<Permisos> getPermisosRol(String rolCodigo) {
+        if (rolCodigo != null) {
+            try {
+                Query q = manejador.createQuery("SELECT p FROM Permisos p WHERE p.rolCodigo.rolCodigo=" + rolCodigo);
+                return q.getResultList();
+            } catch (Exception e) {
+            }
         }
         return null;
     }
-
-       /**
+    /**
      * Lista para combos
      *
      * @return
      */
     /*public List getListaCursos() {
-        return utilitario.getConexion().consultar("select cur_codigo,cur_anio from cursos");
-    }*/
-    
+     return utilitario.getConexion().consultar("select cur_codigo,cur_anio from cursos");
+     }*/
 }
