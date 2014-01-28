@@ -186,4 +186,31 @@ public class servicioAdministracion {
     public List getListaPantallas() {
         return utilitario.getConexion().consultar("select pan_codigo,pan_nombre  from pantalla order by pan_nombre");
     }
+
+    /**
+     * Retorna los menus padres de un perfil
+     *
+     * @param rolCodigo
+     * @return
+     */
+    public List<Permisos> getPermisosPadres(String rolCodigo) {
+        try {
+            Query q = manejador.createQuery("SELECT p FROM Permisos p WHERE  p.rolCodigo.rolCodigo=" + rolCodigo + " and  p.panCodigo.panPanCodigo is null");
+            return q.getResultList();
+        } catch (Exception e) {
+            System.out.println("ERROR SQL PERMISOS:  " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Permisos> getPermisosHijos(String rolCodigo, String panCodigo) {
+        try {
+            
+            Query q = manejador.createQuery("SELECT p FROM Permisos p WHERE p.rolCodigo.rolCodigo=" + rolCodigo + " and  p.panCodigo.panPanCodigo=" + panCodigo);
+            return q.getResultList();
+        } catch (Exception e) {
+            System.out.println("ERROR SQL PERMISO HIJAS:  " + e.getMessage());
+        }
+        return null;
+    }
 }

@@ -30,9 +30,12 @@ public class controladorLogin {
     private String strClaveActua;
     private String strClaveNueva;
     private String strConfirmaClaveNueva;
+    
+    
 
     public void ingresar() {
         Conexion conexion = utilitario.getConexion();
+     
         if (conexion == null) {
             conexion = new Conexion();
             String str_recursojdbc = utilitario.getPropiedad("recursojdbc");
@@ -44,7 +47,7 @@ public class controladorLogin {
         String str_mensaje = ser_seguridad.ingresar(usuario, clave);
         if (str_mensaje.isEmpty()) {
             try {
-                utilitario.crearVariable("NICK", usuario);
+                utilitario.crearVariable("NICK", usuario); 
                 FacesContext.getCurrentInstance().getExternalContext().redirect("portal/index.jsf");
             } catch (Exception e) {
             }
@@ -53,7 +56,7 @@ public class controladorLogin {
         }
     }
 
-    public void salir() {
+       public void salir() {
         try {
             utilitario.ejecutarJavaScript("location.href='about:blank'");
             utilitario.ejecutarJavaScript("window.close()");
@@ -134,4 +137,5 @@ public class controladorLogin {
     public String getStrNick() {
         return utilitario.getVariable("NICK");
     }
+
 }
