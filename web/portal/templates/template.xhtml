@@ -16,7 +16,7 @@
     </h:head>
     <h:body>     
         <p:growl id="groMensajes" autoUpdate="true" />
-        
+
         <p:idleMonitor timeout="#{session.maxInactiveInterval * 500}" >            
             <p:ajax event="idle" listener="#{controladorLogin.salir}" onstart="diaCaduco.show();"  />  
         </p:idleMonitor>  
@@ -27,7 +27,7 @@
         </p:dialog>
 
         <p:layout fullPage="true">
-            <p:layoutUnit id="north" position="north" size="130">
+            <p:layoutUnit id="north" position="north" size="100">
                 <div class="cabecera">
                     <h:panelGrid columns="4" style="width: 99%" >
                         <h:panelGrid columns="2">
@@ -45,19 +45,15 @@
                         </h:panelGrid>
                     </h:panelGrid> 
                 </div>
-                <h:form>
+                <h:form transient="true">
                     <p:ajaxStatus style="position:fixed;right:5px;top:18px" >  
                         <f:facet name="start">  
                             <h:graphicImage value="../imagenes/im_cargar.gif" />  
                         </f:facet>  
-
                         <f:facet name="complete">  
                             <h:outputText value="" />  
                         </f:facet>  
                     </p:ajaxStatus> 
-                    <p:menubar>                       
-                        <p:menuitem value="Cambiar Clave"  icon="ui-clave" onclick="diaClave.show();" />                         
-                    </p:menubar>
                     <p:commandLink title="Cerrar Sesión" style="position:fixed;right:2px;top:1px;" action="#{controladorLogin.salir}">
                         <h:graphicImage value="../imagenes/im_salir_sistema.png" width="32" height="32"/>
                     </p:commandLink>
@@ -90,8 +86,14 @@
                 </h:form>
             </p:layoutUnit>
 
-       
+
             <p:layoutUnit id="center" position="center">
+                <h:form>
+                    <p:menubar  binding="#{controladorMenu.menu}" autoDisplay="false" >                       
+                        <p:menuitem value="Cambiar Clave"  icon="ui-clave" onclick="diaClave.show();" />                         
+                    </p:menubar> 
+                </h:form>
+
                 <ui:insert name="contenido">
                 </ui:insert>
             </p:layoutUnit>
