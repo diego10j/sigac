@@ -193,7 +193,7 @@
                                                 target="#{controladorPermisos.perPermisos}" value="#{tabla}" />
                                         </p:commandLink>
                                     </p:column>               
-                                    <p:column headerText="NOMBRE PANTALLA" filterBy="#{tabla.panCodigo.panNombre}">
+                                    <p:column headerText="NOMBRE PANTALLA" sortBy="#{tabla.panCodigo.panNombre}">
                                         <h:outputText value="#{tabla.panCodigo.panNombre}    -    #{tabla.panCodigo.panPath}"/>                     
                                     </p:column>
                                 </p:dataTable>
