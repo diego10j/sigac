@@ -159,7 +159,6 @@ public class servicioAdministracion {
     }
 
     public Pantalla getPantalla(String panCodigo) {
-
         try {
             Query q = manejador.createNamedQuery("Pantalla.findByPanCodigo");
             q.setParameter("panCodigo", new Integer(panCodigo));
@@ -167,5 +166,24 @@ public class servicioAdministracion {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public Roles getRol(String rolCodigo) {
+        try {
+            Query q = manejador.createNamedQuery("Roles.findByRolCodigo");
+            q.setParameter("rolCodigo", new Integer(rolCodigo));
+            return (Roles) q.getSingleResult();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaPantallas() {
+        return utilitario.getConexion().consultar("select pan_codigo,pan_nombre  from pantalla order by pan_nombre");
     }
 }
