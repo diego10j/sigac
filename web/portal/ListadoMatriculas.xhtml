@@ -12,56 +12,81 @@
 
     <ui:define name="contenido">
 
-        <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
-            <!-- CONFIGURACIÓN TABLA -->
 
-            <h:panelGroup id="pnlTabela"> 
+        <p:toolbar >
+            <p:toolbarGroup>
+                <h:outputText style="font-size: 18px;" value="PERÍODO LECTIVO ACTIVO : #{controladorMatriculas.perActivo.perNombre}"/>
+                <p:separator/>
+                <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+            </p:toolbarGroup>
+        </p:toolbar>
+        <!-- CONFIGURACIÓN TABLA -->
 
-                <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber" filteredValue="#{controladorMatriculas.filtroMatriculas}">
+        <p:layout style="height: 100%;width: 100%;display: block;">
+            <p:layoutUnit position="west" size="40%" header="Seleccione un Curso" resizable="true">
+                <h:form>
+                    <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
+                                 selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}">
+                        <p:ajax event="rowSelect" listener="#{controladorMatriculas.seleccionarCurso}" update=":frmPrincipal"/>
+                        <p:column headerText="CURSO" >
+                            <h:outputText value="#{tabla.curCodigo.curAnio}"/>
+                        </p:column>
+                        <p:column headerText="PARALELO" >
+                            <h:outputText value="#{tabla.parCodigo.parNombre}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
 
+            <p:layoutUnit position="center">
+                <h:form prependId="false" id="frmPrincipal">
+                    <h:panelGroup id="pnlTabela"> 
 
-                    <p:column width="60">
-                        <p:commandLink     title="Modificar"
-                                           oncomplete="wdlgDetalle.show()" 
-                                           update=":frmFormulario">
-                            <p:graphicImage url="../imagenes/im_modificar.png" 
-                                            style="vertical-align: middle; border: none"/>
-                            <f:setPropertyActionListener
-                                target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
-
-                        </p:commandLink>
-                        <p:spacer width="10"/>
-                        <p:commandLink action="#{controladorMatriculas.eliminar}" 
-                                       title="Eliminar"
-                                       update=":frmPrincipal:pnlTabela">
-                            <p:graphicImage url="../imagenes/im_eliminar.png" 
-                                            style="vertical-align: middle; border: none"/>
-                            <f:setPropertyActionListener
-                                target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
-                        </p:commandLink>
-                    </p:column>
+                        <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                                     rowIndexVar="rowNumber" filteredValue="#{controladorMatriculas.filtroMatriculas}">
 
 
-                    <p:column headerText="CÓDIGO MATRICULA" filterBy="#{tabla.matCodigo}" >
-                        <h:outputText value="#{tabla.matCodigo}"/>
-                    </p:column>
-                    <p:column headerText="CÓDIGO ALUMNO" filterBy="#{tabla.aluCodigo.aluCodigo}" >
-                        <h:outputText value="#{tabla.aluCodigo.aluCodigo}"/>                     
-                    </p:column>
-                    <p:column headerText="CÓDIGO CREAR CURSO" filterBy="#{tabla.creCodigo.creCodigo}"  >
-                        <h:outputText value="#{tabla.creCodigo.creCodigo}"/>                     
-                    </p:column>
+                            <p:column width="60">
+                                <p:commandLink     title="Modificar"
+                                                   oncomplete="wdlgDetalle.show()" 
+                                                   update=":frmFormulario">
+                                    <p:graphicImage url="../imagenes/im_modificar.png" 
+                                                    style="vertical-align: middle; border: none"/>
+                                    <f:setPropertyActionListener
+                                        target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
 
-                </p:dataTable>
-            </h:panelGroup>
+                                </p:commandLink>
+                                <p:spacer width="10"/>
+                                <p:commandLink action="#{controladorMatriculas.eliminar}" 
+                                               title="Eliminar"
+                                               update=":frmPrincipal:pnlTabela">
+                                    <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                                    style="vertical-align: middle; border: none"/>
+                                    <f:setPropertyActionListener
+                                        target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
+                                </p:commandLink>
+                            </p:column>
 
-        </h:form>
+
+                            <p:column headerText="CÓDIGO MATRICULA" filterBy="#{tabla.matCodigo}" >
+                                <h:outputText value="#{tabla.matCodigo}"/>
+                            </p:column>
+                            <p:column headerText="CÓDIGO ALUMNO" filterBy="#{tabla.aluCodigo.aluCodigo}" >
+                                <h:outputText value="#{tabla.aluCodigo.aluCodigo}"/>                     
+                            </p:column>
+                            <p:column headerText="CÓDIGO CREAR CURSO" filterBy="#{tabla.creCodigo.creCodigo}"  >
+                                <h:outputText value="#{tabla.creCodigo.creCodigo}"/>                     
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGroup>
+
+                </h:form>
+            </p:layoutUnit>
+
+        </p:layout>
+
+
 
         <!-- CONFIGURACIÓN FORMULARIO -->
         <p:dialog id="dlgDetalhe" 
