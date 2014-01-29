@@ -12,7 +12,7 @@
     </application>
     <converter>
         <converter-id>ConvertidorAutoCompletar</converter-id>
-        <converter-class>portal.convertidores.ConvertidorAutoCompletar</converter-class>
+        <converter-class>convertidores.ConvertidorAutoCompletar</converter-class>
     </converter>
 
 </faces-config>
