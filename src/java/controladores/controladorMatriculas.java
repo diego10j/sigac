@@ -68,6 +68,8 @@ public class controladorMatriculas {
             listaMatriculas = servMatriculas.getMatriculas(creCursoSeleccionado.getCreCodigo().toString());
         }
         comAlumnos = servAlumno.getListaAlumnos();
+        matMatricula = new Matricula();
+        matMatricula.setAluCodigo(new Alumnos());
     }
 
     public void seleccionarCurso(SelectEvent evt) {
@@ -98,11 +100,10 @@ public class controladorMatriculas {
             matMatricula.setCreCodigo(servCrearCurso.getCrearCurso(creCursoSeleccionado.getCreCodigo().toString()));
         }
         matMatricula.setAluCodigo(servAlumno.getAlumno(matMatricula.getAluCodigo().getAluCodigo().toString()));
-        
+
         String str_mensaje = servMatriculas.guardarMatriculas(matMatricula);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
-            matMatricula = new Matricula();
             cargarDatos();
             utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
         } else {
@@ -110,9 +111,8 @@ public class controladorMatriculas {
         }
 
     }
-    
-    
-      public List autocompletar(String query) {
+
+    public List autocompletar(String query) {
         List suggestions = new ArrayList();
         for (int i = 0; i < comAlumnos.size(); i++) {
             Object[] f = (Object[]) comAlumnos.get(i);
@@ -131,7 +131,6 @@ public class controladorMatriculas {
         }
         return suggestions;
     }
-
 
     public Matricula getMatMatricula() {
         return matMatricula;
@@ -188,5 +187,4 @@ public class controladorMatriculas {
     public void setComAlumnos(List comAlumnos) {
         this.comAlumnos = comAlumnos;
     }
-    
 }
