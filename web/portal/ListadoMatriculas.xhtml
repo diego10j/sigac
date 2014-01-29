@@ -13,20 +13,20 @@
     <ui:define name="contenido">
 
 
-        <p:toolbar >
-            <p:toolbarGroup>
-                <h:outputText style="font-size: 18px;" value="PERÍODO LECTIVO ACTIVO : #{controladorMatriculas.perActivo.perNombre}"/>
-                <p:separator/>
-                <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-            </p:toolbarGroup>
-        </p:toolbar>
+       
         <!-- CONFIGURACIÓN TABLA -->
 
         <p:layout style="height: 100%;width: 100%;display: block;">
             <p:layoutUnit position="west" size="40%" header="Seleccione un Curso" resizable="true">
                 <h:form>
+                    <div align="center">
+                    <h:outputText style="font-size: 22px;" value="#{controladorMatriculas.perActivo.perNombre}"/>
+                    </div>
                     <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
                                  selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}">
+                        <f:facet name="header">
+                             <h:outputText  value="#{controladorMatriculas.perActivo.perNombre}"/>
+                        </f:facet>
                         <p:ajax event="rowSelect" listener="#{controladorMatriculas.seleccionarCurso}" update=":frmPrincipal"/>
                         <p:column headerText="CURSO" >
                             <h:outputText value="#{tabla.curCodigo.curAnio}"/>
@@ -40,6 +40,11 @@
 
             <p:layoutUnit position="center">
                 <h:form prependId="false" id="frmPrincipal">
+                     <p:toolbar >
+            <p:toolbarGroup>
+                <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+            </p:toolbarGroup>
+        </p:toolbar>
                     <h:panelGroup id="pnlTabela"> 
 
                         <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
