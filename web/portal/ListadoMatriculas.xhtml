@@ -73,7 +73,7 @@
                                 </p:column>
 
 
-                              
+
                                 <p:column headerText="ALUMNO" filterBy="#{tabla.aluCodigo.aluCodigo}" >
                                     <h:outputText value="#{tabla.aluCodigo.aluNombres}"/>                     
                                 </p:column>                               
@@ -106,14 +106,24 @@
                     <p:fieldset legend="DATOS MATRICULAS">
 
                         <h:panelGrid columns="2">
-                            <h:outputText value="Código Matricula :*"/>
-                            <p:inputText value="#{controladorMatriculas.matMatricula.matCodigo}"  size="60" required="true" requiredMessage="Debe ingresar el Código matricula" />                   
+                            <h:outputText value="Curso :*"/>
+                            <h:outputText value="#{controladorMatriculas.creCursoSeleccionado.curCodigo.curAnio} #{controladorMatriculas.creCursoSeleccionado.parCodigo.parNombre}"/>
 
-                            <h:outputText value="Código Alumno :*"/>
-                            <p:inputText value="#{controladorMatriculas.matMatricula.aluCodigo.aluCodigo}" size="60" required="true" requiredMessage="Debe ingresar el Código Alumno" />
+                            <h:outputText value="Buscar Alumno :*"/>
 
-                            <h:outputText value="Código Crear Curso :*"/>
-                            <p:inputText value="#{controladorMatriculas.matMatricula.creCodigo.creCodigo}" size="14" required="true" requiredMessage="Debe ingresar el Código Crear Curso" />
+                            <p:autoComplete value="#{controladorMatriculas.matMatricula.aluCodigo.aluCodigo}" size="60" var="fila" maxResults="10" completeMethod="#{controladorMatriculas.autocompletar}" 
+                                            forceSelection="true" converter="ConvertidorAutoCompletar" itemLabel="#{fila[1]} #{fila[2]}" itemValue="#{fila}">
+                                <f:attribute name="lisOpciones" id="lisOpciones" value="#{controladorCreditos.listaEmpleadosDepartamento}"/>
+                                <p:column>  
+                                    #{fila[1]}
+                                </p:column>
+                                <p:column>  
+                                    #{fila[2]}
+                                </p:column>
+                                <p:column>  
+                                    #{fila[3]}
+                                </p:column>                               
+                            </p:autoComplete>
 
                         </h:panelGrid>
 
