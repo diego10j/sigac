@@ -51,10 +51,10 @@
                     <p:column headerText="CÓDIGO MATRICULA" filterBy="#{tabla.matCodigo}" >
                         <h:outputText value="#{tabla.matCodigo}"/>
                     </p:column>
-                    <p:column headerText="CÓDIGO ALUMNO" filterBy="#{tabla.aluCodigo}" >
+                    <p:column headerText="CÓDIGO ALUMNO" filterBy="#{tabla.aluCodigo.aluCodigo}" >
                         <h:outputText value="#{tabla.aluCodigo.aluCodigo}"/>                     
                     </p:column>
-                    <p:column headerText="CÓDIGO CREAR CURSO" filterBy="#{tabla.creCodigo}"  >
+                    <p:column headerText="CÓDIGO CREAR CURSO" filterBy="#{tabla.creCodigo.creCodigo}"  >
                         <h:outputText value="#{tabla.creCodigo.creCodigo}"/>                     
                     </p:column>
 
