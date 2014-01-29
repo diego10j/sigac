@@ -84,9 +84,9 @@ public class servicioMatriculas {
         return null;
     }
 
-    public List<Matricula> getMatriculas() {
+    public List<Matricula> getMatriculas(String creCodigo) {
         try {
-            Query q = manejador.createNamedQuery("Matricula.findAll");
+            Query q = manejador.createQuery("SELECT m FROM Matricula m WHERE m.creCodigo.creCodigo=" + creCodigo + " order by m.aluCodigo.aluNombres");
             return q.getResultList();
         } catch (Exception e) {
         }
