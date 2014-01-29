@@ -63,7 +63,8 @@ public class controladorMatriculas {
     }
     
     public void seleccionarCurso(SelectEvent evt) {
-        lisCrearCursos = servCrearCurso.getCursosCreados(perActivo.getPerCodigo().toString());
+        creCursoSeleccionado=(CrearCurso)evt.getObject();
+         listaMatriculas = servMatriculas.getMatriculas(creCursoSeleccionado.getCreCodigo().toString());
     }
     
     public void insertar() {
