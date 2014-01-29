@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Matriculas</ui:define>
+
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <!-- CONFIGURACIÓN TABLA -->
+
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" filteredValue="#{controladorMatriculas.filtroMatriculas}">
+
+
+                    <p:column width="60">
+                        <p:commandLink     title="Modificar"
+                                           oncomplete="wdlgDetalle.show()" 
+                                           update=":frmFormulario">
+                            <p:graphicImage url="../imagenes/im_modificar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
+
+                        </p:commandLink>
+                        <p:spacer width="10"/>
+                        <p:commandLink action="#{controladorMatriculas.eliminar}" 
+                                       title="Eliminar"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
+                        </p:commandLink>
+                    </p:column>
+
+
+                    <p:column headerText="CÓDIGO MATRICULA" filterBy="#{tabla.matCodigo}" >
+                        <h:outputText value="#{tabla.matCodigo}"/>
+                    </p:column>
+                    <p:column headerText="CÓDIGO ALUMNO" filterBy="#{tabla.aluCodigo}" >
+                        <h:outputText value="#{tabla.aluCodigo}"/>                     
+                    </p:column>
+                    <p:column headerText="CÓDIGO CREAR CURSO" filterBy="#{tabla.creCodigo}"  >
+                        <h:outputText value="#{tabla.creCodigo}"/>                     
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
+
+        </h:form>
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
+                  widgetVar="wdlgDetalle" 
+                  modal="true" 
+                  resizable="false"
+                  appendToBody="true"
+                  closable="true" 
+                  header="Datos de Matriculas" 
+                  styleClass="dialogoSemScroll" >
+
+            <h:form id="frmFormulario">
+                <p:panelGrid id="pnlDetalhe" 
+                             columns="1" 
+                             styleClass="panelGridSemBorda">
+
+                    <p:fieldset legend="DATOS MATRICULAS">
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Código Matricula :*"/>
+                            <p:inputText value="#{controladorMatriculas.matMatricula.matCodigo}"  size="60" required="true" requiredMessage="Debe ingresar el Código matricula" />                   
+
+                            <h:outputText value="Código Alumno :*"/>
+                            <p:inputText value="#{controladorMatriculas.matMatricula.aluCodigo.aluCodigo}" size="60" required="true" requiredMessage="Debe ingresar el Código Alumno" />
+
+                            <h:outputText value="Código Crear Curso :*"/>
+                            <p:inputText value="#{controladorMatriculas.matMatricula.creCodigo.creCodigo}" size="14" required="true" requiredMessage="Debe ingresar el Código Crear Curso" />
+
+                        </h:panelGrid>
+
+
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+
+                                <p:commandButton action="#{controladorMatriculas.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>

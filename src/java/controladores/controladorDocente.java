@@ -6,8 +6,10 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Docentes;
-import entidades.EquivalenciaConducta;
+import framework.reportes.GenerarReporte;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -31,10 +33,12 @@ public class controladorDocente {
     private List<Docentes> filtroDocentes;
     @EJB
     private servicioInstitucion servInstitucion;
+    private String str_path_reporte;
 
     @PostConstruct
     public void cargarDatos() {
         listaDocentes = servDocente.getDocentes();
+        str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
     }
 
     public void insertar() {
@@ -70,6 +74,20 @@ public class controladorDocente {
         }
     }
 
+    public void verReporteListadoDocentes() {
+        Map p = new HashMap();
+        p.put("", null);
+        GenerarReporte generar = new GenerarReporte();
+        generar.generar(p, "/reportes/rep_docentes/rep_docentes.jasper");
+    }
+
+    public void verReporteListadoCargoDocentes() {
+        Map p = new HashMap();
+        p.put("", null);
+        GenerarReporte generar = new GenerarReporte();
+        generar.generar(p, "/reportes/rep_docentes/rep_cargo_docente.jasper");
+    }
+
     public Docentes getDocDocente() {
         return docDocente;
     }
@@ -92,5 +110,13 @@ public class controladorDocente {
 
     public void setFiltroDocentes(List<Docentes> filtroDocentes) {
         this.filtroDocentes = filtroDocentes;
+    }
+
+    public String getStr_path_reporte() {
+        return str_path_reporte;
+    }
+
+    public void setStr_path_reporte(String str_path_reporte) {
+        this.str_path_reporte = str_path_reporte;
     }
 }
