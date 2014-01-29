@@ -33,7 +33,7 @@ public class servicioAlumno {
 
     public String guardarAlumno(Alumnos alumno) {
         try {
-            utx.begin();           
+            utx.begin();
             if (alumno.getAluCodigo() == null) {
                 //Guardo
                 long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
@@ -42,7 +42,7 @@ public class servicioAlumno {
             } else {
                 //modifica             
                 manejador.merge(alumno);
-            }            
+            }
             utx.commit();
         } catch (Exception e) {
             try {
@@ -82,16 +82,16 @@ public class servicioAlumno {
         return null;
     }
 
-     public Representante getRepresentanteAlumno(String aluCodigo) {
+    public Representante getRepresentanteAlumno(String aluCodigo) {
 
         try {
             Query q = manejador.createQuery("SELECT r FROM Representante r WHERE r.aluCodigo.aluCodigo =" + aluCodigo);
-            return (Representante) q.getSingleResult();            
+            return (Representante) q.getSingleResult();
         } catch (Exception e) {
         }
         return null;
     }
-    
+
     public List<Alumnos> getAlumnos() {
         try {
             Query q = manejador.createNamedQuery("Alumnos.findAll");
@@ -99,5 +99,14 @@ public class servicioAlumno {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    /**
+     * Lista para autocompletar
+     *
+     * @return
+     */
+    public List getListaAlumnos() {
+        return utilitario.getConexion().consultar("select alu_codigo,alu_apellidos,alu_nombres,alu_cedula from alumnos order by alu_apellidos");
     }
 }
