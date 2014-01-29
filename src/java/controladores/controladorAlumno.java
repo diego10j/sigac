@@ -39,6 +39,7 @@ public class controladorAlumno {
     @EJB
     private servicioInstitucion servInstitucion;
     private String str_path_reporte;
+     
 
     @PostConstruct
     public void cargarDatos() {
@@ -46,6 +47,7 @@ public class controladorAlumno {
         aluAlumno = new Alumnos();
         repRepresentante = new Representante();
         str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
+        
     }
 
     public void insertar() {
@@ -107,7 +109,7 @@ public class controladorAlumno {
         GenerarReporte generar=new GenerarReporte();
         generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
     }
-
+    
     public Alumnos getAluAlumno() {
         return aluAlumno;
     }
@@ -146,5 +148,5 @@ public class controladorAlumno {
 
     public void setStr_path_reporte(String str_path_reporte) {
         this.str_path_reporte = str_path_reporte;
-    }    
+    }
 }

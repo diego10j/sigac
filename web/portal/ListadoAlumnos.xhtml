@@ -18,6 +18,7 @@
                     <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorAlumno.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
                     <p:separator/>
                     <p:commandButton value="Ver Listado Alumnos" action="#{controladorAlumno.verReporteListadoAlumnos}" oncomplete="window.open('#{controladorAlumno.str_path_reporte}');" />
+                    
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -134,7 +135,7 @@
 
                         <h:panelGrid columns="4">
                             <h:outputText value="Fecha de Nacimiento :*"/>
-                            <p:calendar value="#{controladorAlumno.aluAlumno.aluFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Alumno"/>
+                            <p:calendar value="#{controladorAlumno.aluAlumno.aluFechanacimiento}" pattern="dd-MM-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Alumno"/>
                             <h:outputText value="Lugar de Nacimiento :"/>
                             <p:inputText  value="#{controladorAlumno.aluAlumno.aluLugarnacimiento}"/>
                         </h:panelGrid>
