@@ -92,4 +92,13 @@ public class servicioTipoAsignaturas {
         }
         return null;
     }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaTipoAsignatura() {
+        return utilitario.getConexion().consultar("select tip_codigo,tip_nombre from tipoasignaturas order by tip_nombre");
+    }
 }
