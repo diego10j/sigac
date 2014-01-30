@@ -6,7 +6,6 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Docentes;
-import entidades.Institucion;
 import entidades.Roles;
 import entidades.Usuario;
 import java.util.List;
@@ -14,8 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.behavior.AjaxBehavior;
-import javax.faces.event.AjaxBehaviorEvent;
 import servcios.servicioDocente;
 import servcios.servicioInstitucion;
 import servcios.servicioRoles;
