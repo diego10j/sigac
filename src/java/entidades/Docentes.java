@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Docentes.findByDocEmail", query = "SELECT d FROM Docentes d WHERE d.docEmail = :docEmail"),
     @NamedQuery(name = "Docentes.findByDocHojavida", query = "SELECT d FROM Docentes d WHERE d.docHojavida = :docHojavida")})
 public class Docentes implements Serializable {
+    @OneToMany(mappedBy = "docCodigo")
+    private List<Usuario> usuarioList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -211,6 +213,15 @@ public class Docentes implements Serializable {
     @Override
     public String toString() {
         return "entidades.Docentes[ docCodigo=" + docCodigo + " ]";
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
     
 }
