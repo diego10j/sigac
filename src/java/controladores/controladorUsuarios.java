@@ -88,10 +88,13 @@ public class controladorUsuarios {
         usuUsuario.setInsCodigo(servInstitucion.getIntitucion());
         if (usuUsuario.getDocCodigo().getDocCodigo() != null) {
             usuUsuario.setDocCodigo(servDocente.getDocente(usuUsuario.getDocCodigo().getDocCodigo().toString()));
+        } else {
+            usuUsuario.setDocCodigo(null);
         }
         if (usuUsuario.getRolCodigo().getRolCodigo() != null) {
             usuUsuario.setRolCodigo(servRoles.getRoles(usuUsuario.getRolCodigo().getRolCodigo().toString()));
         }
+
         String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
