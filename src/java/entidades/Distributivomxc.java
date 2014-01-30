@@ -5,6 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Distributivomxc.findAll", query = "SELECT d FROM Distributivomxc d"),
     @NamedQuery(name = "Distributivomxc.findByDisCodigo", query = "SELECT d FROM Distributivomxc d WHERE d.disCodigo = :disCodigo")})
 public class Distributivomxc implements Serializable {
+    @OneToMany(mappedBy = "disCodigo")
+    private List<NotaDestrezaparcial> notaDestrezaparcialList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -108,6 +113,15 @@ public class Distributivomxc implements Serializable {
     @Override
     public String toString() {
         return "entidades.Distributivomxc[ disCodigo=" + disCodigo + " ]";
+    }
+
+    @XmlTransient
+    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
+        return notaDestrezaparcialList;
+    }
+
+    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
+        this.notaDestrezaparcialList = notaDestrezaparcialList;
     }
     
 }
