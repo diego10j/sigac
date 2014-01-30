@@ -27,7 +27,8 @@
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
-                                           update=":frmFormulario">
+                                           update=":frmFormulario"
+                                           action="#{controladorUsuarios.madificar}">
                             <p:graphicImage url="../imagenes/im_modificar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
@@ -46,22 +47,22 @@
                     </p:column>
 
 
-                    <p:column headerText="CODIGO" filterBy="#{tabla.usuCodigo}" sortBy="#{tabla.usuCodigo}" >
-                        <h:outputText value="#{tabla.usuCodigo}"/>
-                    </p:column>
                     <p:column headerText="NOMBRE" filterBy="#{tabla.usuNombre}" sortBy="#{tabla.usuNombre}">
                         <h:outputText value="#{tabla.usuNombre}"/>                     
                     </p:column>
+                    <p:column headerText="ROL" sortBy="#{tabla.rolCodigo.rolNombre}">
+                        <h:outputText value="#{tabla.rolCodigo.rolNombre}"/>
+                    </p:column>
                     <p:column headerText="NICK" filterBy="#{tabla.usuNick}" sortBy="#{tabla.usuNick}">
                         <h:outputText value="#{tabla.usuNick}"/>
-                    </p:column>
-                    <p:column headerText="CLAVE" filterBy="#{tabla.usuClave}" sortBy="#{tabla.usuClave}">
-                        <h:outputText value="#{tabla.usuClave}"/>
-                    </p:column>
+                    </p:column>                    
                     <p:column headerText="FECHA DE CREACIÓN" sortBy="#{tabla.usuFechacreacion}" >
                         <h:outputText value="#{tabla.usuFechacreacion}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
+                    </p:column>
+                    <p:column headerText="DOCENTE" filterBy="#{tabla.docCodigo.docNombres}" sortBy="#{tabla.docCodigo.docNombres}">
+                        <h:outputText value="#{tabla.docCodigo.docNombres}"/>
                     </p:column>
 
                 </p:dataTable>
@@ -86,20 +87,31 @@
                              styleClass="panelGridSemBorda">
 
                     <p:fieldset legend="DATOS DE LOS USUARIOS">
-
+                        <p>Cuando se crean un usuario nuevo la clave es la misma que el valor del campo <strong>Nick </strong></p>
                         <h:panelGrid columns="2">
+
+                            <h:outputText value="Rol :"/>
+                            <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.rolCodigo.rolCodigo}" required="true" requiredMessage="Debe seleccionar un rol" >
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Rol ..." />
+                                <f:selectItems value="#{controladorUsuarios.comRoles}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
+
                             <h:outputText value="Nombre :*"/>
                             <p:inputText value="#{controladorUsuarios.usuUsuario.usuNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
 
                             <h:outputText value="Nick :*"/>
-                            <p:inputText value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />
+                            <p:inputText   value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />                           
+                           
 
-                            <h:outputText value="Password:*"/>
-                            <p:inputText value="#{controladorUsuarios.usuUsuario.usuClave}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Password" />
-
+                           
                             <h:outputText value="Fecha de creación :*"/>
                             <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
 
+                            <h:outputText value="Docente :"/>
+                            <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
+                                <f:selectItems value="#{controladorUsuarios.comDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
                         </h:panelGrid>
 
                     </p:fieldset>
