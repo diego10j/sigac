@@ -95,7 +95,7 @@ public class servicioCursos {
         return null;
     }
 
-       /**
+    /**
      * Lista para combos
      *
      * @return
@@ -103,5 +103,4 @@ public class servicioCursos {
     public List getListaCursos() {
         return utilitario.getConexion().consultar("select cur_codigo,cur_anio from cursos");
     }
-    
 }

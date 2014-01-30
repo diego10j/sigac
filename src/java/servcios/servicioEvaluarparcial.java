@@ -92,4 +92,13 @@ public class servicioEvaluarparcial {
         }
         return null;
     }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaEvaluarParcial() {
+        return utilitario.getConexion().consultar("SELECT eva_codigo,eva_nombre from evaluarparcial order by eva_nombre");
+    }
 }

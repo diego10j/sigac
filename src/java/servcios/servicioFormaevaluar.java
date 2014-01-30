@@ -92,4 +92,13 @@ public class servicioFormaevaluar {
         }
         return null;
     }
+
+    /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaFormasEvaluar() {
+        return utilitario.getConexion().consultar("SELECT for_codigo,for_nombre from formaevaluar");
+    }
 }
