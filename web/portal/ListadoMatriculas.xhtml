@@ -54,7 +54,8 @@
                                 <p:column width="60">
                                     <p:commandLink     title="Modificar"
                                                        oncomplete="wdlgDetalle.show()" 
-                                                       update=":frmFormulario">
+                                                       update=":frmFormulario"
+                                                       action="#{controladorMatriculas.modificar}">
                                         <p:graphicImage url="../imagenes/im_modificar.png" 
                                                         style="vertical-align: middle; border: none"/>
                                         <f:setPropertyActionListener
@@ -75,6 +76,7 @@
 
 
                                 <p:column headerText="ALUMNO" filterBy="#{tabla.aluCodigo.aluCodigo}" >
+                                    <h:outputText value="#{tabla.aluCodigo.aluApellidos}"/>                     
                                     <h:outputText value="#{tabla.aluCodigo.aluNombres}"/>                     
                                 </p:column>                               
 
@@ -111,9 +113,10 @@
 
                             <h:outputText value="Buscar Alumno :*"/>
 
-                            <p:autoComplete value="#{controladorMatriculas.matMatricula.aluCodigo.aluCodigo}" size="60" var="fila" maxResults="10" completeMethod="#{controladorMatriculas.autocompletar}" 
-                                            forceSelection="true" converter="ConvertidorAutoCompletar" itemLabel="#{fila[1]} #{fila[2]}" itemValue="#{fila}">
-                                <f:attribute name="lisOpciones" id="lisOpciones" value="#{controladorCreditos.listaEmpleadosDepartamento}"/>
+                            <p:autoComplete value="#{controladorMatriculas.objAlumno}" size="60" var="fila" maxResults="10" completeMethod="#{controladorMatriculas.autocompletar}" 
+                                            forceSelection="true" converter="ConvertidorAutoCompletar" itemLabel="#{fila[1]} #{fila[2]}" itemValue="#{fila}" required="true" requiredMessage="Debe seleccionar un Alumno"> 
+                                <f:attribute name="lisOpciones" id="lisOpciones" value="#{controladorMatriculas.comAlumnos}"/>
+
                                 <p:column>  
                                     #{fila[1]}
                                 </p:column>
