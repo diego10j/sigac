@@ -37,7 +37,7 @@ public class servicioUsuarios {
             manejador.joinTransaction();
             //nombre tabla y atributo
             if (usuario.getUsuCodigo() == null) {
-                long lon_codigo = utilitario.getConexion().getMaximo("Usuario", "cur_codigo", 1);
+                long lon_codigo = utilitario.getConexion().getMaximo("Usuario", "usu_codigo", 1);
                 usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));
                 System.out.println("ide " + lon_codigo);
                 usuario.setUsuCodigo(new Integer(String.valueOf(lon_codigo)));

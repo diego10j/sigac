@@ -90,4 +90,13 @@ public class servicioRoles {
         }
         return null;
     }
+    
+     /**
+     * Lista para combos
+     *
+     * @return
+     */
+    public List getListaRoles() {
+        return utilitario.getConexion().consultar("select rol_codigo,rol_nombre from roles order by rol_nombre");
+    }
 }
