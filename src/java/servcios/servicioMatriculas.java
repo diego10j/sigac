@@ -34,10 +34,9 @@ public class servicioMatriculas {
         try {
             utx.begin();
             manejador.joinTransaction();
-            if (matricula.getMatCodigo() == null) {
+            if (matricula.getMatCodigo() == null || matricula.getMatCodigo().toString().isEmpty()) {
                 //nombre tabla y atributo
-                long lon_codigo = utilitario.getConexion().getMaximo("matricula", "mat_codigo", 1);
-                System.out.println("ide " + lon_codigo);
+                long lon_codigo = utilitario.getConexion().getMaximo("matricula", "mat_codigo", 1);                
                 matricula.setMatCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(matricula);
             } else {

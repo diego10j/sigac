@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("ConvertidorAutoCompletar")
 public class ConvertidorAutoCompletar implements Converter {
 
-     private  List lis_opciones;
+    private List lis_opciones;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {
@@ -26,15 +26,15 @@ public class ConvertidorAutoCompletar implements Converter {
             return null;
         } else {
             try {
-                String value = submittedValue;                
-               lis_opciones=(List) component.getAttributes().get("lisOpciones");                
+                String value = submittedValue;
+                lis_opciones = (List) component.getAttributes().get("lisOpciones");
                 if (lis_opciones != null) {
                     for (int i = 0; i < lis_opciones.size(); i++) {
-                        Object[] fila = (Object[]) lis_opciones.get(i);                        
-                            String f = fila[0] + "";                            
-                            if (f.trim().equals(value)) {
-                                return fila;
-                            }                        
+                        Object[] fila = (Object[]) lis_opciones.get(i);
+                        String f = fila[0] + "";
+                        if (f.trim().equals(value)) {
+                            return fila;
+                        }
                     }
                 }
             } catch (Exception exception) {
@@ -66,5 +66,4 @@ public class ConvertidorAutoCompletar implements Converter {
     public void setLis_opciones(List lis_opciones) {
         this.lis_opciones = lis_opciones;
     }
-    
 }
