@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Matricula.findByMatDisciplinageneral", query = "SELECT m FROM Matricula m WHERE m.matDisciplinageneral = :matDisciplinageneral"),
     @NamedQuery(name = "Matricula.findByMatAprobado", query = "SELECT m FROM Matricula m WHERE m.matAprobado = :matAprobado")})
 public class Matricula implements Serializable {
+    @Column(name = "mat_activo")
+    private Boolean matActivo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -146,6 +148,14 @@ public class Matricula implements Serializable {
     @Override
     public String toString() {
         return "entidades.Matricula[ matCodigo=" + matCodigo + " ]";
+    }
+
+    public Boolean getMatActivo() {
+        return matActivo;
+    }
+
+    public void setMatActivo(Boolean matActivo) {
+        this.matActivo = matActivo;
     }
     
 }

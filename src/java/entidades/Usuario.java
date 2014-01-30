@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuClave = :usuClave"),
     @NamedQuery(name = "Usuario.findByUsuFechacreacion", query = "SELECT u FROM Usuario u WHERE u.usuFechacreacion = :usuFechacreacion")})
 public class Usuario implements Serializable {
+    @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
+    @ManyToOne
+    private Docentes docCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -149,6 +152,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entidades.Usuario[ usuCodigo=" + usuCodigo + " ]";
+    }
+
+    public Docentes getDocCodigo() {
+        return docCodigo;
+    }
+
+    public void setDocCodigo(Docentes docCodigo) {
+        this.docCodigo = docCodigo;
     }
     
 }
