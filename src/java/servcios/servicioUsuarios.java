@@ -51,7 +51,7 @@ public class servicioUsuarios {
             try {
                 utx.rollback();
             } catch (Exception e1) {
-            }
+            }            
             e.printStackTrace();
             return e.getMessage();
         }
