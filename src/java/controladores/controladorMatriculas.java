@@ -46,6 +46,7 @@ public class controladorMatriculas {
     @EJB
     private servicioAlumno servAlumno;
     private List comAlumnos;
+    private Object objAlumno;
 
     @PostConstruct
     public void cargarDatos() {
@@ -80,6 +81,7 @@ public class controladorMatriculas {
     public void insertar() {
         matMatricula = new Matricula();
         matMatricula.setAluCodigo(new Alumnos());
+        objAlumno = null;
     }
 
     public void eliminar() {
@@ -94,13 +96,23 @@ public class controladorMatriculas {
         }
     }
 
+    public void modificar() {
+        objAlumno = new Object[]{matMatricula.getAluCodigo().getAluCodigo(), matMatricula.getAluCodigo().getAluApellidos(), matMatricula.getAluCodigo().getAluNombres(), matMatricula.getAluCodigo().getAluCedula()};
+    }
+
+    public void seleccionarAlumno(SelectEvent evt) {
+        objAlumno = evt.getObject();
+    }
+
     public void guardar() {
 
         if (creCursoSeleccionado != null) {
             matMatricula.setCreCodigo(servCrearCurso.getCrearCurso(creCursoSeleccionado.getCreCodigo().toString()));
         }
-        matMatricula.setAluCodigo(servAlumno.getAlumno(matMatricula.getAluCodigo().getAluCodigo().toString()));
 
+        if (objAlumno != null) {
+            matMatricula.setAluCodigo(servAlumno.getAlumno(((Object[]) objAlumno)[0] + ""));
+        }
         String str_mensaje = servMatriculas.guardarMatriculas(matMatricula);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
@@ -184,7 +196,11 @@ public class controladorMatriculas {
         return comAlumnos;
     }
 
-    public void setComAlumnos(List comAlumnos) {
-        this.comAlumnos = comAlumnos;
+    public Object getObjAlumno() {
+        return objAlumno;
+    }
+
+    public void setObjAlumno(Object objAlumno) {
+        this.objAlumno = objAlumno;
     }
 }
