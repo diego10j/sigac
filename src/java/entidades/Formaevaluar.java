@@ -33,6 +33,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Formaevaluar.findByForCodigo", query = "SELECT f FROM Formaevaluar f WHERE f.forCodigo = :forCodigo"),
     @NamedQuery(name = "Formaevaluar.findByForNombre", query = "SELECT f FROM Formaevaluar f WHERE f.forNombre = :forNombre")})
 public class Formaevaluar implements Serializable {
+    @OneToMany(mappedBy = "forCodigo")
+    private List<NotaDestrezaparcial> notaDestrezaparcialList;
+    @OneToMany(mappedBy = "forCodigo")
+    private List<Comportamientoparcial> comportamientoparcialList;
+    @OneToMany(mappedBy = "forCodigo")
+    private List<Registroasistencia> registroasistenciaList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -100,6 +106,33 @@ public class Formaevaluar implements Serializable {
     @Override
     public String toString() {
         return "entidades.Formaevaluar[ forCodigo=" + forCodigo + " ]";
+    }
+
+    @XmlTransient
+    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
+        return notaDestrezaparcialList;
+    }
+
+    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
+        this.notaDestrezaparcialList = notaDestrezaparcialList;
+    }
+
+    @XmlTransient
+    public List<Comportamientoparcial> getComportamientoparcialList() {
+        return comportamientoparcialList;
+    }
+
+    public void setComportamientoparcialList(List<Comportamientoparcial> comportamientoparcialList) {
+        this.comportamientoparcialList = comportamientoparcialList;
+    }
+
+    @XmlTransient
+    public List<Registroasistencia> getRegistroasistenciaList() {
+        return registroasistenciaList;
+    }
+
+    public void setRegistroasistenciaList(List<Registroasistencia> registroasistenciaList) {
+        this.registroasistenciaList = registroasistenciaList;
     }
     
 }

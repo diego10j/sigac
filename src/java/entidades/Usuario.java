@@ -6,6 +6,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuClave = :usuClave"),
     @NamedQuery(name = "Usuario.findByUsuFechacreacion", query = "SELECT u FROM Usuario u WHERE u.usuFechacreacion = :usuFechacreacion")})
 public class Usuario implements Serializable {
+    @Column(name = "usu_activo")
+    private Boolean usuActivo;
+    @OneToMany(mappedBy = "ideUsua")
+    private List<SisBloqueo> sisBloqueoList;
     @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
     @ManyToOne
     private Docentes docCodigo;
@@ -160,6 +167,23 @@ public class Usuario implements Serializable {
 
     public void setDocCodigo(Docentes docCodigo) {
         this.docCodigo = docCodigo;
+    }
+
+    public Boolean getUsuActivo() {
+        return usuActivo;
+    }
+
+    public void setUsuActivo(Boolean usuActivo) {
+        this.usuActivo = usuActivo;
+    }
+
+    @XmlTransient
+    public List<SisBloqueo> getSisBloqueoList() {
+        return sisBloqueoList;
+    }
+
+    public void setSisBloqueoList(List<SisBloqueo> sisBloqueoList) {
+        this.sisBloqueoList = sisBloqueoList;
     }
     
 }

@@ -37,6 +37,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Matricula.findByMatDisciplinageneral", query = "SELECT m FROM Matricula m WHERE m.matDisciplinageneral = :matDisciplinageneral"),
     @NamedQuery(name = "Matricula.findByMatAprobado", query = "SELECT m FROM Matricula m WHERE m.matAprobado = :matAprobado")})
 public class Matricula implements Serializable {
+    @OneToMany(mappedBy = "matCodigo")
+    private List<NotaDestrezaparcial> notaDestrezaparcialList;
+    @OneToMany(mappedBy = "matCodigo")
+    private List<Comportamientoparcial> comportamientoparcialList;
+    @OneToMany(mappedBy = "matCodigo")
+    private List<Registroasistencia> registroasistenciaList;
     @Column(name = "mat_activo")
     private Boolean matActivo;
     private static final long serialVersionUID = 1L;
@@ -156,6 +162,33 @@ public class Matricula implements Serializable {
 
     public void setMatActivo(Boolean matActivo) {
         this.matActivo = matActivo;
+    }
+
+    @XmlTransient
+    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
+        return notaDestrezaparcialList;
+    }
+
+    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
+        this.notaDestrezaparcialList = notaDestrezaparcialList;
+    }
+
+    @XmlTransient
+    public List<Comportamientoparcial> getComportamientoparcialList() {
+        return comportamientoparcialList;
+    }
+
+    public void setComportamientoparcialList(List<Comportamientoparcial> comportamientoparcialList) {
+        this.comportamientoparcialList = comportamientoparcialList;
+    }
+
+    @XmlTransient
+    public List<Registroasistencia> getRegistroasistenciaList() {
+        return registroasistenciaList;
+    }
+
+    public void setRegistroasistenciaList(List<Registroasistencia> registroasistenciaList) {
+        this.registroasistenciaList = registroasistenciaList;
     }
     
 }

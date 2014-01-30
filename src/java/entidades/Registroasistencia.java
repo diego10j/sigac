@@ -35,6 +35,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Registroasistencia.findByRegTotalfaltas", query = "SELECT r FROM Registroasistencia r WHERE r.regTotalfaltas = :regTotalfaltas"),
     @NamedQuery(name = "Registroasistencia.findByRegDiaslaborados", query = "SELECT r FROM Registroasistencia r WHERE r.regDiaslaborados = :regDiaslaborados")})
 public class Registroasistencia implements Serializable {
+    @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
+    @ManyToOne
+    private Matricula matCodigo;
+    @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
+    @ManyToOne
+    private Formaevaluar forCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -152,6 +158,22 @@ public class Registroasistencia implements Serializable {
     @Override
     public String toString() {
         return "entidades.Registroasistencia[ regCodigo=" + regCodigo + " ]";
+    }
+
+    public Matricula getMatCodigo() {
+        return matCodigo;
+    }
+
+    public void setMatCodigo(Matricula matCodigo) {
+        this.matCodigo = matCodigo;
+    }
+
+    public Formaevaluar getForCodigo() {
+        return forCodigo;
+    }
+
+    public void setForCodigo(Formaevaluar forCodigo) {
+        this.forCodigo = forCodigo;
     }
     
 }
