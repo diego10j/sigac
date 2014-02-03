@@ -45,10 +45,6 @@
                         </p:commandLink>
                     </p:column>
 
-
-                    <p:column headerText="CODIGO" filterBy="#{tabla.perCodigo}" sortBy="#{tabla.perCodigo}" >
-                        <h:outputText value="#{tabla.perCodigo}"/>
-                    </p:column>
                     <p:column headerText="NOMBRE" filterBy="#{tabla.perNombre}" sortBy="#{tabla.perNombre}">
                         <h:outputText value="#{tabla.perNombre}"/>                     
                     </p:column>
@@ -62,7 +58,7 @@
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="ESTADO DEL PERIODO" filterBy="#{tabla.perActivo}" sortBy="#{tabla.perActivo}">
+                    <p:column headerText="ESTADO DEL PERIODO"  sortBy="#{tabla.perActivo}">
                         <h:outputText value="#{tabla.perActivo}"/>                     
                     </p:column>
 
