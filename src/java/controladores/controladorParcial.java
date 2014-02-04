@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 import servcios.servicioDocente;
@@ -163,6 +164,33 @@ public class controladorParcial {
         } catch (Exception e) {
         }
 
+        boolean valida = true;
+        //Valida que todas las notas esten en rango de 0 a 10
+
+        if (not_trabajo > 10 & not_trabajo < 0) {
+            fila[11] = null;
+            valida = false;
+        }
+
+        if (not_act_indiv > 10 & not_act_indiv < 0) {
+            fila[3] = null;
+            valida = false;
+        }
+
+        if (not_act_group > 10 & not_act_group < 0) {
+            fila[4] = null;
+            valida = false;
+        }
+
+        if (not_leccion > 10 & not_leccion < 0) {
+            fila[5] = null;
+            valida = false;
+        }
+
+        if (not_evaluacion > 10 & not_evaluacion < 0) {
+            fila[6] = null;
+            valida = false;
+        }
 
         double total = not_act_group + not_act_indiv + not_evaluacion + not_leccion + not_trabajo;
         double parcial = total / 5; //Nota del parcial
@@ -173,6 +201,17 @@ public class controladorParcial {
         //////////
 
         lisNotasParcial.set(event.getRowIndex(), fila);
+
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":parcial");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
+
+        if (valida == false) {
+            System.out.println(event.getColumn().getClientId() + " ././..");
+            System.out.println(event.getComponent().getClientId() + " ././..");;
+            requestContext.update("@this");
+        }
+
 
     }
 
