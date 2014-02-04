@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 import servcios.servicioDocente;
 import servcios.servicioEvaluarparcial;
@@ -128,6 +129,51 @@ public class controladorParcial {
         } else {
             utilitario.agregarMensajeInfo("Seleccione un Curso y una Asignatura", "");
         }
+    }
+
+    public void cabioNota(CellEditEvent event) {
+
+        Object[] fila = (Object[]) lisNotasParcial.get(event.getRowIndex());
+
+        double not_trabajo = 0;
+        double not_act_indiv = 0;
+        double not_act_group = 0;
+        double not_leccion = 0;
+        double not_evaluacion = 0;
+
+
+        try {
+            not_trabajo = Double.parseDouble(fila[11] + "");
+        } catch (Exception e) {
+        }
+        try {
+            not_act_indiv = Double.parseDouble(fila[3] + "");
+        } catch (Exception e) {
+        }
+        try {
+            not_act_group = Double.parseDouble(fila[4] + "");
+        } catch (Exception e) {
+        }
+        try {
+            not_leccion = Double.parseDouble(fila[5] + "");
+        } catch (Exception e) {
+        }
+        try {
+            not_evaluacion = Double.parseDouble(fila[6] + "");
+        } catch (Exception e) {
+        }
+
+
+        double total = not_act_group + not_act_indiv + not_evaluacion + not_leccion + not_trabajo;
+        double parcial = total / 5; //Nota del parcial
+
+        fila[7] = utilitario.getFormatoNumero(total);
+        fila[8] = utilitario.getFormatoNumero(parcial);
+        ///Calcular la equivalencia
+        //////////
+
+        lisNotasParcial.set(event.getRowIndex(), fila);
+
     }
 
     public void guardar() {
