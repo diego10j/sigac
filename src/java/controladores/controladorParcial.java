@@ -164,33 +164,6 @@ public class controladorParcial {
         } catch (Exception e) {
         }
 
-        boolean valida = true;
-        //Valida que todas las notas esten en rango de 0 a 10
-
-        if (not_trabajo > 10 || not_trabajo < 0) {
-            fila[11] = null;
-            valida = false;
-        }
-
-        if (not_act_indiv > 10 || not_act_indiv < 0) {
-            fila[3] = null;
-            valida = false;
-        }
-
-        if (not_act_group > 10 || not_act_group < 0) {
-            fila[4] = null;
-            valida = false;
-        }
-
-        if (not_leccion > 10 || not_leccion < 0) {
-            fila[5] = null;
-            valida = false;
-        }
-
-        if (not_evaluacion > 10 || not_evaluacion < 0) {
-            fila[6] = null;
-            valida = false;
-        }
 
         double total = not_act_group + not_act_indiv + not_evaluacion + not_leccion + not_trabajo;
         double parcial = total / 5; //Nota del parcial
@@ -200,19 +173,40 @@ public class controladorParcial {
         ///Calcular la equivalencia
         //////////
 
-        lisNotasParcial.set(event.getRowIndex(), fila);
+       
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("tabNotas:" + event.getRowIndex() + ":parcial");
         requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
 
-        if (valida == false) {
-            System.out.println(event.getColumn().getClientId() + " ././..");
-            System.out.println(event.getComponent().getClientId() + " ././..");;
-            requestContext.update("@this");
+        double dou_new = 0;
+        try {
+            dou_new = Double.parseDouble(event.getNewValue() + "");
+        } catch (Exception e) {
+            dou_new = -1;
+        }
+        if (dou_new > 10 || dou_new < 0) {     
+            if(event.getColumn().getClientId().endsWith("cTrabajos")){
+                fila[11]=0;
+            }
+            else if(event.getColumn().getClientId().endsWith("cActInd")){
+                fila[3]=0;
+            }
+             else if(event.getColumn().getClientId().endsWith("cActGrup")){
+                fila[4]=0;
+            }
+             else if(event.getColumn().getClientId().endsWith("cLecc")){
+                fila[5]=0;
+            }
+             else if(event.getColumn().getClientId().endsWith("cEval")){
+                fila[6]=0;
+            }
+            requestContext.update(event.getColumn().getClientId());
+            utilitario.agregarMensajeError("La nota debe estar en el rango de 0 a 10", "");
         }
 
-
+         lisNotasParcial.set(event.getRowIndex(), fila);
+        
     }
 
     public void guardar() {
