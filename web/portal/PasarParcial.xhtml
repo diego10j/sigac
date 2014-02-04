@@ -88,6 +88,9 @@
                         <p:column headerText="Alumno" style="width:25%">
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
+                         <p:column headerText="Trabajos" style="width:10%">
+                            <h:outputText value="#{tabla[11]}" />                                
+                        </p:column>
                         <p:column headerText="Act. Ind." style="width:10%">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
