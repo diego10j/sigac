@@ -85,13 +85,12 @@
 
                     <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisNotasParcial}" editable="true" editMode="cell">
 
-                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" update="@this" /> 
+                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" /> 
                         
-                        <p:column headerText="Alumno" style="width:25%">
+                        <p:column headerText="Alumno" style="width:25%" >
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
-                        <p:column headerText="Trabajos" style="width:10%">
-
+                        <p:column headerText="Trabajos" style="width:10%" id="ctrabajos">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
                                 <f:facet name="input">
@@ -143,11 +142,11 @@
                         </p:column>
                         <p:column headerText="Total" style="width:10%">
 
-                            <h:outputText value="#{tabla[7]}" />
+                            <h:outputText id="total" value="#{tabla[7]}" />
 
                         </p:column>
                         <p:column headerText="Parcial" style="width:10%">
-                            <h:outputText value="#{tabla[8]}" />                                
+                            <h:outputText id="parcial" value="#{tabla[8]}" />                                
                         </p:column>
 
                     </p:dataTable>
