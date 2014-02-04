@@ -167,27 +167,27 @@ public class controladorParcial {
         boolean valida = true;
         //Valida que todas las notas esten en rango de 0 a 10
 
-        if (not_trabajo > 10 & not_trabajo < 0) {
+        if (not_trabajo > 10 || not_trabajo < 0) {
             fila[11] = null;
             valida = false;
         }
 
-        if (not_act_indiv > 10 & not_act_indiv < 0) {
+        if (not_act_indiv > 10 || not_act_indiv < 0) {
             fila[3] = null;
             valida = false;
         }
 
-        if (not_act_group > 10 & not_act_group < 0) {
+        if (not_act_group > 10 || not_act_group < 0) {
             fila[4] = null;
             valida = false;
         }
 
-        if (not_leccion > 10 & not_leccion < 0) {
+        if (not_leccion > 10 || not_leccion < 0) {
             fila[5] = null;
             valida = false;
         }
 
-        if (not_evaluacion > 10 & not_evaluacion < 0) {
+        if (not_evaluacion > 10 || not_evaluacion < 0) {
             fila[6] = null;
             valida = false;
         }
