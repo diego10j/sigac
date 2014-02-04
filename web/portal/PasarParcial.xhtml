@@ -90,51 +90,51 @@
                         <p:column headerText="Alumno" style="width:25%" >
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
-                        <p:column headerText="Trabajos" style="width:10%" id="ctrabajos">
+                        <p:column headerText="Trabajos" style="width:10%" id="cTrabajos">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[11]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                    <p:inputText  value="#{tabla[11]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" >
                                         <f:validateDoubleRange minimum="0" maximum="10" />
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Act. Ind." style="width:10%">
+                        <p:column headerText="Act. Ind." style="width:10%" id="cActInd">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[3]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                    <p:inputText  value="#{tabla[3]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" >
                                         <f:validateDoubleRange minimum="0" maximum="10" />
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Act. Grup." style="width:10%">
+                        <p:column headerText="Act. Grup." style="width:10%" id="cActGrup">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[4]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
-                                        <f:validateDoubleRange minimum="0" maximum="10" />
+                                    <p:inputText  value="#{tabla[4]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" >
+                                        <f:validateDoubleRange minimum="0" maximum="10"  />
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Lecciones" style="width:10%">
+                        <p:column headerText="Lecciones" style="width:10%" id="cLecc">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[5]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                    <p:inputText  value="#{tabla[5]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" >
                                         <f:validateDoubleRange minimum="0" maximum="10" />
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Eval. Suma." style="width:10%">
+                        <p:column headerText="Eval. Suma." style="width:10%" id="cEval">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[6]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                    <p:inputText  value="#{tabla[6]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" >
                                         <f:validateDoubleRange  minimum="0" maximum="10" />
                                     </p:inputText>
                                 </f:facet>  
