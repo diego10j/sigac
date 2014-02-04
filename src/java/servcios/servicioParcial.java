@@ -149,7 +149,7 @@ public class servicioParcial {
             Object[] fila = (Object[]) actual;
             utilitario.getConexion().agregarSql("UPDATE nota_destrezaparcial set not_actividadindividual=" + fila[3] + ""
                     + ",not_actividadgrupal=" + fila[4] + ",not_lecciones=" + fila[5] + ",not_evaluacionsumativa=" + fila[6] + ",not_total=" + fila[7] + ",\n"
-                    + "not_primerparcial=" + fila[8] + ",not_eqvdestrez='" + fila[9] + "'a,not_observacion='" + fila[10] + "' where not_codigo=" + fila[0]);
+                    + "not_primerparcial=" + fila[8] + ",not_eqvdestreza='" + fila[9] + "',not_observacion='" + fila[10] + "' where not_codigo=" + fila[0]);
         }
         return utilitario.getConexion().ejecutarListaSql();
     }
