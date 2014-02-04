@@ -85,6 +85,8 @@
 
                     <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisNotasParcial}" editable="true" editMode="cell">
 
+                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" update="@this" /> 
+                        
                         <p:column headerText="Alumno" style="width:25%">
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
@@ -134,7 +136,7 @@
                                 <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
                                 <f:facet name="input">
                                     <p:inputText  value="#{tabla[6]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
-                                        <f:validateLongRange minimum="0" maximum="10" />
+                                        <f:validateLongRange  minimum="0" maximum="10" />
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
