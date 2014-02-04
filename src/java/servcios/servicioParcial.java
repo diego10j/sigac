@@ -109,6 +109,7 @@ public class servicioParcial {
                 tab_notas.setValor("not_total", "0.00");
                 tab_notas.setValor("not_primerparcial", "0.00");
                 tab_notas.setValor("not_actividadindividual", "0.00");
+                tab_notas.setValor("not_trabajos", "0.00");
 
             }
             tab_notas.guardar();
@@ -132,7 +133,7 @@ public class servicioParcial {
     public List getNotasParcialDistributivo(String cre_codigo, String for_codigo, String eva_codigo, String dis_codigo) {
         return utilitario.getConexion().consultar("select a.not_codigo,alu_apellidos,alu_nombres,not_actividadindividual\n"
                 + ",not_actividadgrupal,not_lecciones,not_evaluacionsumativa,not_total,\n"
-                + "not_primerparcial,not_eqvdestreza,not_observacion,a.for_codigo,a.dis_codigo,a.mat_codigo,a.eva_codigo from nota_destrezaparcial a\n"
+                + "not_primerparcial,not_eqvdestreza,not_observacion,not_trabajos,a.for_codigo,a.dis_codigo,a.mat_codigo,a.eva_codigo from nota_destrezaparcial a\n"
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo\n"
                 + "where a.for_codigo=" + for_codigo + "  and a.dis_codigo=" + dis_codigo + " and a.eva_codigo=" + eva_codigo + "");
@@ -149,7 +150,7 @@ public class servicioParcial {
             Object[] fila = (Object[]) actual;
             utilitario.getConexion().agregarSql("UPDATE nota_destrezaparcial set not_actividadindividual=" + fila[3] + ""
                     + ",not_actividadgrupal=" + fila[4] + ",not_lecciones=" + fila[5] + ",not_evaluacionsumativa=" + fila[6] + ",not_total=" + fila[7] + ",\n"
-                    + "not_primerparcial=" + fila[8] + ",not_eqvdestreza='" + fila[9] + "',not_observacion='" + fila[10] + "' where not_codigo=" + fila[0]);
+                    + "not_primerparcial=" + fila[8] + ",not_eqvdestreza='" + fila[9] + "',not_observacion='" + fila[10] + "', not_trabajos=" + fila[11] + " where not_codigo=" + fila[0]);
         }
         return utilitario.getConexion().ejecutarListaSql();
     }
