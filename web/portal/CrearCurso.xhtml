@@ -163,7 +163,7 @@
 
                     <h:panelGrid columns="2">
                         <h:outputText value="Asignatura :*"/>
-                        <p:selectOneMenu value="#{controladorCrearCurso.disDistributivo.asiCodigo.asiCodigo}"  filterMatchMode="startsWith"  required="true" requiredMessage="Debe ingresar una Asignatura">
+                        <p:selectOneMenu value="#{controladorCrearCurso.disDistributivo.asiCodigo.asiCodigo}"  filter="true" filterMatchMode="startsWith"  required="true" requiredMessage="Debe ingresar una Asignatura">
                             <f:selectItem itemValue="" itemLabel="Seleccione una Asignatura ..."/>
                             <f:selectItems value="#{controladorCrearCurso.listaMaterias}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                         </p:selectOneMenu>
