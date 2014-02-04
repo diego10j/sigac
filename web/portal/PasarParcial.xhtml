@@ -55,9 +55,9 @@
 
                     <p:dataTable id="tabMaterias" value="#{controladorParcial.lisAsignaturas}" var="tabla" rowKey="#{tabla[0]}"
                                  selection="#{controladorParcial.objAsignaturaSeleccionada}" selectionMode="single">
-                        
+
                         <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionoAsignatura}" update=":frmPrincipal:tabNotas"/>
-                        
+
                         `<f:facet name="header">
                             Listado de Aignaturas
                         </f:facet>
@@ -88,37 +88,61 @@
                         <p:column headerText="Alumno" style="width:25%">
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
-                         <p:column headerText="Trabajos" style="width:10%">
-                            <h:outputText value="#{tabla[11]}" />                                
+                        <p:column headerText="Trabajos" style="width:10%">
+
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[11]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                        <f:validateLongRange minimum="0" maximum="10" />
+                                    </p:inputText>
+                                </f:facet>  
+                            </p:cellEditor>  
                         </p:column>
                         <p:column headerText="Act. Ind." style="width:10%">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
-                                <f:facet name="input"><p:inputText  value="#{tabla[3]}" style="width:96%"/></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[3]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                        <f:validateLongRange minimum="0" maximum="10" />
+                                    </p:inputText>
+                                </f:facet>  
                             </p:cellEditor>  
                         </p:column>
                         <p:column headerText="Act. Grup." style="width:10%">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
-                                <f:facet name="input"><p:inputText value="#{tabla[4]}" style="width:96%"/></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[4]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                        <f:validateLongRange minimum="0" maximum="10" />
+                                    </p:inputText>
+                                </f:facet>  
                             </p:cellEditor>  
                         </p:column>
                         <p:column headerText="Lecciones" style="width:10%">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
-                                <f:facet name="input"><p:inputText value="#{tabla[5]}" style="width:96%"/></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[5]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                        <f:validateLongRange minimum="0" maximum="10" />
+                                    </p:inputText>
+                                </f:facet>  
                             </p:cellEditor>  
                         </p:column>
                         <p:column headerText="Eval. Suma." style="width:10%">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
-                                <f:facet name="input"><p:inputText value="#{tabla[6]}" style="width:96%"/></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[6]}" style="width:96%" validatorMessage="La nota debe estar en el rango de 0 a 10" required="true" requiredMessage="Debe ingresar una nota">
+                                        <f:validateLongRange minimum="0" maximum="10" />
+                                    </p:inputText>
+                                </f:facet>  
                             </p:cellEditor>  
                         </p:column>
                         <p:column headerText="Total" style="width:10%">
-                            
+
                             <h:outputText value="#{tabla[7]}" />
-                            
+
                         </p:column>
                         <p:column headerText="Parcial" style="width:10%">
                             <h:outputText value="#{tabla[8]}" />                                
