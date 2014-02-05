@@ -50,10 +50,11 @@ public class servicioParcial {
     }
 
     public List getMateriasCursoDocente(String cre_codigo, String doc_codigo) {
-        return utilitario.getConexion().consultar("select d.dis_codigo,asi_nombre,tip_codigo from distributivomxc d\n"
-                + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+        return utilitario.getConexion().consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                + " INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                + " LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo"
                 + "where d.doc_codigo=" + doc_codigo + "\n"
-                + "and d.cre_codigo=" + cre_codigo + "");
+                + "and d.cre_codigo=" + cre_codigo + " order by c.asi_nombre,a.asi_nombre");
     }
 
     public List<NotaDestrezaparcial> getNotasDestreza() {
@@ -109,7 +110,7 @@ public class servicioParcial {
                 tab_notas.setValor("not_total", "0.00");
                 tab_notas.setValor("not_primerparcial", "0.00");
                 tab_notas.setValor("not_actividadindividual", "0.00");
-                tab_notas.setValor("not_trabajos", "0.00");                
+                tab_notas.setValor("not_trabajos", "0.00");
                 tab_notas.setValor("not_observacion", " ");
             }
             tab_notas.guardar();
