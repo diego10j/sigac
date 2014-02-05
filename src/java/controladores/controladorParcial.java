@@ -140,31 +140,34 @@ public class controladorParcial {
         Object[] fila = (Object[]) lisNotasParcial.get(event.getRowIndex());
 
 
+        if (event.getColumn().getClientId().endsWith("cObserva") == false) {
 
-        double dou_new = 0;
-        try {
-            dou_new = Double.parseDouble(event.getNewValue() + "");
-        } catch (Exception e) {
-            dou_new = -1;
-        }
-        if (dou_new > 10 || dou_new < 0) {
-            if (event.getColumn().getClientId().endsWith("cTrabajos")) {
-                fila[11] = 0;
-                utilitario.agregarMensajeError("La nota de Trabajos debe estar en el rango de 0 a 10", "");
-            } else if (event.getColumn().getClientId().endsWith("cActInd")) {
-                fila[3] = 0;
-                utilitario.agregarMensajeError("La nota de Actividades Individuales debe estar en el rango de 0 a 10", "");
-            } else if (event.getColumn().getClientId().endsWith("cActGrup")) {
-                fila[4] = 0;
-                utilitario.agregarMensajeError("La nota de Actividades en Grupo debe estar en el rango de 0 a 10", "");
-            } else if (event.getColumn().getClientId().endsWith("cLecc")) {
-                fila[5] = 0;
-                utilitario.agregarMensajeError("La nota de Lecciones debe estar en el rango de 0 a 10", "");
-            } else if (event.getColumn().getClientId().endsWith("cEval")) {
-                fila[6] = 0;
-                utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
+            double dou_new = 0;
+            try {
+                dou_new = Double.parseDouble(event.getNewValue() + "");
+            } catch (Exception e) {
+                dou_new = -1;
             }
-            requestContext.update("tabNotas");
+            if (dou_new > 10 || dou_new < 0) {
+                if (event.getColumn().getClientId().endsWith("cTrabajos")) {
+                    fila[11] = 0;
+                    utilitario.agregarMensajeError("La nota de Trabajos debe estar en el rango de 0 a 10", "");
+                } else if (event.getColumn().getClientId().endsWith("cActInd")) {
+                    fila[3] = 0;
+                    utilitario.agregarMensajeError("La nota de Actividades Individuales debe estar en el rango de 0 a 10", "");
+                } else if (event.getColumn().getClientId().endsWith("cActGrup")) {
+                    fila[4] = 0;
+                    utilitario.agregarMensajeError("La nota de Actividades en Grupo debe estar en el rango de 0 a 10", "");
+                } else if (event.getColumn().getClientId().endsWith("cLecc")) {
+                    fila[5] = 0;
+                    utilitario.agregarMensajeError("La nota de Lecciones debe estar en el rango de 0 a 10", "");
+                } else if (event.getColumn().getClientId().endsWith("cEval")) {
+                    fila[6] = 0;
+                    utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
+                }
+                requestContext.update("tabNotas");
+            }
+
         }
 
 
@@ -216,8 +219,8 @@ public class controladorParcial {
                 break;
             }
         }
-        if(obj_resultado==null){
-            obj_resultado="NO EQV";
+        if (obj_resultado == null) {
+            obj_resultado = "NO EQV";
         }
         fila[9] = obj_resultado;
 
@@ -227,6 +230,7 @@ public class controladorParcial {
 
         requestContext.update("tabNotas:" + event.getRowIndex() + ":parcial");
         requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
 
 
 
