@@ -97,6 +97,7 @@ public class controladorParcial {
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
         }
+        objAsignaturaSeleccionada=null;
         cargarAlumnos();
     }
 
@@ -112,6 +113,9 @@ public class controladorParcial {
             if (fila[2] != null && fila[2].toString().equals("3")) {
                 //SOLO MATERIAS DE PREBASICA
                 booMuestra = false;
+            }
+            else{
+                booMuestra = true;
             }
         } else {
             booMuestra = true;
