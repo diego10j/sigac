@@ -8,6 +8,7 @@ import aplicacion.Utilitario;
 import entidades.Docentes;
 import entidades.NotaDestrezaparcial;
 import entidades.PeriodoLectivo;
+import framework.aplicacion.TablaGenerica;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -204,6 +205,22 @@ public class controladorParcial {
         fila[8] = utilitario.getFormatoNumero(parcial);
         ///Calcular la equivalencia
         //////////
+
+        TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_aprovechamiento");
+        Object obj_resultado = null;
+        for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+            String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+            str_expresion = str_expresion.replace("nota", fila[8] + "");
+            obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+            if (obj_resultado != null) {
+                break;
+            }
+        }
+        if(obj_resultado==null){
+            obj_resultado="NO EQV";
+        }
+        fila[9] = obj_resultado;
+
 
         lisNotasParcial.set(event.getRowIndex(), fila);
 
