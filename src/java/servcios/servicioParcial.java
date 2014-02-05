@@ -109,8 +109,8 @@ public class servicioParcial {
                 tab_notas.setValor("not_total", "0.00");
                 tab_notas.setValor("not_primerparcial", "0.00");
                 tab_notas.setValor("not_actividadindividual", "0.00");
-                tab_notas.setValor("not_trabajos", "0.00");
-
+                tab_notas.setValor("not_trabajos", "0.00");                
+                tab_notas.setValor("not_observacion", " ");
             }
             tab_notas.guardar();
             if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
