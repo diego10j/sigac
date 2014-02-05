@@ -102,7 +102,7 @@ public class servicioAsignaturas {
      */
     public List getListaAsignaturas() {
         return utilitario.getConexion().consultar("select asi_codigo,asi_nombre ||' - '|| tip_nombre as nombre from asignaturas mat\n"
-                + "left JOIN tipoasignaturas tip on mat.tip_codigo=tip.tip_codigo");
+                + "left JOIN tipoasignaturas tip on mat.tip_codigo=tip.tip_codigo WHERE asi_asi_codigo is not null");
     }
 
     public List<Asignaturas> getAsignaturasPadre() {
