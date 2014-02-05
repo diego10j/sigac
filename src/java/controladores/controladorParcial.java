@@ -53,6 +53,7 @@ public class controladorParcial {
     private List lisNotasParcial;
     private String strForma;
     private String strParcial;
+    private boolean booMuestra = true;
 
     @PostConstruct
     public void cargarDatos() {
@@ -95,7 +96,7 @@ public class controladorParcial {
     public void seleccionarCursos(SelectEvent evt) {
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
-        }        
+        }
         cargarAlumnos();
     }
 
@@ -105,6 +106,16 @@ public class controladorParcial {
 
     public void seleccionoAsignatura(SelectEvent evt) {
         cargarAlumnos();
+
+        Object[] fila = (Object[]) evt.getObject();
+        if (fila != null) {
+            if (fila[2] != null && fila[2].toString().equals("3")) {
+                //SOLO MATERIAS DE PREBASICA
+                booMuestra = false;
+            }
+        } else {
+            booMuestra = true;
+        }
     }
 
     private void cargarAlumnos() {
@@ -138,12 +149,7 @@ public class controladorParcial {
     public void cabioNota(CellEditEvent event) {
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
-
         Object[] fila = (Object[]) lisNotasParcial.get(event.getRowIndex());
-
-
-
-
         double dou_new = 0;
         try {
             dou_new = Double.parseDouble(event.getNewValue() + "");
@@ -166,44 +172,61 @@ public class controladorParcial {
             } else if (event.getColumn().getClientId().endsWith("cEval")) {
                 fila[6] = 0;
                 utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
+            } else if (event.getColumn().getClientId().endsWith("cEval")) {
+                fila[6] = 0;
+                utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
+            }
+             else if (event.getColumn().getClientId().endsWith("cNota")) {
+                fila[8] = 0;
+                utilitario.agregarMensajeError("La nota debe estar en el rango de 0 a 10", "");
             }
             requestContext.update("tabNotas");
         }
 
-        double not_trabajo = 0;
-        double not_act_indiv = 0;
-        double not_act_group = 0;
-        double not_leccion = 0;
-        double not_evaluacion = 0;
+
+        if (booMuestra) {
 
 
-        try {
-            not_trabajo = Double.parseDouble(fila[11] + "");
-        } catch (Exception e) {
-        }
-        try {
-            not_act_indiv = Double.parseDouble(fila[3] + "");
-        } catch (Exception e) {
-        }
-        try {
-            not_act_group = Double.parseDouble(fila[4] + "");
-        } catch (Exception e) {
-        }
-        try {
-            not_leccion = Double.parseDouble(fila[5] + "");
-        } catch (Exception e) {
-        }
-        try {
-            not_evaluacion = Double.parseDouble(fila[6] + "");
-        } catch (Exception e) {
+            double not_trabajo = 0;
+            double not_act_indiv = 0;
+            double not_act_group = 0;
+            double not_leccion = 0;
+            double not_evaluacion = 0;
+
+
+            try {
+                not_trabajo = Double.parseDouble(fila[11] + "");
+            } catch (Exception e) {
+            }
+            try {
+                not_act_indiv = Double.parseDouble(fila[3] + "");
+            } catch (Exception e) {
+            }
+            try {
+                not_act_group = Double.parseDouble(fila[4] + "");
+            } catch (Exception e) {
+            }
+            try {
+                not_leccion = Double.parseDouble(fila[5] + "");
+            } catch (Exception e) {
+            }
+            try {
+                not_evaluacion = Double.parseDouble(fila[6] + "");
+            } catch (Exception e) {
+            }
+
+
+            double total = not_act_group + not_act_indiv + not_evaluacion + not_leccion + not_trabajo;
+            double parcial = total / 5; //Nota del parcial
+            fila[7] = utilitario.getFormatoNumero(total);
+            fila[8] = utilitario.getFormatoNumero(parcial);
+
+            requestContext.update("tabNotas:" + event.getRowIndex() + ":parcial");
+            requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
+        } else {
         }
 
 
-        double total = not_act_group + not_act_indiv + not_evaluacion + not_leccion + not_trabajo;
-        double parcial = total / 5; //Nota del parcial
-
-        fila[7] = utilitario.getFormatoNumero(total);
-        fila[8] = utilitario.getFormatoNumero(parcial);
         ///Calcular la equivalencia
         //////////
 
@@ -226,8 +249,7 @@ public class controladorParcial {
         lisNotasParcial.set(event.getRowIndex(), fila);
 
 
-        requestContext.update("tabNotas:" + event.getRowIndex() + ":parcial");
-        requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
+
         requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
 
 
@@ -331,5 +353,13 @@ public class controladorParcial {
 
     public void setLisNotasParcial(List<NotaDestrezaparcial> lisNotasParcial) {
         this.lisNotasParcial = lisNotasParcial;
+    }
+
+    public boolean isBooMuestra() {
+        return booMuestra;
+    }
+
+    public void setBooMuestra(boolean booMuestra) {
+        this.booMuestra = booMuestra;
     }
 }
