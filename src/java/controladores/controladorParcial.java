@@ -95,9 +95,9 @@ public class controladorParcial {
     public void seleccionarCursos(SelectEvent evt) {
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
-        } else {
-            lisAsignaturas = servParcial.getMateriasCursoDocente("-1", "-1");
-        }
+        } 
+        objAsignaturaSeleccionada=null;
+        lisAsignaturas = servParcial.getMateriasCursoDocente("-1", "-1");
         cargarAlumnos();
     }
 
