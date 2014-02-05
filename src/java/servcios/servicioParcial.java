@@ -50,7 +50,7 @@ public class servicioParcial {
     }
 
     public List getMateriasCursoDocente(String cre_codigo, String doc_codigo) {
-        return utilitario.getConexion().consultar("select d.dis_codigo,asi_nombre from distributivomxc d\n"
+        return utilitario.getConexion().consultar("select d.dis_codigo,asi_nombre,tip_codigo from distributivomxc d\n"
                 + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
                 + "where d.doc_codigo=" + doc_codigo + "\n"
                 + "and d.cre_codigo=" + cre_codigo + "");

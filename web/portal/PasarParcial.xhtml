@@ -90,7 +90,7 @@
                         <p:column headerText="Alumno" style="width:25%" >
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
-                        <p:column headerText="Trabajos" style="width:10%" id="cTrabajos">
+                        <p:column headerText="Trabajos" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cTrabajos">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
                                 <f:facet name="input">
@@ -99,7 +99,7 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Act. Ind." style="width:10%" id="cActInd">
+                        <p:column headerText="Act. Ind." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cActInd">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
                                 <f:facet name="input">
@@ -109,7 +109,7 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Act. Grup." style="width:10%" id="cActGrup">
+                        <p:column headerText="Act. Grup." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cActGrup">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
                                 <f:facet name="input">
@@ -119,7 +119,7 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Lecciones" style="width:10%" id="cLecc">
+                        <p:column headerText="Lecciones" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cLecc">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                                 <f:facet name="input">
@@ -129,7 +129,7 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Eval. Suma." style="width:10%" id="cEval">
+                        <p:column headerText="Eval. Suma." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cEval">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
                                 <f:facet name="input">
@@ -138,14 +138,26 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Total" style="width:10%">
+                        <p:column headerText="Total" rendered="#{controladorParcial.booMuestra}" style="width:10%">
 
                             <h:outputText style="font-size: 13px;" id="total" value="#{tabla[7]}" />
 
                         </p:column>
-                        <p:column headerText="Parcial" style="width:10%">
+                        <p:column headerText="Parcial" rendered="#{controladorParcial.booMuestra}" style="width:10%">
                             <h:outputText style="font-size: 14px;font-weight: bold" id="parcial" value="#{tabla[8]}" />                                
                         </p:column>
+                        
+                        
+                        <p:column headerText="Nota" id="cNota" rendered="#{controladorParcial.booMuestra==false}" style="width:10%">
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{tabla[8]}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[8]}" style="width:96%"  >
+                                    </p:inputText>
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+          
                         
                         <p:column headerText="EQV" style="width:10%">
                             <h:outputText id="eqv" value="#{tabla[9]}" />                                
