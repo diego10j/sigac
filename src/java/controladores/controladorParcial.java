@@ -95,9 +95,7 @@ public class controladorParcial {
     public void seleccionarCursos(SelectEvent evt) {
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
-        } 
-        objAsignaturaSeleccionada=null;
-        lisNotasParcial=null;
+        }        
         cargarAlumnos();
     }
 
@@ -113,7 +111,11 @@ public class controladorParcial {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
                 lisNotasParcial = servParcial.getNotasParcialDistributivo(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+            } else {
+                lisNotasParcial = null;
             }
+        } else {
+            lisNotasParcial = null;
         }
     }
 
