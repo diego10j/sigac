@@ -580,4 +580,32 @@ public class Utilitario extends Framework {
         cal.set(Calendar.SECOND, cal.get(Calendar.SECOND));
         return cal.getTime();
     }
+
+    public Object evaluarExpresionJavaScript(String expresion) {
+        //Resuleve el valor de una expresion Ejemplo: 5+3-3
+
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("js");
+        Object operacion;
+        try {
+            expresion = expresion.replace("[", "(");
+            expresion = expresion.replace("]", ")");
+            operacion = engine.eval(expresion);
+            
+            return operacion;
+        } catch (ScriptException e) {
+            System.out.println("ERROR al evaluarExpresion( " + expresion + " )  :" + e.toString());
+        }
+        return null;
+    }
+
+    public static void main(String args[]) {
+        Utilitario u = new Utilitario();
+        System.out.println(u.evaluarExpresionJavaScript("if(7>=7 && 7<=8){'Alcanza'}"));
+        System.out.println(u.evaluarExpresionJavaScript("if(7>=5 && 7<=6){'Proximo'}"));
+        System.out.println(u.evaluarExpresionJavaScript("if(7<=4){'No Alcanza'}"));
+        System.out.println(u.evaluarExpresionJavaScript("if(7==10){'Supera'}"));
+        System.out.println(u.evaluarExpresionJavaScript("if(7>=9 && 7<10){'Domina'}"));       
+        
+    }
 }
