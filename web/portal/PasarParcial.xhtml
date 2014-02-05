@@ -146,6 +146,20 @@
                         <p:column headerText="Parcial" style="width:10%">
                             <h:outputText style="font-size: 14px;font-weight: bold" id="parcial" value="#{tabla[8]}" />                                
                         </p:column>
+                        
+                        <p:column headerText="EQV" style="width:10%">
+                            <h:outputText style="font-size: 14px;font-weight: bold" id="parcial" value="#{tabla[9]}" />                                
+                        </p:column>
+                        
+                          <p:column headerText="Observacion" style="width:25%" id="cEval">
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{tabla[10]}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[10]}" style="width:96%"  >
+                                    </p:inputText>
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
 
                     </p:dataTable>
 
