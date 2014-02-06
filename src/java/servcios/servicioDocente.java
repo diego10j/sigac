@@ -5,7 +5,6 @@
 package servcios;
 
 import aplicacion.Utilitario;
-import entidades.Alumnos;
 import entidades.Docentes;
 import java.util.List;
 import javax.annotation.Resource;
