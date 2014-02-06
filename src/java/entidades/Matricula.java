@@ -35,16 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Matricula.findByMatCodigo", query = "SELECT m FROM Matricula m WHERE m.matCodigo = :matCodigo"),
     @NamedQuery(name = "Matricula.findByMatPromediogeneral", query = "SELECT m FROM Matricula m WHERE m.matPromediogeneral = :matPromediogeneral"),
     @NamedQuery(name = "Matricula.findByMatDisciplinageneral", query = "SELECT m FROM Matricula m WHERE m.matDisciplinageneral = :matDisciplinageneral"),
-    @NamedQuery(name = "Matricula.findByMatAprobado", query = "SELECT m FROM Matricula m WHERE m.matAprobado = :matAprobado")})
+    @NamedQuery(name = "Matricula.findByMatAprobado", query = "SELECT m FROM Matricula m WHERE m.matAprobado = :matAprobado"),
+    @NamedQuery(name = "Matricula.findByMatActivo", query = "SELECT m FROM Matricula m WHERE m.matActivo = :matActivo")})
 public class Matricula implements Serializable {
-    @OneToMany(mappedBy = "matCodigo")
-    private List<NotaDestrezaparcial> notaDestrezaparcialList;
-    @OneToMany(mappedBy = "matCodigo")
-    private List<Comportamientoparcial> comportamientoparcialList;
-    @OneToMany(mappedBy = "matCodigo")
-    private List<Registroasistencia> registroasistenciaList;
-    @Column(name = "mat_activo")
-    private Boolean matActivo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -58,6 +51,10 @@ public class Matricula implements Serializable {
     private Character matDisciplinageneral;
     @Column(name = "mat_aprobado")
     private Boolean matAprobado;
+    @Column(name = "mat_activo")
+    private Boolean matActivo;
+    @OneToMany(mappedBy = "matCodigo")
+    private List<NotaDestrezaparcial> notaDestrezaparcialList;
     @OneToMany(mappedBy = "matCodigo")
     private List<InformeQuimestre> informeQuimestreList;
     @JoinColumn(name = "cre_codigo", referencedColumnName = "cre_codigo")
@@ -66,6 +63,10 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "alu_codigo", referencedColumnName = "alu_codigo")
     @ManyToOne
     private Alumnos aluCodigo;
+    @OneToMany(mappedBy = "matCodigo")
+    private List<Comportamientoparcial> comportamientoparcialList;
+    @OneToMany(mappedBy = "matCodigo")
+    private List<Registroasistencia> registroasistenciaList;
 
     public Matricula() {
     }
@@ -106,6 +107,23 @@ public class Matricula implements Serializable {
         this.matAprobado = matAprobado;
     }
 
+    public Boolean getMatActivo() {
+        return matActivo;
+    }
+
+    public void setMatActivo(Boolean matActivo) {
+        this.matActivo = matActivo;
+    }
+
+    @XmlTransient
+    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
+        return notaDestrezaparcialList;
+    }
+
+    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
+        this.notaDestrezaparcialList = notaDestrezaparcialList;
+    }
+
     @XmlTransient
     public List<InformeQuimestre> getInformeQuimestreList() {
         return informeQuimestreList;
@@ -131,6 +149,24 @@ public class Matricula implements Serializable {
         this.aluCodigo = aluCodigo;
     }
 
+    @XmlTransient
+    public List<Comportamientoparcial> getComportamientoparcialList() {
+        return comportamientoparcialList;
+    }
+
+    public void setComportamientoparcialList(List<Comportamientoparcial> comportamientoparcialList) {
+        this.comportamientoparcialList = comportamientoparcialList;
+    }
+
+    @XmlTransient
+    public List<Registroasistencia> getRegistroasistenciaList() {
+        return registroasistenciaList;
+    }
+
+    public void setRegistroasistenciaList(List<Registroasistencia> registroasistenciaList) {
+        this.registroasistenciaList = registroasistenciaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -154,41 +190,6 @@ public class Matricula implements Serializable {
     @Override
     public String toString() {
         return "entidades.Matricula[ matCodigo=" + matCodigo + " ]";
-    }
-
-    public Boolean getMatActivo() {
-        return matActivo;
-    }
-
-    public void setMatActivo(Boolean matActivo) {
-        this.matActivo = matActivo;
-    }
-
-    @XmlTransient
-    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
-        return notaDestrezaparcialList;
-    }
-
-    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
-        this.notaDestrezaparcialList = notaDestrezaparcialList;
-    }
-
-    @XmlTransient
-    public List<Comportamientoparcial> getComportamientoparcialList() {
-        return comportamientoparcialList;
-    }
-
-    public void setComportamientoparcialList(List<Comportamientoparcial> comportamientoparcialList) {
-        this.comportamientoparcialList = comportamientoparcialList;
-    }
-
-    @XmlTransient
-    public List<Registroasistencia> getRegistroasistenciaList() {
-        return registroasistenciaList;
-    }
-
-    public void setRegistroasistenciaList(List<Registroasistencia> registroasistenciaList) {
-        this.registroasistenciaList = registroasistenciaList;
     }
     
 }

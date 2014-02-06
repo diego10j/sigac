@@ -39,15 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByUsuNombre", query = "SELECT u FROM Usuario u WHERE u.usuNombre = :usuNombre"),
     @NamedQuery(name = "Usuario.findByUsuNick", query = "SELECT u FROM Usuario u WHERE u.usuNick = :usuNick"),
     @NamedQuery(name = "Usuario.findByUsuClave", query = "SELECT u FROM Usuario u WHERE u.usuClave = :usuClave"),
-    @NamedQuery(name = "Usuario.findByUsuFechacreacion", query = "SELECT u FROM Usuario u WHERE u.usuFechacreacion = :usuFechacreacion")})
+    @NamedQuery(name = "Usuario.findByUsuFechacreacion", query = "SELECT u FROM Usuario u WHERE u.usuFechacreacion = :usuFechacreacion"),
+    @NamedQuery(name = "Usuario.findByUsuActivo", query = "SELECT u FROM Usuario u WHERE u.usuActivo = :usuActivo")})
 public class Usuario implements Serializable {
-    @Column(name = "usu_activo")
-    private Boolean usuActivo;
-    @OneToMany(mappedBy = "ideUsua")
-    private List<SisBloqueo> sisBloqueoList;
-    @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
-    @ManyToOne
-    private Docentes docCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -66,12 +60,19 @@ public class Usuario implements Serializable {
     @Column(name = "usu_fechacreacion")
     @Temporal(TemporalType.DATE)
     private Date usuFechacreacion;
+    @Column(name = "usu_activo")
+    private Boolean usuActivo;
     @JoinColumn(name = "rol_codigo", referencedColumnName = "rol_codigo")
     @ManyToOne
     private Roles rolCodigo;
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
+    @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
+    @ManyToOne
+    private Docentes docCodigo;
+    @OneToMany(mappedBy = "ideUsua")
+    private List<SisBloqueo> sisBloqueoList;
 
     public Usuario() {
     }
@@ -120,6 +121,14 @@ public class Usuario implements Serializable {
         this.usuFechacreacion = usuFechacreacion;
     }
 
+    public Boolean getUsuActivo() {
+        return usuActivo;
+    }
+
+    public void setUsuActivo(Boolean usuActivo) {
+        this.usuActivo = usuActivo;
+    }
+
     public Roles getRolCodigo() {
         return rolCodigo;
     }
@@ -134,6 +143,23 @@ public class Usuario implements Serializable {
 
     public void setInsCodigo(Institucion insCodigo) {
         this.insCodigo = insCodigo;
+    }
+
+    public Docentes getDocCodigo() {
+        return docCodigo;
+    }
+
+    public void setDocCodigo(Docentes docCodigo) {
+        this.docCodigo = docCodigo;
+    }
+
+    @XmlTransient
+    public List<SisBloqueo> getSisBloqueoList() {
+        return sisBloqueoList;
+    }
+
+    public void setSisBloqueoList(List<SisBloqueo> sisBloqueoList) {
+        this.sisBloqueoList = sisBloqueoList;
     }
 
     @Override
@@ -159,31 +185,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entidades.Usuario[ usuCodigo=" + usuCodigo + " ]";
-    }
-
-    public Docentes getDocCodigo() {
-        return docCodigo;
-    }
-
-    public void setDocCodigo(Docentes docCodigo) {
-        this.docCodigo = docCodigo;
-    }
-
-    public Boolean getUsuActivo() {
-        return usuActivo;
-    }
-
-    public void setUsuActivo(Boolean usuActivo) {
-        this.usuActivo = usuActivo;
-    }
-
-    @XmlTransient
-    public List<SisBloqueo> getSisBloqueoList() {
-        return sisBloqueoList;
-    }
-
-    public void setSisBloqueoList(List<SisBloqueo> sisBloqueoList) {
-        this.sisBloqueoList = sisBloqueoList;
     }
     
 }

@@ -35,9 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CrearCurso.findByCreCodigo", query = "SELECT c FROM CrearCurso c WHERE c.creCodigo = :creCodigo"),
     @NamedQuery(name = "CrearCurso.findByCreObservacion", query = "SELECT c FROM CrearCurso c WHERE c.creObservacion = :creObservacion")})
 public class CrearCurso implements Serializable {
-    @JoinColumn(name = "per_codigo", referencedColumnName = "per_codigo")
-    @ManyToOne
-    private PeriodoLectivo perCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -49,8 +46,9 @@ public class CrearCurso implements Serializable {
     private String creObservacion;
     @OneToMany(mappedBy = "creCodigo")
     private List<Matricula> matriculaList;
-    @OneToMany(mappedBy = "creCodigo")
-    private List<Distributivomxc> distributivomxcList;
+    @JoinColumn(name = "per_codigo", referencedColumnName = "per_codigo")
+    @ManyToOne
+    private PeriodoLectivo perCodigo;
     @JoinColumn(name = "par_codigo", referencedColumnName = "par_codigo")
     @ManyToOne
     private Paralelo parCodigo;
@@ -60,6 +58,8 @@ public class CrearCurso implements Serializable {
     @JoinColumn(name = "cur_codigo", referencedColumnName = "cur_codigo")
     @ManyToOne
     private Cursos curCodigo;
+    @OneToMany(mappedBy = "creCodigo")
+    private List<Distributivomxc> distributivomxcList;
 
     public CrearCurso() {
     }
@@ -93,13 +93,12 @@ public class CrearCurso implements Serializable {
         this.matriculaList = matriculaList;
     }
 
-    @XmlTransient
-    public List<Distributivomxc> getDistributivomxcList() {
-        return distributivomxcList;
+    public PeriodoLectivo getPerCodigo() {
+        return perCodigo;
     }
 
-    public void setDistributivomxcList(List<Distributivomxc> distributivomxcList) {
-        this.distributivomxcList = distributivomxcList;
+    public void setPerCodigo(PeriodoLectivo perCodigo) {
+        this.perCodigo = perCodigo;
     }
 
     public Paralelo getParCodigo() {
@@ -126,6 +125,15 @@ public class CrearCurso implements Serializable {
         this.curCodigo = curCodigo;
     }
 
+    @XmlTransient
+    public List<Distributivomxc> getDistributivomxcList() {
+        return distributivomxcList;
+    }
+
+    public void setDistributivomxcList(List<Distributivomxc> distributivomxcList) {
+        this.distributivomxcList = distributivomxcList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,14 +157,6 @@ public class CrearCurso implements Serializable {
     @Override
     public String toString() {
         return "entidades.CrearCurso[ creCodigo=" + creCodigo + " ]";
-    }
-
-    public PeriodoLectivo getPerCodigo() {
-        return perCodigo;
-    }
-
-    public void setPerCodigo(PeriodoLectivo perCodigo) {
-        this.perCodigo = perCodigo;
     }
     
 }

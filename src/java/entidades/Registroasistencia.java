@@ -35,12 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Registroasistencia.findByRegTotalfaltas", query = "SELECT r FROM Registroasistencia r WHERE r.regTotalfaltas = :regTotalfaltas"),
     @NamedQuery(name = "Registroasistencia.findByRegDiaslaborados", query = "SELECT r FROM Registroasistencia r WHERE r.regDiaslaborados = :regDiaslaborados")})
 public class Registroasistencia implements Serializable {
-    @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
-    @ManyToOne
-    private Matricula matCodigo;
-    @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
-    @ManyToOne
-    private Formaevaluar forCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -57,9 +51,12 @@ public class Registroasistencia implements Serializable {
     private Integer regTotalfaltas;
     @Column(name = "reg_diaslaborados")
     private Integer regDiaslaborados;
-    @JoinColumn(name = "inf_codigo", referencedColumnName = "inf_codigo")
+    @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
     @ManyToOne
-    private InformeQuimestre infCodigo;
+    private Matricula matCodigo;
+    @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
+    @ManyToOne
+    private Formaevaluar forCodigo;
     @JoinColumn(name = "eva_codigo", referencedColumnName = "eva_codigo")
     @ManyToOne
     private Evaluarparcial evaCodigo;
@@ -119,12 +116,20 @@ public class Registroasistencia implements Serializable {
         this.regDiaslaborados = regDiaslaborados;
     }
 
-    public InformeQuimestre getInfCodigo() {
-        return infCodigo;
+    public Matricula getMatCodigo() {
+        return matCodigo;
     }
 
-    public void setInfCodigo(InformeQuimestre infCodigo) {
-        this.infCodigo = infCodigo;
+    public void setMatCodigo(Matricula matCodigo) {
+        this.matCodigo = matCodigo;
+    }
+
+    public Formaevaluar getForCodigo() {
+        return forCodigo;
+    }
+
+    public void setForCodigo(Formaevaluar forCodigo) {
+        this.forCodigo = forCodigo;
     }
 
     public Evaluarparcial getEvaCodigo() {
@@ -158,22 +163,6 @@ public class Registroasistencia implements Serializable {
     @Override
     public String toString() {
         return "entidades.Registroasistencia[ regCodigo=" + regCodigo + " ]";
-    }
-
-    public Matricula getMatCodigo() {
-        return matCodigo;
-    }
-
-    public void setMatCodigo(Matricula matCodigo) {
-        this.matCodigo = matCodigo;
-    }
-
-    public Formaevaluar getForCodigo() {
-        return forCodigo;
-    }
-
-    public void setForCodigo(Formaevaluar forCodigo) {
-        this.forCodigo = forCodigo;
     }
     
 }

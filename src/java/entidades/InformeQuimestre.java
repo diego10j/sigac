@@ -6,7 +6,6 @@ package entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -61,10 +58,6 @@ public class InformeQuimestre implements Serializable {
     @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
     @ManyToOne
     private Formaevaluar forCodigo;
-    @OneToMany(mappedBy = "infCodigo")
-    private List<Comportamientoparcial> comportamientoparcialList;
-    @OneToMany(mappedBy = "infCodigo")
-    private List<Registroasistencia> registroasistenciaList;
 
     public InformeQuimestre() {
     }
@@ -127,24 +120,6 @@ public class InformeQuimestre implements Serializable {
 
     public void setForCodigo(Formaevaluar forCodigo) {
         this.forCodigo = forCodigo;
-    }
-
-    @XmlTransient
-    public List<Comportamientoparcial> getComportamientoparcialList() {
-        return comportamientoparcialList;
-    }
-
-    public void setComportamientoparcialList(List<Comportamientoparcial> comportamientoparcialList) {
-        this.comportamientoparcialList = comportamientoparcialList;
-    }
-
-    @XmlTransient
-    public List<Registroasistencia> getRegistroasistenciaList() {
-        return registroasistenciaList;
-    }
-
-    public void setRegistroasistenciaList(List<Registroasistencia> registroasistenciaList) {
-        this.registroasistenciaList = registroasistenciaList;
     }
 
     @Override

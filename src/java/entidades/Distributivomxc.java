@@ -33,14 +33,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Distributivomxc.findAll", query = "SELECT d FROM Distributivomxc d"),
     @NamedQuery(name = "Distributivomxc.findByDisCodigo", query = "SELECT d FROM Distributivomxc d WHERE d.disCodigo = :disCodigo")})
 public class Distributivomxc implements Serializable {
-    @OneToMany(mappedBy = "disCodigo")
-    private List<NotaDestrezaparcial> notaDestrezaparcialList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "dis_codigo", nullable = false)
     private Integer disCodigo;
+    @OneToMany(mappedBy = "disCodigo")
+    private List<NotaDestrezaparcial> notaDestrezaparcialList;
     @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
     @ManyToOne
     private Docentes docCodigo;
@@ -64,6 +64,15 @@ public class Distributivomxc implements Serializable {
 
     public void setDisCodigo(Integer disCodigo) {
         this.disCodigo = disCodigo;
+    }
+
+    @XmlTransient
+    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
+        return notaDestrezaparcialList;
+    }
+
+    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
+        this.notaDestrezaparcialList = notaDestrezaparcialList;
     }
 
     public Docentes getDocCodigo() {
@@ -113,15 +122,6 @@ public class Distributivomxc implements Serializable {
     @Override
     public String toString() {
         return "entidades.Distributivomxc[ disCodigo=" + disCodigo + " ]";
-    }
-
-    @XmlTransient
-    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
-        return notaDestrezaparcialList;
-    }
-
-    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
-        this.notaDestrezaparcialList = notaDestrezaparcialList;
     }
     
 }

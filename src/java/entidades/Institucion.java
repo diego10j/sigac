@@ -67,9 +67,9 @@ public class Institucion implements Serializable {
     @Column(name = "ins_logo", length = 150)
     private String insLogo;
     @OneToMany(mappedBy = "insCodigo")
-    private List<Cursos> cursosList;
-    @OneToMany(mappedBy = "insCodigo")
     private List<Docentes> docentesList;
+    @OneToMany(mappedBy = "insCodigo")
+    private List<Cursos> cursosList;
     @OneToMany(mappedBy = "insCodigo")
     private List<Usuario> usuarioList;
     @OneToMany(mappedBy = "insCodigo")
@@ -77,9 +77,9 @@ public class Institucion implements Serializable {
     @OneToMany(mappedBy = "insCodigo")
     private List<EquivalenciaConducta> equivalenciaConductaList;
     @OneToMany(mappedBy = "insCodigo")
-    private List<Asignaturas> asignaturasList;
-    @OneToMany(mappedBy = "insCodigo")
     private List<EquivalenciaAprovechamiento> equivalenciaAprovechamientoList;
+    @OneToMany(mappedBy = "insCodigo")
+    private List<Asignaturas> asignaturasList;
     @OneToMany(mappedBy = "insCodigo")
     private List<PeriodoLectivo> periodoLectivoList;
     @OneToMany(mappedBy = "insCodigo")
@@ -159,21 +159,21 @@ public class Institucion implements Serializable {
     }
 
     @XmlTransient
-    public List<Cursos> getCursosList() {
-        return cursosList;
-    }
-
-    public void setCursosList(List<Cursos> cursosList) {
-        this.cursosList = cursosList;
-    }
-
-    @XmlTransient
     public List<Docentes> getDocentesList() {
         return docentesList;
     }
 
     public void setDocentesList(List<Docentes> docentesList) {
         this.docentesList = docentesList;
+    }
+
+    @XmlTransient
+    public List<Cursos> getCursosList() {
+        return cursosList;
+    }
+
+    public void setCursosList(List<Cursos> cursosList) {
+        this.cursosList = cursosList;
     }
 
     @XmlTransient
@@ -204,21 +204,21 @@ public class Institucion implements Serializable {
     }
 
     @XmlTransient
-    public List<Asignaturas> getAsignaturasList() {
-        return asignaturasList;
-    }
-
-    public void setAsignaturasList(List<Asignaturas> asignaturasList) {
-        this.asignaturasList = asignaturasList;
-    }
-
-    @XmlTransient
     public List<EquivalenciaAprovechamiento> getEquivalenciaAprovechamientoList() {
         return equivalenciaAprovechamientoList;
     }
 
     public void setEquivalenciaAprovechamientoList(List<EquivalenciaAprovechamiento> equivalenciaAprovechamientoList) {
         this.equivalenciaAprovechamientoList = equivalenciaAprovechamientoList;
+    }
+
+    @XmlTransient
+    public List<Asignaturas> getAsignaturasList() {
+        return asignaturasList;
+    }
+
+    public void setAsignaturasList(List<Asignaturas> asignaturasList) {
+        this.asignaturasList = asignaturasList;
     }
 
     @XmlTransient
