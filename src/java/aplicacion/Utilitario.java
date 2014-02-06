@@ -599,6 +599,13 @@ public class Utilitario extends Framework {
         return null;
     }
 
+      public String getURLCompleto() {
+        ExternalContext iecx = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) iecx.getRequest();
+        String path = request.getRequestURL() + "";       
+        return path;
+    }
+    
     public static void main(String args[]) {
         Utilitario u = new Utilitario();
         System.out.println(u.evaluarExpresionJavaScript("if(7>=7 && 7<=8){'Alcanza'}"));

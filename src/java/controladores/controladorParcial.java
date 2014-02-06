@@ -72,8 +72,15 @@ public class controladorParcial {
         comFormas = servFormaEvaluar.getListaFormasEvaluar();
         comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-        //cursos y materias
-        lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
+
+
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+            //cursos y materias
+            lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
+
+        } else {
+            lisCursos = servParcial.getCursosDisciplinaDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
+        }
 
         if (lisCursos != null) {
             if (!lisCursos.isEmpty()) {
@@ -358,7 +365,7 @@ public class controladorParcial {
             } catch (Exception e) {
             }
             try {
-                sem5 = Double.parseDouble(fila[6] + "");
+                sem5 = Double.parseDouble(fila[7] + "");
             } catch (Exception e) {
             }
 

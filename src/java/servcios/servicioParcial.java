@@ -39,14 +39,19 @@ public class servicioParcial {
      * @return Lista con los cursos y pararalelos
      */
     public List getCursosDocente(String per_codigo, String doc_codigo) {
-
-
         return utilitario.getConexion().consultar("select d.cre_codigo,cu.cur_anio,pa.par_nombre from distributivomxc d\n"
                 + "inner join crear_curso c on d.cre_codigo=c.cre_codigo INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo inner join paralelo pa on c.par_codigo=pa.par_codigo inner join docentes p on d.doc_codigo=p.doc_codigo"
                 + " where p.doc_codigo=" + doc_codigo + " and c.per_codigo=" + per_codigo + "\n"
                 + "group  by d.cre_codigo,cu.cur_codigo,cu.cur_anio,pa.par_nombre\n"
                 + "order by cu.cur_codigo,par_nombre");
 
+    }
+
+    public List getCursosDisciplinaDocente(String per_codigo, String doc_codigo) {
+        return utilitario.getConexion().consultar("SELECT c.cre_codigo,cu.cur_anio,pa.par_nombre FROM crear_curso c\n"
+                + "INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo\n"
+                + "inner join paralelo pa on c.par_codigo=pa.par_codigo\n"
+                + "where c.doc_codigo=" + doc_codigo + " and c.per_codigo=" + per_codigo + "");
     }
 
     public List getMateriasCursoDocente(String cre_codigo, String doc_codigo) {
@@ -152,6 +157,89 @@ public class servicioParcial {
             utilitario.getConexion().agregarSql("UPDATE nota_destrezaparcial set not_actividadindividual=" + fila[3] + ""
                     + ",not_actividadgrupal=" + fila[4] + ",not_lecciones=" + fila[5] + ",not_evaluacionsumativa=" + fila[6] + ",not_total=" + fila[7] + ",\n"
                     + "not_primerparcial=" + fila[8] + ",not_eqvdestreza='" + fila[9] + "',not_observacion='" + fila[10] + "', not_trabajos=" + fila[11] + " where not_codigo=" + fila[0]);
+        }
+        return utilitario.getConexion().ejecutarListaSql();
+    }
+
+    /**
+     * Reorna los alumnos que no estan inscritos para pasar la nota de
+     * disciplina
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param eva_codigo Parcial
+     * @return
+     */
+    public TablaGenerica getParcialDisciplina(String cre_codigo, String for_codigo, String eva_codigo) {
+        return utilitario.consultar("select * from matricula where cre_codigo=" + cre_codigo + " and mat_codigo not in (SELECT mat_codigo from comportamientoparcial where for_codigo=" + for_codigo + " and eva_codigo=" + eva_codigo + ") ");
+    }
+
+    /**
+     * Inscribe los alumnos en un Curso, en una Asignaura en un parcial de un
+     * quimestre para pasar la disciplina
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param eva_codigo Parcial
+     * @return int con el número de alumnos insertados
+     */
+    public int inscribirParcialDisciplina(String cre_codigo, String for_codigo, String eva_codigo) {
+        TablaGenerica tab_alumno = getParcialDisciplina(cre_codigo, for_codigo, eva_codigo);
+        if (tab_alumno.isEmpty() == false) {
+            TablaGenerica tab_notas = new TablaGenerica();
+            tab_notas.setTabla("comportamientoparcial", "com_codigo", -1);
+            tab_notas.setCondicion("com_codigo=-1");
+            tab_notas.ejecutarSql();
+
+            for (int i = 0; i < tab_alumno.getTotalFilas(); i++) {
+                tab_notas.insertar();
+                tab_notas.setValor("eva_codigo", eva_codigo);
+                tab_notas.setValor("for_codigo", for_codigo);
+                tab_notas.setValor("mat_codigo", tab_alumno.getValor(i, "mat_codigo"));
+                tab_notas.setValor("com_semana1", "0.00");
+                tab_notas.setValor("com_semana2", "0.00");
+                tab_notas.setValor("com_semana3", "0.00");
+                tab_notas.setValor("com_semana4", "0.00");
+                tab_notas.setValor("com_semana5", "0.00");
+                tab_notas.setValor("com_sumatoria", "0.00");
+            }
+            tab_notas.guardar();
+            if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
+                return tab_alumno.getTotalFilas();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Retorna una lista con los alumnos que pertenecen a un parcial de un
+     * distributivo
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param dis_codigo Distributivo
+     * @return
+     */
+    public List getNotasParcialDisciplina(String cre_codigo, String for_codigo, String eva_codigo) {
+        return utilitario.getConexion().consultar("SELECT a.com_codigo,alu_apellidos,alu_nombres,com_semana1,com_semana2,\n"
+                + "com_semana3,com_semana4,com_semana5,com_sumatoria,com_equivalencia,a.for_codigo,a.mat_codigo,a.eva_codigo from comportamientoparcial a\n"
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
+                + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
+                + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
+    }
+
+    /**
+     * Guarda todas las notas de un parcial
+     *
+     * @param notas
+     * @return
+     */
+    public String guardarDisciplinaParcial(List notas) {
+        for (Object actual : notas) {
+            Object[] fila = (Object[]) actual;
+            utilitario.getConexion().agregarSql("UPDATE comportamientoparcial set com_semana1=" + fila[3] + " "
+                    + ",com_semana2=" + fila[4] + ", com_semana3=" + fila[5] + ", com_semana4=" + fila[6] + ", com_semana5=" + fila[7] + ",\n"
+                    + "com_sumatoria=" + fila[8] + ",com_equivalencia='" + fila[9] + "' where com_codigo=" + fila[0]);
         }
         return utilitario.getConexion().ejecutarListaSql();
     }
