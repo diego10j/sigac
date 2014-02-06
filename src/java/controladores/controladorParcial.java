@@ -54,6 +54,7 @@ public class controladorParcial {
     private String strForma;
     private String strParcial;
     private boolean booMuestra = true;
+    private List lisDisciplinaParcial;
 
     @PostConstruct
     public void cargarDatos() {
@@ -97,8 +98,16 @@ public class controladorParcial {
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
         }
-        objAsignaturaSeleccionada=null;
+        objAsignaturaSeleccionada = null;
         cargarAlumnos();
+    }
+
+    public void seleccionarCursosDisciplina(SelectEvent evt) {
+        cargarAlumnosDisciplina();
+    }
+
+    public void seleccionoComboDisciplina() {
+        cargarAlumnosDisciplina();
     }
 
     public void seleccionoCombo() {
@@ -113,8 +122,7 @@ public class controladorParcial {
             if (fila[2] != null && fila[2].toString().equals("3")) {
                 //SOLO MATERIAS DE PREBASICA
                 booMuestra = false;
-            }
-            else{
+            } else {
                 booMuestra = true;
             }
         } else {
@@ -134,6 +142,18 @@ public class controladorParcial {
         }
     }
 
+    private void cargarAlumnosDisciplina() {
+        if (objCursoSeleccionado != null) {
+            if (strForma != null && strParcial != null) {
+                lisDisciplinaParcial = servParcial.getNotasParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+            } else {
+                lisDisciplinaParcial = null;
+            }
+        } else {
+            lisDisciplinaParcial = null;
+        }
+    }
+
     public void actualizarNotasParcial() {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
@@ -150,6 +170,25 @@ public class controladorParcial {
         }
     }
 
+    public void actualizarDisciplinaParcial() {
+        if (objCursoSeleccionado != null) {
+            if (strForma != null && strParcial != null) {
+                int num_matriculados = servParcial.inscribirParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+                if (num_matriculados > 0) {
+                    utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
+                }
+                lisDisciplinaParcial = servParcial.getNotasParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
+            }
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione un Curso", "");
+        }
+    }
+
+    /*
+     * cuando cambia una nota, valida que este en el rango de 1 a 10 y calcula la equivalencia 
+     */
     public void cabioNota(CellEditEvent event) {
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -179,8 +218,7 @@ public class controladorParcial {
             } else if (event.getColumn().getClientId().endsWith("cEval")) {
                 fila[6] = 0;
                 utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
-            }
-             else if (event.getColumn().getClientId().endsWith("cNota")) {
+            } else if (event.getColumn().getClientId().endsWith("cNota")) {
                 fila[8] = 0;
                 utilitario.agregarMensajeError("La nota debe estar en el rango de 0 a 10", "");
             }
@@ -260,9 +298,121 @@ public class controladorParcial {
 
     }
 
+    /*
+     * cuando cambia una nota, valida que este en el rango de 1 a 10 y calcula la equivalencia 
+     */
+    public void cabioDisciplina(CellEditEvent event) {
+
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        Object[] fila = (Object[]) lisDisciplinaParcial.get(event.getRowIndex());
+        double dou_new = 0;
+        try {
+            dou_new = Double.parseDouble(event.getNewValue() + "");
+        } catch (Exception e) {
+            dou_new = -1;
+        }
+        if (dou_new > 2 || dou_new < 0) {
+            if (event.getColumn().getClientId().endsWith("cSem1")) {
+                fila[3] = 0;
+                utilitario.agregarMensajeError("La nota de Disciplina de la semana 1 debe estar en el rango de 0 a 2", "");
+            } else if (event.getColumn().getClientId().endsWith("cSem2")) {
+                fila[4] = 0;
+                utilitario.agregarMensajeError("La nota de Disciplina de la semana 2 debe estar en el rango de 0 a 2", "");
+            } else if (event.getColumn().getClientId().endsWith("cSem3")) {
+                fila[5] = 0;
+                utilitario.agregarMensajeError("La nota de Disciplina de la semana 3 debe estar en el rango de 0 a 2", "");
+            } else if (event.getColumn().getClientId().endsWith("cSem4")) {
+                fila[6] = 0;
+                utilitario.agregarMensajeError("La nota de Disciplina de la semana 4 debe estar en el rango de 0 a 2", "");
+            } else if (event.getColumn().getClientId().endsWith("cSem5")) {
+                fila[7] = 0;
+                utilitario.agregarMensajeError("La nota de Disciplina de la semana 5 debe estar en el rango de 0 a 2", "");
+            }
+            requestContext.update("tabNotas");
+        }
+
+
+        if (booMuestra) {
+
+
+            double sem1 = 0;
+            double sem2 = 0;
+            double sem3 = 0;
+            double sem4 = 0;
+            double sem5 = 0;
+
+            try {
+                sem1 = Double.parseDouble(fila[3] + "");
+            } catch (Exception e) {
+            }
+            try {
+                sem2 = Double.parseDouble(fila[4] + "");
+            } catch (Exception e) {
+            }
+            try {
+                sem3 = Double.parseDouble(fila[5] + "");
+            } catch (Exception e) {
+            }
+            try {
+                sem4 = Double.parseDouble(fila[6] + "");
+            } catch (Exception e) {
+            }
+            try {
+                sem5 = Double.parseDouble(fila[6] + "");
+            } catch (Exception e) {
+            }
+
+            double total = sem1 + sem2 + sem3 + sem4 + sem5;
+
+            fila[8] = utilitario.getFormatoNumero(total);
+
+            requestContext.update("tabNotas:" + event.getRowIndex() + ":suma");
+
+        } else {
+        }
+
+
+        ///Calcular la equivalencia
+        //////////
+
+        TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
+        Object obj_resultado = null;
+        for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+            String str_expresion = tab_equi.getValor(i, "eqc_escala");
+            str_expresion = str_expresion.replace("nota", fila[8] + "");
+            obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+            if (obj_resultado != null) {
+                break;
+            }
+        }
+        if (obj_resultado == null) {
+            obj_resultado = "NO EQV";
+        }
+        fila[9] = obj_resultado;
+
+
+        lisDisciplinaParcial.set(event.getRowIndex(), fila);
+
+
+
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
+
+
+
+    }
+
     public void guardar() {
         if (lisNotasParcial != null) {
             String str_mensaje = servParcial.guardarNotasParcial(lisNotasParcial);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+            }
+        }
+
+        if (lisDisciplinaParcial != null) {
+            String str_mensaje = servParcial.guardarDisciplinaParcial(lisDisciplinaParcial);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
             } else {
@@ -365,5 +515,13 @@ public class controladorParcial {
 
     public void setBooMuestra(boolean booMuestra) {
         this.booMuestra = booMuestra;
+    }
+
+    public List getLisDisciplinaParcial() {
+        return lisDisciplinaParcial;
+    }
+
+    public void setLisDisciplinaParcial(List lisDisciplinaParcial) {
+        this.lisDisciplinaParcial = lisDisciplinaParcial;
     }
 }
