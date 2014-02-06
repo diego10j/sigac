@@ -45,8 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Docentes.findByDocEmail", query = "SELECT d FROM Docentes d WHERE d.docEmail = :docEmail"),
     @NamedQuery(name = "Docentes.findByDocHojavida", query = "SELECT d FROM Docentes d WHERE d.docHojavida = :docHojavida")})
 public class Docentes implements Serializable {
-    @OneToMany(mappedBy = "docCodigo")
-    private List<Usuario> usuarioList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -81,9 +79,11 @@ public class Docentes implements Serializable {
     @ManyToOne
     private Institucion insCodigo;
     @OneToMany(mappedBy = "docCodigo")
-    private List<Distributivomxc> distributivomxcList;
+    private List<Usuario> usuarioList;
     @OneToMany(mappedBy = "docCodigo")
     private List<CrearCurso> crearCursoList;
+    @OneToMany(mappedBy = "docCodigo")
+    private List<Distributivomxc> distributivomxcList;
 
     public Docentes() {
     }
@@ -173,12 +173,12 @@ public class Docentes implements Serializable {
     }
 
     @XmlTransient
-    public List<Distributivomxc> getDistributivomxcList() {
-        return distributivomxcList;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setDistributivomxcList(List<Distributivomxc> distributivomxcList) {
-        this.distributivomxcList = distributivomxcList;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @XmlTransient
@@ -188,6 +188,15 @@ public class Docentes implements Serializable {
 
     public void setCrearCursoList(List<CrearCurso> crearCursoList) {
         this.crearCursoList = crearCursoList;
+    }
+
+    @XmlTransient
+    public List<Distributivomxc> getDistributivomxcList() {
+        return distributivomxcList;
+    }
+
+    public void setDistributivomxcList(List<Distributivomxc> distributivomxcList) {
+        this.distributivomxcList = distributivomxcList;
     }
 
     @Override
@@ -213,15 +222,6 @@ public class Docentes implements Serializable {
     @Override
     public String toString() {
         return "entidades.Docentes[ docCodigo=" + docCodigo + " ]";
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
     }
     
 }

@@ -41,15 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "NotaDestrezaparcial.findByNotEqvdestreza", query = "SELECT n FROM NotaDestrezaparcial n WHERE n.notEqvdestreza = :notEqvdestreza"),
     @NamedQuery(name = "NotaDestrezaparcial.findByNotObservacion", query = "SELECT n FROM NotaDestrezaparcial n WHERE n.notObservacion = :notObservacion")})
 public class NotaDestrezaparcial implements Serializable {
-    @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
-    @ManyToOne
-    private Matricula matCodigo;
-    @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
-    @ManyToOne
-    private Formaevaluar forCodigo;
-    @JoinColumn(name = "dis_codigo", referencedColumnName = "dis_codigo")
-    @ManyToOne
-    private Distributivomxc disCodigo;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -77,12 +68,18 @@ public class NotaDestrezaparcial implements Serializable {
     @Size(max = 200)
     @Column(name = "not_observacion", length = 200)
     private String notObservacion;
+    @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
+    @ManyToOne
+    private Matricula matCodigo;
+    @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
+    @ManyToOne
+    private Formaevaluar forCodigo;
     @JoinColumn(name = "eva_codigo", referencedColumnName = "eva_codigo")
     @ManyToOne
     private Evaluarparcial evaCodigo;
-    @JoinColumn(name = "asi_codigo", referencedColumnName = "asi_codigo")
+    @JoinColumn(name = "dis_codigo", referencedColumnName = "dis_codigo")
     @ManyToOne
-    private Asignaturas asiCodigo;
+    private Distributivomxc disCodigo;
 
     public NotaDestrezaparcial() {
     }
@@ -171,6 +168,22 @@ public class NotaDestrezaparcial implements Serializable {
         this.notObservacion = notObservacion;
     }
 
+    public Matricula getMatCodigo() {
+        return matCodigo;
+    }
+
+    public void setMatCodigo(Matricula matCodigo) {
+        this.matCodigo = matCodigo;
+    }
+
+    public Formaevaluar getForCodigo() {
+        return forCodigo;
+    }
+
+    public void setForCodigo(Formaevaluar forCodigo) {
+        this.forCodigo = forCodigo;
+    }
+
     public Evaluarparcial getEvaCodigo() {
         return evaCodigo;
     }
@@ -179,12 +192,12 @@ public class NotaDestrezaparcial implements Serializable {
         this.evaCodigo = evaCodigo;
     }
 
-    public Asignaturas getAsiCodigo() {
-        return asiCodigo;
+    public Distributivomxc getDisCodigo() {
+        return disCodigo;
     }
 
-    public void setAsiCodigo(Asignaturas asiCodigo) {
-        this.asiCodigo = asiCodigo;
+    public void setDisCodigo(Distributivomxc disCodigo) {
+        this.disCodigo = disCodigo;
     }
 
     @Override
@@ -210,30 +223,6 @@ public class NotaDestrezaparcial implements Serializable {
     @Override
     public String toString() {
         return "entidades.NotaDestrezaparcial[ notCodigo=" + notCodigo + " ]";
-    }
-
-    public Matricula getMatCodigo() {
-        return matCodigo;
-    }
-
-    public void setMatCodigo(Matricula matCodigo) {
-        this.matCodigo = matCodigo;
-    }
-
-    public Formaevaluar getForCodigo() {
-        return forCodigo;
-    }
-
-    public void setForCodigo(Formaevaluar forCodigo) {
-        this.forCodigo = forCodigo;
-    }
-
-    public Distributivomxc getDisCodigo() {
-        return disCodigo;
-    }
-
-    public void setDisCodigo(Distributivomxc disCodigo) {
-        this.disCodigo = disCodigo;
     }
     
 }

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author usuario
+ * @author Diego
  */
 @Entity
 @Table(name = "equivalencia_aprovechamiento", catalog = "injp", schema = "public", uniqueConstraints = {

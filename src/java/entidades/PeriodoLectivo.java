@@ -41,8 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PeriodoLectivo.findByPerFechafin", query = "SELECT p FROM PeriodoLectivo p WHERE p.perFechafin = :perFechafin"),
     @NamedQuery(name = "PeriodoLectivo.findByPerActivo", query = "SELECT p FROM PeriodoLectivo p WHERE p.perActivo = :perActivo")})
 public class PeriodoLectivo implements Serializable {
-    @OneToMany(mappedBy = "perCodigo")
-    private List<CrearCurso> crearCursoList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -63,6 +61,8 @@ public class PeriodoLectivo implements Serializable {
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
+    @OneToMany(mappedBy = "perCodigo")
+    private List<CrearCurso> crearCursoList;
 
     public PeriodoLectivo() {
     }
@@ -119,6 +119,15 @@ public class PeriodoLectivo implements Serializable {
         this.insCodigo = insCodigo;
     }
 
+    @XmlTransient
+    public List<CrearCurso> getCrearCursoList() {
+        return crearCursoList;
+    }
+
+    public void setCrearCursoList(List<CrearCurso> crearCursoList) {
+        this.crearCursoList = crearCursoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -142,15 +151,6 @@ public class PeriodoLectivo implements Serializable {
     @Override
     public String toString() {
         return "entidades.PeriodoLectivo[ perCodigo=" + perCodigo + " ]";
-    }
-
-    @XmlTransient
-    public List<CrearCurso> getCrearCursoList() {
-        return crearCursoList;
-    }
-
-    public void setCrearCursoList(List<CrearCurso> crearCursoList) {
-        this.crearCursoList = crearCursoList;
     }
     
 }

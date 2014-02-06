@@ -48,8 +48,6 @@ public class Asignaturas implements Serializable {
     @Size(max = 250)
     @Column(name = "asi_observaciones", length = 250)
     private String asiObservaciones;
-    @OneToMany(mappedBy = "asiCodigo")
-    private List<NotaDestrezaparcial> notaDestrezaparcialList;
     @JoinColumn(name = "tip_codigo", referencedColumnName = "tip_codigo")
     @ManyToOne
     private Tipoasignaturas tipCodigo;
@@ -93,15 +91,6 @@ public class Asignaturas implements Serializable {
 
     public void setAsiObservaciones(String asiObservaciones) {
         this.asiObservaciones = asiObservaciones;
-    }
-
-    @XmlTransient
-    public List<NotaDestrezaparcial> getNotaDestrezaparcialList() {
-        return notaDestrezaparcialList;
-    }
-
-    public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
-        this.notaDestrezaparcialList = notaDestrezaparcialList;
     }
 
     public Tipoasignaturas getTipCodigo() {

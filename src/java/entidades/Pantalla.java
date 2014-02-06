@@ -33,11 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Pantalla.findAll", query = "SELECT p FROM Pantalla p"),
     @NamedQuery(name = "Pantalla.findByPanCodigo", query = "SELECT p FROM Pantalla p WHERE p.panCodigo = :panCodigo"),
-    @NamedQuery(name = "Pantalla.findByPanNombre", query = "SELECT p FROM Pantalla p WHERE p.panNombre = :panNombre")})
+    @NamedQuery(name = "Pantalla.findByPanNombre", query = "SELECT p FROM Pantalla p WHERE p.panNombre = :panNombre"),
+    @NamedQuery(name = "Pantalla.findByPanPath", query = "SELECT p FROM Pantalla p WHERE p.panPath = :panPath")})
 public class Pantalla implements Serializable {
-    @Size(max = 200)
-    @Column(name = "pan_path", length = 200)
-    private String panPath;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -47,6 +45,9 @@ public class Pantalla implements Serializable {
     @Size(max = 150)
     @Column(name = "pan_nombre", length = 150)
     private String panNombre;
+    @Size(max = 200)
+    @Column(name = "pan_path", length = 200)
+    private String panPath;
     @OneToMany(mappedBy = "panCodigo")
     private List<Permisos> permisosList;
     @OneToMany(mappedBy = "panPanCodigo")
@@ -79,6 +80,14 @@ public class Pantalla implements Serializable {
 
     public void setPanNombre(String panNombre) {
         this.panNombre = panNombre;
+    }
+
+    public String getPanPath() {
+        return panPath;
+    }
+
+    public void setPanPath(String panPath) {
+        this.panPath = panPath;
     }
 
     @XmlTransient
@@ -138,14 +147,6 @@ public class Pantalla implements Serializable {
     @Override
     public String toString() {
         return "entidades.Pantalla[ panCodigo=" + panCodigo + " ]";
-    }
-
-    public String getPanPath() {
-        return panPath;
-    }
-
-    public void setPanPath(String panPath) {
-        this.panPath = panPath;
     }
     
 }
