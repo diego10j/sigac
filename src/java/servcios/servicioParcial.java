@@ -137,7 +137,7 @@ public class servicioParcial {
                 + "not_primerparcial,not_eqvdestreza,not_observacion,not_trabajos,a.for_codigo,a.dis_codigo,a.mat_codigo,a.eva_codigo from nota_destrezaparcial a\n"
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo\n"
-                + "where a.for_codigo=" + for_codigo + "  and a.dis_codigo=" + dis_codigo + " and a.eva_codigo=" + eva_codigo + "");
+                + "where a.for_codigo=" + for_codigo + "  and a.dis_codigo=" + dis_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
     }
 
     /**
