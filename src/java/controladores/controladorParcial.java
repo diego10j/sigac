@@ -199,7 +199,7 @@ public class controladorParcial {
         }
     }
 
-    public void actualizarDisciplinaParcial() {        
+    public void actualizarDisciplinaParcial() {
         if (objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
                 int num_matriculados = servParcial.inscribirParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
@@ -215,7 +215,7 @@ public class controladorParcial {
         }
     }
 
-    public void actualizarAsistenciaParcial() {        
+    public void actualizarAsistenciaParcial() {
         if (objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
                 int num_matriculados = servParcial.inscribirParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
@@ -229,6 +229,56 @@ public class controladorParcial {
         } else {
             utilitario.agregarMensajeInfo("Seleccione un Curso", "");
         }
+    }
+
+    /*
+     * cuando cambia una nota, valida que este en el rango de 1 a 10 y calcula la equivalencia 
+     */
+    public void cabioAsistencia(CellEditEvent event) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+
+        Object[] fila = (Object[]) lisAsistenciaParcial.get(event.getRowIndex());
+        int int_new = 0;
+        try {
+            int_new = Integer.parseInt(event.getNewValue() + "");
+        } catch (Exception e) {
+            int_new = -1;
+        }
+        if (int_new > 10 || int_new < 0) {
+            if (event.getColumn().getClientId().endsWith("cAtra")) {
+                fila[3] = 0;
+                utilitario.agregarMensajeError("La Número de Atrasos debe ser un valor numerico entero", "");
+            } else if (event.getColumn().getClientId().endsWith("cFJusti")) {
+                fila[4] = 0;
+                utilitario.agregarMensajeError("La Número de Faltas Justificadas debe ser un valor numerico entero", "");
+            } else if (event.getColumn().getClientId().endsWith("cFInjus")) {
+                fila[5] = 0;
+                utilitario.agregarMensajeError("La Número de Faltas Injustificadas debe ser un valor numerico entero", "");
+            } else if (event.getColumn().getClientId().endsWith("cDias")) {
+                fila[7] = 0;
+                utilitario.agregarMensajeError("La Número de Días Laborados debe ser un valor numerico entero", "");
+            }
+            requestContext.update("tabNotas");
+        }
+
+        int total = 0;
+        int int_justi = 0;
+        int int_injusti = 0;
+        try {
+            int_justi = Integer.parseInt(fila[4] + "");
+        } catch (Exception e) {
+        }
+        try {
+            int_injusti = Integer.parseInt(fila[5] + "");
+        } catch (Exception e) {
+        }
+
+        total = int_justi + int_injusti;
+        fila[7] = total;
+
+        lisAsistenciaParcial.set(event.getRowIndex(), fila);
+
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
     }
 
     /*
@@ -257,9 +307,6 @@ public class controladorParcial {
             } else if (event.getColumn().getClientId().endsWith("cLecc")) {
                 fila[5] = 0;
                 utilitario.agregarMensajeError("La nota de Lecciones debe estar en el rango de 0 a 10", "");
-            } else if (event.getColumn().getClientId().endsWith("cEval")) {
-                fila[6] = 0;
-                utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cEval")) {
                 fila[6] = 0;
                 utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
