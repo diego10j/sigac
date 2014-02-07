@@ -399,7 +399,7 @@ public class controladorParcial {
 
         if (fila[10] == null) {
             fila[10] = "-";
-        }
+        }        
         fila[9] = obj_resultado;
 
 
