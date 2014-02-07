@@ -389,12 +389,16 @@ public class controladorParcial {
             str_expresion = str_expresion.replace("nota", fila[8] + "");
             obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
             if (obj_resultado != null) {
-                fila[10]=tab_equi.getValor(i, "eqc_alterno");
+                fila[10] = tab_equi.getValor(i, "eqc_alterno");
                 break;
             }
         }
         if (obj_resultado == null) {
             obj_resultado = "NO EQV";
+        }
+
+        if (fila[10] == null) {
+            fila[10] = "-";
         }
         fila[9] = obj_resultado;
 
