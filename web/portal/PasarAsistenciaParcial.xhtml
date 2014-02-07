@@ -72,7 +72,7 @@
 
                     <p:dataTable  id="tabNotas" var="tabla" value="#{controladorParcial.lisAsistenciaParcial}" editable="true" editMode="cell">
 
-                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioDisciplina}" /> 
+                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioAsistencia}" /> 
 
                         <p:column headerText="Alumno" style="width:25%" >
                             #{tabla[1]} #{tabla[2]}
@@ -107,15 +107,8 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                        <p:column headerText="Total Faltas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cTotal">
-                            <p:cellEditor>  
-                                <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
-                                <f:facet name="input">
-                                    <p:inputText  value="#{tabla[6]}" style="width:96%"  >
-
-                                    </p:inputText>
-                                </f:facet>  
-                            </p:cellEditor>  
+                        <p:column headerText="Total Faltas" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
+                            <h:outputText id="total" value="#{tabla[6]}" />                                
                         </p:column>
                         <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cDias">
                             <p:cellEditor>  
@@ -127,7 +120,7 @@
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
-                      
+
                     </p:dataTable>
 
                 </p:layoutUnit>
