@@ -55,6 +55,8 @@ public class controladorParcial {
     private String strParcial;
     private boolean booMuestra = true;
     private List lisDisciplinaParcial;
+    //Asistencia
+    private List lisAsistenciaParcial;
 
     @PostConstruct
     public void cargarDatos() {
@@ -109,6 +111,14 @@ public class controladorParcial {
         cargarAlumnos();
     }
 
+    public void seleccionarCursosAsistencia(SelectEvent evt) {
+        cargarAlumnosAsistencia();
+    }
+
+    public void seleccionoComboAsistencia() {
+        cargarAlumnosAsistencia();
+    }
+
     public void seleccionarCursosDisciplina(SelectEvent evt) {
         cargarAlumnosDisciplina();
     }
@@ -161,6 +171,18 @@ public class controladorParcial {
         }
     }
 
+    private void cargarAlumnosAsistencia() {
+        if (objCursoSeleccionado != null) {
+            if (strForma != null && strParcial != null) {
+                lisAsistenciaParcial = servParcial.getListaParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+            } else {
+                lisAsistenciaParcial = null;
+            }
+        } else {
+            lisAsistenciaParcial = null;
+        }
+    }
+
     public void actualizarNotasParcial() {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
@@ -177,7 +199,7 @@ public class controladorParcial {
         }
     }
 
-    public void actualizarDisciplinaParcial() {
+    public void actualizarDisciplinaParcial() {        
         if (objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
                 int num_matriculados = servParcial.inscribirParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
@@ -185,6 +207,22 @@ public class controladorParcial {
                     utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
                 }
                 lisDisciplinaParcial = servParcial.getNotasParcialDisciplina(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
+            }
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione un Curso", "");
+        }
+    }
+
+    public void actualizarAsistenciaParcial() {        
+        if (objCursoSeleccionado != null) {
+            if (strForma != null && strParcial != null) {
+                int num_matriculados = servParcial.inscribirParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+                if (num_matriculados > 0) {
+                    utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
+                }
+                lisAsistenciaParcial = servParcial.getListaParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
             } else {
                 utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
             }
@@ -399,18 +437,14 @@ public class controladorParcial {
 
         if (fila[10] == null) {
             fila[10] = "-";
-        }        
+        }
         fila[9] = obj_resultado;
 
 
         lisDisciplinaParcial.set(event.getRowIndex(), fila);
 
-
-
         requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
         requestContext.update("tabNotas:" + event.getRowIndex() + ":alter");
-
-
 
     }
 
@@ -426,6 +460,15 @@ public class controladorParcial {
 
         if (lisDisciplinaParcial != null) {
             String str_mensaje = servParcial.guardarDisciplinaParcial(lisDisciplinaParcial);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+            }
+        }
+
+        if (lisAsistenciaParcial != null) {
+            String str_mensaje = servParcial.guardarAsistenciaParcial(lisAsistenciaParcial);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
             } else {
@@ -536,5 +579,13 @@ public class controladorParcial {
 
     public void setLisDisciplinaParcial(List lisDisciplinaParcial) {
         this.lisDisciplinaParcial = lisDisciplinaParcial;
+    }
+
+    public List getLisAsistenciaParcial() {
+        return lisAsistenciaParcial;
+    }
+
+    public void setLisAsistenciaParcial(List lisAsistenciaParcial) {
+        this.lisAsistenciaParcial = lisAsistenciaParcial;
     }
 }

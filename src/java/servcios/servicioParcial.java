@@ -162,6 +162,9 @@ public class servicioParcial {
     }
 
     /**
+     * DISCIPLINA
+     */
+    /**
      * Reorna los alumnos que no estan inscritos para pasar la nota de
      * disciplina
      *
@@ -243,4 +246,92 @@ public class servicioParcial {
         }
         return utilitario.getConexion().ejecutarListaSql();
     }
+
+    /**
+     * ASISTENCIA
+     *
+     */
+    /**
+     * Reorna los alumnos que no estan inscritos para pasar la nota de
+     * asistencia
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param eva_codigo Parcial
+     * @return
+     */
+    public TablaGenerica getParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
+        return utilitario.consultar("select * from matricula where cre_codigo=" + cre_codigo + " and mat_codigo not in (SELECT mat_codigo from registroasistencia where for_codigo=" + for_codigo + " and eva_codigo=" + eva_codigo + ") ");
+    }
+
+    /**
+     * Inscribe los alumnos en un Curso, en una Asignaura en un parcial de un
+     * quimestre para pasar la disciplina
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param eva_codigo Parcial
+     * @return int con el número de alumnos insertados
+     */
+    public int inscribirParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
+        TablaGenerica tab_alumno = getParcialAsistencia(cre_codigo, for_codigo, eva_codigo);
+        if (tab_alumno.isEmpty() == false) {
+            TablaGenerica tab_notas = new TablaGenerica();
+            tab_notas.setTabla("registroasistencia", "reg_codigo", -1);
+            tab_notas.setCondicion("reg_codigo=-1");
+            tab_notas.ejecutarSql();
+
+            for (int i = 0; i < tab_alumno.getTotalFilas(); i++) {
+                tab_notas.insertar();
+                tab_notas.setValor("eva_codigo", eva_codigo);
+                tab_notas.setValor("for_codigo", for_codigo);
+                tab_notas.setValor("mat_codigo", tab_alumno.getValor(i, "mat_codigo"));
+                tab_notas.setValor("reg_atrasos", "0");
+                tab_notas.setValor("reg_faltasjustificadas", "0");
+                tab_notas.setValor("reg_faltasinjustificadas", "0");
+                tab_notas.setValor("reg_totalfaltas", "0");
+                tab_notas.setValor("reg_diaslaborados", "0");
+            }
+            tab_notas.guardar();
+            if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
+                return tab_alumno.getTotalFilas();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Retorna una lista con los alumnos que pertenecen a un parcial de un
+     * distributivo
+     *
+     * @param cre_codigo Curso
+     * @param for_codigo Quimestre
+     * @param dis_codigo Distributivo
+     * @return
+     */
+    public List getListaParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
+        return utilitario.getConexion().consultar("select a.reg_atrasos,alu_apellidos,alu_nombres,"
+                + "reg_atrasos,reg_faltasjustificadas,reg_faltasinjustificadas,reg_totalfaltas,reg_diaslaborados from registroasistencia a\n"
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
+                + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
+                + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
+    }
+    
+    
+      /**
+     * Guarda todas las notas de un parcial
+     *
+     * @param notas
+     * @return
+     */
+    public String guardarAsistenciaParcial(List notas) {
+        for (Object actual : notas) {
+            Object[] fila = (Object[]) actual;
+            utilitario.getConexion().agregarSql("UPDATE registroasistencia set reg_atrasos=" + fila[3] + " "
+                    + ",reg_faltasjustificadas=" + fila[4] + ", reg_faltasinjustificadas=" + fila[5] + ", reg_totalfaltas=" + fila[6] + ", reg_diaslaborados=" + fila[7] + "\n"
+                    + " where reg_codigo=" + fila[0]);
+        }
+        return utilitario.getConexion().ejecutarListaSql();
+    }
+
 }
