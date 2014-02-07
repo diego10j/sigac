@@ -222,7 +222,7 @@ public class servicioParcial {
      */
     public List getNotasParcialDisciplina(String cre_codigo, String for_codigo, String eva_codigo) {
         return utilitario.getConexion().consultar("SELECT a.com_codigo,alu_apellidos,alu_nombres,com_semana1,com_semana2,\n"
-                + "com_semana3,com_semana4,com_semana5,com_sumatoria,com_equivalencia,a.for_codigo,a.mat_codigo,a.eva_codigo from comportamientoparcial a\n"
+                + "com_semana3,com_semana4,com_semana5,com_sumatoria,com_equivalencia,com_equi,a.for_codigo,a.mat_codigo,a.eva_codigo from comportamientoparcial a\n"
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
@@ -239,7 +239,7 @@ public class servicioParcial {
             Object[] fila = (Object[]) actual;
             utilitario.getConexion().agregarSql("UPDATE comportamientoparcial set com_semana1=" + fila[3] + " "
                     + ",com_semana2=" + fila[4] + ", com_semana3=" + fila[5] + ", com_semana4=" + fila[6] + ", com_semana5=" + fila[7] + ",\n"
-                    + "com_sumatoria=" + fila[8] + ",com_equivalencia='" + fila[9] + "' where com_codigo=" + fila[0]);
+                    + "com_sumatoria=" + fila[8] + ",com_equivalencia='" + fila[9] + "',com_equi='" + fila[10] + "' where com_codigo=" + fila[0]);
         }
         return utilitario.getConexion().ejecutarListaSql();
     }
