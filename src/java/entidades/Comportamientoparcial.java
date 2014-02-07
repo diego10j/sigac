@@ -5,6 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comportamientoparcial.findByComSemana4", query = "SELECT c FROM Comportamientoparcial c WHERE c.comSemana4 = :comSemana4"),
     @NamedQuery(name = "Comportamientoparcial.findByComSemana5", query = "SELECT c FROM Comportamientoparcial c WHERE c.comSemana5 = :comSemana5"),
     @NamedQuery(name = "Comportamientoparcial.findByComSumatoria", query = "SELECT c FROM Comportamientoparcial c WHERE c.comSumatoria = :comSumatoria"),
-    @NamedQuery(name = "Comportamientoparcial.findByComEquivalencia", query = "SELECT c FROM Comportamientoparcial c WHERE c.comEquivalencia = :comEquivalencia")})
+    @NamedQuery(name = "Comportamientoparcial.findByComEquivalencia", query = "SELECT c FROM Comportamientoparcial c WHERE c.comEquivalencia = :comEquivalencia"),
+    @NamedQuery(name = "Comportamientoparcial.findByComEqui", query = "SELECT c FROM Comportamientoparcial c WHERE c.comEqui = :comEqui")})
 public class Comportamientoparcial implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,21 +46,24 @@ public class Comportamientoparcial implements Serializable {
     @NotNull
     @Column(name = "com_codigo", nullable = false)
     private Integer comCodigo;
-    @Column(name = "com_semana1")
-    private Integer comSemana1;
-    @Column(name = "com_semana2")
-    private Integer comSemana2;
-    @Column(name = "com_semana3")
-    private Integer comSemana3;
-    @Column(name = "com_semana4")
-    private Integer comSemana4;
-    @Column(name = "com_semana5")
-    private Integer comSemana5;
-    @Column(name = "com_sumatoria")
-    private Integer comSumatoria;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "com_semana1", precision = 4, scale = 2)
+    private BigDecimal comSemana1;
+    @Column(name = "com_semana2", precision = 4, scale = 2)
+    private BigDecimal comSemana2;
+    @Column(name = "com_semana3", precision = 4, scale = 2)
+    private BigDecimal comSemana3;
+    @Column(name = "com_semana4", precision = 4, scale = 2)
+    private BigDecimal comSemana4;
+    @Column(name = "com_semana5", precision = 4, scale = 2)
+    private BigDecimal comSemana5;
+    @Column(name = "com_sumatoria", precision = 4, scale = 2)
+    private BigDecimal comSumatoria;
     @Size(max = 100)
     @Column(name = "com_equivalencia", length = 100)
     private String comEquivalencia;
+    @Column(name = "com_equi")
+    private Character comEqui;
     @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
     @ManyToOne
     private Matricula matCodigo;
@@ -84,51 +89,51 @@ public class Comportamientoparcial implements Serializable {
         this.comCodigo = comCodigo;
     }
 
-    public Integer getComSemana1() {
+    public BigDecimal getComSemana1() {
         return comSemana1;
     }
 
-    public void setComSemana1(Integer comSemana1) {
+    public void setComSemana1(BigDecimal comSemana1) {
         this.comSemana1 = comSemana1;
     }
 
-    public Integer getComSemana2() {
+    public BigDecimal getComSemana2() {
         return comSemana2;
     }
 
-    public void setComSemana2(Integer comSemana2) {
+    public void setComSemana2(BigDecimal comSemana2) {
         this.comSemana2 = comSemana2;
     }
 
-    public Integer getComSemana3() {
+    public BigDecimal getComSemana3() {
         return comSemana3;
     }
 
-    public void setComSemana3(Integer comSemana3) {
+    public void setComSemana3(BigDecimal comSemana3) {
         this.comSemana3 = comSemana3;
     }
 
-    public Integer getComSemana4() {
+    public BigDecimal getComSemana4() {
         return comSemana4;
     }
 
-    public void setComSemana4(Integer comSemana4) {
+    public void setComSemana4(BigDecimal comSemana4) {
         this.comSemana4 = comSemana4;
     }
 
-    public Integer getComSemana5() {
+    public BigDecimal getComSemana5() {
         return comSemana5;
     }
 
-    public void setComSemana5(Integer comSemana5) {
+    public void setComSemana5(BigDecimal comSemana5) {
         this.comSemana5 = comSemana5;
     }
 
-    public Integer getComSumatoria() {
+    public BigDecimal getComSumatoria() {
         return comSumatoria;
     }
 
-    public void setComSumatoria(Integer comSumatoria) {
+    public void setComSumatoria(BigDecimal comSumatoria) {
         this.comSumatoria = comSumatoria;
     }
 
@@ -138,6 +143,14 @@ public class Comportamientoparcial implements Serializable {
 
     public void setComEquivalencia(String comEquivalencia) {
         this.comEquivalencia = comEquivalencia;
+    }
+
+    public Character getComEqui() {
+        return comEqui;
+    }
+
+    public void setComEqui(Character comEqui) {
+        this.comEqui = comEqui;
     }
 
     public Matricula getMatCodigo() {
