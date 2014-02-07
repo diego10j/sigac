@@ -274,7 +274,7 @@ public class controladorParcial {
         }
 
         total = int_justi + int_injusti;
-        fila[7] = total;
+        fila[6] = total;
 
         lisAsistenciaParcial.set(event.getRowIndex(), fila);
 
