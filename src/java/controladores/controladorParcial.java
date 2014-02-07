@@ -389,6 +389,7 @@ public class controladorParcial {
             str_expresion = str_expresion.replace("nota", fila[8] + "");
             obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
             if (obj_resultado != null) {
+                fila[10]=tab_equi.getValor(i, "eqc_alterno");
                 break;
             }
         }
@@ -403,6 +404,7 @@ public class controladorParcial {
 
 
         requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":alter");
 
 
 
