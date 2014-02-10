@@ -182,6 +182,14 @@ public class controladorParcial {
         } else {
             lisAsistenciaParcial = null;
         }
+        if (lisAsistenciaParcial != null && lisAsistenciaParcial.isEmpty() == false) {
+            try {
+                Object[] fila = (Object[]) lisAsistenciaParcial.get(0);
+                numDias = Integer.parseInt(fila[8] + "");
+            } catch (Exception e) {
+            }
+            numDias = 0;
+        }
     }
 
     public void actualizarNotasParcial() {
@@ -261,9 +269,6 @@ public class controladorParcial {
             } else if (event.getColumn().getClientId().endsWith("cFInjus")) {
                 fila[5] = 0;
                 utilitario.agregarMensajeError("La Número de Faltas Injustificadas debe ser un valor numerico entero", "");
-            } else if (event.getColumn().getClientId().endsWith("cDias")) {
-                fila[7] = 0;
-                utilitario.agregarMensajeError("La Número de Días Laborados debe ser un valor numerico entero", "");
             }
             requestContext.update("tabNotas");
         }
@@ -279,8 +284,8 @@ public class controladorParcial {
             int_injusti = Integer.parseInt(fila[5] + "");
         } catch (Exception e) {
         }
-        
-        int num_dias=0;
+
+        int num_dias = 0;
         try {
             num_dias = Integer.parseInt(fila[8] + "");
         } catch (Exception e) {
@@ -289,9 +294,9 @@ public class controladorParcial {
         total = int_justi + int_injusti;
         fila[6] = total;
 
-        
-        fila[7] = num_dias-total;
-        
+
+        fila[7] = num_dias - total;
+
         lisAsistenciaParcial.set(event.getRowIndex(), fila);
 
         requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
