@@ -21,13 +21,13 @@
                     <p:separator/>
 
                     <p:selectOneMenu value="#{controladorParcial.strForma}" required="true" requiredMessage="Debe seleccionar un Quimestre">
-                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas"/>
+                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
                         <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
                         <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                     </p:selectOneMenu>
                     <p:separator/>
                     <p:selectOneMenu value="#{controladorParcial.strParcial}" required="true" requiredMessage="Debe seleccionar un Parcial">
-                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas"/>
+                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
                         <f:selectItem itemValue="-1" itemLabel="Seleccione un Parcial ..." />
                         <f:selectItems value="#{controladorParcial.comParciales}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                     </p:selectOneMenu>
@@ -43,7 +43,7 @@
                     <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
                                  selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="250" >
                         `
-                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursosAsistencia}" update=":frmPrincipal:tabNotas"/>
+                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursosAsistencia}" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
                         <p:column headerText="CURSO" width="75%">
                             #{tabla[1]}
                         </p:column>
@@ -67,7 +67,7 @@
                             <p:commandButton value="Actualizar Matriculados" action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
                             <p:separator/>
                             <h:outputText value="Número de días del Parcial:"/>
-                            <p:inputText value="#{controladorParcial.numDias}" size="3">
+                            <p:inputText id="txtDias" value="#{controladorParcial.numDias}" size="3">
                                 <f:validateLongRange minimum="0"/>
                             </p:inputText>
 
