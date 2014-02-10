@@ -57,6 +57,7 @@ public class controladorParcial {
     private List lisDisciplinaParcial;
     //Asistencia
     private List lisAsistenciaParcial;
+    private int numDias = 0;
 
     @PostConstruct
     public void cargarDatos() {
@@ -216,19 +217,25 @@ public class controladorParcial {
     }
 
     public void actualizarAsistenciaParcial() {
-        if (objCursoSeleccionado != null) {
-            if (strForma != null && strParcial != null) {
-                int num_matriculados = servParcial.inscribirParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
-                if (num_matriculados > 0) {
-                    utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
+        if (numDias > 0) {
+            if (objCursoSeleccionado != null) {
+                if (strForma != null && strParcial != null) {
+                    int num_matriculados = servParcial.inscribirParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial, numDias);
+                    if (num_matriculados > 0) {
+                        utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
+                    }
+                    lisAsistenciaParcial = servParcial.getListaParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
+                } else {
+                    utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
                 }
-                lisAsistenciaParcial = servParcial.getListaParcialAsistencia(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial);
             } else {
-                utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
+                utilitario.agregarMensajeInfo("Seleccione un Curso", "");
             }
         } else {
-            utilitario.agregarMensajeInfo("Seleccione un Curso", "");
+            utilitario.agregarMensajeInfo("El número de días del parcial tiene que ser mayor a 0", "");
         }
+
+
     }
 
     /*
@@ -272,13 +279,23 @@ public class controladorParcial {
             int_injusti = Integer.parseInt(fila[5] + "");
         } catch (Exception e) {
         }
+        
+        int num_dias=0;
+        try {
+            num_dias = Integer.parseInt(fila[8] + "");
+        } catch (Exception e) {
+        }
 
         total = int_justi + int_injusti;
         fila[6] = total;
 
+        
+        fila[7] = num_dias-total;
+        
         lisAsistenciaParcial.set(event.getRowIndex(), fila);
 
         requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":dias");
     }
 
     /*
@@ -634,5 +651,13 @@ public class controladorParcial {
 
     public void setLisAsistenciaParcial(List lisAsistenciaParcial) {
         this.lisAsistenciaParcial = lisAsistenciaParcial;
+    }
+
+    public int getNumDias() {
+        return numDias;
+    }
+
+    public void setNumDias(int numDias) {
+        this.numDias = numDias;
     }
 }
