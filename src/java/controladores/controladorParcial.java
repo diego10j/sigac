@@ -263,13 +263,13 @@ public class controladorParcial {
         if (int_new > 15 || int_new < 0) {
             if (event.getColumn().getClientId().endsWith("cAtra")) {
                 fila[3] = 0;
-                utilitario.agregarMensajeError("La Número de Atrasos debe ser un valor numerico entero", "");
+                utilitario.agregarMensajeError("La Número de Atrasos debe ser un valor numerico entero entre 0 y 15", "");
             } else if (event.getColumn().getClientId().endsWith("cFJusti")) {
                 fila[4] = 0;
-                utilitario.agregarMensajeError("La Número de Faltas Justificadas debe ser un valor numerico entero", "");
+                utilitario.agregarMensajeError("La Número de Faltas Justificadas debe ser un valor numerico entero entre 0 y 15", "");
             } else if (event.getColumn().getClientId().endsWith("cFInjus")) {
                 fila[5] = 0;
-                utilitario.agregarMensajeError("La Número de Faltas Injustificadas debe ser un valor numerico entero", "");
+                utilitario.agregarMensajeError("La Número de Faltas Injustificadas debe ser un valor numerico entero entre 0 y 15", "");
             }
             requestContext.update("tabNotas");
         }
