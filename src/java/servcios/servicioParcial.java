@@ -273,7 +273,7 @@ public class servicioParcial {
      * @param eva_codigo Parcial
      * @return int con el número de alumnos insertados
      */
-    public int inscribirParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
+    public int inscribirParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo,int dias) {
         TablaGenerica tab_alumno = getParcialAsistencia(cre_codigo, for_codigo, eva_codigo);
         if (tab_alumno.isEmpty() == false) {
             TablaGenerica tab_notas = new TablaGenerica();
@@ -291,6 +291,7 @@ public class servicioParcial {
                 tab_notas.setValor("reg_faltasinjustificadas", "0");
                 tab_notas.setValor("reg_totalfaltas", "0");
                 tab_notas.setValor("reg_diaslaborados", "0");
+                tab_notas.setValor("reg_dias", dias+"");
             }
             tab_notas.guardar();
             if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
@@ -311,7 +312,7 @@ public class servicioParcial {
      */
     public List getListaParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
         return utilitario.getConexion().consultar("select a.reg_atrasos,alu_apellidos,alu_nombres,"
-                + "reg_atrasos,reg_faltasjustificadas,reg_faltasinjustificadas,reg_totalfaltas,reg_diaslaborados from registroasistencia a\n"
+                + "reg_atrasos,reg_faltasjustificadas,reg_faltasinjustificadas,reg_totalfaltas,reg_diaslaborados,reg_dias from registroasistencia a\n"
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
