@@ -260,7 +260,7 @@ public class controladorParcial {
         } catch (Exception e) {
             int_new = -1;
         }
-        if (int_new > 10 || int_new < 0) {
+        if (int_new > 15 || int_new < 0) {
             if (event.getColumn().getClientId().endsWith("cAtra")) {
                 fila[3] = 0;
                 utilitario.agregarMensajeError("La Número de Atrasos debe ser un valor numerico entero", "");
