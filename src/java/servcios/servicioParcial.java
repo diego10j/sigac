@@ -290,7 +290,7 @@ public class servicioParcial {
                 tab_notas.setValor("reg_faltasjustificadas", "0");
                 tab_notas.setValor("reg_faltasinjustificadas", "0");
                 tab_notas.setValor("reg_totalfaltas", "0");
-                tab_notas.setValor("reg_diaslaborados", "0");
+                tab_notas.setValor("reg_diaslaborados",  dias + "");
                 tab_notas.setValor("reg_dias", dias + "");
             }
             tab_notas.guardar();
