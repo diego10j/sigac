@@ -128,8 +128,8 @@
                                 <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
                                 <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
                             </p:selectOneMenu>
-                            <h:outputText value="Observaciones :*"/>
-                            <p:inputTextarea style="width: 98%" value="#{controladorCrearCurso.creCrearc.creObservacion}" required="true" requiredMessage="Debe ingresar la Observacion" />
+                            <h:outputText value="Observaciones :"/>
+                            <p:inputTextarea style="width: 98%" value="#{controladorCrearCurso.creCrearc.creObservacion}"  />
                         </h:panelGrid>
                     </p:fieldset>
 
