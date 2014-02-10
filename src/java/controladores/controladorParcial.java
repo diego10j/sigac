@@ -182,13 +182,14 @@ public class controladorParcial {
         } else {
             lisAsistenciaParcial = null;
         }
-        if (lisAsistenciaParcial != null && lisAsistenciaParcial.isEmpty() == false) {
+
+        if (lisAsistenciaParcial != null) {
             try {
                 Object[] fila = (Object[]) lisAsistenciaParcial.get(0);
                 numDias = Integer.parseInt(fila[8] + "");
             } catch (Exception e) {
+                numDias = 0;
             }
-            numDias = 0;
         }
     }
 
