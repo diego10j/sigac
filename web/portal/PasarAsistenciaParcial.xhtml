@@ -65,7 +65,11 @@
                             <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
                             <p:separator/>
                             <p:commandButton value="Actualizar Matriculados" action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
-
+                            <p:separator/>
+                            <h:outputText value="Número de días del Parcial:"/>
+                            <p:inputText value="#{controladorParcial.numDias}" size="3">
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
 
                         </p:toolbarGroup>
                     </p:toolbar>
@@ -110,15 +114,8 @@
                         <p:column headerText="Total Faltas" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
                             <h:outputText id="total" value="#{tabla[6]}" />                                
                         </p:column>
-                        <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cDias">
-                            <p:cellEditor>  
-                                <f:facet name="output"><h:outputText value="#{tabla[7]}" /></f:facet>  
-                                <f:facet name="input">
-                                    <p:inputText  value="#{tabla[7]}" style="width:96%"  >
-
-                                    </p:inputText>
-                                </f:facet>  
-                            </p:cellEditor>  
+                        <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
+                            <h:outputText id="dias" value="#{tabla[7]}" />
                         </p:column>
 
                     </p:dataTable>
