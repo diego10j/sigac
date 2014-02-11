@@ -57,7 +57,7 @@
                             Listado de Aignaturas
                         </f:facet>
                         <p:column headerText="ASIGNATURA" >
-                            #{tabla[1]}
+                         #{tabla[1]}
                         </p:column>
                         <p:column headerText="TIPO" >
                             #{tabla[3]}
@@ -74,7 +74,9 @@
                         <p:toolbarGroup>
 
                             <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
-                          
+                             <p:separator/>
+                             <p:commandButton value="Actualizar Matriculados" action="#{controladorParcial.actualizarInforme}" update=":frmPrincipal:tabNotas" />  
+
                         </p:toolbarGroup>
                     </p:toolbar>
 
@@ -86,23 +88,23 @@
                             #{tabla[1]} #{tabla[2]}
                         </p:column>
                         <p:column headerText="Sumatoria" rendered="#{controladorParcial.booMuestra}" style="width:10%">
-                            <h:outputText style="font-size: 14px;font-weight: bold"  value="#{tabla[7]}" />                                
+                            <h:outputText style="font-size: 13px;"  value="#{tabla[7]}" />                                
                         </p:column>
                         <p:column headerText="Eqv 80%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
-                            <h:outputText style="font-size: 14px;font-weight: bold"  value="#{tabla[3]}" />                                
+                            <h:outputText style="font-size: 13px;"  value="#{tabla[3]}" />                                
                         </p:column>
                         <p:column headerText="Exámen" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cExamen">
                             <p:cellEditor>  
                                 <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                                 <f:facet name="input">
-                                    <p:inputText  value="#{tabla[5]}" style="width:96%"  >                                       
+                                    <p:inputText  value="#{tabla[5]}" style="width:96%" autocomplete="off" >                                       
                                     </p:inputText>
                                 </f:facet>  
                             </p:cellEditor>  
                         </p:column>
 
                         <p:column headerText="Eqv 20%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
-                            <h:outputText style="font-size: 14px;font-weight: bold" id="eqv20" value="#{tabla[4]}" />                                
+                            <h:outputText style="font-size: 13px;" id="eqv20" value="#{tabla[4]}" />                                
                         </p:column>
 
                         <p:column headerText="Nota Quimestre" rendered="#{controladorParcial.booMuestra}" style="width:10%">
