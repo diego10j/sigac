@@ -80,7 +80,7 @@
 
                     <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisInformeQuimestre}" editable="true" editMode="cell">
 
-                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" /> 
+                        <p:ajax event="cellEdit" listener="#{controladorParcial.cambioExamen}" /> 
 
                         <p:column headerText="Alumno" style="width:25%" >
                             #{tabla[1]} #{tabla[2]}
