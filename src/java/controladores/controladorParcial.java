@@ -22,6 +22,7 @@ import servcios.servicioEvaluarparcial;
 import servcios.servicioFormaevaluar;
 import servcios.servicioParcial;
 import servcios.servicioPeriodo;
+import servcios.servicioQuimestre;
 
 /**
  *
@@ -58,6 +59,10 @@ public class controladorParcial {
     //Asistencia
     private List lisAsistenciaParcial;
     private int numDias = 0;
+    ////Quimestre
+    @EJB
+    private servicioQuimestre servQuimestre;
+    private List lisInformeQuimestre;
 
     @PostConstruct
     public void cargarDatos() {
@@ -77,7 +82,7 @@ public class controladorParcial {
 
 
 
-        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf")) {
             //cursos y materias
             lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
@@ -109,7 +114,12 @@ public class controladorParcial {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
         }
         objAsignaturaSeleccionada = null;
-        cargarAlumnos();
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+            cargarAlumnos();
+        } else {
+            cargarInforme();
+        }
+
     }
 
     public void seleccionarCursosAsistencia(SelectEvent evt) {
@@ -129,22 +139,42 @@ public class controladorParcial {
     }
 
     public void seleccionoCombo() {
-        cargarAlumnos();
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+            cargarAlumnos();
+        } else {
+            cargarInforme();
+        }
     }
 
     public void seleccionoAsignatura(SelectEvent evt) {
-        cargarAlumnos();
-
-        Object[] fila = (Object[]) evt.getObject();
-        if (fila != null) {
-            if (fila[2] != null && fila[2].toString().equals("3")) {
-                //SOLO MATERIAS DE PREBASICA
-                booMuestra = false;
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+            cargarAlumnos();
+            Object[] fila = (Object[]) evt.getObject();
+            if (fila != null) {
+                if (fila[2] != null && fila[2].toString().equals("3")) {
+                    //SOLO MATERIAS DE PREBASICA
+                    booMuestra = false;
+                } else {
+                    booMuestra = true;
+                }
             } else {
                 booMuestra = true;
             }
         } else {
-            booMuestra = true;
+            cargarInforme();
+        }
+
+    }
+
+    private void cargarInforme() {
+        if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
+            if (strForma != null) {
+                lisInformeQuimestre = servQuimestre.getListaInformeQuimestre(((Object[]) objAsignaturaSeleccionada)[0] + "" + "", strForma);
+            } else {
+                lisInformeQuimestre = null;
+            }
+        } else {
+            lisInformeQuimestre = null;
         }
     }
 
@@ -190,6 +220,18 @@ public class controladorParcial {
             } catch (Exception e) {
                 numDias = 0;
             }
+        }
+    }
+
+    public void actualizarInforme() {
+        if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
+            if (strForma != null) {
+                cargarInforme();
+            } else {
+                utilitario.agregarMensajeInfo("Seleccione un Quimestre", "");
+            }
+        } else {
+            utilitario.agregarMensajeInfo("Seleccione un Curso y una Asignatura", "");
         }
     }
 
@@ -302,6 +344,44 @@ public class controladorParcial {
 
         requestContext.update("tabNotas:" + event.getRowIndex() + ":total");
         requestContext.update("tabNotas:" + event.getRowIndex() + ":dias");
+    }
+
+    public void cambioExamen(CellEditEvent event) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        Object[] fila = (Object[]) lisNotasParcial.get(event.getRowIndex());
+        double dou_new = 0;
+        try {
+            dou_new = Double.parseDouble(event.getNewValue() + "");
+        } catch (Exception e) {
+            dou_new = -1;
+        }
+        if (dou_new > 10 || dou_new < 0) {
+            if (event.getColumn().getClientId().endsWith("cExamen")) {
+                fila[5] = 0;
+                utilitario.agregarMensajeError("La nota del Exámen debe estar en el rango de 0 a 10", "");
+            }
+            requestContext.update("tabNotas");
+        }
+
+        double dou_examen = 0;
+        try {
+            dou_examen = Double.parseDouble(fila[5] + "");
+        } catch (Exception e) {
+        }
+        double dou_eqv80 = 0;
+        try {
+            dou_eqv80 = Double.parseDouble(fila[3] + "");
+        } catch (Exception e) {
+        }
+
+        double dou20 = (dou_examen * 2) / 10;
+
+        fila[4] = utilitario.getFormatoNumero(dou20);
+        fila[6] = utilitario.getFormatoNumero((dou20 + dou_eqv80));
+
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv20");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":nota");
+
     }
 
     /*
@@ -545,6 +625,15 @@ public class controladorParcial {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
         }
+
+        if (lisInformeQuimestre != null) {
+            String str_mensaje = servQuimestre.guardarInformeQuimestre(lisInformeQuimestre);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+            }
+        }
     }
 
     public PeriodoLectivo getPerActual() {
@@ -665,5 +754,13 @@ public class controladorParcial {
 
     public void setNumDias(int numDias) {
         this.numDias = numDias;
+    }
+
+    public List getLisInformeQuimestre() {
+        return lisInformeQuimestre;
+    }
+
+    public void setLisInformeQuimestre(List lisInformeQuimestre) {
+        this.lisInformeQuimestre = lisInformeQuimestre;
     }
 }
