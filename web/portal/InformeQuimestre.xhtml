@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Paralelos</ui:define>
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+            <p:toolbar >
+                <p:toolbarGroup>
+
+                    <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
+                    <p:separator/>
+                    <h:outputText style="font-size: 18px;" value="#{controladorParcial.docDocente.docNombres}"/>
+                    <p:separator/>
+
+                    <p:selectOneMenu value="#{controladorParcial.strForma}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                        <p:ajax event="change" listener="#{controladorParcial.seleccionoCombo}" process="@this" update=":frmPrincipal:tabNotas"/>
+                        <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
+                        <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                    </p:selectOneMenu>
+
+
+                </p:toolbarGroup>
+            </p:toolbar>
+
+
+            <p:layout style="height: 100%;width: 100%;display: block;">
+
+                <p:layoutUnit position="west" size="30%" header="Listado de Cursos Asignados" resizable="true">
+
+                    <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
+                                 selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="100" >
+                        `
+                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursos}" update=":frmPrincipal:tabMaterias,:frmPrincipal:tabNotas"/>
+                        <p:column headerText="CURSO" width="75%">
+                            #{tabla[1]}
+                        </p:column>
+                        <p:column headerText="PARALELO" width="25%">
+                            #{tabla[2]}
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dataTable id="tabMaterias" value="#{controladorParcial.lisAsignaturas}" var="tabla" rowKey="#{tabla[0]}"
+                                 selection="#{controladorParcial.objAsignaturaSeleccionada}" selectionMode="single">
+
+                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionoAsignatura}" update=":frmPrincipal:tabNotas"/>
+
+                        `<f:facet name="header">
+                            Listado de Aignaturas
+                        </f:facet>
+                        <p:column headerText="ASIGNATURA" >
+                            #{tabla[1]}
+                        </p:column>
+                        <p:column headerText="TIPO" >
+                            #{tabla[3]}
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+
+                    <p:toolbar >
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
+                          
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisInformeQuimestre}" editable="true" editMode="cell">
+
+                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" /> 
+
+                        <p:column headerText="Alumno" style="width:25%" >
+                            #{tabla[1]} #{tabla[2]}
+                        </p:column>
+                        <p:column headerText="Sumatoria" rendered="#{controladorParcial.booMuestra}" style="width:10%">
+                            <h:outputText style="font-size: 14px;font-weight: bold"  value="#{tabla[7]}" />                                
+                        </p:column>
+                        <p:column headerText="Eqv 80%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
+                            <h:outputText style="font-size: 14px;font-weight: bold"  value="#{tabla[3]}" />                                
+                        </p:column>
+                        <p:column headerText="Exámen" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cExamen">
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText  value="#{tabla[5]}" style="width:96%"  >                                       
+                                    </p:inputText>
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+
+                        <p:column headerText="Eqv 20%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
+                            <h:outputText style="font-size: 14px;font-weight: bold" id="eqv20" value="#{tabla[4]}" />                                
+                        </p:column>
+
+                        <p:column headerText="Nota Quimestre" rendered="#{controladorParcial.booMuestra}" style="width:10%">
+                            <h:outputText style="font-size: 14px;font-weight: bold" id="nota" value="#{tabla[6]}" />                                
+                        </p:column>
+
+
+
+
+                    </p:dataTable>
+
+                </p:layoutUnit>
+
+
+            </p:layout>
+
+        </h:form>
+
+
+
+    </ui:define>
+</ui:composition>
