@@ -348,7 +348,7 @@ public class controladorParcial {
 
     public void cambioExamen(CellEditEvent event) {
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        Object[] fila = (Object[]) lisNotasParcial.get(event.getRowIndex());
+        Object[] fila = (Object[]) lisInformeQuimestre.get(event.getRowIndex());
         double dou_new = 0;
         try {
             dou_new = Double.parseDouble(event.getNewValue() + "");
