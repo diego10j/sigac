@@ -100,17 +100,17 @@ public class servicioQuimestre {
                     tab_imforme.setValor("inf_nota", utilitario.getFormatoNumero((dou_eqv80 + dou20)));
                 }
             }
-        }
+        }        
         tab_imforme.guardar();
         utilitario.getConexion().ejecutarListaSql();
     }
 
-    public List getListaInformeQuimestre(String dis_codigo, String for_codigo) {
+    public List getListaInformeQuimestre(String dis_codigo, String for_codigo) {        
         actualizarQuimestre(dis_codigo, for_codigo);
         return utilitario.getConexion().consultar("SELECT a.inf_codigo,alu_apellidos,alu_nombres,inf_eqv80,inf_exa20,inf_examen,inf_nota,inf_sumatoria FROM informe_quimestre a "
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo\n"
-                + " WHERE a.for_codigo=" + for_codigo + " AND a.dis_codigo=" + dis_codigo);
+                + " WHERE a.for_codigo=" + for_codigo + " AND a.dis_codigo=" + dis_codigo+" order by alu_apellidos,alu_nombres");
     }
 
     public String guardarInformeQuimestre(List notas) {
