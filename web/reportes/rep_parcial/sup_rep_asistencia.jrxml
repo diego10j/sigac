@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sup_rep_asistencia" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="606b72b8-03a6-4d34-96b7-294287417ce1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT reg_diaslaborados,reg_faltasinjustificadas,reg_faltasjustificadas,reg_atrasos,reg_observacion FROM registroasistencia
+where eva_codigo=2 and for_codigo=1
+and  mat_codigo=28]]>
+	</queryString>
+	<field name="reg_diaslaborados" class="java.lang.Integer"/>
+	<field name="reg_faltasinjustificadas" class="java.lang.Integer"/>
+	<field name="reg_faltasjustificadas" class="java.lang.Integer"/>
+	<field name="reg_atrasos" class="java.lang.Integer"/>
+	<field name="reg_observacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="659e2ea8-4142-4fbd-a3fc-e32f941a4708" x="40" y="4" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASISTENCIA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="127" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9e782d5f-4c1a-4371-9ed6-daf4ee26349d" x="187" y="0" width="76" height="15"/>
+				<box rightPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{reg_diaslaborados}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="80c2d4e2-2665-43eb-abfb-0752bdd20f2d" x="40" y="0" width="147" height="15"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[DIAS LABORADOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9ee28294-c5ed-4c3e-b24e-b24a4b284bc1" x="40" y="15" width="147" height="15"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FALTAS JUSTIFICADAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9ed2dca4-6789-46c1-b3ca-0df40316a3d6" x="40" y="30" width="147" height="15"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FALTAS INJUSTIFICADAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05def169-f6ea-4fde-80a9-396db73fc390" x="40" y="45" width="147" height="15"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ATRASOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a12ad072-99f4-4ed3-95a7-cf6ccc334dfd" x="187" y="30" width="76" height="15"/>
+				<box rightPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{reg_faltasinjustificadas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a2f118c0-a2c1-4451-a203-65e53890518a" x="187" y="15" width="76" height="15"/>
+				<box rightPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{reg_faltasjustificadas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d313b421-d78b-4f68-82b2-274162d1ae90" x="187" y="45" width="76" height="15"/>
+				<box rightPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{reg_atrasos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a6793fdd-7dff-4d05-b5f5-c9bb0ddfc176" x="40" y="70" width="147" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES :]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="42bb695b-23c4-4c62-92c9-0150827343db" x="40" y="106" width="434" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="fd417707-2a89-4b3c-8093-7c0322f96f86" x="40" y="119" width="434" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="1adc934b-749e-47be-995b-18fdc44f7903" x="40" y="90" width="434" height="29"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{reg_observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
