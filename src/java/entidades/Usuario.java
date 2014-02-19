@@ -71,6 +71,9 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
     @ManyToOne
     private Docentes docCodigo;
+    @JoinColumn(name = "alu_codigo", referencedColumnName = "alu_codigo")
+    @ManyToOne
+    private Alumnos aluCodigo;
     @OneToMany(mappedBy = "ideUsua")
     private List<SisBloqueo> sisBloqueoList;
 
@@ -151,6 +154,14 @@ public class Usuario implements Serializable {
 
     public void setDocCodigo(Docentes docCodigo) {
         this.docCodigo = docCodigo;
+    }
+
+    public Alumnos getAluCodigo() {
+        return aluCodigo;
+    }
+
+    public void setAluCodigo(Alumnos aluCodigo) {
+        this.aluCodigo = aluCodigo;
     }
 
     @XmlTransient

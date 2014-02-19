@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EquivalenciaAprovechamiento.findAll", query = "SELECT e FROM EquivalenciaAprovechamiento e"),
     @NamedQuery(name = "EquivalenciaAprovechamiento.findByEqaCodigo", query = "SELECT e FROM EquivalenciaAprovechamiento e WHERE e.eqaCodigo = :eqaCodigo"),
     @NamedQuery(name = "EquivalenciaAprovechamiento.findByEqaEscalacualitativa", query = "SELECT e FROM EquivalenciaAprovechamiento e WHERE e.eqaEscalacualitativa = :eqaEscalacualitativa"),
-    @NamedQuery(name = "EquivalenciaAprovechamiento.findByEqaEscalacuantiva", query = "SELECT e FROM EquivalenciaAprovechamiento e WHERE e.eqaEscalacuantiva = :eqaEscalacuantiva")})
+    @NamedQuery(name = "EquivalenciaAprovechamiento.findByEqaEscalacuantiva", query = "SELECT e FROM EquivalenciaAprovechamiento e WHERE e.eqaEscalacuantiva = :eqaEscalacuantiva"),
+    @NamedQuery(name = "EquivalenciaAprovechamiento.findByEqaCuantitativa", query = "SELECT e FROM EquivalenciaAprovechamiento e WHERE e.eqaCuantitativa = :eqaCuantitativa")})
 public class EquivalenciaAprovechamiento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,6 +46,9 @@ public class EquivalenciaAprovechamiento implements Serializable {
     @Size(max = 150)
     @Column(name = "eqa_escalacuantiva", length = 150)
     private String eqaEscalacuantiva;
+    @Size(max = 150)
+    @Column(name = "eqa_cuantitativa", length = 150)
+    private String eqaCuantitativa;
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
@@ -78,6 +82,14 @@ public class EquivalenciaAprovechamiento implements Serializable {
 
     public void setEqaEscalacuantiva(String eqaEscalacuantiva) {
         this.eqaEscalacuantiva = eqaEscalacuantiva;
+    }
+
+    public String getEqaCuantitativa() {
+        return eqaCuantitativa;
+    }
+
+    public void setEqaCuantitativa(String eqaCuantitativa) {
+        this.eqaCuantitativa = eqaCuantitativa;
     }
 
     public Institucion getInsCodigo() {

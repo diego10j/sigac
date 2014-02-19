@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Registroasistencia.findByRegFaltasjustificadas", query = "SELECT r FROM Registroasistencia r WHERE r.regFaltasjustificadas = :regFaltasjustificadas"),
     @NamedQuery(name = "Registroasistencia.findByRegFaltasinjustificadas", query = "SELECT r FROM Registroasistencia r WHERE r.regFaltasinjustificadas = :regFaltasinjustificadas"),
     @NamedQuery(name = "Registroasistencia.findByRegTotalfaltas", query = "SELECT r FROM Registroasistencia r WHERE r.regTotalfaltas = :regTotalfaltas"),
-    @NamedQuery(name = "Registroasistencia.findByRegDiaslaborados", query = "SELECT r FROM Registroasistencia r WHERE r.regDiaslaborados = :regDiaslaborados")})
+    @NamedQuery(name = "Registroasistencia.findByRegDiaslaborados", query = "SELECT r FROM Registroasistencia r WHERE r.regDiaslaborados = :regDiaslaborados"),
+    @NamedQuery(name = "Registroasistencia.findByRegDias", query = "SELECT r FROM Registroasistencia r WHERE r.regDias = :regDias"),
+    @NamedQuery(name = "Registroasistencia.findByRegObservacion", query = "SELECT r FROM Registroasistencia r WHERE r.regObservacion = :regObservacion")})
 public class Registroasistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,6 +54,11 @@ public class Registroasistencia implements Serializable {
     private Integer regTotalfaltas;
     @Column(name = "reg_diaslaborados")
     private Integer regDiaslaborados;
+    @Column(name = "reg_dias")
+    private Integer regDias;
+    @Size(max = 2147483647)
+    @Column(name = "reg_observacion", length = 2147483647)
+    private String regObservacion;
     @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
     @ManyToOne
     private Matricula matCodigo;
@@ -114,6 +122,22 @@ public class Registroasistencia implements Serializable {
 
     public void setRegDiaslaborados(Integer regDiaslaborados) {
         this.regDiaslaborados = regDiaslaborados;
+    }
+
+    public Integer getRegDias() {
+        return regDias;
+    }
+
+    public void setRegDias(Integer regDias) {
+        this.regDias = regDias;
+    }
+
+    public String getRegObservacion() {
+        return regObservacion;
+    }
+
+    public void setRegObservacion(String regObservacion) {
+        this.regObservacion = regObservacion;
     }
 
     public Matricula getMatCodigo() {

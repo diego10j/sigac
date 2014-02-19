@@ -41,6 +41,8 @@ public class Distributivomxc implements Serializable {
     private Integer disCodigo;
     @OneToMany(mappedBy = "disCodigo")
     private List<NotaDestrezaparcial> notaDestrezaparcialList;
+    @OneToMany(mappedBy = "disCodigo")
+    private List<InformeQuimestre> informeQuimestreList;
     @JoinColumn(name = "doc_codigo", referencedColumnName = "doc_codigo")
     @ManyToOne
     private Docentes docCodigo;
@@ -73,6 +75,15 @@ public class Distributivomxc implements Serializable {
 
     public void setNotaDestrezaparcialList(List<NotaDestrezaparcial> notaDestrezaparcialList) {
         this.notaDestrezaparcialList = notaDestrezaparcialList;
+    }
+
+    @XmlTransient
+    public List<InformeQuimestre> getInformeQuimestreList() {
+        return informeQuimestreList;
+    }
+
+    public void setInformeQuimestreList(List<InformeQuimestre> informeQuimestreList) {
+        this.informeQuimestreList = informeQuimestreList;
     }
 
     public Docentes getDocCodigo() {

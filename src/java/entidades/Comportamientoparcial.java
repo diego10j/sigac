@@ -62,8 +62,9 @@ public class Comportamientoparcial implements Serializable {
     @Size(max = 100)
     @Column(name = "com_equivalencia", length = 100)
     private String comEquivalencia;
-    @Column(name = "com_equi")
-    private Character comEqui;
+    @Size(max = 10)
+    @Column(name = "com_equi", length = 10)
+    private String comEqui;
     @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
     @ManyToOne
     private Matricula matCodigo;
@@ -145,11 +146,11 @@ public class Comportamientoparcial implements Serializable {
         this.comEquivalencia = comEquivalencia;
     }
 
-    public Character getComEqui() {
+    public String getComEqui() {
         return comEqui;
     }
 
-    public void setComEqui(Character comEqui) {
+    public void setComEqui(String comEqui) {
         this.comEqui = comEqui;
     }
 
