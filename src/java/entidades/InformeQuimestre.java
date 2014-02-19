@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InformeQuimestre.findByInfEqv80", query = "SELECT i FROM InformeQuimestre i WHERE i.infEqv80 = :infEqv80"),
     @NamedQuery(name = "InformeQuimestre.findByInfExa20", query = "SELECT i FROM InformeQuimestre i WHERE i.infExa20 = :infExa20"),
     @NamedQuery(name = "InformeQuimestre.findByInfNota", query = "SELECT i FROM InformeQuimestre i WHERE i.infNota = :infNota"),
-    @NamedQuery(name = "InformeQuimestre.findByInfEqvquimestre", query = "SELECT i FROM InformeQuimestre i WHERE i.infEqvquimestre = :infEqvquimestre")})
+    @NamedQuery(name = "InformeQuimestre.findByInfEqvquimestre", query = "SELECT i FROM InformeQuimestre i WHERE i.infEqvquimestre = :infEqvquimestre"),
+    @NamedQuery(name = "InformeQuimestre.findByInfExamen", query = "SELECT i FROM InformeQuimestre i WHERE i.infExamen = :infExamen"),
+    @NamedQuery(name = "InformeQuimestre.findByInfSumatoria", query = "SELECT i FROM InformeQuimestre i WHERE i.infSumatoria = :infSumatoria")})
 public class InformeQuimestre implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,12 +54,19 @@ public class InformeQuimestre implements Serializable {
     @Size(max = 150)
     @Column(name = "inf_eqvquimestre", length = 150)
     private String infEqvquimestre;
+    @Column(name = "inf_examen", precision = 4, scale = 2)
+    private BigDecimal infExamen;
+    @Column(name = "inf_sumatoria", precision = 4, scale = 2)
+    private BigDecimal infSumatoria;
     @JoinColumn(name = "mat_codigo", referencedColumnName = "mat_codigo")
     @ManyToOne
     private Matricula matCodigo;
     @JoinColumn(name = "for_codigo", referencedColumnName = "for_codigo")
     @ManyToOne
     private Formaevaluar forCodigo;
+    @JoinColumn(name = "dis_codigo", referencedColumnName = "dis_codigo")
+    @ManyToOne
+    private Distributivomxc disCodigo;
 
     public InformeQuimestre() {
     }
@@ -106,6 +115,22 @@ public class InformeQuimestre implements Serializable {
         this.infEqvquimestre = infEqvquimestre;
     }
 
+    public BigDecimal getInfExamen() {
+        return infExamen;
+    }
+
+    public void setInfExamen(BigDecimal infExamen) {
+        this.infExamen = infExamen;
+    }
+
+    public BigDecimal getInfSumatoria() {
+        return infSumatoria;
+    }
+
+    public void setInfSumatoria(BigDecimal infSumatoria) {
+        this.infSumatoria = infSumatoria;
+    }
+
     public Matricula getMatCodigo() {
         return matCodigo;
     }
@@ -120,6 +145,14 @@ public class InformeQuimestre implements Serializable {
 
     public void setForCodigo(Formaevaluar forCodigo) {
         this.forCodigo = forCodigo;
+    }
+
+    public Distributivomxc getDisCodigo() {
+        return disCodigo;
+    }
+
+    public void setDisCodigo(Distributivomxc disCodigo) {
+        this.disCodigo = disCodigo;
     }
 
     @Override

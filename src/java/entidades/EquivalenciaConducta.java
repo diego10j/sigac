@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EquivalenciaConducta.findByEqcCodigo", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqcCodigo = :eqcCodigo"),
     @NamedQuery(name = "EquivalenciaConducta.findByEqcAlterno", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqcAlterno = :eqcAlterno"),
     @NamedQuery(name = "EquivalenciaConducta.findByEqcEscala", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqcEscala = :eqcEscala"),
-    @NamedQuery(name = "EquivalenciaConducta.findByEqcDescripcion", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqcDescripcion = :eqcDescripcion")})
+    @NamedQuery(name = "EquivalenciaConducta.findByEqcDescripcion", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqcDescripcion = :eqcDescripcion"),
+    @NamedQuery(name = "EquivalenciaConducta.findByEqvCualitativa", query = "SELECT e FROM EquivalenciaConducta e WHERE e.eqvCualitativa = :eqvCualitativa")})
 public class EquivalenciaConducta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +50,9 @@ public class EquivalenciaConducta implements Serializable {
     @Size(max = 150)
     @Column(name = "eqc_descripcion", length = 150)
     private String eqcDescripcion;
+    @Size(max = 150)
+    @Column(name = "eqv_cualitativa", length = 150)
+    private String eqvCualitativa;
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
@@ -90,6 +94,14 @@ public class EquivalenciaConducta implements Serializable {
 
     public void setEqcDescripcion(String eqcDescripcion) {
         this.eqcDescripcion = eqcDescripcion;
+    }
+
+    public String getEqvCualitativa() {
+        return eqvCualitativa;
+    }
+
+    public void setEqvCualitativa(String eqvCualitativa) {
+        this.eqvCualitativa = eqvCualitativa;
     }
 
     public Institucion getInsCodigo() {

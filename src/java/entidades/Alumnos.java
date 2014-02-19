@@ -86,6 +86,8 @@ public class Alumnos implements Serializable {
     @Size(max = 150)
     @Column(name = "alu_prfmadre", length = 150)
     private String aluPrfmadre;
+    @OneToMany(mappedBy = "aluCodigo")
+    private List<Usuario> usuarioList;
     @JoinColumn(name = "ins_codigo", referencedColumnName = "ins_codigo")
     @ManyToOne
     private Institucion insCodigo;
@@ -195,6 +197,15 @@ public class Alumnos implements Serializable {
 
     public void setAluPrfmadre(String aluPrfmadre) {
         this.aluPrfmadre = aluPrfmadre;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     public Institucion getInsCodigo() {
