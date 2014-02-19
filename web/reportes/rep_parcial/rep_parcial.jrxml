@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_parcial" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="002118e2-1e82-44d9-a3a9-62e6cda746b6">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="329"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\PROYECTOS\\sigac\\web\\reportes\\rep_parcial\\"]]></defaultValueExpression>
 	</parameter>
@@ -23,8 +23,7 @@ inner join formaevaluar k on k.for_codigo=a.for_codigo
 inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo
 INNER JOIN docentes m on f.doc_codigo=m.doc_codigo
 where a.eva_codigo=2 and a.for_codigo=1
-and  a.mat_codigo=28
-]]>
+and  a.mat_codigo=28]]>
 	</queryString>
 	<field name="per_nombre" class="java.lang.String"/>
 	<field name="nombres" class="java.lang.String"/>
@@ -94,7 +93,7 @@ and  a.mat_codigo=28
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="45" splitType="Stretch"/>
+		<band height="43" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band height="73" splitType="Stretch">
@@ -238,7 +237,7 @@ and  a.mat_codigo=28
 		<band height="49" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="406" splitType="Stretch">
+		<band height="379" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="0b3f597e-cb4e-48bd-9400-2c4d66a25c32" x="0" y="0" width="555" height="10"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
@@ -266,6 +265,16 @@ and  a.mat_codigo=28
 				<textFieldExpression><![CDATA[$F{doc_nombres}
 +"PROFESOR/A"]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement uuid="9f6aea39-df96-45c2-9838-2e13a927ceb7" x="1" y="268" width="554" height="16"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rep_tabla_aprovechamiento.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="f5eb4988-faaa-452b-bceb-1fbb96826ff2" x="1" y="360" width="554" height="13"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rep_parcial_subreport1.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>
