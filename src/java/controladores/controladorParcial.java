@@ -823,7 +823,7 @@ public class controladorParcial {
         
     }
     
-    public void ver() {
+    public void verReporteTodos() {
         if (objAsignaturaSeleccionada != null) {
             generarReportePromedio();
             utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
