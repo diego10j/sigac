@@ -855,7 +855,7 @@ public class controladorParcial {
     }
 
     //Reporte esistencia
-    public void getReporteAsistencia() {
+    public void generarReporteAsistencia() {
 
         TablaGenerica tab_reporte = utilitario.consultar("select '' AS CUENTA,'' as NOMINA\n"
                 + "\n"
@@ -1067,6 +1067,17 @@ public class controladorParcial {
             tab_reporte.setValor("TTOTAL", int_total + "");
             tab_reporte.setValor("TDIAS", int_dias + "");
         }
+        GenerarReporte genera = new GenerarReporte();
+        genera.setDataSource(new ReporteDataSource(tab_reporte));
+        Map parametros = new HashMap();
+        if (objCursoSeleccionado != null) {
+            parametros.put("CURSO", ((Object[]) objCursoSeleccionado)[1] + "");
+            parametros.put("PARALELO", ((Object[]) objCursoSeleccionado)[2] + "");
+        }
+        parametros.put("PROFESOR", docDocente.getDocNombres());
+        parametros.put("PERIODO", perActual.getPerNombre());
+        genera.generar(parametros, "/reportes/rep_parcial/rep_atrasos.jasper");
+
     }
 
     private TablaGenerica getAsistenciaQuimestre(String mat_codigo, String for_codigo) {
@@ -1075,6 +1086,15 @@ public class controladorParcial {
                 + "and for_codigo=" + for_codigo + "\n"
                 + "and mat_codigo=" + mat_codigo + "\n"
                 + "order by eva_codigo");
+    }
+
+    public void verReporteasitencia() {
+        if (objCursoSeleccionado != null) {
+            generarReporteAsistencia();
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        } else {
+            utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
+        }
     }
 
     public PeriodoLectivo getPerActual() {
