@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_comportamieto" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="735eb6ea-86cc-48d4-b574-f1291ddc0869">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="126"/>
+	<field name="CUENTA" class="java.lang.String"/>
+	<field name="NOMINA" class="java.lang.String"/>
+	<field name="P1S1" class="java.lang.String"/>
+	<field name="P1S2" class="java.lang.String"/>
+	<field name="P1S3" class="java.lang.String"/>
+	<field name="P1S4" class="java.lang.String"/>
+	<field name="P1S5" class="java.lang.String"/>
+	<field name="P1SUMA" class="java.lang.String"/>
+	<field name="P1LETRA" class="java.lang.String"/>
+	<field name="P1EQUI" class="java.lang.String"/>
+	<field name="P2S1" class="java.lang.String"/>
+	<field name="P2S2" class="java.lang.String"/>
+	<field name="P2S3" class="java.lang.String"/>
+	<field name="P2S4" class="java.lang.String"/>
+	<field name="P2S5" class="java.lang.String"/>
+	<field name="P2SUMA" class="java.lang.String"/>
+	<field name="P2LETRA" class="java.lang.String"/>
+	<field name="P2EQUI" class="java.lang.String"/>
+	<field name="TPROM" class="java.lang.String"/>
+	<field name="TLETRA" class="java.lang.String"/>
+	<field name="TEQUI" class="java.lang.String"/>
+	<field name="GRUPO" class="java.lang.String"/>
+	<field name="P3S1" class="java.lang.String"/>
+	<field name="P3S2" class="java.lang.String"/>
+	<field name="P3S3" class="java.lang.String"/>
+	<field name="P3S4" class="java.lang.String"/>
+	<field name="P3S5" class="java.lang.String"/>
+	<field name="P3SUMA" class="java.lang.String"/>
+	<field name="P3LETRA" class="java.lang.String"/>
+	<field name="P3EQUI" class="java.lang.String"/>
+	<group name="GROUP_QUIMESTRE">
+		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
+		<groupHeader>
+			<band height="121">
+				<staticText>
+					<reportElement uuid="67862f60-a374-4e1e-85b6-3b950e2a9116" x="213" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="65799b07-e7c8-42d0-989f-6bdb8419c829" x="228" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="682c2f81-7fe6-4a8b-a331-9ddf32730139" x="243" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="fa6afe45-3bd5-40bf-a0f1-4c42c139bb0c" x="258" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="606ef83c-174f-4d4b-9bb0-fe3e67894ddd" x="273" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[5	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="45fcb6e8-714d-4221-a322-e354141123af" mode="Opaque" x="288" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SUMATORIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d4110e41-f522-486a-b09d-fbe60a5d8606" mode="Opaque" x="308" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1ca018d6-8008-4d92-a140-4346f95ff952" x="323" y="55" width="56" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c7348f10-03a5-40a1-9c1b-100790e7c91f" x="213" y="40" width="166" height="15"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PARCIAL I]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6c284fb2-6bc2-4820-bf22-db4d856ef181" x="379" y="40" width="166" height="15"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PARCIAL II]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="fa3e0b52-a183-43a7-8587-57692c26ab7c" mode="Opaque" x="474" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f280a417-94a2-4e00-aad9-82f1fceb5477" x="394" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="05892c7f-167a-4cca-9d90-a705c0eaaf7d" x="379" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="e9310c72-8273-4236-b485-0db5049a2385" mode="Opaque" x="454" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SUMATORIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="43cd5b2a-4bb7-4262-894e-bc9c30454f1f" x="409" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="9a855f65-263f-462e-b01c-0144e83d808b" x="439" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[5	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="73489290-fbc0-4cab-930c-a46892234487" x="489" y="55" width="56" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="21cd3cea-95c8-4f6a-87c1-d9e5e604c73f" x="424" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="89a20dfd-d5e9-4652-9076-8d848304d6ff" x="655" y="55" width="56" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="05d1411a-ed89-4499-8c1a-8a6b1d0f356b" x="605" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[5	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="9f90fa1b-cdcd-43c3-bbdd-61f72d9b7270" x="560" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3eda5392-b077-4283-9467-00a1a28bc891" x="575" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="bd5cf970-ca14-4df9-aab3-6edc3f74c519" mode="Opaque" x="620" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SUMATORIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c8fb560e-feb6-4595-b58a-b5eb61fac3fc" x="590" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="95f1d9dc-0c24-4101-b65c-421c8aa03d4b" x="545" y="40" width="166" height="15"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PARCIAL III]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="665ed848-d0f2-4369-a953-ad82243ef1a0" mode="Opaque" x="640" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="5de49af6-3e03-4cd6-a616-1219653bf057" x="545" y="55" width="15" height="66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="905ac852-a4d5-4bbb-b317-0b716bdce96d" mode="Opaque" x="711" y="55" width="20" height="66" backcolor="#FFFF66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROMEDIO F.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91e14046-9579-4599-a8ff-bac19e3106bd" mode="Opaque" x="731" y="55" width="15" height="66" backcolor="#FFFF66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6d918195-433e-4ee9-8fb8-e1ad448c4ebd" x="746" y="25" width="56" height="96"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EQUIVALENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="895aaff3-b8a0-46ef-8114-c8c738971acc" mode="Opaque" x="711" y="25" width="35" height="30" backcolor="#FFFF66"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROM.]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="0cf8b0e2-5c60-47e9-9034-00d9d9e983cb" x="213" y="25" width="498" height="15"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="b49076d1-77a2-4641-9f4e-55df2bf5b575" x="20" y="40" width="193" height="81"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NÓMINA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="622731f1-8f6d-443b-8fa8-d8a0d3fa98d7" x="0" y="40" width="20" height="81"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[No.]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="057dcd38-8005-4ff7-80cc-65f0e8c44600" x="213" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1S1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bf31772a-7789-45c3-8d66-fc1171d3bd0a" x="228" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1S2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="09082475-5bcb-4da3-8492-644c766af65f" x="243" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1S3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1a738165-421d-4725-9418-27638025d629" x="258" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1S4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="393c725a-99b3-4d46-90a3-66a143e81869" x="273" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1S5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="abb2dbe3-a572-4564-8e73-80f5857e7a12" mode="Opaque" x="288" y="0" width="20" height="15" backcolor="#FDE8FD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1SUMA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b8b9f536-5723-4063-93ac-944801646bfc" mode="Opaque" x="308" y="0" width="15" height="15" backcolor="#E2E2FC"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1LETRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="61dbc465-78d2-435b-a931-5012ab749314" mode="Opaque" x="323" y="0" width="56" height="15" backcolor="#FDEDBD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P1EQUI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3c376af9-5878-4b09-832f-8244304bdddc" mode="Opaque" x="474" y="0" width="15" height="15" backcolor="#E2E2FC"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2LETRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="96e0b6d7-0288-4d88-aff7-cc0c0674924e" x="379" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2S1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7ab63b74-61e4-4fad-8130-4b46fe9499db" mode="Opaque" x="454" y="0" width="20" height="15" backcolor="#FDE8FD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2SUMA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="307bd131-ac23-4a0b-a115-8f03b31867a5" x="409" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2S3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f2f2fd7a-089b-4a80-8385-8142128b36ea" x="394" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2S2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="51404899-7086-4e17-8644-bad3d4e0798a" mode="Opaque" x="489" y="0" width="56" height="15" backcolor="#FDEDBD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2EQUI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e7ccb039-ddd2-4f04-be59-77d4207d11e1" x="439" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2S5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b6669af3-9e05-43aa-8b4c-786e43e4c9e3" x="424" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P2S4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="190bb392-5dce-4c80-98df-7289b42d8ad8" mode="Opaque" x="640" y="0" width="15" height="15" backcolor="#E2E2FC"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3LETRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d5c97a7e-50f7-4224-b3c2-e64367a00e28" x="545" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3S1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="317fcb11-1bfd-4b38-93f6-25b346282546" mode="Opaque" x="620" y="0" width="20" height="15" backcolor="#FDE8FD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3SUMA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1e46b9eb-74d0-4c8a-b97b-504aa8f26da8" x="575" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3S3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a964e4b2-3533-497a-93a4-1d3f91a3b661" x="560" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3S2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7d1a8005-d68a-45a4-b31e-56850f44168b" mode="Opaque" x="655" y="0" width="56" height="15" backcolor="#FDEDBD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3EQUI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e7b8eaaf-3e4c-4f9f-8427-c22694c9a00e" x="605" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3S5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e5ff3b97-e5ae-40ab-97e4-1d4727215bf3" x="590" y="0" width="15" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{P3S4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a3f676d8-48e0-4602-8c20-8d95b4c7191c" mode="Opaque" x="711" y="0" width="20" height="15" backcolor="#FFFF66"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TPROM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="baa86f37-c81a-4356-88cb-2fb9bac2731b" mode="Opaque" x="731" y="0" width="15" height="15" backcolor="#FFFF66"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TLETRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="104749a1-3d43-4c1a-83cb-89cf0e4671b8" mode="Opaque" x="746" y="0" width="56" height="15" backcolor="#FDEDBD"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TEQUI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bb61df2f-e949-42a4-86f6-b6792c109813" x="20" y="0" width="193" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMINA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5ca068be-3151-41aa-ab60-53d544fd2cca" x="0" y="0" width="20" height="15"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUENTA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
