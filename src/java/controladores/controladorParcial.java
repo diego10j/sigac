@@ -1097,6 +1097,362 @@ public class controladorParcial {
         }
     }
 
+    //Reporte Comportamieto
+    private TablaGenerica getComportamientoQuimestre(String mat_codigo, String for_codigo) {
+        return utilitario.consultar("select com_semana1,com_semana2,com_semana3,com_semana4,com_semana5,com_sumatoria,com_equi,com_equivalencia from  comportamientoparcial \n"
+                + "where eva_codigo in(1,2,3)\n"
+                + "and for_codigo=" + for_codigo + "\n"
+                + "and mat_codigo=" + mat_codigo + " order by eva_codigo");
+    }
+
+    public void generarReporteComportamiento() {
+        TablaGenerica tab_reporte = utilitario.consultar("SELECT  ''AS CUENTA,''AS NOMINA\n"
+                + ",''AS P1S1,''AS P1S2,''AS P1S3,''AS P1S4,''AS P1S5,''AS P1SUMA,''AS P1LETRA,''AS P1EQUI\n"
+                + ",''AS P2S1,''AS P2S2,''AS P2S3,''AS P2S4,''AS P2S5,''AS P2SUMA,''AS P2LETRA,''AS P2EQUI\n"
+                + ",''AS P3S1,''AS P3S2,''AS P3S3,''AS P3S4,''AS P3S5,''AS P3SUMA,''AS P3LETRA,''AS P3EQUI\n"
+                + ",''AS TPROM,''AS TLETRA,''AS TEQUI,''AS GRUPO");
+
+
+        TablaGenerica tab_alumnos = getAlumnosCurso(((Object[]) objCursoSeleccionado)[0] + "");
+
+        TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
+
+
+        for (int i = 0; i < tab_alumnos.getTotalFilas(); i++) {
+            ////////////////////////////////////
+            //QUIMESTRE 2
+            tab_reporte.insertar();
+            tab_reporte.setValor("CUENTA", String.valueOf((tab_alumnos.getTotalFilas() - i)));
+            tab_reporte.setValor("NOMINA", tab_alumnos.getValor(i, "Alumnos"));
+            TablaGenerica tab_comportamiento = getComportamientoQuimestre(tab_alumnos.getValor(i, "mat_codigo"), "4");
+            tab_reporte.setValor("GRUPO", "SEGUNDO QUIMESTRE");
+            double dou_promedio = 0;
+            if (tab_comportamiento.getTotalFilas() == 3) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P2S1", tab_comportamiento.getValor(1, "com_semana1"));
+                tab_reporte.setValor("P2S2", tab_comportamiento.getValor(1, "com_semana2"));
+                tab_reporte.setValor("P2S3", tab_comportamiento.getValor(1, "com_semana3"));
+                tab_reporte.setValor("P2S4", tab_comportamiento.getValor(1, "com_semana4"));
+                tab_reporte.setValor("P2S5", tab_comportamiento.getValor(1, "com_semana5"));
+                tab_reporte.setValor("P2SUMA", tab_comportamiento.getValor(1, "com_sumatoria"));
+                tab_reporte.setValor("P2LETRA", tab_comportamiento.getValor(1, "com_equi"));
+                tab_reporte.setValor("P2EQUI", tab_comportamiento.getValor(1, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P2SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P3S1", tab_comportamiento.getValor(2, "com_semana1"));
+                tab_reporte.setValor("P3S2", tab_comportamiento.getValor(2, "com_semana2"));
+                tab_reporte.setValor("P3S3", tab_comportamiento.getValor(2, "com_semana3"));
+                tab_reporte.setValor("P3S4", tab_comportamiento.getValor(2, "com_semana4"));
+                tab_reporte.setValor("P3S5", tab_comportamiento.getValor(2, "com_semana5"));
+                tab_reporte.setValor("P3SUMA", tab_comportamiento.getValor(2, "com_sumatoria"));
+                tab_reporte.setValor("P3LETRA", tab_comportamiento.getValor(2, "com_equi"));
+                tab_reporte.setValor("P3EQUI", tab_comportamiento.getValor(2, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P3SUMA"));
+                } catch (Exception e) {
+                }
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            } else if (tab_comportamiento.getTotalFilas() == 2) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P2S1", tab_comportamiento.getValor(1, "com_semana1"));
+                tab_reporte.setValor("P2S2", tab_comportamiento.getValor(1, "com_semana2"));
+                tab_reporte.setValor("P2S3", tab_comportamiento.getValor(1, "com_semana3"));
+                tab_reporte.setValor("P2S4", tab_comportamiento.getValor(1, "com_semana4"));
+                tab_reporte.setValor("P2S5", tab_comportamiento.getValor(1, "com_semana5"));
+                tab_reporte.setValor("P2SUMA", tab_comportamiento.getValor(1, "com_sumatoria"));
+                tab_reporte.setValor("P2LETRA", tab_comportamiento.getValor(1, "com_equi"));
+                tab_reporte.setValor("P2EQUI", tab_comportamiento.getValor(1, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P2SUMA"));
+                } catch (Exception e) {
+                }
+
+
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            } else if (tab_comportamiento.getTotalFilas() == 1) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            }
+        }
+
+
+
+        for (int i = 0; i < tab_alumnos.getTotalFilas(); i++) {
+            tab_reporte.insertar();
+            tab_reporte.setValor("CUENTA", String.valueOf((tab_alumnos.getTotalFilas() - i)));
+            tab_reporte.setValor("NOMINA", tab_alumnos.getValor(i, "Alumnos"));
+            TablaGenerica tab_comportamiento = getComportamientoQuimestre(tab_alumnos.getValor(i, "mat_codigo"), "1");
+            tab_reporte.setValor("GRUPO", "PRIMER QUIMESTRE");
+            double dou_promedio = 0;
+            if (tab_comportamiento.getTotalFilas() == 3) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P2S1", tab_comportamiento.getValor(1, "com_semana1"));
+                tab_reporte.setValor("P2S2", tab_comportamiento.getValor(1, "com_semana2"));
+                tab_reporte.setValor("P2S3", tab_comportamiento.getValor(1, "com_semana3"));
+                tab_reporte.setValor("P2S4", tab_comportamiento.getValor(1, "com_semana4"));
+                tab_reporte.setValor("P2S5", tab_comportamiento.getValor(1, "com_semana5"));
+                tab_reporte.setValor("P2SUMA", tab_comportamiento.getValor(1, "com_sumatoria"));
+                tab_reporte.setValor("P2LETRA", tab_comportamiento.getValor(1, "com_equi"));
+                tab_reporte.setValor("P2EQUI", tab_comportamiento.getValor(1, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P2SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P3S1", tab_comportamiento.getValor(2, "com_semana1"));
+                tab_reporte.setValor("P3S2", tab_comportamiento.getValor(2, "com_semana2"));
+                tab_reporte.setValor("P3S3", tab_comportamiento.getValor(2, "com_semana3"));
+                tab_reporte.setValor("P3S4", tab_comportamiento.getValor(2, "com_semana4"));
+                tab_reporte.setValor("P3S5", tab_comportamiento.getValor(2, "com_semana5"));
+                tab_reporte.setValor("P3SUMA", tab_comportamiento.getValor(2, "com_sumatoria"));
+                tab_reporte.setValor("P3LETRA", tab_comportamiento.getValor(2, "com_equi"));
+                tab_reporte.setValor("P3EQUI", tab_comportamiento.getValor(2, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P3SUMA"));
+                } catch (Exception e) {
+                }
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            } else if (tab_comportamiento.getTotalFilas() == 2) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                tab_reporte.setValor("P2S1", tab_comportamiento.getValor(1, "com_semana1"));
+                tab_reporte.setValor("P2S2", tab_comportamiento.getValor(1, "com_semana2"));
+                tab_reporte.setValor("P2S3", tab_comportamiento.getValor(1, "com_semana3"));
+                tab_reporte.setValor("P2S4", tab_comportamiento.getValor(1, "com_semana4"));
+                tab_reporte.setValor("P2S5", tab_comportamiento.getValor(1, "com_semana5"));
+                tab_reporte.setValor("P2SUMA", tab_comportamiento.getValor(1, "com_sumatoria"));
+                tab_reporte.setValor("P2LETRA", tab_comportamiento.getValor(1, "com_equi"));
+                tab_reporte.setValor("P2EQUI", tab_comportamiento.getValor(1, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P2SUMA"));
+                } catch (Exception e) {
+                }
+
+
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            } else if (tab_comportamiento.getTotalFilas() == 1) {
+                tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
+                tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
+                tab_reporte.setValor("P1S3", tab_comportamiento.getValor(0, "com_semana3"));
+                tab_reporte.setValor("P1S4", tab_comportamiento.getValor(0, "com_semana4"));
+                tab_reporte.setValor("P1S5", tab_comportamiento.getValor(0, "com_semana5"));
+                tab_reporte.setValor("P1SUMA", tab_comportamiento.getValor(0, "com_sumatoria"));
+                tab_reporte.setValor("P1LETRA", tab_comportamiento.getValor(0, "com_equi"));
+                tab_reporte.setValor("P1EQUI", tab_comportamiento.getValor(0, "com_equivalencia"));
+
+                try {
+                    dou_promedio += Double.parseDouble(tab_reporte.getValor("P1SUMA"));
+                } catch (Exception e) {
+                }
+
+                //busco la equivalencia del promedio
+                Object obj_resultado = null;
+                String str_alterno = "";
+                for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                    String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        str_alterno = tab_equi.getValor(j, "eqc_alterno");
+                        break;
+                    }
+                }
+                if (obj_resultado == null) {
+                    obj_resultado = "NO EQV";
+                }
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TLETRA", str_alterno);
+                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+            }
+
+        }
+
+
+        GenerarReporte genera = new GenerarReporte();
+        genera.setDataSource(new ReporteDataSource(tab_reporte));
+        Map parametros = new HashMap();
+        if (objCursoSeleccionado != null) {
+            parametros.put("CURSO", ((Object[]) objCursoSeleccionado)[1] + "");
+            parametros.put("PARALELO", ((Object[]) objCursoSeleccionado)[2] + "");
+        }
+        parametros.put("PROFESOR", docDocente.getDocNombres());
+        parametros.put("PERIODO", perActual.getPerNombre());
+        genera.generar(parametros   , "/reportes/rep_parcial/rep_comportamieto.jasper");
+
+
+    }
+
+    public void verReporteComportamiento() {
+        if (objCursoSeleccionado != null) {
+            generarReporteComportamiento();
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        } else {
+            utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
+        }
+    }
+
     public PeriodoLectivo getPerActual() {
         return perActual;
     }
