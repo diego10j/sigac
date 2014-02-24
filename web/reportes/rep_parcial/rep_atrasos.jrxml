@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_atrasos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6c813044-f8d1-4837-bce8-ce16ec2351d4">
-	<property name="ireport.zoom" value="1.3310000000000028"/>
-	<property name="ireport.x" value="308"/>
+	<property name="ireport.zoom" value="0.9090909090909111"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="PROFESOR" class="java.lang.String"/>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<parameter name="CURSO" class="java.lang.String"/>
+	<parameter name="PARALELO" class="java.lang.String"/>
 	<field name="CUENTA" class="java.lang.String"/>
 	<field name="NOMINA" class="java.lang.String"/>
 	<field name="Q1P1A" class="java.lang.String"/>
@@ -254,7 +258,7 @@
 				<text><![CDATA[Dias Laborados ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bb5cbf95-065a-485d-8b5c-c7a093bd8113" mode="Opaque" x="435" y="68" width="12" height="70" backcolor="#D5C1E9"/>
+				<reportElement uuid="2cad57ce-69c6-4e00-bd99-ba45012fe582" mode="Opaque" x="435" y="68" width="12" height="70" backcolor="#D5C1E9"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -851,6 +855,49 @@
 				</textElement>
 				<text><![CDATA[No.]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="d5d95b83-9545-44f8-9aa0-01efb2f31b2a" x="0" y="0" width="802" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE ASISTENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67755eaa-4c83-409f-94d3-310a045838c1" x="-1" y="15" width="235" height="15"/>
+				<box rightPadding="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AÑO DE BÁSICA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f952b4ad-c9a6-43a9-9302-b48765de2a27" x="-1" y="30" width="235" height="15"/>
+				<box rightPadding="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROFESOR/A :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4faa7b32-9a94-402d-a56b-e1fa4e2bf14d" x="233" y="15" width="127" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{CURSO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7a0dd326-173b-49e5-bb50-c5723e1618db" x="233" y="30" width="442" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71179c7b-2cb6-4fcf-abaa-ca033b18cc81" x="359" y="15" width="127" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{PARALELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c4aaf92b-2b4d-42f3-81a4-1574f0174f19" x="675" y="10" width="126" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
