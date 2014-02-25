@@ -1432,7 +1432,6 @@ public class controladorParcial {
 
         }
 
-
         GenerarReporte genera = new GenerarReporte();
         genera.setDataSource(new ReporteDataSource(tab_reporte));
         Map parametros = new HashMap();
