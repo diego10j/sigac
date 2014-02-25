@@ -5,4 +5,8 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
+  <persistence-unit name="injpLOCAL" transaction-type="JTA">
+    <jta-data-source>injpLOCAL</jta-data-source>
+    <properties/>
+  </persistence-unit>
 </persistence>
