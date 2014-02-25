@@ -1173,9 +1173,10 @@ public class controladorParcial {
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
+                long l_prom = Math.round(dou_promedio / 3);
                 for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
                     String str_expresion = tab_equi.getValor(j, "eqc_escala");
-                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    str_expresion = str_expresion.replace("nota", l_prom + "");
                     obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
                     if (obj_resultado != null) {
                         str_alterno = tab_equi.getValor(j, "eqc_alterno");
@@ -1185,7 +1186,7 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", l_prom + "");
                 tab_reporte.setValor("TLETRA", str_alterno);
                 tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 2) {
@@ -1255,9 +1256,10 @@ public class controladorParcial {
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
+                long l_prom = Math.round(dou_promedio / 3);
                 for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
                     String str_expresion = tab_equi.getValor(j, "eqc_escala");
-                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    str_expresion = str_expresion.replace("nota", l_prom + "");
                     obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
                     if (obj_resultado != null) {
                         str_alterno = tab_equi.getValor(j, "eqc_alterno");
@@ -1267,7 +1269,7 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", l_prom + "");
                 tab_reporte.setValor("TLETRA", str_alterno);
                 tab_reporte.setValor("TEQUI", obj_resultado.toString());
             }
@@ -1328,9 +1330,10 @@ public class controladorParcial {
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
+                long l_prom = Math.round(dou_promedio / 3);
                 for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
                     String str_expresion = tab_equi.getValor(j, "eqc_escala");
-                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    str_expresion = str_expresion.replace("nota", l_prom + "");
                     obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
                     if (obj_resultado != null) {
                         str_alterno = tab_equi.getValor(j, "eqc_alterno");
@@ -1340,7 +1343,7 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", l_prom + "");
                 tab_reporte.setValor("TLETRA", str_alterno);
                 tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 2) {
@@ -1375,9 +1378,10 @@ public class controladorParcial {
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
+                long l_prom = Math.round(dou_promedio / 3);
                 for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
                     String str_expresion = tab_equi.getValor(j, "eqc_escala");
-                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    str_expresion = str_expresion.replace("nota", l_prom + "");
                     obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
                     if (obj_resultado != null) {
                         str_alterno = tab_equi.getValor(j, "eqc_alterno");
@@ -1387,7 +1391,7 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", l_prom + "");
                 tab_reporte.setValor("TLETRA", str_alterno);
                 tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 1) {
@@ -1408,9 +1412,10 @@ public class controladorParcial {
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
+                long l_prom = Math.round(dou_promedio / 3);
                 for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
                     String str_expresion = tab_equi.getValor(j, "eqc_escala");
-                    str_expresion = str_expresion.replace("nota", utilitario.getFormatoNumero(dou_promedio / 3));
+                    str_expresion = str_expresion.replace("nota", l_prom + "");
                     obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
                     if (obj_resultado != null) {
                         str_alterno = tab_equi.getValor(j, "eqc_alterno");
@@ -1420,7 +1425,7 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", l_prom + "");
                 tab_reporte.setValor("TLETRA", str_alterno);
                 tab_reporte.setValor("TEQUI", obj_resultado.toString());
             }
@@ -1437,8 +1442,7 @@ public class controladorParcial {
         }
         parametros.put("PROFESOR", docDocente.getDocNombres());
         parametros.put("PERIODO", perActual.getPerNombre());
-        genera.generar(parametros   , "/reportes/rep_parcial/rep_comportamieto.jasper");
-
+        genera.generar(parametros, "/reportes/rep_parcial/rep_comportamieto.jasper");
 
     }
 
