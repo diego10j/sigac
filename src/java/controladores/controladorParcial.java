@@ -1372,8 +1372,6 @@ public class controladorParcial {
                 } catch (Exception e) {
                 }
 
-
-
                 //busco la equivalencia del promedio
                 Object obj_resultado = null;
                 String str_alterno = "";
