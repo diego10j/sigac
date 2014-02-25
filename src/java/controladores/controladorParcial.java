@@ -1185,9 +1185,9 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 2) {
                 tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
                 tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
@@ -1234,9 +1234,9 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 1) {
                 tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
                 tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
@@ -1267,9 +1267,9 @@ public class controladorParcial {
                 if (obj_resultado == null) {
                     obj_resultado = "NO EQV";
                 }
-                tab_reporte.setValor("TPROM,", utilitario.getFormatoNumero(dou_promedio / 3));
+                tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             }
         }
 
@@ -1342,7 +1342,7 @@ public class controladorParcial {
                 }
                 tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 2) {
                 tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
                 tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
@@ -1391,7 +1391,7 @@ public class controladorParcial {
                 }
                 tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             } else if (tab_comportamiento.getTotalFilas() == 1) {
                 tab_reporte.setValor("P1S1", tab_comportamiento.getValor(0, "com_semana1"));
                 tab_reporte.setValor("P1S2", tab_comportamiento.getValor(0, "com_semana2"));
@@ -1424,7 +1424,7 @@ public class controladorParcial {
                 }
                 tab_reporte.setValor("TPROM", utilitario.getFormatoNumero(dou_promedio / 3));
                 tab_reporte.setValor("TLETRA", str_alterno);
-                tab_reporte.setValor("P1EQUI", obj_resultado.toString());
+                tab_reporte.setValor("TEQUI", obj_resultado.toString());
             }
 
         }
