@@ -33,7 +33,7 @@
     </filter-mapping>    
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>blitzer</param-value>     
+        <param-value>excite-bike</param-value>     
     </context-param>  
     
     

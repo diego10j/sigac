@@ -7,15 +7,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">TITULO PAGINA ======</ui:define>
+    <ui:define name="tituloPagina">Inicio</ui:define>
 
-    <ui:define name="opciones">
-        izquierda
 
+    <ui:define name="contenido">
+        <div align="center" style="padding-top: 20px;">
+            <p:galleria value="#{controladorLogin.imagenes}" var="image" panelWidth="700" panelHeight="350" showCaption="false"  autoPlay="true" >  
+                <p:graphicImage value="../imagenes/fotos/#{image}" height="340"/>  
+            </p:galleria>  
+
+        </div>
     </ui:define>
-	
-	<ui:define name="contenido">
-	centro
-	</ui:define>
 </ui:composition>
 
