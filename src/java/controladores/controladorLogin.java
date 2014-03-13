@@ -9,6 +9,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import aplicacion.Utilitario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import persistencia.Conexion;
 import servcios.ServicioSeguridad;
@@ -31,6 +34,15 @@ public class controladorLogin {
     private String strClaveNueva;
     private String strConfirmaClaveNueva;
     
+     private List<String> imagenes;
+    
+     @PostConstruct
+     public void cargar(){
+         imagenes=new ArrayList();
+         imagenes.add("im1.jpg");
+         imagenes.add("im2.jpg");
+         imagenes.add("im3.jpg");
+     }
     
 
     public void ingresar() {
@@ -138,4 +150,12 @@ public class controladorLogin {
         return utilitario.getVariable("NICK");
     }
 
+    public List<String> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<String> imagenes) {
+        this.imagenes = imagenes;
+    }
+    
 }

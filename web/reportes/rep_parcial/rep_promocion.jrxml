@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_promocion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3760851-d981-430e-9ce3-6d1cdf1a9626">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="138"/>
+	<parameter name="fecha_prom" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT e.alu_apellidos||' '||e.alu_nombres as nombres,round(avg(inf_nota),0) as promedio,c.asi_nombre,g.cur_anio FROM informe_quimestre a
+inner join distributivomxc b on a.dis_codigo=b.dis_codigo
+inner join asignaturas c on b.asi_codigo=c.asi_codigo
+inner join matricula d on a.mat_codigo=d.mat_codigo
+inner join alumnos e on d.alu_codigo=e.alu_codigo
+inner join crear_curso f on d.cre_codigo=f.cre_codigo
+inner join cursos g on f.cur_codigo=g.cur_codigo
+where a.mat_codigo=33
+group by e.alu_apellidos||' '||e.alu_nombres,c.asi_nombre,g.cur_anio]]>
+	</queryString>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="promedio" class="java.math.BigDecimal"/>
+	<field name="asi_nombre" class="java.lang.String"/>
+	<field name="cur_anio" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="118" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c0ae0779-2d44-403b-bda8-4b9b8d07dad7" x="0" y="37" width="553" height="19"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["De conformidad por lo prescrito en la Ley Organica de Educación Intercultural y demás normativa"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4f2cf789-8b6c-48e9-8322-1883dd53ac7e" x="0" y="56" width="123" height="19"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["vigente, certifica que:  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7dd066fe-03b0-410b-81a2-48897fe4e9c6" x="123" y="56" width="397" height="19" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="073b6a28-6246-4d65-abc9-d4ddb5867c34" x="520" y="56" width="33" height="19"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" del "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="417e86d9-1c0a-405d-b514-e47d93d4566c" x="0" y="75" width="102" height="19" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cur_anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="993f407f-727f-4480-ba02-793af7eb2df6" x="102" y="75" width="441" height="19"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AÑO DE EDUCACIÓN GENERAL BÁSICA obtuvo las siguientes calificaciones"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1300066e-272d-41d7-8553-d339003b2acf" x="0" y="94" width="123" height="19"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["durante el presente año lectivo"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3b772e82-500d-4353-9af4-6a7f04dcd093" x="0" y="3" width="246" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASIGNATURAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bc3eeab4-1ba2-462f-a538-72822b8d9ee3" x="246" y="3" width="246" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="eeca8a65-1357-4160-918c-c5706a2e2675" x="0" y="0" width="246" height="20"/>
+				<box leftPadding="20">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asi_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1c04e763-178f-4ff1-8b73-808e31c7dc4a" x="246" y="0" width="246" height="20"/>
+				<box leftPadding="20">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{promedio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="103" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3db3dc8a-454f-4802-85a0-a8094c9a01f6" x="0" y="34" width="553" height="45"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por lo tanto es promovido(a) al siguiente grado. Para certificar suscriben en unidad de acto el/la director(a) con el profesor(a) del grado."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="efaaa0d8-0309-43d0-8f61-8d7d3626487b" x="0" y="79" width="553" height="24"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["En la cuidad de Quito, a los 7 días del mes julio del 2012."]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_comportamieto" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="735eb6ea-86cc-48d4-b574-f1291ddc0869">
-	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.zoom" value="0.8264462809917361"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="126"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PROFESOR" class="java.lang.String"/>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<parameter name="CURSO" class="java.lang.String"/>
+	<parameter name="PARALELO" class="java.lang.String"/>
 	<field name="CUENTA" class="java.lang.String"/>
 	<field name="NOMINA" class="java.lang.String"/>
 	<field name="P1S1" class="java.lang.String"/>
@@ -33,12 +37,12 @@
 	<field name="P3SUMA" class="java.lang.String"/>
 	<field name="P3LETRA" class="java.lang.String"/>
 	<field name="P3EQUI" class="java.lang.String"/>
-	<group name="GROUP_QUIMESTRE">
+	<group name="GROUP_QUIMESTRE" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
-			<band height="121">
+			<band height="140">
 				<staticText>
-					<reportElement uuid="67862f60-a374-4e1e-85b6-3b950e2a9116" x="213" y="55" width="15" height="66"/>
+					<reportElement uuid="67862f60-a374-4e1e-85b6-3b950e2a9116" x="213" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -51,7 +55,7 @@
 					<text><![CDATA[1	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="65799b07-e7c8-42d0-989f-6bdb8419c829" x="228" y="55" width="15" height="66"/>
+					<reportElement uuid="65799b07-e7c8-42d0-989f-6bdb8419c829" x="228" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -64,7 +68,7 @@
 					<text><![CDATA[2	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="682c2f81-7fe6-4a8b-a331-9ddf32730139" x="243" y="55" width="15" height="66"/>
+					<reportElement uuid="682c2f81-7fe6-4a8b-a331-9ddf32730139" x="243" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -77,7 +81,7 @@
 					<text><![CDATA[3]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="fa6afe45-3bd5-40bf-a0f1-4c42c139bb0c" x="258" y="55" width="15" height="66"/>
+					<reportElement uuid="fa6afe45-3bd5-40bf-a0f1-4c42c139bb0c" x="258" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -90,7 +94,7 @@
 					<text><![CDATA[4	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="606ef83c-174f-4d4b-9bb0-fe3e67894ddd" x="273" y="55" width="15" height="66"/>
+					<reportElement uuid="606ef83c-174f-4d4b-9bb0-fe3e67894ddd" x="273" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -103,7 +107,7 @@
 					<text><![CDATA[5	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="45fcb6e8-714d-4221-a322-e354141123af" mode="Opaque" x="288" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<reportElement uuid="45fcb6e8-714d-4221-a322-e354141123af" mode="Opaque" x="288" y="74" width="20" height="66" backcolor="#FDE8FD"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -116,7 +120,7 @@
 					<text><![CDATA[SUMATORIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="d4110e41-f522-486a-b09d-fbe60a5d8606" mode="Opaque" x="308" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<reportElement uuid="d4110e41-f522-486a-b09d-fbe60a5d8606" mode="Opaque" x="308" y="74" width="15" height="66" backcolor="#E2E2FC"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -129,7 +133,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="1ca018d6-8008-4d92-a140-4346f95ff952" x="323" y="55" width="56" height="66"/>
+					<reportElement uuid="1ca018d6-8008-4d92-a140-4346f95ff952" x="323" y="74" width="56" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -142,7 +146,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="c7348f10-03a5-40a1-9c1b-100790e7c91f" x="213" y="40" width="166" height="15"/>
+					<reportElement uuid="c7348f10-03a5-40a1-9c1b-100790e7c91f" x="213" y="59" width="166" height="15"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -155,7 +159,7 @@
 					<text><![CDATA[PARCIAL I]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="6c284fb2-6bc2-4820-bf22-db4d856ef181" x="379" y="40" width="166" height="15"/>
+					<reportElement uuid="6c284fb2-6bc2-4820-bf22-db4d856ef181" x="379" y="59" width="166" height="15"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -168,7 +172,7 @@
 					<text><![CDATA[PARCIAL II]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="fa3e0b52-a183-43a7-8587-57692c26ab7c" mode="Opaque" x="474" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<reportElement uuid="fa3e0b52-a183-43a7-8587-57692c26ab7c" mode="Opaque" x="474" y="74" width="15" height="66" backcolor="#E2E2FC"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -181,7 +185,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="f280a417-94a2-4e00-aad9-82f1fceb5477" x="394" y="55" width="15" height="66"/>
+					<reportElement uuid="f280a417-94a2-4e00-aad9-82f1fceb5477" x="394" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -194,7 +198,7 @@
 					<text><![CDATA[2	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="05892c7f-167a-4cca-9d90-a705c0eaaf7d" x="379" y="55" width="15" height="66"/>
+					<reportElement uuid="05892c7f-167a-4cca-9d90-a705c0eaaf7d" x="379" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -207,7 +211,7 @@
 					<text><![CDATA[1	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e9310c72-8273-4236-b485-0db5049a2385" mode="Opaque" x="454" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<reportElement uuid="e9310c72-8273-4236-b485-0db5049a2385" mode="Opaque" x="454" y="74" width="20" height="66" backcolor="#FDE8FD"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -220,7 +224,7 @@
 					<text><![CDATA[SUMATORIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="43cd5b2a-4bb7-4262-894e-bc9c30454f1f" x="409" y="55" width="15" height="66"/>
+					<reportElement uuid="43cd5b2a-4bb7-4262-894e-bc9c30454f1f" x="409" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -233,7 +237,7 @@
 					<text><![CDATA[3]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="9a855f65-263f-462e-b01c-0144e83d808b" x="439" y="55" width="15" height="66"/>
+					<reportElement uuid="9a855f65-263f-462e-b01c-0144e83d808b" x="439" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -246,7 +250,7 @@
 					<text><![CDATA[5	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="73489290-fbc0-4cab-930c-a46892234487" x="489" y="55" width="56" height="66"/>
+					<reportElement uuid="73489290-fbc0-4cab-930c-a46892234487" x="489" y="74" width="56" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -259,7 +263,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="21cd3cea-95c8-4f6a-87c1-d9e5e604c73f" x="424" y="55" width="15" height="66"/>
+					<reportElement uuid="21cd3cea-95c8-4f6a-87c1-d9e5e604c73f" x="424" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -272,7 +276,7 @@
 					<text><![CDATA[4	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="89a20dfd-d5e9-4652-9076-8d848304d6ff" x="655" y="55" width="56" height="66"/>
+					<reportElement uuid="89a20dfd-d5e9-4652-9076-8d848304d6ff" x="655" y="74" width="56" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -285,7 +289,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="05d1411a-ed89-4499-8c1a-8a6b1d0f356b" x="605" y="55" width="15" height="66"/>
+					<reportElement uuid="05d1411a-ed89-4499-8c1a-8a6b1d0f356b" x="605" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -298,7 +302,7 @@
 					<text><![CDATA[5	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="9f90fa1b-cdcd-43c3-bbdd-61f72d9b7270" x="560" y="55" width="15" height="66"/>
+					<reportElement uuid="9f90fa1b-cdcd-43c3-bbdd-61f72d9b7270" x="560" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -311,7 +315,7 @@
 					<text><![CDATA[2	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="3eda5392-b077-4283-9467-00a1a28bc891" x="575" y="55" width="15" height="66"/>
+					<reportElement uuid="3eda5392-b077-4283-9467-00a1a28bc891" x="575" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -324,7 +328,7 @@
 					<text><![CDATA[3]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="bd5cf970-ca14-4df9-aab3-6edc3f74c519" mode="Opaque" x="620" y="55" width="20" height="66" backcolor="#FDE8FD"/>
+					<reportElement uuid="bd5cf970-ca14-4df9-aab3-6edc3f74c519" mode="Opaque" x="620" y="74" width="20" height="66" backcolor="#FDE8FD"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -337,7 +341,7 @@
 					<text><![CDATA[SUMATORIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="c8fb560e-feb6-4595-b58a-b5eb61fac3fc" x="590" y="55" width="15" height="66"/>
+					<reportElement uuid="c8fb560e-feb6-4595-b58a-b5eb61fac3fc" x="590" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -350,7 +354,7 @@
 					<text><![CDATA[4	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="95f1d9dc-0c24-4101-b65c-421c8aa03d4b" x="545" y="40" width="166" height="15"/>
+					<reportElement uuid="95f1d9dc-0c24-4101-b65c-421c8aa03d4b" x="545" y="59" width="166" height="15"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -363,7 +367,7 @@
 					<text><![CDATA[PARCIAL III]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="665ed848-d0f2-4369-a953-ad82243ef1a0" mode="Opaque" x="640" y="55" width="15" height="66" backcolor="#E2E2FC"/>
+					<reportElement uuid="665ed848-d0f2-4369-a953-ad82243ef1a0" mode="Opaque" x="640" y="74" width="15" height="66" backcolor="#E2E2FC"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -376,7 +380,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="5de49af6-3e03-4cd6-a616-1219653bf057" x="545" y="55" width="15" height="66"/>
+					<reportElement uuid="5de49af6-3e03-4cd6-a616-1219653bf057" x="545" y="74" width="15" height="66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -389,7 +393,7 @@
 					<text><![CDATA[1	]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="905ac852-a4d5-4bbb-b317-0b716bdce96d" mode="Opaque" x="711" y="55" width="20" height="66" backcolor="#FFFF66"/>
+					<reportElement uuid="905ac852-a4d5-4bbb-b317-0b716bdce96d" mode="Opaque" x="711" y="74" width="20" height="66" backcolor="#FFFF66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -402,7 +406,7 @@
 					<text><![CDATA[PROMEDIO F.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="91e14046-9579-4599-a8ff-bac19e3106bd" mode="Opaque" x="731" y="55" width="15" height="66" backcolor="#FFFF66"/>
+					<reportElement uuid="91e14046-9579-4599-a8ff-bac19e3106bd" mode="Opaque" x="731" y="74" width="15" height="66" backcolor="#FFFF66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -415,7 +419,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="6d918195-433e-4ee9-8fb8-e1ad448c4ebd" x="746" y="25" width="56" height="96"/>
+					<reportElement uuid="6d918195-433e-4ee9-8fb8-e1ad448c4ebd" x="746" y="44" width="56" height="96"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -428,7 +432,7 @@
 					<text><![CDATA[EQUIVALENCIA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="895aaff3-b8a0-46ef-8114-c8c738971acc" mode="Opaque" x="711" y="25" width="35" height="30" backcolor="#FFFF66"/>
+					<reportElement uuid="895aaff3-b8a0-46ef-8114-c8c738971acc" mode="Opaque" x="711" y="44" width="35" height="30" backcolor="#FFFF66"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -441,7 +445,7 @@
 					<text><![CDATA[PROM.]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="0cf8b0e2-5c60-47e9-9034-00d9d9e983cb" x="213" y="25" width="498" height="15"/>
+					<reportElement uuid="0cf8b0e2-5c60-47e9-9034-00d9d9e983cb" x="213" y="44" width="498" height="15"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -452,7 +456,7 @@
 					<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="b49076d1-77a2-4641-9f4e-55df2bf5b575" x="20" y="40" width="193" height="81"/>
+					<reportElement uuid="b49076d1-77a2-4641-9f4e-55df2bf5b575" x="20" y="59" width="193" height="81"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -465,7 +469,7 @@
 					<text><![CDATA[NÓMINA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="622731f1-8f6d-443b-8fa8-d8a0d3fa98d7" x="0" y="40" width="20" height="81"/>
+					<reportElement uuid="622731f1-8f6d-443b-8fa8-d8a0d3fa98d7" x="0" y="59" width="20" height="81"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<leftPen lineWidth="0.5"/>
@@ -477,10 +481,53 @@
 					</textElement>
 					<text><![CDATA[No.]]></text>
 				</staticText>
+				<textField>
+					<reportElement uuid="d87484e7-bdfd-40a7-89b6-42e595df2258" x="359" y="15" width="127" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{PARALELO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="235f0d8d-dc67-47eb-b26a-0d590bc5f637" x="233" y="15" width="127" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{CURSO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="465fe7d4-d2ab-46e4-9aca-d3347a4d8835" x="233" y="30" width="442" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{PROFESOR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="3e646b59-ee88-4657-88d2-782e9b56725a" x="677" y="10" width="126" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2fa2a500-fa32-448f-9fa7-156c610f08be" x="0" y="0" width="802" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[REGISTRO DE PARTICIPACIÓN Y DESARROLLO COMPORTAMENTAL - VALORES	]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4082f760-d001-4f9a-abf7-332e44c6d7fc" x="0" y="15" width="235" height="15"/>
+					<box rightPadding="10"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[AÑO DE BÁSICA :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="913c1b5a-5c78-4173-a8e5-f88f783ff36b" x="0" y="30" width="235" height="15"/>
+					<box rightPadding="10"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROFESOR/A :]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="50"/>
+			<band height="26"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -489,9 +536,6 @@
 	<title>
 		<band height="45" splitType="Stretch"/>
 	</title>
-	<pageHeader>
-		<band height="55" splitType="Stretch"/>
-	</pageHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField isBlankWhenNull="true">
@@ -874,6 +918,6 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="13" splitType="Stretch"/>
 	</summary>
 </jasperReport>
