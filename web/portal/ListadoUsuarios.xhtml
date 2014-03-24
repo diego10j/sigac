@@ -15,6 +15,9 @@
             <p:toolbar >
                 <p:toolbarGroup>
                     <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorUsuarios.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
+
+                    <p:separator/>
+                    <p:commandButton value="Importar Uusarios"  action="#{controladorUsuarios.importarUsuarios}"  update=":frmPrincipal:pnlTabela" />
                 </p:toolbarGroup>
             </p:toolbar>
             <!-- CONFIGURACIÓN TABLA -->
@@ -60,9 +63,30 @@
                         <h:outputText value="#{tabla.usuFechacreacion}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
+                    </p:column> 
+                    <p:column headerText="ESTADO"  sortBy="#{tabla.usuActivo}">                        
+                        <h:outputText rendered="#{tabla.usuActivo == true}" value="ACTIVO" style="color: #009900;font-weight: bold;font-size: 12px" />
+                        <h:outputText rendered="#{tabla.usuActivo == false}" value="INACTIVO" style="color: #ff0000;font-weight: bold;font-size: 12px"/>
+                    </p:column> 
+                    <p:column>
+                        <p:commandLink action="#{controladorUsuarios.activarDesactivarUsuario}" 
+                                       title="Cambiar Estado"
+                                       update=":frmPrincipal:pnlTabela">
+                            <p:graphicImage url="../imagenes/im_actualiza.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorUsuarios.usuUsuario}" value="#{tabla}" />
+                        </p:commandLink>
                     </p:column>
-                    <p:column headerText="DOCENTE" filterBy="#{tabla.docCodigo.docNombres}" sortBy="#{tabla.docCodigo.docNombres}">
-                        <h:outputText value="#{tabla.docCodigo.docNombres}"/>
+
+                    <p:column>
+                        <p:commandLink action="#{controladorUsuarios.resetearClave}" 
+                                       title="Resetear Clave">
+                            <p:graphicImage url="../imagenes/im_clave.png" 
+                                            style="vertical-align: middle; border: none"/>
+                            <f:setPropertyActionListener
+                                target="#{controladorUsuarios.usuUsuario}" value="#{tabla}" />
+                        </p:commandLink>
                     </p:column>
 
                 </p:dataTable>
@@ -107,11 +131,8 @@
                             <h:outputText value="Fecha de creación :*"/>
                             <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
 
-                            <h:outputText value="Docente :"/>
-                            <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
-                                <f:selectItem itemValue="-1" itemLabel="Seleccione un Docente ..." />
-                                <f:selectItems value="#{controladorUsuarios.comDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                            </p:selectOneMenu>
+
+
                         </h:panelGrid>
 
                     </p:fieldset>
