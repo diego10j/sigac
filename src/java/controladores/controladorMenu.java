@@ -21,7 +21,7 @@ import org.primefaces.component.submenu.Submenu;
 public class controladorMenu {
 
     private Menubar menu = new Menubar();
-    private String rolCodigo = "1";
+    private String rolCodigo;
     private Utilitario utilitario = new Utilitario();
 
     public controladorMenu() {
@@ -30,6 +30,7 @@ public class controladorMenu {
 
     public void dibujarMenu() {
         menu.getChildren().clear();
+        rolCodigo = utilitario.getVariable("rolCodigo"); 
         List lis_consulta = utilitario.getConexion().consultar("SELECT pa.pan_codigo,pan_nombre,pan_path from permisos pe, pantalla pa \n"
                 + "where pe.pan_Codigo = pa.pan_Codigo\n"
                 + "and pe.rol_Codigo=" + rolCodigo + "\n"
@@ -38,10 +39,10 @@ public class controladorMenu {
             Object[] fila = (Object[]) lis_consulta.get(i);
             Submenu sub_menu = new Submenu();
             sub_menu.setId("sub_" + fila[0]);
-            sub_menu.setLabel(fila[1] + "");            
+            sub_menu.setLabel(fila[1] + "");
             formar_menu_recursivo(sub_menu, fila[0]);
             menu.getChildren().add(sub_menu);
-           
+
         }
     }
 
@@ -50,7 +51,7 @@ public class controladorMenu {
                 + "where pe.pan_Codigo = pa.pan_Codigo\n"
                 + "and pe.rol_Codigo=" + rolCodigo + "\n"
                 + "and pa.pan_pan_codigo=" + ide_opci + " order by pa.pan_nombre");
-      
+
         for (int i = 0; i < lis_consulta.size(); i++) {
             Object[] fila = (Object[]) lis_consulta.get(i);
             if (tieneHijos(fila[0])) {
@@ -60,7 +61,7 @@ public class controladorMenu {
                 sub_menu.getChildren().add(sub_menu_nuevo);
                 formar_menu_recursivo(sub_menu_nuevo, fila[0]);
             } else {
-                
+
                 MenuItem mei_item = new MenuItem();
                 mei_item.setId("item_" + fila[0]);
                 mei_item.setValue(fila[1]);

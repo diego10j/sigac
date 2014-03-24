@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @UniqueConstraint(columnNames = {"usu_codigo"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u order by u.usuNombre"),
     @NamedQuery(name = "Usuario.findByUsuCodigo", query = "SELECT u FROM Usuario u WHERE u.usuCodigo = :usuCodigo"),
     @NamedQuery(name = "Usuario.findByUsuNombre", query = "SELECT u FROM Usuario u WHERE u.usuNombre = :usuNombre"),
     @NamedQuery(name = "Usuario.findByUsuNick", query = "SELECT u FROM Usuario u WHERE u.usuNick = :usuNick"),

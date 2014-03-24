@@ -6,8 +6,10 @@ package servcios;
 
 import aplicacion.Utilitario;
 import entidades.Docentes;
+import entidades.Usuario;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -29,6 +31,12 @@ public class servicioDocente {
     @Resource
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
+    @EJB
+    private servicioUsuarios servUsuario;
+    @EJB
+    private servicioInstitucion servInstitucion;
+    @EJB
+    private servicioRoles servRoles;
 
     public String guardarDocente(Docentes docente) {
         try {
@@ -40,6 +48,15 @@ public class servicioDocente {
                 System.out.println("ide " + lon_codigo);
                 docente.setDocCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(docente);
+                //guardo Usuario
+                Usuario user = new Usuario();
+                user.setUsuNombre(docente.getDocNombres());
+                user.setUsuNick(docente.getDocCedula());
+                user.setUsuClave(docente.getDocCedula());
+                user.setRolCodigo(servRoles.getRoles("6"));
+                user.setInsCodigo(servInstitucion.getIntitucion());
+                servUsuario.guardarUsuarios(user);
+
             } else {
                 manejador.merge(docente);
             }
@@ -91,7 +108,7 @@ public class servicioDocente {
         }
         return null;
     }
-    
+
     /**
      * Lista para combos
      *
