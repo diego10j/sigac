@@ -39,6 +39,8 @@ public class controladorAlumno {
     @EJB
     private servicioInstitucion servInstitucion;
     private String str_path_reporte;
+    
+    
      
 
     @PostConstruct

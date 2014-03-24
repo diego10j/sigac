@@ -7,8 +7,10 @@ package servcios;
 import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Representante;
+import entidades.Usuario;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -30,6 +32,12 @@ public class servicioAlumno {
     @Resource
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
+    @EJB
+    private servicioUsuarios servUsuario;
+    @EJB
+    private servicioInstitucion servInstitucion;
+    @EJB
+    private servicioRoles servRoles;
 
     public String guardarAlumno(Alumnos alumno) {
         try {
@@ -39,6 +47,14 @@ public class servicioAlumno {
                 long lon_codigo = utilitario.getConexion().getMaximo("alumnos", "alu_codigo", 1);
                 alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(alumno);
+                //guardo Usuario
+                Usuario user = new Usuario();
+                user.setUsuNombre(alumno.getAluNombres() + " " + alumno.getAluApellidos());
+                user.setUsuNick(alumno.getAluCedula());
+                user.setRolCodigo(servRoles.getRoles("3"));
+                user.setUsuClave(alumno.getAluCedula());
+                user.setInsCodigo(servInstitucion.getIntitucion());
+                servUsuario.guardarUsuarios(user);
             } else {
                 //modifica             
                 manejador.merge(alumno);

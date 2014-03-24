@@ -76,21 +76,32 @@ public class controladorUsuarios {
         }
     }
 
+    public void resetearClave() {
+        servUsuarios.resetearClave(usuUsuario);
+        utilitario.agregarMensaje("Se reseteo la clave del usuario " + usuUsuario.getUsuNombre() + " la nueva clave es el nick del Usuario :  " + usuUsuario.getUsuNick(), "");
+    }
+
+    public void activarDesactivarUsuario() {
+        String str_mensaje = servUsuarios.activarDesactivarUsuario(usuUsuario);
+        utilitario.agregarMensaje(str_mensaje, "");
+        cargarDatos();
+    }
+
     public void guardar() {
         if (usuUsuario.getUsuCodigo() == null) {
             //Asigna el nick al password si es nuevo
             usuUsuario.setUsuClave(usuUsuario.getUsuNick());
-        }      
+        }
         usuUsuario.setInsCodigo(servInstitucion.getIntitucion());
         if (usuUsuario.getDocCodigo().getDocCodigo() != null) {
             usuUsuario.setDocCodigo(servDocente.getDocente(usuUsuario.getDocCodigo().getDocCodigo().toString()));
         } else {
             usuUsuario.setDocCodigo(null);
-        }       
+        }
         if (usuUsuario.getRolCodigo().getRolCodigo() != null) {
             usuUsuario.setRolCodigo(servRoles.getRoles(usuUsuario.getRolCodigo().getRolCodigo().toString()));
-        }        
-        String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);        
+        }
+        String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             usuUsuario = new Usuario();
@@ -98,6 +109,18 @@ public class controladorUsuarios {
             utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+    }
+
+    public void importarUsuarios() {
+        int int_num = servUsuarios.actualizarUsuarios();
+        if (int_num == 0) {
+            utilitario.agregarMensajeInfo("El sistema se encuentra actualizado con todos los usuarios", "");
+        } else if (int_num > 0) {
+            utilitario.agregarMensaje("Se importaron " + int_num + " usuarios al sistema", "");
+            cargarDatos();
+        } else {
+            utilitario.agregarMensajeError("No se pudieron importar usuarios", "");
         }
     }
 
