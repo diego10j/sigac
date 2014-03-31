@@ -101,7 +101,7 @@
 
                         <h:panelGrid columns="4">
                             <h:outputText value="Cédula :*"/>
-                            <p:inputText value="#{controladorDocente.docDocente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
+                            <p:inputMask mask="9999999999" value="#{controladorDocente.docDocente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
 
                             <h:outputText value="Fecha de Nacimiento :*"/>
                             <p:calendar value="#{controladorDocente.docDocente.docFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
@@ -124,11 +124,12 @@
                         <h:panelGrid columns="4">
 
                             <h:outputText value="Teléfono :"/>
-                            <p:inputText value="#{controladorDocente.docDocente.docTelefono}" maxlength="100" size="10"/>
+                            <p:inputMask id="txtTelef" value="#{controladorDocente.docDocente.docTelefono}" size="17" mask="9999999"/>
 
                             <h:outputText value="Celular :*"/>
-                            <p:inputText value="#{controladorDocente.docDocente.docCelular}" maxlength="100" size="10" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
-
+                            <p:inputMask id="txtCelular" mask="9999999999" value="#{controladorDocente.docDocente.docCelular}" size="17" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+                             <p:watermark for="txtTelef" value="Ejemplo: 2568135"/>
+                                <p:watermark for="txtCelular" value="Ejemplo: 0983113547"/>    
                         </h:panelGrid>
 
                         <h:panelGrid columns="2">

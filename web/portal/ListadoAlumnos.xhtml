@@ -116,12 +116,12 @@
                     <p:fieldset legend="DATOS DE LOS ALUMNOS">
                         <h:panelGrid columns="6">
                             <h:outputText value="Cédula :"/>
-                            <p:inputText size="10" maxlength="10" value="#{controladorAlumno.aluAlumno.aluCedula}" />                    
+                            <p:inputMask mask="9999999999" size="15" id="txtCedula"  value="#{controladorAlumno.aluAlumno.aluCedula}" />                    
                             <h:outputText value="Sexo :*" />
                             <p:selectOneMenu value="#{controladorAlumno.aluAlumno.aluSexo}">
                                 <f:selectItem itemValue="M" itemLabel="MASCULINO"/> 
                                 <f:selectItem itemValue="F" itemLabel="FEMENINO"/>
-                            </p:selectOneMenu>
+                            </p:selectOneMenu>                            
                         </h:panelGrid>
                         <h:panelGrid columns="2">
                             <h:outputText value="Nombres :*"/>
@@ -160,9 +160,11 @@
                                 <h:outputText value="Parentesco del Representante :*"/>
                                 <p:inputText value="#{controladorAlumno.repRepresentante.repParentesco}" required="true" requiredMessage="Debe ingresar el Parentesco del Representante"/>
                                 <h:outputText value="Teléfono del Representante :"/>
-                                <p:inputText value="#{controladorAlumno.repRepresentante.repTelefono}"/>
+                                <p:inputMask id="txtTelef" value="#{controladorAlumno.repRepresentante.repTelefono}" mask="9999999"/>                                
                                 <h:outputText value="Celular del Representante :"/>
-                                <p:inputText value="#{controladorAlumno.repRepresentante.repCelular}"/>
+                                <p:inputMask id="txtCelular" value="#{controladorAlumno.repRepresentante.repCelular}" mask="9999999999"/>
+                                <p:watermark for="txtTelef" value="Ejemplo: 2568135"/>
+                                <p:watermark for="txtCelular" value="Ejemplo: 0983113547"/>
                             </h:panelGrid>
                         </p:fieldset>
                     </p:fieldset>
