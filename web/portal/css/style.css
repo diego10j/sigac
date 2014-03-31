@@ -133,3 +133,7 @@ td
     background-image: url('../../imagenes/im_documento.png')!important;
     padding-right: 5px;
 }
+
+.ui-inputfield{
+    text-transform:uppercase;    
+}
