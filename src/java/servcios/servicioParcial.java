@@ -47,6 +47,15 @@ public class servicioParcial {
 
     }
 
+    public List getCursosAlumno(String alu_codigo) {
+        return utilitario.getConexion().consultar("select a.cre_codigo,cur_anio,par_nombre from matricula a\n"
+                + "inner join crear_curso b on a.cre_codigo=b.cre_codigo\n"
+                + "INNER JOIN cursos c on b.cur_codigo=c.cur_codigo \n"
+                + "inner join paralelo d on b.par_codigo=d.par_codigo\n"
+                + "where alu_codigo=" + alu_codigo);
+
+    }
+
     public List getCursosDisciplinaDocente(String per_codigo, String doc_codigo) {
         return utilitario.getConexion().consultar("SELECT c.cre_codigo,cu.cur_anio,pa.par_nombre FROM crear_curso c\n"
                 + "INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo\n"
@@ -60,6 +69,13 @@ public class servicioParcial {
                 + " LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo "
                 + "where d.doc_codigo=" + doc_codigo + "\n"
                 + "and d.cre_codigo=" + cre_codigo + " order by c.asi_nombre,a.asi_nombre");
+    }
+
+    public List getMateriasCursoDocente(String cre_codigo) {
+        return utilitario.getConexion().consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                + " INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                + " LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo "
+                + "where d.cre_codigo=" + cre_codigo + " order by c.asi_nombre,a.asi_nombre");
     }
 
     public List<NotaDestrezaparcial> getNotasDestreza() {
@@ -290,7 +306,7 @@ public class servicioParcial {
                 tab_notas.setValor("reg_faltasjustificadas", "0");
                 tab_notas.setValor("reg_faltasinjustificadas", "0");
                 tab_notas.setValor("reg_totalfaltas", "0");
-                tab_notas.setValor("reg_diaslaborados",  dias + "");
+                tab_notas.setValor("reg_diaslaborados", dias + "");
                 tab_notas.setValor("reg_dias", dias + "");
             }
             tab_notas.guardar();
