@@ -131,7 +131,11 @@
                             <h:outputText value="Fecha de creación :*"/>
                             <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
 
-
+                            <h:outputText value="Docente :"/>
+                            <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
+                                <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
+                                <f:selectItems value="#{controladorUsuarios.comDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                            </p:selectOneMenu>
 
                         </h:panelGrid>
 
