@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_abeja" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b6cf571-2418-49aa-ab16-1b85e75c1b4e">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.138428376721004"/>
+	<property name="ireport.x" value="846"/>
+	<property name="ireport.y" value="447"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="for_codigo" class="java.lang.String"/>
+	<parameter name="eva_codigo" class="java.lang.String"/>
+	<parameter name="asi_codigo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="per_codigo" class="java.lang.String"/>
+	<parameter name="cur_codigo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select i.per_nombre,e.alu_codigo,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,
+		<![CDATA[select  i.per_nombre,e.alu_codigo,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,
 a.not_trabajos,a.not_actividadindividual,a.not_actividadgrupal,a.not_lecciones,a.not_evaluacionsumativa,a.not_total,a.not_primerparcial,
 a.not_eqvdestreza,k.for_nombre,l.eva_nombre,m.doc_nombres
 from nota_destrezaparcial a
@@ -21,8 +30,11 @@ INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo
 inner join formaevaluar k on k.for_codigo=a.for_codigo
 inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo
 INNER JOIN docentes m on f.doc_codigo=m.doc_codigo
-where a.eva_codigo=2 and a.for_codigo=1
-and b.asi_codigo=4
+where a.eva_codigo in($P!{eva_codigo})
+and a.for_codigo in($P!{for_codigo})
+and b.asi_codigo in($P!{asi_codigo})
+and f.per_codigo in($P!{per_codigo})
+and f.cur_codigo in($P!{cur_codigo})
 order by e.alu_apellidos || ' ' || alu_nombres]]>
 	</queryString>
 	<field name="per_nombre" class="java.lang.String"/>
@@ -221,7 +233,7 @@ order by e.alu_apellidos || ' ' || alu_nombres]]>
 							<textElement verticalAlignment="Middle" rotation="Left">
 								<font size="6" isBold="true"/>
 							</textElement>
-							<text><![CDATA[Primer Parcial]]></text>
+							<text><![CDATA[Parcial]]></text>
 						</staticText>
 						<staticText>
 							<reportElement uuid="dd694dca-966b-4949-a383-3b108526a71e" style="Crosstab Data Text" x="430" y="0" width="46" height="39"/>
@@ -899,6 +911,17 @@ order by e.alu_apellidos || ' ' || alu_nombres]]>
 					<cellContents/>
 				</crosstabCell>
 			</crosstab>
+			<textField>
+				<reportElement uuid="59932e1a-67f9-472c-96df-b124a512f2db" mode="Opaque" x="350" y="0" width="126" height="14" backcolor="#FF9900"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{for_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
