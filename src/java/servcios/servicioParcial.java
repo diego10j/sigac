@@ -39,16 +39,28 @@ public class servicioParcial {
      * @return Lista con los cursos y pararalelos
      */
     public List getCursosDocente(String per_codigo, String doc_codigo) {
-        return utilitario.getConexion().consultar("select d.cre_codigo,cu.cur_anio,pa.par_nombre from distributivomxc d\n"
+        return utilitario.getConexion().consultar("select d.cre_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo from distributivomxc d\n"
                 + "inner join crear_curso c on d.cre_codigo=c.cre_codigo INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo inner join paralelo pa on c.par_codigo=pa.par_codigo inner join docentes p on d.doc_codigo=p.doc_codigo"
                 + " where p.doc_codigo=" + doc_codigo + " and c.per_codigo=" + per_codigo + "\n"
-                + "group  by d.cre_codigo,cu.cur_codigo,cu.cur_anio,pa.par_nombre\n"
+                + "group  by d.cre_codigo,cu.cur_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo\n"
                 + "order by cu.cur_codigo,par_nombre");
 
     }
 
+    public List getMatriculasCursoAlumno(String alu_codigo) {
+        return utilitario.getConexion().consultar("select d.cre_codigo,per_nombre,cu.cur_anio,pa.par_nombre,c.cur_codigo from distributivomxc d\n"
+                + " inner join crear_curso c on d.cre_codigo=c.cre_codigo \n"
+                + " INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo inner join paralelo pa on c.par_codigo=pa.par_codigo \n"
+                + " inner join matricula p on d.cre_codigo=p.cre_codigo\n"
+                + " inner join periodo_lectivo pl on c.per_codigo=pl.per_codigo\n"
+                + " where p.alu_codigo=" + alu_codigo + "\n"
+                + " group  by d.cre_codigo,per_nombre,cu.cur_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo\n"
+                + " order by cu.cur_codigo,par_nombre");
+
+    }
+
     public List getCursosAlumno(String alu_codigo) {
-        return utilitario.getConexion().consultar("select a.cre_codigo,cur_anio,par_nombre from matricula a\n"
+        return utilitario.getConexion().consultar("select a.cre_codigo,cur_anio,par_nombre,c.cur_codigo from matricula a\n"
                 + "inner join crear_curso b on a.cre_codigo=b.cre_codigo\n"
                 + "INNER JOIN cursos c on b.cur_codigo=c.cur_codigo \n"
                 + "inner join paralelo d on b.par_codigo=d.par_codigo\n"
@@ -57,14 +69,14 @@ public class servicioParcial {
     }
 
     public List getCursosDisciplinaDocente(String per_codigo, String doc_codigo) {
-        return utilitario.getConexion().consultar("SELECT c.cre_codigo,cu.cur_anio,pa.par_nombre FROM crear_curso c\n"
+        return utilitario.getConexion().consultar("SELECT c.cre_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo FROM crear_curso c\n"
                 + "INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo\n"
                 + "inner join paralelo pa on c.par_codigo=pa.par_codigo\n"
                 + "where c.doc_codigo=" + doc_codigo + " and c.per_codigo=" + per_codigo + "");
     }
 
     public List getMateriasCursoDocente(String cre_codigo, String doc_codigo) {
-        return utilitario.getConexion().consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+        return utilitario.getConexion().consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre,d.asi_codigo from distributivomxc d\n"
                 + " INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
                 + " LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo "
                 + "where d.doc_codigo=" + doc_codigo + "\n"
