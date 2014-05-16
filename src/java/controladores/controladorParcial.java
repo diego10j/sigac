@@ -96,6 +96,9 @@ public class controladorParcial {
             //cursos y materias
             lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
+        } else if (utilitario.getURLCompleto().endsWith("Consultar.jsf")) {
+            String alumno = utilitario.getVariable("alu_codigo");
+            lisCursos = servParcial.getMatriculasCursoAlumno(alumno == null ? "-1" : alumno);
         } else {
             lisCursos = servParcial.getCursosDisciplinaDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
         }
@@ -1237,6 +1240,50 @@ public class controladorParcial {
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
         }
+    }
+
+    public void verReporteDestrezas() {
+        
+        
+        
+        
+        if (objCursoSeleccionado == null) {
+            utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
+            return;
+        }
+        if (objAsignaturaSeleccionada == null) {
+            utilitario.agregarMensajeInfo("Debe selecccionar una Asignatura", "");
+            return;
+        }
+         if (strForma == null) {
+            utilitario.agregarMensajeInfo("Debe selecccionar un quimestre", "");
+            return;
+        } if (strParcial == null) {
+            utilitario.agregarMensajeInfo("Debe selecccionar un parcial", "");
+            return;
+        }
+        
+        
+       
+        
+        
+        
+        
+            ///aumenta asignatura, parcial, quimestr
+            generarReporteDestrezas();
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        
+    }
+
+    private void generarReporteDestrezas() {
+        GenerarReporte genera = new GenerarReporte();
+        Map parametros = new HashMap();
+        parametros.put("cur_codigo", ((Object[]) objCursoSeleccionado)[3] + "");
+        parametros.put("per_codigo", perActual.getPerCodigo());
+        parametros.put("asi_codigo", ((Object[]) objAsignaturaSeleccionada)[4] + "");
+        parametros.put("for_codigo", strForma);
+        parametros.put("eva_codigo", strParcial);
+        genera.generar(parametros, "/reportes/rep_parcial/rep_destrezas.jasper");
     }
 
     //Reporte Comportamieto
