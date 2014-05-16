@@ -1255,10 +1255,10 @@ public class controladorParcial {
             utilitario.agregarMensajeInfo("Debe selecccionar una Asignatura", "");
             return;
         }
-         if (strForma == null) {
+         if (strForma == null || strForma.isEmpty()) {
             utilitario.agregarMensajeInfo("Debe selecccionar un quimestre", "");
             return;
-        } if (strParcial == null) {
+        } if (strParcial == null || strParcial.isEmpty()) {
             utilitario.agregarMensajeInfo("Debe selecccionar un parcial", "");
             return;
         }
