@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_abeja" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b6cf571-2418-49aa-ab16-1b85e75c1b4e">
 	<property name="ireport.zoom" value="3.138428376721004"/>
-	<property name="ireport.x" value="846"/>
+	<property name="ireport.x" value="652"/>
 	<property name="ireport.y" value="447"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="for_codigo" class="java.lang.String"/>
