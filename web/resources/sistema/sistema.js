@@ -105,11 +105,34 @@ PrimeFaces.locales['es'] = {
     allDayText: 'Todo el día'
 };
 
-function abrirPopUp(dir) {    
-    var w = window.open(dir, "sistemadj", "width="+screen.availWidth+", height="+screen.availHeight+", screenX=0,screenY=0, top=0, left=0, status=0 , resizable=yes, scrollbars=yes" );
+function abrirPopUp(dir) {
+    var w = window.open(dir, "sistemadj", "width=" + screen.availWidth + ", height=" + screen.availHeight + ", screenX=0,screenY=0, top=0, left=0, status=0 , resizable=yes, scrollbars=yes");
     w.focus();
 }
-function abrirNuevoPopUp(dir) {    
-    var w = window.open(dir, "", "width="+screen.availWidth+", height="+screen.availHeight+", screenX=0,screenY=0, top=0, left=0, status=0 , resizable=yes, scrollbars=yes" );
+function abrirNuevoPopUp(dir) {
+    var w = window.open(dir, "", "width=" + screen.availWidth + ", height=" + screen.availHeight + ", screenX=0,screenY=0, top=0, left=0, status=0 , resizable=yes, scrollbars=yes");
     w.focus();
+}
+
+
+
+function fillthescreen() {
+    winH = windowHeight(); //This returns the screen heigth
+    heightNeeded = winH - 80; //We need to substract the footer height
+    if (typeof(window.innerWidth) != 'number') { //Explorer doesn't recognize minHeight
+        document.getElementById('col1').style.height = heightNeeded + 'px'; //So, we use height (and explroer bug)
+    }
+    document.getElementById('col1').style.minHeight = heightNeeded + 'px'; //For every other browser, we use minHeight
+}
+
+function windowHeight() {
+    var alto = 0;
+    if (typeof(window.innerWidth) == 'number') {
+        alto = window.innerHeight;
+    } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+        alto = document.documentElement.clientHeight;
+    } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
+        alto = document.body.clientHeight;
+    }
+    return alto;
 }
