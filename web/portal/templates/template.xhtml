@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css" media="all"/>
         <h:outputScript library="sistema" name="sistema.js"/>      
     </h:head>
-    <h:body>     
+    <h:body onload="fillthescreen()">     
         <p:growl id="groMensajes" autoUpdate="true" />
 
         <p:idleMonitor timeout="#{session.maxInactiveInterval * 500}" >            
@@ -26,85 +26,98 @@
             </div>
         </p:dialog>
 
-        <p:layout fullPage="true">
-            <p:layoutUnit id="north" position="north" size="80">
-                <div class="cabecera">
-                    <h:panelGrid columns="4" style="width: 99%" >
-                        <h:panelGrid columns="2">
-                            <h:outputLink  hreflang="index.jsf">
-                                <h:graphicImage value="../imagenes/logo.png" height="64"/>
-                            </h:outputLink>  
-                            <p>INSTITUTO “NIÑO JESUS DE PRAGA”</p>
-                        </h:panelGrid>
-
-                        <h:panelGrid columns="2">
-                            <h:graphicImage value="../imagenes/im_usuario.png"/>
-                            <p:outputLabel value="#{controladorLogin.strNick}"/>
-                            <h:graphicImage value="../imagenes/im_calendario.png"/>
-                            <p:outputLabel value="#{controladorLogin.strFecha}"/>
-                        </h:panelGrid>
-                    </h:panelGrid> 
-                </div>
-                <h:form transient="true">
-                    <p:ajaxStatus style="position:fixed;right:5px;top:18px" >  
-                        <f:facet name="start">  
-                            <h:graphicImage value="../imagenes/im_cargar.gif" />  
-                        </f:facet>  
-                        <f:facet name="complete">  
-                            <h:outputText value="" />  
-                        </f:facet>  
-                    </p:ajaxStatus> 
-                    <p:commandLink title="Cerrar Sesión" style="position:fixed;right:2px;top:1px;" action="#{controladorLogin.salir}">
-                        <h:graphicImage value="../imagenes/im_salir_sistema.png" width="32" height="32"/>
-                    </p:commandLink>
-                </h:form>
-            </p:layoutUnit>
-
-            <p:dialog id="diaClave" appendToBody="true" widgetVar="wdiaClave" visible="#{pre_portal.booCambiaClave}" header="Cambiar Clave" modal="true"  width="410" height="230" resizable="false" closable="false">
-                <h:form>                    
-                    <h:panelGrid width="100%" columns="2">                    	
-                        <h:outputText value="Clave Actual :"/>
-                        <p:password value="#{controladorLogin.strClaveActua}"/>
-                        <f:facet name="footer">
-                            <h:outputText style="font-weight: bold;font-style: oblique;" value="La nueva clave debe contener almenos una letra Mayúscula y un dígito numérico"/>
-                            <p:separator/>
-                        </f:facet>                    
-                    </h:panelGrid>
-                    <h:panelGrid width="100%" columns="2">                    	
-                        <h:outputText value="Clave Nueva :"/>
-                        <p:password value="#{controladorLogin.strClaveNueva}" goodLabel="Buena" weakLabel="Débil" strongLabel="Segura" promptLabel="Ingrese una clave" feedback="false" redisplay="true"/>
-                        <h:outputText value="Confirmar Clave Nuevo :"/>
-                        <p:password value="#{controladorLogin.strConfirmaClaveNueva}"/> 
-
-                        <f:facet name="footer">
-                            <p:toolbar>
-                                <p:toolbarGroup align="left">
-                                    <p:commandButton update="@form" style="float: right"  value="Aceptar" action="#{controladorLogin.cambiarClave}"/>    
-                                </p:toolbarGroup>
-                                <p:toolbarGroup align="right">
-                                    <p:commandButton update=":diaClave" style="padding-left: 6px"  value="Cancelar" action="#{controladorLogin.cancelarCambiarClave}" />    
-                                </p:toolbarGroup>                        
-                            </p:toolbar>
-                        </f:facet>
-                    </h:panelGrid>
 
 
-                </h:form>
-            </p:dialog>
+        <div id="header">
+            <h:panelGrid columns="4" style="width: 99%" >
+                <h:panelGrid columns="2">
+                    <h:outputLink  hreflang="index.jsf">
+                        <h:graphicImage value="../imagenes/logo.png" height="64"/>
+                    </h:outputLink>  
+                    <p>INSTITUTO “NIÑO JESUS DE PRAGA”</p>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2" >
+                    <h:graphicImage value="../imagenes/im_usuario.png"/>
+                    <p:outputLabel value="#{controladorLogin.strNick}"/>
+                    <h:graphicImage value="../imagenes/im_calendario.png"/>
+                    <p:outputLabel value="#{controladorLogin.strFecha}"/>
+                </h:panelGrid>
+            </h:panelGrid> 
+        </div>
+        <h:form transient="true">
+            <p:ajaxStatus style="position:fixed;right:5px;top:18px" >  
+                <f:facet name="start">  
+                    <h:graphicImage value="../imagenes/im_cargar.gif" />  
+                </f:facet>  
+                <f:facet name="complete">  
+                    <h:outputText value="" />  
+                </f:facet>  
+            </p:ajaxStatus> 
+            <p:commandLink title="Cerrar Sesión" style="position:fixed;right:2px;top:1px;" action="#{controladorLogin.salir}">
+                <h:graphicImage value="../imagenes/im_salir_sistema.png" width="32" height="32"/>
+            </p:commandLink>
+        </h:form>
 
 
-            <p:layoutUnit id="center" position="center">
-                <h:form>
-                    <p:menubar  binding="#{controladorMenu.menu}" autoDisplay="false" >                       
-                        <p:menuitem value="Cambiar Clave"  icon="ui-clave" onclick="wdiaClave.show();" />
-                    </p:menubar> 
-                </h:form>
+        <p:dialog id="diaClave" appendToBody="true" widgetVar="wdiaClave" visible="#{pre_portal.booCambiaClave}" header="Cambiar Clave" modal="true"  width="410" height="230" resizable="false" closable="false">
+            <h:form>                    
+                <h:panelGrid width="100%" columns="2">                    	
+                    <h:outputText value="Clave Actual :"/>
+                    <p:password value="#{controladorLogin.strClaveActua}"/>
+                    <f:facet name="footer">
+                        <h:outputText style="font-weight: bold;font-style: oblique;" value="La nueva clave debe contener almenos una letra Mayúscula y un dígito numérico"/>
+                        <p:separator/>
+                    </f:facet>                    
+                </h:panelGrid>
+                <h:panelGrid width="100%" columns="2">                    	
+                    <h:outputText value="Clave Nueva :"/>
+                    <p:password value="#{controladorLogin.strClaveNueva}" goodLabel="Buena" weakLabel="Débil" strongLabel="Segura" promptLabel="Ingrese una clave" feedback="false" redisplay="true"/>
+                    <h:outputText value="Confirmar Clave Nuevo :"/>
+                    <p:password value="#{controladorLogin.strConfirmaClaveNueva}"/> 
 
-                <ui:insert name="contenido">
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:commandButton update="@form" style="float: right"  value="Aceptar" action="#{controladorLogin.cambiarClave}"/>    
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton update=":diaClave" style="padding-left: 6px"  value="Cancelar" action="#{controladorLogin.cancelarCambiarClave}" />    
+                            </p:toolbarGroup>                        
+                        </p:toolbar>
+                    </f:facet>
+                </h:panelGrid>
+
+
+            </h:form>
+        </p:dialog>
+
+
+
+        <h:form>
+            <p:menubar  binding="#{controladorMenu.menu}" autoDisplay="false" >                       
+                <p:menuitem value="Cambiar Clave"  icon="ui-clave" onclick="wdiaClave.show();" />
+            </p:menubar> 
+        </h:form>
+
+
+        <div id="container" class="ui-layout-unit-content ui-widget-content">
+            <div id="col1">
+                <ui:insert name="menuIzquierda">
                 </ui:insert>
-            </p:layoutUnit>
-        </p:layout>
-
+            </div>
+            <div id="col2">
+                <h:panelGroup layout="block" style="width: 100%;height: 100%;overflow: auto;">
+                    <ui:insert name="tituloContenido">
+                        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;background: #313b3f;border-color: #b9b7b3">
+                            <h:outputText value="Titulo de prueba" />
+                        </div>
+                    </ui:insert>
+                    <ui:insert name="contenido">
+                    </ui:insert>
+                </h:panelGroup>
+            </div>
+        </div>
     </h:body>
 </html>
 
