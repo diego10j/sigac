@@ -30,7 +30,8 @@ public class servicioParalelo {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarParalelo(Paralelo paralelo) {
+    public String guardarParalelo(Paralelo iparalelo) {
+        Paralelo paralelo = iparalelo;
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -91,8 +92,8 @@ public class servicioParalelo {
         }
         return null;
     }
-    
-       /**
+
+    /**
      * Lista para combos
      *
      * @return

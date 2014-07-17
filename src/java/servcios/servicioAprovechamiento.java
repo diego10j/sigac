@@ -34,7 +34,8 @@ public class servicioAprovechamiento {
     
     private Utilitario utilitario=new Utilitario();
 
-    public String guardarAprovechamiento(EquivalenciaAprovechamiento aprovechamiento) {
+    public String guardarAprovechamiento(EquivalenciaAprovechamiento iaprovechamiento) {
+        EquivalenciaAprovechamiento aprovechamiento=iaprovechamiento;
         try {
             utx.begin();
             manejador.joinTransaction();

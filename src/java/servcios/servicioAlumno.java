@@ -39,7 +39,8 @@ public class servicioAlumno {
     @EJB
     private servicioRoles servRoles;
 
-    public String guardarAlumno(Alumnos alumno) {
+    public String guardarAlumno(Alumnos ialumno) {
+        Alumnos alumno = ialumno;
         try {
             utx.begin();
             if (alumno.getAluCodigo() == null) {

@@ -30,14 +30,14 @@ public class servicioInstitucion {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarInstitucion(Institucion instituto) {
+    public String guardarInstitucion(Institucion iinstituto) {
+        Institucion instituto = iinstituto;
         try {
             utx.begin();
             manejador.joinTransaction();
             if (instituto.getInsCodigo() == null) {
                 //nombre tabla y atributo
                 long lon_codigo = utilitario.getConexion().getMaximo("institucion", "doc_codigo", 1);
-                System.out.println("ide " + lon_codigo);
                 instituto.setInsCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(instituto);
             } else {

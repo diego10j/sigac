@@ -30,7 +30,8 @@ public class servicioTipoAsignaturas {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarTipoAsignaturas(Tipoasignaturas tipoasignaturas) {
+    public String guardarTipoAsignaturas(Tipoasignaturas itipoasignaturas) {
+        Tipoasignaturas tipoasignaturas=itipoasignaturas;
         try {
             utx.begin();
             manejador.joinTransaction();

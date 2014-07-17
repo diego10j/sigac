@@ -30,7 +30,8 @@ public class servicioFormaevaluar {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarFormaevaluar(Formaevaluar formaevaluar) {
+    public String guardarFormaevaluar(Formaevaluar iformaevaluar) {
+        Formaevaluar formaevaluar = iformaevaluar;
         try {
             utx.begin();
             manejador.joinTransaction();
