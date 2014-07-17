@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Equivalencia Aprovechamiento</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoEquivAprovechamiento.jsf"/>
+                    <p:menuitem value="Crear Equivalencia Aprovechamiento"  icon="ui-icon-document" url="CrearEquivAprovechamiento.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Equivalencia Aprovechamiento" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear una Equivalencia de Aprovechamiento, recuerde que los campos con * son obligatorios.</p>
+
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1"                              >
+
+                <p:fieldset legend="DATOS DE EQUIVALENCIA APROVECHAMIENTO">
+
+                    <h:panelGrid columns="2">
+
+                        <h:outputText value="Escala Cualitativa :*"/>
+                        <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacualitativa}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cualitativa"/>
+
+                        <h:outputText value="Escala Cuantitativa:*"/>
+                        <h:panelGroup>
+                            <p:inputText id="txtFormula" value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacuantiva}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cuantitativa"/>
+                            <h:outputText value="(Fórmula para calcular la equivalencia)"/>
+                            <p:watermark for="txtFormula" value="Ejemplo: if(nota==10){'Supera'}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorAprovechamiento.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
+
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

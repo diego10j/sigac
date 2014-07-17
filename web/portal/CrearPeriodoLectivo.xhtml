@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Periodo Lectivo</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoPeriodoLectivo.jsf"/>
+                    <p:menuitem value="Crear Período Lectivo"  icon="ui-icon-document" url="CrearPeriodoLectivo.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Período Lectivo" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Período Lectivo, recuerde que los campos con * son obligatorios.</p>
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+
+                <p:fieldset legend="DATOS DEL PERIODO LECTIVO">
+
+                    <h:panelGrid columns="4">
+
+                        <h:outputText value="Nombre :*"/>
+                        <p:inputText value="#{controladorPeridoLectivo.perPeriodo.perNombre}" maxlength="250" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />                   
+                        <h:outputText value="Fecha de Inicio :*"/>
+                        <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Inicio"/>
+                        <h:outputText value="Fecha Fin :*"/>
+                        <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechafin}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fin"/>
+                        <h:outputText value="Estado :*"/>
+                        <p:selectBooleanCheckbox value="#{controladorPeridoLectivo.perPeriodo.perActivo}" required="true" requiredMessage="Debe ingresar el Estado" />                   
+
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="#{controladorPeridoLectivo.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

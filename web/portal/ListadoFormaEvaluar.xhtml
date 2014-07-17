@@ -10,14 +10,27 @@
     <ui:define name="tituloPagina">Listado Forma de Evaluar</ui:define>
 
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoFormaEvaluar.jsf"/>
+                    <p:menuitem value="Crear Forma de Evaluar"  icon="ui-icon-document" url="CrearFormaEvaluar.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
     <ui:define name="contenido">
 
         <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorFormaevaluar.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
+
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Formas de Evaluar" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->
 
             <h:panelGroup id="pnlTabela"> 
@@ -65,11 +78,11 @@
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Datos Forma de Evaluar" 
+                  header="Modificar Forma de Evaluar" 
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
 
@@ -81,7 +94,7 @@
 
                         </h:panelGrid>
 
-                        
+
                     </p:fieldset>
                     <f:facet name="footer">
                         <p:toolbar>
@@ -92,7 +105,7 @@
                         </p:toolbar>
                     </f:facet>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

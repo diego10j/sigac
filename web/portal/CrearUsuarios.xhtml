@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Usuario</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoUsuarios.jsf"/>
+                    <p:menuitem value="Crear Usuario"  icon="ui-icon-document" url="CrearUsuarios.jsf" />
+                    <p:menuitem value="Importar Usuarios"  icon="ui-icon-person" action="#{controladorUsuarios.importarUsuarios}"  />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Usuario" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Usuario, recuerde que los campos con * son obligatorios.</p>
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+
+                <p:fieldset legend="DATOS DEL USUARIO">
+                    <p>Cuando se crean un usuario nuevo la clave es la misma que el valor del campo <strong>Nick </strong></p>
+                    <h:panelGrid columns="2">
+
+                        <h:outputText value="Rol :"/>
+                        <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.rolCodigo.rolCodigo}" required="true" requiredMessage="Debe seleccionar un rol" >
+                            <f:selectItem itemValue="" itemLabel="Seleccione un Rol ..." />
+                            <f:selectItems value="#{controladorUsuarios.comRoles}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Nombre :*"/>
+                        <p:inputText value="#{controladorUsuarios.usuUsuario.usuNombre}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nombre" />
+
+                        <h:outputText value="Nick :*"/>
+                        <p:inputText   value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />                           
+
+                        <h:outputText value="Fecha de creación :*"/>
+                        <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
+
+                        <h:outputText value="Docente :"/>
+                        <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">
+                            <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
+                            <f:selectItems value="#{controladorUsuarios.comDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="#{controladorUsuarios.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+
+            </h:panelGrid>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

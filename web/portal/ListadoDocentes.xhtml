@@ -9,25 +9,35 @@
 
     <ui:define name="tituloPagina">Listado Docentes</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoDocentes.jsf"/>
+                    <p:menuitem value="Crear Docente"  icon="ui-icon-document" url="CrearDocentes.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Listado de Docentes"  icon="ui-icon-note" url="RepoListaDocente.jsf"/>
+                    <p:menuitem value="Cursos a Cargo"  icon="ui-icon-note" url="RepoCargoDocente.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
     <ui:define name="contenido">
 
         <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorDocente.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                <p:separator/>
-                <p:commandButton value="Ver Listado Docentes" action="#{controladorDocente.verReporteListadoDocentes()}" oncomplete="window.open('#{controladorDocente.str_path_reporte}');" />
-                
-                <p:separator/>
-                <p:commandButton value="Ver Cargo Docentes" action="#{controladorDocente.verReporteListadoCargoDocentes()}" oncomplete="window.open('#{controladorDocente.str_path_reporte}');" />
-                </p:toolbarGroup>
-            </p:toolbar>
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Docentes" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->
 
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorDocente.listaDocentes}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber" filteredValue="#{controladorDocente.filtroDocentes}" >
+                             paginatorPosition="bottom" style="overflow: auto"    rowIndexVar="rowNumber" filteredValue="#{controladorDocente.filtroDocentes}" >
 
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
@@ -50,7 +60,7 @@
                         </p:commandLink>
                     </p:column>
 
-                    
+
                     <p:column headerText="CÉDULA" filterBy="#{tabla.docCedula}" sortBy="#{tabla.docCedula}">
                         <h:outputText value="#{tabla.docCedula}"/>                     
                     </p:column>
@@ -77,6 +87,10 @@
                         <h:outputText value="#{tabla.docEmail}"/>
                     </p:column>
 
+                    <p:column headerText="HOJA DE VIDA">
+                        <h:commandLink target="_blank" value="#{tabla.docHojavida}"/>
+                    </p:column>
+                        
                 </p:dataTable>
             </h:panelGroup>
 
@@ -90,14 +104,14 @@
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Datos del Docentes" 
+                  header="Modificar Docente" 
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
-                             styleClass="panelGridSemBorda">
-                    <p:fieldset legend="DATOS DE LOS DOCENTES">
+                            styleClass="panelGridSemBorda" >
+                    <p:fieldset legend="DATOS DEL DOCENTE">
 
                         <h:panelGrid columns="4">
                             <h:outputText value="Cédula :*"/>
@@ -124,12 +138,12 @@
                         <h:panelGrid columns="4">
 
                             <h:outputText value="Teléfono :"/>
-                            <p:inputMask id="txtTelef" value="#{controladorDocente.docDocente.docTelefono}" size="17" mask="9999999"/>
+                            <p:inputMask id="txtTelef" value="#{controladorDocente.docDocente.docTelefono}" size="21" mask="9999999"/>
 
                             <h:outputText value="Celular :*"/>
-                            <p:inputMask id="txtCelular" mask="9999999999" value="#{controladorDocente.docDocente.docCelular}" size="17" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
-                             <p:watermark for="txtTelef" value="Ejemplo: 2568135"/>
-                                <p:watermark for="txtCelular" value="Ejemplo: 0983113547"/>    
+                            <p:inputMask id="txtCelular" mask="9999999999" value="#{controladorDocente.docDocente.docCelular}" size="21" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+                            <p:watermark for="txtTelef" value="Ejemplo: 2568135"/>
+                            <p:watermark for="txtCelular" value="Ejemplo: 0983113547"/>    
                         </h:panelGrid>
 
                         <h:panelGrid columns="2">
@@ -146,7 +160,7 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

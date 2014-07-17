@@ -7,12 +7,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">Listado Alumnos</ui:define>
+    <ui:define name="tituloPagina">Crear Alumno</ui:define>
 
     <ui:define name="menuIzquierda">
-
         <h:form>
-
             <p:panelMenu >
                 <p:submenu label="Opciones">
                     <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoAlumnos.jsf"/>
@@ -27,103 +25,13 @@
     </ui:define>
 
     <ui:define name="contenido">
-
-        <h:form prependId="false" id="frmPrincipal">
-
-            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
-                <h:outputText value="Administración de Alumnos" />
-            </div>
-
-            <!-- CONFIGURACIÓN TABLA -->
-            <h:panelGroup id="pnlTabela">                
-                <p:dataTable value="#{controladorAlumno.listaAlumnos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber"  filteredValue="#{controladorAlumno.filtroAlumnos}" paginatorPosition="bottom"  style="overflow: auto"  >
-
-                    <p:column width="60">
-                        <p:commandLink     title="Modificar" action="#{controladorAlumno.cargarRepresentante}"
-                                           oncomplete="wdlgDetalle.show()" 
-                                           update=":frmFormulario">
-                            <p:graphicImage url="../imagenes/im_modificar.png" 
-                                            style="vertical-align: middle; border: none"/>
-                            <f:setPropertyActionListener
-                                target="#{controladorAlumno.aluAlumno}" value="#{tabla}" />
-
-                        </p:commandLink>
-                        <p:spacer width="10"/>
-                        <p:commandLink action="#{controladorAlumno.eliminar}" 
-                                       title="Eliminar"
-                                       update=":frmPrincipal:pnlTabela">
-                            <p:graphicImage url="../imagenes/im_eliminar.png" 
-                                            style="vertical-align: middle; border: none"/>
-                            <f:setPropertyActionListener
-                                target="#{controladorAlumno.aluAlumno}" value="#{tabla}" />
-                        </p:commandLink>
-                    </p:column>
-
-
-
-                    <p:column headerText="CEDULA" filterBy="#{tabla.aluCedula}">
-                        <h:outputText value="#{tabla.aluCedula}"/>                     
-                    </p:column>
-                    <p:column headerText="APELLIDOS" filterBy="#{tabla.aluApellidos}" sortBy="#{tabla.aluApellidos}" >
-                        <h:outputText value="#{tabla.aluApellidos}"/>
-                    </p:column>
-                    <p:column headerText="NOMBRES" filterBy="#{tabla.aluNombres}" sortBy="#{tabla.aluNombres}" >
-                        <h:outputText value="#{tabla.aluNombres}"/>
-                    </p:column>
-
-                    <p:column headerText="DIRECCIÓN">
-                        <h:outputText value="#{tabla.aluDireccion}"/>
-                    </p:column>
-                    <p:column headerText="SEXO" sortBy="#{tabla.aluSexo}" >
-                        <h:outputText value="#{tabla.aluSexo}"/>
-                    </p:column>
-                    <p:column headerText="FECHA DE NACIMIENTO" sortBy="#{tabla.aluFechanacimiento}" >
-                        <h:outputText value="#{tabla.aluFechanacimiento}">
-                            <f:convertDateTime type="date" dateStyle="short"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="LUGAR NACIMIENTO" sortBy="#{tabla.aluLugarnacimiento}" >
-                        <h:outputText value="#{tabla.aluLugarnacimiento}"/>
-                    </p:column>
-                    <p:column headerText="NOMBRE PADRE" sortBy="#{tabla.aluPadre}">
-                        <h:outputText value="#{tabla.aluPadre}"/>
-                    </p:column>
-                    <p:column headerText="PROFESIÓN PADRE">
-                        <h:outputText value="#{tabla.aluPrfpadre}"/>
-                    </p:column>
-                    <p:column headerText="NOMBRE MADRE" sortBy="#{tabla.aluMadre}" >
-                        <h:outputText value="#{tabla.aluMadre}"/>
-                    </p:column>
-                    <p:column headerText="PROFESIÓN MADRE">
-                        <h:outputText value="#{tabla.aluPrfmadre}"/>
-                    </p:column>
-
-                </p:dataTable>
-            </h:panelGroup>
-
-        </h:form>
-
-
-
-
-
-
-
-        <!-- CONFIGURACIÓN FORMULARIO -->
-        <p:dialog id="dlgDetalhe" 
-                  widgetVar="wdlgDetalle" 
-                  modal="true" 
-                  resizable="false"
-                  appendToBody="true"
-                  closable="true" 
-                  header="Datos del Alumno" 
-                  styleClass="dialogoSemScroll" >
-
-            <h:form id="frmFormulario">
-                <h:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             >
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Alumno" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Alumno, recuerde que los campos con * son obligatorios.</p>
+        <div style="overflow: auto;">
+            <h:form id="frmFormulario" >
+                <h:panelGrid id="pnlDetalhe"  columns="1" >
                     <p:fieldset legend="DATOS DEL ALUMNO">
                         <h:panelGrid columns="8">
                             <h:outputText value="Cédula :*"/>
@@ -150,8 +58,6 @@
                             <p:inputText  value="#{controladorAlumno.aluAlumno.aluLugarnacimiento}"/>
 
                         </h:panelGrid>
-
-
 
                         <p:fieldset legend="DATOS DE LOS PADRES">
                             <h:panelGrid columns="4">
@@ -187,15 +93,14 @@
                         <p:toolbar>
                             <p:toolbarGroup>
                                 <p:commandButton action="#{controladorAlumno.guardar}" 
-                                                 value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
+                                                 value="Guardar" icon="ui-guardar" update="@form" />
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>   
                 </h:panelGrid>
             </h:form>
 
-
-        </p:dialog>
+        </div>
 
     </ui:define>
 </ui:composition>

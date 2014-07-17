@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Curso</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoCursos.jsf"/>
+                    <p:menuitem value="Crear Curso"  icon="ui-icon-document" url="CrearCursos.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Curso" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Curso, recuerde que los campos con * son obligatorios.</p>
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1">
+
+                <p:fieldset legend="DATOS DEL CURSO">
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Nombre :*"/>
+                        <p:inputText value="#{controladorCursos.curCursos.curAnio}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Año" />                   
+                        <h:outputText value="Observaciones :"/>
+                        <p:inputTextarea style="width: 95%" value="#{controladorCursos.curCursos.curObservaciones}" maxlength="250" />  
+
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorCursos.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
+
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

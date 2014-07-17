@@ -9,23 +9,34 @@
 
     <ui:define name="tituloPagina">Listado de Equivalencia de Conducta</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoEquivConducta.jsf"/>
+                    <p:menuitem value="Crear Equivalencia Conducta"  icon="ui-icon-document" url="CrearEquivConducta.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>    
 
     <ui:define name="contenido">
-     <h:form prependId="false" id="frmPrincipal">
-         
-         <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorConducta.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
+        <h:form prependId="false" id="frmPrincipal">
+
+          <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Equivalencias de Conducta" />
+            </div>
+
             <!-- CONFIGURACIÓN TABLA -->
-             <h:panelGroup id="pnlTabela"> 
-                 
-            <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                         rowIndexVar="rowNumber"  >
-                
-            
-                  <p:column width="60">
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorConducta.listaEquivalenciaConducta}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" style="overflow: auto" >
+
+
+                    <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
                                            update=":frmFormulario">
@@ -45,25 +56,25 @@
                                 target="#{controladorConducta.eqvConducta}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                  
-                <p:column headerText="ALTERNO" sortBy="#{tabla.eqcAlterno}">
-                    <h:outputText value="#{tabla.eqcAlterno}"/>                     
-                </p:column>
-                <p:column headerText="ESCALA" sortBy="#{tabla.eqcEscala}">
-                    <h:outputText value="#{tabla.eqcEscala}"/>
-               </p:column>
-                <p:column headerText="DESCRIPCIÓN" sortBy="#{tabla.eqcDescripcion}" >
-                    <h:outputText value="#{tabla.eqcDescripcion}"/>
-                    
-                </p:column>   
+
+                    <p:column headerText="ALTERNO" sortBy="#{tabla.eqcAlterno}">
+                        <h:outputText value="#{tabla.eqcAlterno}"/>                     
+                    </p:column>
+                    <p:column headerText="ESCALA" sortBy="#{tabla.eqcEscala}">
+                        <h:outputText value="#{tabla.eqcEscala}"/>
+                    </p:column>
+                    <p:column headerText="DESCRIPCIÓN" sortBy="#{tabla.eqcDescripcion}" >
+                        <h:outputText value="#{tabla.eqcDescripcion}"/>
+
+                    </p:column>   
                 </p:dataTable>
             </h:panelGroup>
 
         </h:form>
-        
-      
-             <!-- CONFIGURACIÓN FORMULARIO -->
-             <p:dialog id="dlgDetalhe" 
+
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
+        <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
                   modal="true" 
                   resizable="false"
@@ -73,24 +84,23 @@
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
+                <h:panelGrid id="pnlDetalhe" 
+                             columns="1" >
                     <p:fieldset legend="DATOS DE EQUIVALENCIA CONDUCTA">
 
-                <h:panelGrid columns="2">
+                        <h:panelGrid columns="2">
 
-                    <h:outputText value="Alterno :*"/>
-                    <p:inputText value="#{controladorConducta.eqvConducta.eqcAlterno}" size="5" required="true" requiredMessage="Debe ingresar el Alterno"/>
-                    
-                     <h:outputText value="Escala :*"/>
-                     <p:inputText value="#{controladorConducta.eqvConducta.eqcEscala}" size="35" required="true" requiredMessage="Debe ingresar la Escala"/>
-                    
-                     <h:outputText value="Descripción :*"/>
-                     <p:inputTextarea style="width: 98%" value="#{controladorConducta.eqvConducta.eqcDescripcion}" required="true" requiredMessage="Debe ingresar la Descripción"/>
-                </h:panelGrid>
+                            <h:outputText value="Alterno :*"/>
+                            <p:inputText value="#{controladorConducta.eqvConducta.eqcAlterno}" size="5" required="true" requiredMessage="Debe ingresar el Alterno"/>
 
-            </p:fieldset>
+                            <h:outputText value="Escala :*"/>
+                            <p:inputText value="#{controladorConducta.eqvConducta.eqcEscala}" size="35" required="true" requiredMessage="Debe ingresar la Escala"/>
+
+                            <h:outputText value="Descripción :*"/>
+                            <p:inputTextarea style="width: 98%" value="#{controladorConducta.eqvConducta.eqcDescripcion}" required="true" requiredMessage="Debe ingresar la Descripción"/>
+                        </h:panelGrid>
+
+                    </p:fieldset>
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
@@ -100,7 +110,7 @@
                         </p:toolbar>
                     </f:facet>
 
-            </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

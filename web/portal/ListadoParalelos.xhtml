@@ -9,23 +9,35 @@
 
     <ui:define name="tituloPagina">Listado Paralelos</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoParalelos.jsf"/>
+                    <p:menuitem value="Crear Paralelo"  icon="ui-icon-document" url="CrearParalelos.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
     <ui:define name="contenido">
-        
+
         <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorParalelo.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
-              <!-- CONFIGURACIÓN TABLA -->
-              
-              
-              <h:panelGroup id="pnlTabela">       
-                   <p:dataTable value="#{controladorParalelo.listaParalelo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false" 
-                                rowIndexVar="rowNumber" filteredValue="#{controladorParalelo.filtroParalelo}">
-                        
-                       
-                     <p:column width="60">
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Paralelos" />
+            </div>
+            <!-- CONFIGURACIÓN TABLA -->
+
+
+            <h:panelGroup id="pnlTabela">       
+                <p:dataTable value="#{controladorParalelo.listaParalelo}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false" 
+                             rowIndexVar="rowNumber" filteredValue="#{controladorParalelo.filtroParalelo}">
+
+
+                    <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
                                            update=":frmFormulario">
@@ -45,12 +57,12 @@
                                 target="#{controladorParalelo.parParalelo}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                 
-                <p:column headerText="NOMBRE"  sortBy="#{tabla.parNombre}">
-                    <h:outputText value="#{tabla.parNombre}"/>                     
-                </p:column>
-                   
-             </p:dataTable>
+
+                    <p:column headerText="NOMBRE"  sortBy="#{tabla.parNombre}">
+                        <h:outputText value="#{tabla.parNombre}"/>                     
+                    </p:column>
+
+                </p:dataTable>
             </h:panelGroup>
 
         </h:form>
@@ -64,35 +76,34 @@
                   closable="true" 
                   header="Datos del Paralelo" 
                   styleClass="dialogoSemScroll" >
-            
+
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
-                    
+                <h:panelGrid id="pnlDetalhe" 
+                             columns="1" >
+
                     <p:fieldset legend="DATOS DEL PARALELO">
 
-                <h:panelGrid columns="4">
-                    <h:outputText value="Nombre :"/>
-                    <p:inputText value="#{controladorParalelo.parParalelo.parNombre}" maxlength="150" size="10"/>  
-                    
-                </h:panelGrid>
-            </p:fieldset>
-                    
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Nombre :"/>
+                            <p:inputText value="#{controladorParalelo.parParalelo.parNombre}" maxlength="150" size="10"/>  
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
-                                
+
                                 <p:commandButton action="#{controladorParalelo.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal" />
-                            
+
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>  
-                    </p:panelGrid>
+                </h:panelGrid>
             </h:form>
 
 
         </p:dialog>
-                    
+
     </ui:define>
 </ui:composition>

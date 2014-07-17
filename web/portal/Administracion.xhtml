@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="templates/template.xhtml"
+<ui:composition template="templates/template2.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"                
@@ -12,11 +12,11 @@
     <ui:define name="contenido">
 
 
-        <p:tabView id="tabulador" style="height: 100%;display: block">
+        <p:tabView id="tabulador" style="width:99%;height:96%;overflow: auto;display: block;">
 
             <p:tab id="tba1" title="Pantallas">                    
                 <h:form prependId="false" id="frmPrincipal">     
-                    <p:layout style="height: 100%;width: 100%;display: block;">
+                    <p:layout style="height: 700px;width: 100%;display: block;">
                         <p:layoutUnit position="west" size="26%" header="Estructura de las Pantallas" resizable="true">
 
                             <p:tree id="arbPantalla" value="#{controladorAdministracion.raiz}" var="node"  
@@ -141,7 +141,7 @@
             <p:tab id="tba3" title="Permisos">
 
 
-                <p:layout style="height: 100%;width: 100%;display: block;">
+                <p:layout style="height: 700px;width: 100%;display: block;">
                     <p:layoutUnit position="west" size="40%" header="Seleccione un Rol/Perfil" resizable="true">
                         <h:form id="frmRolPermi">
                             <p:dataTable value="#{controladorPermisos.lisRoles}" var="tabla" selectionMode="single"
