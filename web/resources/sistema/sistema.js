@@ -118,7 +118,7 @@ function abrirNuevoPopUp(dir) {
 
 function fillthescreen() {
     winH = windowHeight(); //This returns the screen heigth
-    heightNeeded = winH - 80; //We need to substract the footer height
+    heightNeeded = winH - 90; //We need to substract the footer height
     if (typeof(window.innerWidth) != 'number') { //Explorer doesn't recognize minHeight
         document.getElementById('col1').style.height = heightNeeded + 'px'; //So, we use height (and explroer bug)
     }
