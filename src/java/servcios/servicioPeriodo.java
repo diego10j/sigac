@@ -33,7 +33,8 @@ public class servicioPeriodo {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarPeriodoLectivo(PeriodoLectivo periodoLectivo) {
+    public String guardarPeriodoLectivo(PeriodoLectivo iperiodoLectivo) {
+        PeriodoLectivo periodoLectivo = iperiodoLectivo;
         try {
             utx.begin();
             manejador.joinTransaction();

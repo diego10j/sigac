@@ -38,7 +38,8 @@ public class servicioDocente {
     @EJB
     private servicioRoles servRoles;
 
-    public String guardarDocente(Docentes docente) {
+    public String guardarDocente(Docentes idocente) {
+        Docentes docente=idocente;
         try {
             utx.begin();
             manejador.joinTransaction();

@@ -33,7 +33,8 @@ public class servicioUsuarios {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarUsuarios(Usuario usuario) {
+    public String guardarUsuarios(Usuario iusuario) {
+        Usuario usuario = iusuario;
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -169,9 +170,9 @@ public class servicioUsuarios {
 
         return str_msj;
     }
-    
+
     public void resetearClave(Usuario usuario) {
-        Encriptar encriptar= new Encriptar();
+        Encriptar encriptar = new Encriptar();
         usuario.setUsuClave(encriptar.getEncriptar(usuario.getUsuNick()));
         guardarUsuarios(usuario);
     }

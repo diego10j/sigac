@@ -31,7 +31,8 @@ public class servicioCursos {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarCursos(Cursos cursos) {
+    public String guardarCursos(Cursos icursos) {
+        Cursos cursos = icursos;
         try {
             utx.begin();
             manejador.joinTransaction();

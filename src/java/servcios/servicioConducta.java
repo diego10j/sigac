@@ -33,7 +33,8 @@ public class servicioConducta {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarConducta(EquivalenciaConducta conducta) {
+    public String guardarConducta(EquivalenciaConducta iconducta) {
+        EquivalenciaConducta conducta = iconducta;
         try {
             utx.begin();
             manejador.joinTransaction();

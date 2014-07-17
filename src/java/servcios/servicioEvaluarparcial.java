@@ -30,7 +30,8 @@ public class servicioEvaluarparcial {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarEvaluarparcial(Evaluarparcial evaluarparcial) {
+    public String guardarEvaluarparcial(Evaluarparcial ievaluarparcial) {
+        Evaluarparcial evaluarparcial = ievaluarparcial;
         try {
             utx.begin();
             manejador.joinTransaction();
