@@ -9,23 +9,36 @@
 
     <ui:define name="tituloPagina">Listado Usuarios</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoUsuarios.jsf"/>
+                    <p:menuitem value="Crear Usuario"  icon="ui-icon-document" url="CrearUsuarios.jsf" />
+                    <p:menuitem value="Importar Usuarios"  icon="ui-icon-person" action="#{controladorUsuarios.importarUsuarios}"  />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
     <ui:define name="contenido">
 
         <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorUsuarios.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-
-                    <p:separator/>
-                    <p:commandButton value="Importar Uusarios"  action="#{controladorUsuarios.importarUsuarios}"  update=":frmPrincipal:pnlTabela" />
-                </p:toolbarGroup>
-            </p:toolbar>
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Usuarios" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->
+
+            <p style="font-size: 12px;vertical-align: middle"> <p:graphicImage url="../imagenes/im_actualiza.png" style="vertical-align: middle; border: none;padding-left: 10px"/>Con esta opción se puede activar e inactivar a un usuario.</p>
+
+            <p style="font-size: 12px;vertical-align: middle"> <p:graphicImage url="../imagenes/im_clave.png" style="vertical-align: middle; border: none;padding-left: 10px"/>Con esta opción se puede resetear la clave a un usuario.</p>
 
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorUsuarios.listaUsuario}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber" filteredValue="#{controladorUsuarios.filtroUsuarios}">
+                             rowIndexVar="rowNumber" filteredValue="#{controladorUsuarios.filtroUsuarios}" paginatorPosition="bottom" style="overflow: auto">
 
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
@@ -102,15 +115,15 @@
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Datos del Usuario" 
+                  header="Modificar Usuario" 
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
 
-                    <p:fieldset legend="DATOS DE LOS USUARIOS">
+                    <p:fieldset legend="DATOS DEL USUARIO">
                         <p>Cuando se crean un usuario nuevo la clave es la misma que el valor del campo <strong>Nick </strong></p>
                         <h:panelGrid columns="2">
 
@@ -150,7 +163,7 @@
                         </p:toolbar>
                     </f:facet>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

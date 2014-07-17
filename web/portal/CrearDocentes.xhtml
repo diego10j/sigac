@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Listado Docentes</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoDocentes.jsf"/>
+                    <p:menuitem value="Crear Docente"  icon="ui-icon-document" url="CrearDocentes.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Listado de Docentes"  icon="ui-icon-note" url="RepoListaDocente.jsf"/>
+                    <p:menuitem value="Cursos a Cargo"  icon="ui-icon-note" url="RepoCargoDocente.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Docente" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Docente, recuerde que los campos con * son obligatorios.</p>
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+                <p:fieldset legend="DATOS DEL DOCENTE">
+
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Cédula :*"/>
+                        <p:inputMask mask="9999999999" value="#{controladorDocente.docDocente.docCedula}" maxlength="10" size="10" required="true" requiredMessage="Debe ingresar la Cédula del Docente" />                   
+
+                        <h:outputText value="Fecha de Nacimiento :*"/>
+                        <p:calendar value="#{controladorDocente.docDocente.docFechanacimiento}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Nacimiento del Docente"/>
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2">
+
+                        <h:outputText value="Nombres :*"/>
+                        <p:inputText value="#{controladorDocente.docDocente.docNombres}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar los Nombres del Docente"/>
+
+                        <h:outputText value="Dirección :*"/>
+                        <p:inputText value="#{controladorDocente.docDocente.docDireccion}" maxlength="250" size="60" required="true" requiredMessage="Debe ingresar la Dirección del Docente"/>
+
+                        <h:outputText value="Email :*"/>
+                        <p:inputText value="#{controladorDocente.docDocente.docEmail}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar el Email del Docente"/>
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4">
+
+                        <h:outputText value="Teléfono :"/>
+                        <p:inputMask id="txtTelef" value="#{controladorDocente.docDocente.docTelefono}" size="21" mask="9999999"/>
+
+                        <h:outputText value="Celular :*"/>
+                        <p:inputMask id="txtCelular" mask="9999999999" value="#{controladorDocente.docDocente.docCelular}" size="21" required="true" requiredMessage="Debe ingresar el Celular del Docente"/>
+                        <p:watermark for="txtTelef" value="Ejemplo: 2568135"/>
+                        <p:watermark for="txtCelular" value="Ejemplo: 0983113547"/>    
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Hoja de Vida :*"/>
+                        <p:fileUpload label="Adjuntar Hoja de Vida" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                    </h:panelGrid>
+
+                </p:fieldset>
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorDocente.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

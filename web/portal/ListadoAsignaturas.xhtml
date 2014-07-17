@@ -8,22 +8,34 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="tituloPagina">Listado Asignaturas</ui:define>
-  
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoAsignaturas.jsf"/>
+                    <p:menuitem value="Crear Asignatura"  icon="ui-icon-document" url="CrearAsignatura.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
     <ui:define name="contenido">
-       
-         <h:form prependId="false" id="frmPrincipal">
-             
-             <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorAsignaturas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
+
+        <h:form prependId="false" id="frmPrincipal">
+
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Asignaturas" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->            
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorAsignaturas.listaAsignaturas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber" filteredValue="#{controladorAsignaturas.filtroAsignaturas}" >
-                    
+                             rowIndexVar="rowNumber" filteredValue="#{controladorAsignaturas.filtroAsignaturas}"   paginatorPosition="bottom"  >
+
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
@@ -44,20 +56,20 @@
                                 target="#{controladorAsignaturas.asiAsignaturas}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                    
-                <p:column headerText="NOMBRE" filterBy="#{tabla.asiNombre}" sortBy="#{tabla.asiNombre}">
-                    <h:outputText value="#{tabla.asiNombre}"/>                     
-                </p:column>
-                <p:column headerText="OBSERVACIONES" filterBy="#{tabla.asiObservaciones}" sortBy="#{tabla.asiObservaciones}">
-                    <h:outputText value="#{tabla.asiObservaciones}"/>
-               </p:column>
-                    
-                    
-                    </p:dataTable>
+
+                    <p:column headerText="NOMBRE" filterBy="#{tabla.asiNombre}" sortBy="#{tabla.asiNombre}">
+                        <h:outputText value="#{tabla.asiNombre}"/>                     
+                    </p:column>
+                    <p:column headerText="OBSERVACIONES" filterBy="#{tabla.asiObservaciones}" sortBy="#{tabla.asiObservaciones}">
+                        <h:outputText value="#{tabla.asiObservaciones}"/>
+                    </p:column>
+
+
+                </p:dataTable>
             </h:panelGroup>
 
         </h:form>
-        
+
         <!-- CONFIGURACIÓN FORMULARIO -->
         <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
@@ -65,28 +77,26 @@
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Datos de las Asignaturas" 
+                  header="Modificar Asignatura" 
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
-                    
-                    <p:fieldset legend="DATOS DE LAS ASIGNATURAS">
+                <h:panelGrid id="pnlDetalhe" 
+                             columns="1" >
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Nombre :*"/>
-                    <p:inputText value="#{controladorAsignaturas.asiAsignaturas.asiNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
-                    
-                    <h:outputText value="Observaciones :*"/>
-                    <p:inputTextarea style="width: 98%" value="#{controladorAsignaturas.asiAsignaturas.asiObservaciones}" maxlength="250"  required="true" requiredMessage="Debe ingresar la Observacion" />
 
-                   
-                </h:panelGrid>
+                    <p:fieldset legend="DATOS DEL CURSO">
 
-            </p:fieldset>
-                    
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorAsignaturas.asiAsignaturas.asiNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre de la Asignatura" />
+
+                            <h:outputText value="Observaciones :*"/>
+                            <p:inputTextarea style="width: 98%" value="#{controladorAsignaturas.asiAsignaturas.asiObservaciones}" maxlength="250"  required="true" requiredMessage="Debe ingresar la Observacion" />
+                        </h:panelGrid>
+
+                    </p:fieldset>
+
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
@@ -95,10 +105,10 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                    
-                    </p:panelGrid>
+
+                </h:panelGrid>
             </h:form>
         </p:dialog>
-             
+
     </ui:define>
 </ui:composition>

@@ -9,13 +9,26 @@
 
     <ui:define name="tituloPagina">Listado Tipo de Asignaturas</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoTipoAsignaturas.jsf"/>
+                    <p:menuitem value="Crear Tipo Asignatura"  icon="ui-icon-document" url="CrearTipoAsignaturas.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
     <ui:define name="contenido">
         <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorTipoAsignaturas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración Tipo de Asignaturas" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->
 
             <h:panelGroup id="pnlTabela"> 
@@ -64,16 +77,13 @@
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
+                <h:panelGrid id="pnlDetalhe" 
+                             columns="1" >
 
-
-                    <p:fieldset legend="DATOS DEL TIPO DE ASIGNATURA">
+                    <p:fieldset legend="DATOS TIPO DE ASIGNATURA">
 
                         <h:panelGrid columns="2">
-                            
-                            
+
                             <h:outputText value="Nombre :*"/>
                             <p:inputText value="#{controladorTipoAsignaturas.tipoasignaturas.tipNombre}" maxlength="200" size="45" required="true" requiredMessage="Debe ingresar el Nombre" />
 
@@ -90,7 +100,7 @@
                         </p:toolbar>
                     </f:facet>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

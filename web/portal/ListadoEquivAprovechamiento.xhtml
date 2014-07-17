@@ -9,16 +9,29 @@
 
     <ui:define name="tituloPagina">Listado Equivalencia Aprovechamiento</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoEquivAprovechamiento.jsf"/>
+                    <p:menuitem value="Crear Equivalencia Aprovechamiento"  icon="ui-icon-document" url="CrearEquivAprovechamiento.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
     <ui:define name="contenido">
 
         <h:form prependId="false" id="frmPrincipal">
-            
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorAprovechamiento.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
-            <!-- CONFIGURACIÓN TABLA -->
+
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Equivalencias de Aprovechamiento" />
+            </div>
+
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorAprovechamiento.listaEquivalenciaAprovechamiento}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
@@ -69,14 +82,13 @@
 
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
-                             columns="1" 
-                             styleClass="panelGridSemBorda">
+                <h:panelGrid id="pnlDetalhe" 
+                             columns="1"                              >
 
                     <p:fieldset legend="DATOS DE EQUIVALENCIA APROVECHAMIENTO">
 
                         <h:panelGrid columns="2">
-                           
+
                             <h:outputText value="Escala Cualitativa :*"/>
                             <p:inputText value="#{controladorAprovechamiento.eqvAprovechamiento.eqaEscalacualitativa}" size="45" required="true" requiredMessage="Debe ingresar la Escala Cualitativa"/>
 
@@ -96,7 +108,7 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

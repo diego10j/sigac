@@ -9,23 +9,33 @@
 
     <ui:define name="tituloPagina">Listado Institución</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoInstitucion.jsf"/>
+                    <p:menuitem value="Crear Institución"  icon="ui-icon-document" url="CrearInstitucion.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
 
     <ui:define name="contenido">
-    
-        <h:form prependId="false" id="frmPrincipal">
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorInstitucion.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                </p:toolbarGroup>
-            </p:toolbar>
-           <!-- CONFIGURACIÓN TABLA -->
-            
-             <h:panelGroup id="pnlTabela"> 
 
-                 <p:dataTable value="#{controladorInstitucion.listaInstitucion}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                              rowIndexVar="rowNumber" filteredValue="#{controladorInstitucion.filtroInstitucion}">
-                
-            
+        <h:form prependId="false" id="frmPrincipal">
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Instituciones" />
+            </div>
+            <!-- CONFIGURACIÓN TABLA -->
+
+            <h:panelGroup id="pnlTabela"> 
+
+                <p:dataTable value="#{controladorInstitucion.listaInstitucion}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
+                             rowIndexVar="rowNumber" filteredValue="#{controladorInstitucion.filtroInstitucion}" style="overflow: auto">
+
+
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
                                            oncomplete="wdlgDetalle.show()" 
@@ -46,81 +56,84 @@
                                 target="#{controladorInstitucion.insInstitucion}" value="#{tabla}" />
                         </p:commandLink>
                     </p:column>
-                     
-                
-                <p:column headerText="NOMBRE" >
-                    <h:outputText value="#{tabla.insNombre}"/>                     
-                </p:column>
-                <p:column headerText="DIRECCIÓN" >
-                    <h:outputText value="#{tabla.insDireccion}"/>
-               </p:column> 
-                
-                <p:column headerText="TELÉFONO" >
-                    <h:outputText value="#{tabla.insTelefono}"/>
-               </p:column>
-                
-                <p:column headerText="CORREO" >
-                    <h:outputText value="#{tabla.insCorreo}"/>
-               </p:column>
-                <p:column headerText="TIPO DE ESCUELA"  >
-                    <h:outputText value="#{tabla.insTipoescuela}"/>
-               </p:column>
-                <p:column headerText="RECTOR"  >
-                    <h:outputText value="#{tabla.insRector}"/>
-               </p:column>
-                     
-                      </p:dataTable>
+
+
+                    <p:column headerText="NOMBRE" >
+                        <h:outputText value="#{tabla.insNombre}"/>                     
+                    </p:column>
+                    <p:column headerText="DIRECCIÓN" >
+                        <h:outputText value="#{tabla.insDireccion}"/>
+                    </p:column> 
+
+                    <p:column headerText="TELÉFONO" >
+                        <h:outputText value="#{tabla.insTelefono}"/>
+                    </p:column>
+
+                    <p:column headerText="CORREO" >
+                        <h:outputText value="#{tabla.insCorreo}"/>
+                    </p:column>
+                    <p:column headerText="TIPO DE ESCUELA"  >
+                        <h:outputText value="#{tabla.insTipoescuela}"/>
+                    </p:column>
+                    <p:column headerText="RECTOR"  >
+                        <h:outputText value="#{tabla.insRector}"/>
+                    </p:column>
+                     <p:column headerText="LOGO"  >
+                         <h:graphicImage value="#{tabla.insLogo}"/>
+                    </p:column>
+
+                </p:dataTable>
             </h:panelGroup>
 
         </h:form>
-               
-         <!-- CONFIGURACIÓN FORMULARIO -->
+
+        <!-- CONFIGURACIÓN FORMULARIO -->
         <p:dialog id="dlgDetalhe" 
                   widgetVar="wdlgDetalle" 
                   modal="true" 
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Datos de la Institución" 
+                  header="Modificar la Institución" 
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
-                    
+
                     <p:fieldset legend="DATOS DE LA INSTITUCIÓN">
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Nombre :*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insNombre}" maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Nombre de la Institución" />                   
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nombre :*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insNombre}" maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Nombre de la Institución" />                   
 
-                    <h:outputText value="Dirección :*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insDireccion}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar la Dirección de la Institución" />
+                            <h:outputText value="Dirección :*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insDireccion}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar la Dirección de la Institución" />
 
-                    <h:outputText value="Tipo de Escuela :*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insTipoescuela}" maxlength="150" size="14" required="true" requiredMessage="Debe ingresar el Tipo de Escuela" />
+                            <h:outputText value="Tipo de Escuela :*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insTipoescuela}" maxlength="150" size="14" required="true" requiredMessage="Debe ingresar el Tipo de Escuela" />
 
-                </h:panelGrid>
+                        </h:panelGrid>
 
-                <h:panelGrid columns="4">
-                    <h:outputText value="Teléfono :*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insTelefono}" maxlength="30" size="25" required="true" requiredMessage="Debe ingresar el Teléfono de la Institución" />
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Teléfono :*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insTelefono}" maxlength="30" size="25" required="true" requiredMessage="Debe ingresar el Teléfono de la Institución" />
 
-                    <h:outputText value="E-mail :*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insCorreo}" maxlength="250" size="25" required="true" requiredMessage="Debe ingresar el Email de la Institución" />
+                            <h:outputText value="E-mail :*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insCorreo}" maxlength="250" size="25" required="true" requiredMessage="Debe ingresar el Email de la Institución" />
 
-                </h:panelGrid>
+                        </h:panelGrid>
 
 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Rector:*"/>
-                    <p:inputText value="#{controladorInstitucion.insInstitucion.insRector}" maxlength="200" size="70" required="true" requiredMessage="Debe ingresar el Nombre de Rector" />
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rector:*"/>
+                            <p:inputText value="#{controladorInstitucion.insInstitucion.insRector}" maxlength="200" size="70" required="true" requiredMessage="Debe ingresar el Nombre de Rector" />
 
-                    <h:outputText value="Logo:*"/>
-                    <p:fileUpload value="#{controladorInstitucion.insInstitucion.insLogo}" label="Adjuntar Logo" uploadLabel="Subir" cancelLabel="Cancelar"/>
-                </h:panelGrid>
-            </p:fieldset>
+                            <h:outputText value="Logo:"/>
+                            <p:fileUpload value="#{controladorInstitucion.insInstitucion.insLogo}" label="Adjuntar Logo" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                        </h:panelGrid>
+                    </p:fieldset>
                     <f:facet name="footer">
                         <p:toolbar>
                             <p:toolbarGroup>
@@ -129,8 +142,8 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                    
-        </p:panelGrid>
+
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

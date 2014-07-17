@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Institución</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoInstitucion.jsf"/>
+                    <p:menuitem value="Crear Institución"  icon="ui-icon-document" url="CrearInstitucion.jsf" />
+                </p:submenu>
+                <p:separator />
+
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Institución" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear una Institución, recuerde que los campos con * son obligatorios.</p>
+
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+
+                <p:fieldset legend="DATOS DE LA INSTITUCIÓN">
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Nombre :*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insNombre}" maxlength="150" size="60" required="true" requiredMessage="Debe ingresar el Nombre de la Institución" />                   
+
+                        <h:outputText value="Dirección :*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insDireccion}" maxlength="200" size="60" required="true" requiredMessage="Debe ingresar la Dirección de la Institución" />
+
+                        <h:outputText value="Tipo de Escuela :*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insTipoescuela}" maxlength="150" size="14" required="true" requiredMessage="Debe ingresar el Tipo de Escuela" />
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Teléfono :*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insTelefono}" maxlength="30" size="25" required="true" requiredMessage="Debe ingresar el Teléfono de la Institución" />
+
+                        <h:outputText value="E-mail :*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insCorreo}" maxlength="250" size="25" required="true" requiredMessage="Debe ingresar el Email de la Institución" />
+
+                    </h:panelGrid>
+
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Rector:*"/>
+                        <p:inputText value="#{controladorInstitucion.insInstitucion.insRector}" maxlength="200" size="70" required="true" requiredMessage="Debe ingresar el Nombre de Rector" />
+
+                        <h:outputText value="Logo:"/>
+                        <p:fileUpload value="#{controladorInstitucion.insInstitucion.insLogo}" label="Adjuntar Logo" uploadLabel="Subir" cancelLabel="Cancelar"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorInstitucion.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
