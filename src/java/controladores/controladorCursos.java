@@ -16,7 +16,6 @@ import javax.faces.bean.ViewScoped;
 import servcios.servicioCursos;
 import servcios.servicioInstitucion;
 
-
 /**
  *
  * @author Diego
@@ -28,52 +27,57 @@ public class controladorCursos {
     @EJB
     private servicioCursos servCursos;
     private Cursos curCursos = new Cursos();
-   
     private Utilitario utilitario = new Utilitario();
     private List<Cursos> listaCursos;
     private List<Cursos> filtroCursos;
-     @EJB
+    @EJB
     private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
         listaCursos = servCursos.getCursos();
-        filtroCursos=null;
+        filtroCursos = null;
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         curCursos = new Cursos();
     }
-  
 
-   public void eliminar() {
+    public void eliminar() {
         if (curCursos.getCurCodigo() != null) {
             String str_mensaje = servCursos.elimnarCursos(curCursos.getCurCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
-                
-                } else {
+
+            } else {
                 utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
             }
         }
     }
-    
+
     public void guardar() {
         //ins_codigo
         curCursos.setInsCodigo(servInstitucion.getIntitucion());
-           String str_mensaje = servCursos.guardarCursos(curCursos);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                curCursos = new Cursos();
+        boolean nuevo = true;
+        if (curCursos.getCurCodigo() != null) {
+            nuevo = false;
+        }
+        String str_mensaje = servCursos.guardarCursos(curCursos);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            curCursos = new Cursos();
+            if (!nuevo) {
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        
+
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
     }
-   
+
     public Cursos getCurCursos() {
         return curCursos;
     }
@@ -97,5 +101,4 @@ public class controladorCursos {
     public void setFiltroCursos(List<Cursos> filtroCursos) {
         this.filtroCursos = filtroCursos;
     }
-   
 }

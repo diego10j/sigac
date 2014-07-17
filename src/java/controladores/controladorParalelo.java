@@ -24,24 +24,23 @@ import servcios.servicioParalelo;
 @ViewScoped
 public class controladorParalelo {
 
-    
-     @EJB
+    @EJB
     private servicioParalelo servParalelo;
     private Paralelo parParalelo = new Paralelo();
     private Utilitario utilitario = new Utilitario();
-     private List<Paralelo> listaParalelo;
-     private List<Paralelo> filtroParalelo;
+    private List<Paralelo> listaParalelo;
+    private List<Paralelo> filtroParalelo;
 
     @PostConstruct
     public void cargarDatos() {
         listaParalelo = servParalelo.getParalelo();
     }
 
-    public void insertar(){
+    public void insertar() {
         parParalelo = new Paralelo();
     }
-    
-   public void eliminar() {
+
+    public void eliminar() {
         if (parParalelo.getParCodigo() != null) {
             String str_mensaje = servParalelo.elimnarParalelo(parParalelo.getParCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -52,23 +51,26 @@ public class controladorParalelo {
             }
         }
     }
-    
+
     public void guardar() {
-        
-            String str_mensaje = servParalelo.guardarParalelo(parParalelo);
-            
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                parParalelo = new Paralelo();
+        boolean nuevo = true;
+        if (parParalelo.getParCodigo() != null) {
+            nuevo = false;
+        }
+        String str_mensaje = servParalelo.guardarParalelo(parParalelo);
+
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            parParalelo = new Paralelo();
+            if (!nuevo) {
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-               } 
-             
-            else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-       }
-  
+
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+    }
 
     public Paralelo getParParalelo() {
         return parParalelo;
@@ -93,5 +95,4 @@ public class controladorParalelo {
     public void setFiltroParalelo(List<Paralelo> filtroParalelo) {
         this.filtroParalelo = filtroParalelo;
     }
-   
 }

@@ -60,12 +60,19 @@ public class controladorDocente {
     public void guardar() {
         docDocente.setInsCodigo(servInstitucion.getIntitucion());
         if (utilitario.validarCedula(docDocente.getDocCedula())) {
+            boolean nuevo = true;
+            if (docDocente.getDocCodigo() != null) {
+                nuevo = false;
+            }
             String str_mensaje = servDocente.guardarDocente(docDocente);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 docDocente = new Docentes();
-                cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                if (!nuevo) {
+                    cargarDatos();
+                    utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                }
+
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }

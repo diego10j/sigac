@@ -39,9 +39,6 @@ public class controladorAlumno {
     @EJB
     private servicioInstitucion servInstitucion;
     private String str_path_reporte;
-    
-    
-     
 
     @PostConstruct
     public void cargarDatos() {
@@ -49,7 +46,7 @@ public class controladorAlumno {
         aluAlumno = new Alumnos();
         repRepresentante = new Representante();
         str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
-        
+
     }
 
     public void insertar() {
@@ -87,6 +84,11 @@ public class controladorAlumno {
             utilitario.agregarMensajeInfo("La cédula ingresada no es válida", "");
             return;
         }
+        boolean nuevo = true;
+        if (aluAlumno.getAluCodigo() != null) {
+            nuevo = false;
+        }
+
         String str_mensaje = servAlumno.guardarAlumno(aluAlumno);
         if (str_mensaje.isEmpty()) {
             repRepresentante.setAluCodigo(aluAlumno);
@@ -96,7 +98,9 @@ public class controladorAlumno {
                 repRepresentante = new Representante();
                 aluAlumno = new Alumnos();
                 cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                if (!nuevo) {
+                    utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                }
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
@@ -104,14 +108,21 @@ public class controladorAlumno {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
     }
-    
-    public void verReporteListadoAlumnos(){
-        Map p=new HashMap();
+
+    public void verReporteListadoAlumnos() {
+        Map p = new HashMap();
         p.put("", null);
-        GenerarReporte generar=new GenerarReporte();
+        GenerarReporte generar = new GenerarReporte();
         generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
     }
-    
+
+    public void verReporteXLSListadoAlumnos() {
+        Map p = new HashMap();
+        p.put("", null);
+        GenerarReporte generar = new GenerarReporte();
+        generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
+    }
+
     public Alumnos getAluAlumno() {
         return aluAlumno;
     }
