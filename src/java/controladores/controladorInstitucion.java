@@ -32,12 +32,12 @@ public class controladorInstitucion {
     public void cargarDatos() {
         listaInstitucion = servInstitucion.getInstitucion();
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         insInstitucion = new Institucion();
     }
-    
-     public void eliminar() {
+
+    public void eliminar() {
         if (insInstitucion.getInsCodigo() != null) {
             String str_mensaje = servInstitucion.elimnarIntitucion(insInstitucion.getInsCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -50,17 +50,22 @@ public class controladorInstitucion {
     }
 
     public void guardar() {
-        
-            String str_mensaje = servInstitucion.guardarInstitucion(insInstitucion);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                insInstitucion = new Institucion();
+        boolean nuevo = true;
+        if (insInstitucion.getInsCodigo() != null) {
+            nuevo = false;
+        }
+        String str_mensaje = servInstitucion.guardarInstitucion(insInstitucion);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            insInstitucion = new Institucion();
+            if (!nuevo) {
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-       
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
     }
 
     public Institucion getInsInstitucion() {
@@ -86,7 +91,4 @@ public class controladorInstitucion {
     public void setFiltroInstitucion(List<Institucion> filtroInstitucion) {
         this.filtroInstitucion = filtroInstitucion;
     }
-    
-    
-    
 }
