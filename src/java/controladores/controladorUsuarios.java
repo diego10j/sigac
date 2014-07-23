@@ -8,6 +8,7 @@ import aplicacion.Utilitario;
 import entidades.Docentes;
 import entidades.Roles;
 import entidades.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -53,6 +54,7 @@ public class controladorUsuarios {
 
     public void insertar() {
         usuUsuario = new Usuario();
+        usuUsuario.setUsuFechacreacion(new Date());
         usuUsuario.setDocCodigo(new Docentes());
         usuUsuario.setRolCodigo(new Roles());
     }
@@ -113,8 +115,8 @@ public class controladorUsuarios {
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             usuUsuario = new Usuario();
+            cargarDatos();
             if (!nuevo) {
-                cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
             }
         } else {
@@ -130,7 +132,7 @@ public class controladorUsuarios {
             utilitario.agregarMensaje("Se importaron " + int_num + " usuarios al sistema", "");
 
             if (utilitario.getURLCompleto().endsWith("ListadoUsuarios.jsf")) {
-                RequestContext.getCurrentInstance().update(":frmPrincipal:pnlTabela");
+                RequestContext.getCurrentInstance().update(":frmPrincipal");
             }
 
         } else {
