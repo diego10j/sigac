@@ -18,7 +18,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -87,10 +89,7 @@ public class controladorParcial {
         }
 
         comFormas = servFormaEvaluar.getListaFormasEvaluar();
-
         comParciales = servEvaluarParcial.getListaEvaluarParcial();
-
-
 
         if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf")) {
             //cursos y materias
@@ -103,12 +102,6 @@ public class controladorParcial {
             lisCursos = servParcial.getCursosDisciplinaDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
         }
 
-        if (lisCursos != null) {
-            if (!lisCursos.isEmpty()) {
-                objCursoSeleccionado = lisCursos.get(0);
-            }
-        }
-
         if (objCursoSeleccionado != null) {
             lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
         } else {
@@ -116,16 +109,17 @@ public class controladorParcial {
         }
         str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
 
-        if (objCursoSeleccionado != null) {
+        if (utilitario.getURLCompleto().endsWith("Consultar.jsf")) {
             String alumno = utilitario.getVariable("alu_codigo");
-            if (alumno != null) {
-                lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
+            if (alumno == null) {
+                alumno = "-1";
+            }
+            if (objCursoSeleccionado != null) {
                 lisCursos = servParcial.getCursosAlumno(alumno);
+                lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
             } else {
                 lisConsulta = consultarNotas("-1", "-1");
             }
-        } else {
-            lisConsulta = consultarNotas("-1", "-1");
         }
     }
 
@@ -143,6 +137,53 @@ public class controladorParcial {
             cargarAlumnos();
         } else {
             cargarInforme();
+        }
+
+        if (utilitario.getURLCompleto().endsWith("Consultar.jsf")) {
+            String alumno = utilitario.getVariable("alu_codigo");
+            if (alumno == null) {
+                alumno = "-1";
+            }
+            System.out.println(objCursoSeleccionado + " *** " + alumno);
+            if (objCursoSeleccionado != null) {
+                lisCursos = servParcial.getCursosAlumno(alumno);
+                lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
+            } else {
+                lisConsulta = consultarNotas("-1", "-1");
+            }
+        }
+
+
+
+
+    }
+
+    public void seleccionarCursos(AjaxBehaviorEvent evt) {
+        if (objCursoSeleccionado != null) {
+            if (utilitario.getURLCompleto().endsWith("Consultar.jsf")) {
+                lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
+            } else {
+                lisAsignaturas = servParcial.getMateriasCursoDocente(objCursoSeleccionado + "", docDocente.getDocCodigo().toString());
+            }
+        }
+        objAsignaturaSeleccionada = null;
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf")) {
+            cargarAlumnos();
+        } else {
+            cargarInforme();
+        }
+        if (utilitario.getURLCompleto().endsWith("Consultar.jsf")) {
+            String alumno = utilitario.getVariable("alu_codigo");
+            if (alumno == null) {
+                alumno = "-1";
+            }
+
+            if (objCursoSeleccionado != null) {
+                lisCursos = servParcial.getCursosAlumno(alumno);
+                lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
+            } else {
+                lisConsulta = consultarNotas("-1", "-1");
+            }
         }
 
     }
@@ -206,7 +247,13 @@ public class controladorParcial {
     private void cargarAlumnos() {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
-                lisNotasParcial = servParcial.getNotasParcialDistributivo(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+                if (objCursoSeleccionado != null) {
+                    lisNotasParcial = servParcial.getNotasParcialDistributivo(objCursoSeleccionado + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+                } else {
+                    lisNotasParcial = servParcial.getNotasParcialDistributivo("-1", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+
+                }
+
             } else {
                 lisNotasParcial = null;
             }
@@ -263,11 +310,11 @@ public class controladorParcial {
     public void actualizarNotasParcial() {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null && strParcial != null) {
-                int num_matriculados = servParcial.inscribirParcialDistributivo(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+                int num_matriculados = servParcial.inscribirParcialDistributivo(objCursoSeleccionado + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
                 if (num_matriculados > 0) {
                     utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
                 }
-                lisNotasParcial = servParcial.getNotasParcialDistributivo(((Object[]) objCursoSeleccionado)[0] + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+                lisNotasParcial = servParcial.getNotasParcialDistributivo(objCursoSeleccionado + "", strForma, strParcial, ((Object[]) objAsignaturaSeleccionada)[0] + "");
             } else {
                 utilitario.agregarMensajeInfo("Seleccione un Quimestre y un Parcial", "");
             }
@@ -855,14 +902,20 @@ public class controladorParcial {
         String str_nom_dis = "";
 
         //Consulto todas las asignaturas del curso seleccionado
-        List listaAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "");;
+        List listaAsignaturas = new ArrayList();
+        if (objCursoSeleccionado != null) {
+            listaAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "");;
+
+        } else {
+            listaAsignaturas = servParcial.getMateriasCursoDocente("-1");;
+        }
 
         TablaGenerica tab_reporte = utilitario.consultar("select '' as CUENTA,'' as NOMINA, '' as Q1P1,'' as Q1P2,'' as Q1P3,'' as Q1SUMATORIA,'' as Q1EQV80,'' as Q1EXAMEN,'' as Q1EQV20,'' as Q1NOTA,\n"
                 + "'' as Q2P1,'' as Q2P2,'' as Q2P3,'' as Q2SUMATORIA,'' as Q2EQV80,'' as Q2EXAMEN,'' as Q2EQV20,'' as Q2NOTA,'' as PROMEDIOFINAL");
 
         TablaGenerica tab_alumnos = getAlumnoCurso(curso, alumno);
 
-        for (int m = 0; m < listaAsignaturas.size(); m++) {
+        for (int m = (listaAsignaturas.size() - 1); m >= 0; m--) {
             Object[] fila = (Object[]) listaAsignaturas.get(m);
             str_ide_dis = fila[0] + "";
             str_nom_dis = fila[1] + "";
@@ -1243,10 +1296,10 @@ public class controladorParcial {
     }
 
     public void verReporteDestrezas() {
-        
-        
-        
-        
+
+
+
+
         if (objCursoSeleccionado == null) {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
             return;
@@ -1255,24 +1308,25 @@ public class controladorParcial {
             utilitario.agregarMensajeInfo("Debe selecccionar una Asignatura", "");
             return;
         }
-         if (strForma == null || strForma.isEmpty()) {
+        if (strForma == null || strForma.isEmpty()) {
             utilitario.agregarMensajeInfo("Debe selecccionar un quimestre", "");
             return;
-        } if (strParcial == null || strParcial.isEmpty()) {
+        }
+        if (strParcial == null || strParcial.isEmpty()) {
             utilitario.agregarMensajeInfo("Debe selecccionar un parcial", "");
             return;
         }
-        
-        
-       
-        
-        
-        
-        
-            ///aumenta asignatura, parcial, quimestr
-            generarReporteDestrezas();
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
-        
+
+
+
+
+
+
+
+        ///aumenta asignatura, parcial, quimestr
+        generarReporteDestrezas();
+        utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+
     }
 
     private void generarReporteDestrezas() {
