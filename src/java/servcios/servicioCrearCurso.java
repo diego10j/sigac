@@ -39,7 +39,8 @@ public class servicioCrearCurso {
      * @param per_codigo
      * @return
      */
-    public String guardarCrearCurso(CrearCurso crearcurso) {
+    public String guardarCrearCurso(CrearCurso icrearcurso) {
+        CrearCurso crearcurso = icrearcurso;
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -106,7 +107,7 @@ public class servicioCrearCurso {
             try {
                 Query q = manejador.createQuery("SELECT d FROM Distributivomxc d WHERE d.creCodigo.creCodigo =" + cre_codigo + "  order by d.asiCodigo.asiNombre");
                 return q.getResultList();
-            } catch (Exception e) {             
+            } catch (Exception e) {
             }
         }
         return null;
@@ -136,7 +137,7 @@ public class servicioCrearCurso {
         return "";
     }
 
-     public String elimnarDistributivo(String disCodigo) {
+    public String elimnarDistributivo(String disCodigo) {
         try {
             utx.begin();
             Distributivomxc borra = manejador.find(Distributivomxc.class, new Integer(disCodigo));
@@ -151,5 +152,4 @@ public class servicioCrearCurso {
         }
         return "";
     }
-
 }

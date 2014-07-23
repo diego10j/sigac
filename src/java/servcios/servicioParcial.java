@@ -87,7 +87,7 @@ public class servicioParcial {
         return utilitario.getConexion().consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
                 + " INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
                 + " LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo "
-                + "where d.cre_codigo=" + cre_codigo + " order by c.asi_nombre,a.asi_nombre");
+                + "where d.cre_codigo=" + cre_codigo + " order by a.asi_nombre,c.asi_nombre");
     }
 
     public List<NotaDestrezaparcial> getNotasDestreza() {
@@ -252,9 +252,10 @@ public class servicioParcial {
      * @return
      */
     public List getNotasParcialDisciplina(String cre_codigo, String for_codigo, String eva_codigo) {
+
         return utilitario.getConexion().consultar("SELECT a.com_codigo,alu_apellidos,alu_nombres,com_semana1,com_semana2,\n"
                 + "com_semana3,com_semana4,com_semana5,com_sumatoria,com_equivalencia,com_equi,a.for_codigo,a.mat_codigo,a.eva_codigo from comportamientoparcial a\n"
-                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n  and b.cre_codigo="+cre_codigo+" "
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
     }

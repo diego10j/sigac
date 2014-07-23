@@ -30,13 +30,14 @@ public class servicioMatriculas {
     private UserTransaction utx;
     private Utilitario utilitario = new Utilitario();
 
-    public String guardarMatriculas(Matricula matricula) {
+    public String guardarMatriculas(Matricula imatricula) {
+        Matricula matricula = imatricula;
         try {
             utx.begin();
             manejador.joinTransaction();
             if (matricula.getMatCodigo() == null || matricula.getMatCodigo().toString().isEmpty()) {
                 //nombre tabla y atributo
-                long lon_codigo = utilitario.getConexion().getMaximo("matricula", "mat_codigo", 1);                
+                long lon_codigo = utilitario.getConexion().getMaximo("matricula", "mat_codigo", 1);
                 matricula.setMatCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(matricula);
             } else {
@@ -85,10 +86,21 @@ public class servicioMatriculas {
 
     public List<Matricula> getMatriculas(String creCodigo) {
         try {
-            Query q = manejador.createQuery("SELECT m FROM Matricula m WHERE m.creCodigo.creCodigo=" + creCodigo + " order by m.aluCodigo.aluNombres");
+            Query q = manejador.createQuery("SELECT m FROM Matricula m WHERE m.creCodigo.creCodigo=" + creCodigo + " order by m.aluCodigo.aluApellidos");
             return q.getResultList();
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public List getMatriculadosxCurso(String perCodigo) {
+        return utilitario.getConexion().consultar("SELECT matricula.cre_codigo,cur_anio,par_nombre,Count(matricula.cre_codigo)\n"
+                + "FROM matricula\n"
+                + "INNER JOIN crear_curso ON matricula.cre_codigo = crear_curso.cre_codigo\n"
+                + "INNER JOIN cursos ON crear_curso.cur_codigo = cursos.cur_codigo\n"
+                + "INNER JOIN paralelo ON crear_curso.par_codigo = paralelo.par_codigo\n"
+                + "WHERE per_codigo=" + perCodigo + "\n"
+                + "GROUP BY matricula.cre_codigo,cur_anio,par_nombre,cursos.cur_codigo\n"
+                + "ORDER BY cursos.cur_codigo,par_nombre");
     }
 }
