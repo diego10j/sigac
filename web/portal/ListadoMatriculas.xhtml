@@ -7,86 +7,93 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">Listado Matriculas</ui:define>
+    <ui:define name="tituloPagina">Matrículas</ui:define>
 
-
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoMatriculas.jsf"/>
+                    <p:menuitem value="Matricular Alumno"  icon="ui-icon-document" url="CrearMatriculas.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Lista Alumnos Matriculados"  icon="ui-icon-note" url="RepoListaAlumnosMatri.jsf"/>
+                    <p:menuitem value="Alumnos Matriculados por Curso"  icon="ui-icon-bookmark" url="RepoAlumnosCurso.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
     <ui:define name="contenido">
 
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Administración Matrículas #{controladorMatriculas.perActivo.perNombre}" />
+        </div>
+        <h:form>
+            <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
+                         selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}" scrollable="true" scrollWidth="100%" scrollHeight="100">
 
-
+                <p:ajax event="rowSelect" listener="#{controladorMatriculas.seleccionarCurso}" update=":frmPrincipal"/>
+                <p:column headerText="CURSO" >
+                    <h:outputText value="#{tabla.curCodigo.curAnio}"/>
+                </p:column>
+                <p:column headerText="PARALELO" >
+                    <h:outputText value="#{tabla.parCodigo.parNombre}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:separator/>
         <!-- CONFIGURACIÓN TABLA -->
-        <h:panelGroup>
-            <p:layout style="height: 100%;width: 100%;display: block;">
-                <p:layoutUnit position="west" size="40%" header="Seleccione un Curso" resizable="true">
-                    <h:form>
-                        <div align="center">
-                            <h:outputText style="font-size: 22px;" value="#{controladorMatriculas.perActivo.perNombre}"/>
-                        </div>
-                        <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
-                                     selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}">
-                            <f:facet name="header">
-                                <h:outputText  value="#{controladorMatriculas.perActivo.perNombre}"/>
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{controladorMatriculas.seleccionarCurso}" update=":frmPrincipal"/>
-                            <p:column headerText="CURSO" >
-                                <h:outputText value="#{tabla.curCodigo.curAnio}"/>
-                            </p:column>
-                            <p:column headerText="PARALELO" >
-                                <h:outputText value="#{tabla.parCodigo.parNombre}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
-                </p:layoutUnit>
+        <h:panelGroup >
 
-                <p:layoutUnit position="center">
-                    <h:form prependId="false" id="frmPrincipal">
-                        <p:toolbar >
-                            <p:toolbarGroup>
-                                <p:commandButton value="Insertar" icon="ui-agregar" action="#{controladorMatriculas.insertar}" oncomplete="wdlgDetalle.show()" update=":frmFormulario" />
-                            </p:toolbarGroup>
-                        </p:toolbar>
-                        <h:panelGroup id="pnlTabela"> 
+            <h:form prependId="false" id="frmPrincipal" style="overflow: auto">
 
-                            <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                                         rowIndexVar="rowNumber" filteredValue="#{controladorMatriculas.filtroMatriculas}">
+                <h:panelGroup id="pnlTabela"> 
+
+                    <p:dataTable value="#{controladorMatriculas.listaMatriculas}" var="tabla"    
+                                 rowIndexVar="rowNumber" filteredValue="#{controladorMatriculas.filtroMatriculas}" scrollable="true"  scrollHeight="200" >
 
 
-                                <p:column width="60">
-                                    <p:commandLink     title="Modificar"
-                                                       oncomplete="wdlgDetalle.show()" 
-                                                       update=":frmFormulario"
-                                                       action="#{controladorMatriculas.modificar}">
-                                        <p:graphicImage url="../imagenes/im_modificar.png" 
-                                                        style="vertical-align: middle; border: none"/>
-                                        <f:setPropertyActionListener
-                                            target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
+                        <f:facet name="header">
+                            <h:outputText  value="ALUMNOS MATRICULADOS EN #{controladorMatriculas.creCursoSeleccionado.curCodigo.curAnio} #{controladorMatriculas.creCursoSeleccionado.parCodigo.parNombre}"/>
+                        </f:facet>
 
-                                    </p:commandLink>
-                                    <p:spacer width="10"/>
-                                    <p:commandLink action="#{controladorMatriculas.eliminar}" 
-                                                   title="Eliminar"
-                                                   update=":frmPrincipal:pnlTabela">
-                                        <p:graphicImage url="../imagenes/im_eliminar.png" 
-                                                        style="vertical-align: middle; border: none"/>
-                                        <f:setPropertyActionListener
-                                            target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
-                                    </p:commandLink>
-                                </p:column>
+                        <p:column width="60">
+                            <p:commandLink     title="Modificar"
+                                               oncomplete="wdlgDetalle.show()" 
+                                               update=":frmFormulario"
+                                               action="#{controladorMatriculas.modificar}">
+                                <p:graphicImage url="../imagenes/im_modificar.png" 
+                                                style="vertical-align: middle; border: none"/>
+                                <f:setPropertyActionListener
+                                    target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
 
+                            </p:commandLink>
+                            <p:spacer width="10"/>
+                            <p:commandLink action="#{controladorMatriculas.eliminar}" 
+                                           title="Eliminar"
+                                           update=":frmPrincipal:pnlTabela">
+                                <p:graphicImage url="../imagenes/im_eliminar.png" 
+                                                style="vertical-align: middle; border: none"/>
+                                <f:setPropertyActionListener
+                                    target="#{controladorMatriculas.matMatricula}" value="#{tabla}" />
+                            </p:commandLink>
+                        </p:column>
 
+                        <p:column headerText="N." width="5">
+                            #{rowNumber+1}
+                        </p:column>
 
-                                <p:column headerText="ALUMNO" filterBy="#{tabla.aluCodigo.aluApellidos}" >
-                                    <h:outputText value="#{tabla.aluCodigo.aluApellidos}"/>                     
-                                    <h:outputText value="#{tabla.aluCodigo.aluNombres}"/>                     
-                                </p:column>                               
+                        <p:column headerText="ALUMNO"  >
+                            <h:outputText value="#{tabla.aluCodigo.aluApellidos}"/>                     
+                            <h:outputText value="#{tabla.aluCodigo.aluNombres}"/>                     
+                        </p:column>                               
 
-                            </p:dataTable>
-                        </h:panelGroup>
+                    </p:dataTable>
+                </h:panelGroup>
 
-                    </h:form>
-                </p:layoutUnit>
+            </h:form>
 
-            </p:layout>
 
         </h:panelGroup>
 
@@ -101,7 +108,7 @@
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
 
@@ -141,7 +148,7 @@
                         </p:toolbar>
                     </f:facet>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 

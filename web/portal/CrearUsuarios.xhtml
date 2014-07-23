@@ -52,7 +52,7 @@
                         <p:inputText   value="#{controladorUsuarios.usuUsuario.usuNick}" maxlength="150" size="30" required="true" requiredMessage="Debe ingresar el Nick" />                           
 
                         <h:outputText value="Fecha de creación :*"/>
-                        <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
+                        <p:calendar disabled="true" value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
 
                         <h:outputText value="Docente :"/>
                         <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">

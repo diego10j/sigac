@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Crear Cursos</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="CrearCurso.jsf"/>
+                    <p:menuitem value="Crear Distributivo Curso"  icon="ui-icon-document" url="CrearCursoD.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Distributivo de Cursos"  icon="ui-icon-note" url="RepoDistributivo.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Crear Distributivo Curso" />
+        </div>
+        <p style="font-size: 12px;">Formulario para crear un Curso en un Período Lectivo, recuerde que los campos con * son obligatorios.</p>
+
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+
+                <p:fieldset legend="DATOS CREAR CURSO">
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Periódo Lectivo :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}" rendered="true" requiredMessage="Debe seleccionar un Período Lectivo">
+                            <f:selectItems value="#{controladorCrearCurso.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>                           
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Curso :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.curCodigo.curCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Curso">
+                            <f:selectItem itemValue="" itemLabel="Seleccione un Curso ..." />
+                            <f:selectItems value="#{controladorCrearCurso.listaCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"  />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Paralelo :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.parCodigo.parCodigo}" required="true" requiredMessage="Debe ingresar el Paralelo">
+                            <f:selectItem itemValue="" itemLabel="Seleccione un Paralelo ..." />
+                            <f:selectItems value="#{controladorCrearCurso.listaParalelos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Docente :*"/>
+                        <p:selectOneMenu value="#{controladorCrearCurso.creCrearc.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith" required="true" requiredMessage="Debe ingresar el Docente">
+                            <f:selectItem itemValue="" itemLabel="Seleccione un Docente ..." />
+                            <f:selectItems value="#{controladorCrearCurso.listaDocentes}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Observaciones :"/>
+                        <p:inputTextarea style="width: 98%" value="#{controladorCrearCurso.creCrearc.creObservacion}"  />
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="#{controladorCrearCurso.guardar()}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+
+                    </p:toolbar>
+                </f:facet>
+
+            </h:panelGrid>
+        </h:form>
+
+
+
+    </ui:define>
+</ui:composition>
+
+

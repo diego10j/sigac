@@ -54,7 +54,7 @@
                         <p:spacer width="10"/>
                         <p:commandLink action="#{controladorUsuarios.eliminar}" 
                                        title="Eliminar"
-                                       update=":frmPrincipal:pnlTabela">
+                                       update="@form">
                             <p:graphicImage url="../imagenes/im_eliminar.png" 
                                             style="vertical-align: middle; border: none"/>
                             <f:setPropertyActionListener
@@ -142,7 +142,7 @@
 
 
                             <h:outputText value="Fecha de creación :*"/>
-                            <p:calendar value="#{controladorUsuarios.usuUsuario.usuFechacreacion}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
+                            <p:calendar disabled="true" value="#{controladorUsuarios.usuUsuario.usuFechacreacion}"  size="10" required="true" requiredMessage="Debe ingresar la Fecha de creación"/>
 
                             <h:outputText value="Docente :"/>
                             <p:selectOneMenu value="#{controladorUsuarios.usuUsuario.docCodigo.docCodigo}" filter="true"  filterMatchMode="startsWith">

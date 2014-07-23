@@ -9,123 +9,122 @@
 
     <ui:define name="tituloPagina">Asistencia Parcial</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Registrar Asistencia"   icon="ui-icon-pencil"  url="PasarAsistenciaParcial.jsf"/>
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Reporte Asistencia"  icon="ui-icon-note" url="ReporteAsistenciaParcial.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
     <ui:define name="contenido">
 
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Registrar Asistencia" />
+        </div>
         <h:form prependId="false" id="frmPrincipal">
+            <h:panelGrid columns="4">
+                <h:outputText value="Docente:"/>
+                <h:outputText style="font-size: 18px;" value="#{controladorParcial.docDocente.docNombres}"/>
+
+                <h:outputText value="Periódo Lectivo:"/>
+                <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
+                <h:outputText value="Quimestre:"/>
+                <p:selectOneMenu value="#{controladorParcial.strForma}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                    <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
+                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
+                    <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>
+                <h:outputText value="Parcial:"/>
+                <p:selectOneMenu value="#{controladorParcial.strParcial}" required="true" requiredMessage="Debe seleccionar un Parcial">
+                    <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
+                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Parcial ..." />
+                    <f:selectItems value="#{controladorParcial.comParciales}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
+                         selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="100" >
+                `
+                <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursosAsistencia}" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
+                <p:column headerText="CURSO" width="75%">
+                    #{tabla[1]}
+                </p:column>
+                <p:column headerText="PARALELO" width="25%">
+                    #{tabla[2]}
+                </p:column>
+
+            </p:dataTable>
+            <p:separator/>
+
             <p:toolbar >
                 <p:toolbarGroup>
 
-                    <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
+                    <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
                     <p:separator/>
-                    <h:outputText style="font-size: 18px;" value="#{controladorParcial.docDocente.docNombres}"/>
+                    <p:commandButton value="Actualizar Matriculados" icon="ui-icon-refresh"  action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
                     <p:separator/>
-
-                    <p:selectOneMenu value="#{controladorParcial.strForma}" required="true" requiredMessage="Debe seleccionar un Quimestre">
-                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
-                        <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
-                        <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                    </p:selectOneMenu>
+                    <h:outputText value="Número de días del Parcial:"/>
+                    <p:inputText id="txtDias" value="#{controladorParcial.numDias}" size="3">
+                        <f:validateLongRange minimum="0"/>
+                    </p:inputText>
                     <p:separator/>
-                    <p:selectOneMenu value="#{controladorParcial.strParcial}" required="true" requiredMessage="Debe seleccionar un Parcial">
-                        <p:ajax event="change" listener="#{controladorParcial.seleccionoComboAsistencia}" process="@this" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
-                        <f:selectItem itemValue="-1" itemLabel="Seleccione un Parcial ..." />
-                        <f:selectItems value="#{controladorParcial.comParciales}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                    </p:selectOneMenu>
-
+                    <p:commandButton value="REPORTE ASISTENCIA" action="#{controladorParcial.verReporteasitencia}" />
                 </p:toolbarGroup>
             </p:toolbar>
 
+            <p:dataTable  id="tabNotas" var="tabla" value="#{controladorParcial.lisAsistenciaParcial}" editable="true" editMode="cell" scrollable="true" scrollHeight="150">
 
-            <p:layout style="height: 100%;width: 100%;display: block;">
+                <p:ajax event="cellEdit" listener="#{controladorParcial.cabioAsistencia}" /> 
 
-                <p:layoutUnit position="west" size="30%" header="Listado de Cursos Asignados" resizable="true">
+                <p:column headerText="Alumno" style="width:25%" >
+                    #{tabla[1]} #{tabla[2]}
+                </p:column>
+                <p:column headerText="Atrasos" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cAtra">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
+                        <f:facet name="input">
+                            <p:inputText  value="#{tabla[3]}" style="width:96%"  >
 
-                    <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
-                                 selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="250" >
-                        `
-                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursosAsistencia}" update=":frmPrincipal:tabNotas,:frmPrincipal:txtDias"/>
-                        <p:column headerText="CURSO" width="75%">
-                            #{tabla[1]}
-                        </p:column>
-                        <p:column headerText="PARALELO" width="25%">
-                            #{tabla[2]}
-                        </p:column>
-
-                    </p:dataTable>
-
-
-
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center">
-
-                    <p:toolbar >
-                        <p:toolbarGroup>
-
-                            <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
-                            <p:separator/>
-                            <p:commandButton value="Actualizar Matriculados" action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
-                            <p:separator/>
-                            <h:outputText value="Número de días del Parcial:"/>
-                            <p:inputText id="txtDias" value="#{controladorParcial.numDias}" size="3">
-                                <f:validateLongRange minimum="0"/>
                             </p:inputText>
-                            <p:separator/>
-                            <p:commandButton value="REPORTE ASISTENCIA" action="#{controladorParcial.verReporteasitencia}" />
-                        </p:toolbarGroup>
-                    </p:toolbar>
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>
+                <p:column headerText="Faltas Justificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFJusti">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
+                        <f:facet name="input">
+                            <p:inputText  value="#{tabla[4]}" style="width:96%"  >
 
-                    <p:dataTable  id="tabNotas" var="tabla" value="#{controladorParcial.lisAsistenciaParcial}" editable="true" editMode="cell">
+                            </p:inputText>
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>
+                <p:column headerText="Faltas Injustificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFInjus">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
+                        <f:facet name="input">
+                            <p:inputText  value="#{tabla[5]}" style="width:96%"  >
 
-                        <p:ajax event="cellEdit" listener="#{controladorParcial.cabioAsistencia}" /> 
+                            </p:inputText>
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>
+                <p:column headerText="Total Faltas" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
+                    <h:outputText id="total" value="#{tabla[6]}" />                                
+                </p:column>
+                <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
+                    <h:outputText id="dias" value="#{tabla[7]}" />
+                </p:column>
 
-                        <p:column headerText="Alumno" style="width:25%" >
-                            #{tabla[1]} #{tabla[2]}
-                        </p:column>
-                        <p:column headerText="Atrasos" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cAtra">
-                            <p:cellEditor>  
-                                <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
-                                <f:facet name="input">
-                                    <p:inputText  value="#{tabla[3]}" style="width:96%"  >
-
-                                    </p:inputText>
-                                </f:facet>  
-                            </p:cellEditor>  
-                        </p:column>
-                        <p:column headerText="Faltas Justificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFJusti">
-                            <p:cellEditor>  
-                                <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
-                                <f:facet name="input">
-                                    <p:inputText  value="#{tabla[4]}" style="width:96%"  >
-
-                                    </p:inputText>
-                                </f:facet>  
-                            </p:cellEditor>  
-                        </p:column>
-                        <p:column headerText="Faltas Injustificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFInjus">
-                            <p:cellEditor>  
-                                <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
-                                <f:facet name="input">
-                                    <p:inputText  value="#{tabla[5]}" style="width:96%"  >
-
-                                    </p:inputText>
-                                </f:facet>  
-                            </p:cellEditor>  
-                        </p:column>
-                        <p:column headerText="Total Faltas" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
-                            <h:outputText id="total" value="#{tabla[6]}" />                                
-                        </p:column>
-                        <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
-                            <h:outputText id="dias" value="#{tabla[7]}" />
-                        </p:column>
-
-                    </p:dataTable>
-
-                </p:layoutUnit>
-
-
-            </p:layout>
-
+            </p:dataTable>
         </h:form>
 
 

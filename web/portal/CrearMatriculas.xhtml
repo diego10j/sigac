@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Matrículas</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoMatriculas.jsf"/>
+                    <p:menuitem value="Matricular Alumno"  icon="ui-icon-document" url="CrearMatriculas.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Lista Alumnos Matriculados"  icon="ui-icon-note" url="RepoListaAlumnosMatri.jsf"/>
+                    <p:menuitem value="Alumnos Matriculados por Curso"  icon="ui-icon-bookmark" url="RepoAlumnosCurso.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Matrículas #{controladorMatriculas.perActivo.perNombre}" />
+        </div>
+        <p style="font-size: 12px;">Proceso para matricular un Alumno, seleccione el curso donde se matriculará al alumno,recuerde que los campos con * son obligatorios.</p>
+
+        <h:form>
+            <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
+                         selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}" scrollable="true" scrollWidth="100%" scrollHeight="100">
+
+                <p:ajax event="rowSelect" listener="#{controladorMatriculas.seleccionarCurso}" update=":frmFormulario"/>
+                <p:column headerText="CURSO" >
+                    <h:outputText value="#{tabla.curCodigo.curAnio}"/>
+                </p:column>
+                <p:column headerText="PARALELO" >
+                    <h:outputText value="#{tabla.parCodigo.parNombre}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:separator/>
+
+        <h:form id="frmFormulario">
+            <h:panelGrid id="pnlDetalhe" 
+                         columns="1" 
+                         styleClass="panelGridSemBorda">
+
+                <p:fieldset legend="DATOS MATRICULA">
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Curso :*"/>
+                        <h:outputText style="font-size: 14px;font-weight: bold" value="#{controladorMatriculas.creCursoSeleccionado.curCodigo.curAnio} #{controladorMatriculas.creCursoSeleccionado.parCodigo.parNombre}"/>
+
+                        <h:outputText value="Buscar Alumno :*"/>
+                        <h:panelGroup>
+                            <p:autoComplete id="txtalumno" value="#{controladorMatriculas.objAlumno}" size="60" var="fila" maxResults="10" completeMethod="#{controladorMatriculas.autocompletar}" 
+                                            forceSelection="true" converter="ConvertidorAutoCompletar" itemLabel="#{fila[1]} #{fila[2]}" itemValue="#{fila}" required="true" requiredMessage="Debe seleccionar un Alumno"> 
+                                <f:attribute name="lisOpciones" id="lisOpciones" value="#{controladorMatriculas.comAlumnos}"/>
+
+                                <p:column>  
+                                    #{fila[1]}
+                                </p:column>
+                                <p:column>  
+                                    #{fila[2]}
+                                </p:column>
+                                <p:column>  
+                                    #{fila[3]}
+                                </p:column>                               
+                            </p:autoComplete>
+                            <h:outputText value="(Busque un alumno por apellidos o por número de cédula)"/>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+
+
+                </p:fieldset>
+                <f:facet name="footer">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+
+                            <p:commandButton action="#{controladorMatriculas.guardar}" value="Guardar" icon="ui-guardar" update="@form" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+
+            </h:panelGrid>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

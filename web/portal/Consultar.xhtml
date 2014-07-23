@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="templates/template2.xhtml"
+<ui:composition template="templates/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"                
@@ -9,129 +9,130 @@
 
     <ui:define name="tituloPagina">Consultar Notas</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Consultar Notas"   icon="ui-icon-wrench"  url="Consultar.jsf"/>
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Reporte Final"  icon="ui-icon-note" url="RepoFinal.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
     <ui:define name="contenido">
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Consultar Notas" />
+        </div>
+        <p style="font-size: 12px;">Consulta de Notas, seleccione un Curso Lectivo.</p>
 
         <h:form prependId="false" id="frmPrincipal">
 
-            <p:layout style="height: 100%;width: 100%;display: block;">
+            <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
+                         selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="80" >
+                `
+                <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursos}" update=":frmPrincipal:tabNotas"/>
 
-                <p:layoutUnit position="west" size="30%" header="Listado de Cursos" resizable="true">
+                <p:column headerText="CURSO" width="75%">
+                    #{tabla[2]}
+                </p:column>
+                <p:column headerText="PARALELO" width="25%">
+                    #{tabla[3]}
+                </p:column>
+                <p:column headerText="PERIODO" width="75%">
+                    #{tabla[1]}
+                </p:column>
 
-                    <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
-                                 selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="100" >
-                        `
-                        <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursos}" update=":frmPrincipal:tabNotas"/>
+            </p:dataTable>
 
-                        <p:column headerText="CURSO" width="75%">
-                            #{tabla[1]}
-                        </p:column>
-                        <p:column headerText="PARALELO" width="25%">
-                            #{tabla[2]}
-                        </p:column>
+            <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisConsulta}" style="overflow: auto">
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="2"  headerText="ASIGNATURAS" />
+                        <p:column  colspan="9" headerText="QUIMESTRE I" />
+                        <p:column  colspan="9" headerText="QUIMESTRE II" />
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="1"  headerText="PARCIAL1" />
+                        <p:column colspan="1"  headerText="PARCIAL2" />
+                        <p:column colspan="1"  headerText="PARCIAL3" />
 
-                    </p:dataTable>
+                        <p:column headerText="SUMATORIA" />
+                        <p:column headerText="EQV. 80%" />
+                        <p:column headerText="EXAMEN"/>
+                        <p:column headerText="EQV. 20%" />
+                        <p:column headerText="NOTA" />
+                        <p:column headerText="PARCIAL1" />
+                        <p:column headerText="PARCIAL2" />
+                        <p:column headerText="PARCIAL3" />
+                        <p:column headerText="SUMATORIA" />
+                        <p:column headerText="EQV. 80%"/>
+                        <p:column headerText="EXAMEN" />
+                        <p:column headerText="EQV. 20%" />
+                        <p:column headerText="NOTA" />
+                        <p:column headerText="P. FINAL" />
+                    </p:row>
+                </p:columnGroup>
 
+                <p:column headerText="MATERIA" style="width:25%" >
+                    #{tabla[1]}
+                </p:column>
+                <p:column headerText="PARCIAL1" style="width:25%" >
+                    #{tabla[2]}
+                </p:column>
+                <p:column headerText="PARCIAL2" style="width:25%" >
+                    #{tabla[3]}
+                </p:column>
+                <p:column headerText="PARCIAL3" style="width:25%" >
+                    #{tabla[4]}
+                </p:column>
+                <p:column headerText="SUMATORIA" style="width:25%" >
+                    #{tabla[5]}
+                </p:column>
+                <p:column headerText="EQV. 80%" style="width:25%" >
+                    #{tabla[6]}
+                </p:column>
+                <p:column headerText="EXAMEN" style="width:25%" >
+                    #{tabla[7]}
+                </p:column>
+                <p:column headerText="EQV. 20%" style="width:25%" >
+                    #{tabla[8]}
+                </p:column>
+                <p:column headerText="NOTA" style="width:25%" >
+                    #{tabla[9]}
+                </p:column>
+                <p:column headerText="PARCIAL1" style="width:25%" >
+                    #{tabla[10]}
+                </p:column>
+                <p:column headerText="PARCIAL2" style="width:25%" >
+                    #{tabla[11]}
+                </p:column>
+                <p:column headerText="PARCIAL3" style="width:25%" >
+                    #{tabla[12]}
+                </p:column>
+                <p:column headerText="SUMATORIA" style="width:25%" >
+                    #{tabla[13]}
+                </p:column>
+                <p:column headerText="EQV. 80%" style="width:25%" >
+                    #{tabla[14]}
+                </p:column>
+                <p:column headerText="EXAMEN" style="width:25%" >
+                    #{tabla[15]}
+                </p:column>
+                <p:column headerText="EQV. 20%" style="width:25%" >
+                    #{tabla[16]}
+                </p:column>
+                <p:column headerText="NOTA" style="width:25%" >
+                    #{tabla[17]}
+                </p:column>
+                <p:column headerText="P. FINAL" style="width:25%" >
+                    #{tabla[18]}
+                </p:column>                         
+            </p:dataTable>
 
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center">
-
-
-
-                    <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisConsulta}">
-
-
-                        <p:columnGroup type="header">
-                            <p:row>
-                                <p:column rowspan="2"  headerText="ASIGNATURAS" />
-                                <p:column  colspan="9" headerText="QUIMESTRE I" />
-                                <p:column  colspan="9" headerText="QUIMESTRE II" />
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="1"  headerText="PARCIAL1" />
-                                <p:column colspan="1"  headerText="PARCIAL2" />
-                                <p:column colspan="1"  headerText="PARCIAL3" />
-
-                                <p:column headerText="SUMATORIA" />
-                                <p:column headerText="EQV. 80%" />
-                                <p:column headerText="EXAMEN"/>
-                                <p:column headerText="EQV. 20%" />
-                                <p:column headerText="NOTA" />
-                                <p:column headerText="PARCIAL1" />
-                                <p:column headerText="PARCIAL2" />
-                                <p:column headerText="PARCIAL3" />
-                                <p:column headerText="SUMATORIA" />
-                                <p:column headerText="EQV. 80%"/>
-                                <p:column headerText="EXAMEN" />
-                                <p:column headerText="EQV. 20%" />
-                                <p:column headerText="NOTA" />
-                                <p:column headerText="P. FINAL" />
-                            </p:row>
-                        </p:columnGroup>
-
-                        <p:column headerText="MATERIA" style="width:25%" >
-                            #{tabla[1]}
-                        </p:column>
-                        <p:column headerText="PARCIAL1" style="width:25%" >
-                            #{tabla[2]}
-                        </p:column>
-                        <p:column headerText="PARCIAL2" style="width:25%" >
-                            #{tabla[3]}
-                        </p:column>
-                        <p:column headerText="PARCIAL3" style="width:25%" >
-                            #{tabla[4]}
-                        </p:column>
-                        <p:column headerText="SUMATORIA" style="width:25%" >
-                            #{tabla[5]}
-                        </p:column>
-                        <p:column headerText="EQV. 80%" style="width:25%" >
-                            #{tabla[6]}
-                        </p:column>
-                        <p:column headerText="EXAMEN" style="width:25%" >
-                            #{tabla[7]}
-                        </p:column>
-                        <p:column headerText="EQV. 20%" style="width:25%" >
-                            #{tabla[8]}
-                        </p:column>
-                        <p:column headerText="NOTA" style="width:25%" >
-                            #{tabla[9]}
-                        </p:column>
-                        <p:column headerText="PARCIAL1" style="width:25%" >
-                            #{tabla[10]}
-                        </p:column>
-                        <p:column headerText="PARCIAL2" style="width:25%" >
-                            #{tabla[11]}
-                        </p:column>
-                        <p:column headerText="PARCIAL3" style="width:25%" >
-                            #{tabla[12]}
-                        </p:column>
-                        <p:column headerText="SUMATORIA" style="width:25%" >
-                            #{tabla[13]}
-                        </p:column>
-                        <p:column headerText="EQV. 80%" style="width:25%" >
-                            #{tabla[14]}
-                        </p:column>
-                        <p:column headerText="EXAMEN" style="width:25%" >
-                            #{tabla[15]}
-                        </p:column>
-                        <p:column headerText="EQV. 20%" style="width:25%" >
-                            #{tabla[16]}
-                        </p:column>
-                        <p:column headerText="NOTA" style="width:25%" >
-                            #{tabla[17]}
-                        </p:column>
-                        <p:column headerText="P. FINAL" style="width:25%" >
-                            #{tabla[18]}
-                        </p:column>                         
-
-
-                    </p:dataTable>
-
-
-
-
-                </p:layoutUnit>
-            </p:layout>
         </h:form>
 
     </ui:define>

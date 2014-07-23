@@ -9,28 +9,42 @@
 
     <ui:define name="tituloPagina">Crear Cursos</ui:define>
 
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="CrearCurso.jsf"/>
+                    <p:menuitem value="Crear Distributivo Curso"  icon="ui-icon-document" url="CrearCursoD.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Distributivo de Cursos"  icon="ui-icon-note" url="RepoDistributivo.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+
     <ui:define name="contenido">
 
         <h:form prependId="false" id="frmPrincipal">
 
-            <p:toolbar >
-                <p:toolbarGroup>
-                    <h:outputText value="Periódo Lectivo :"/>
-                    <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}">
-                        <f:selectItems value="#{controladorCrearCurso.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                        <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}" update="@form"/>
-                    </p:selectOneMenu>
-                    <p:separator/>
-                    <p:commandButton value="Insertar" icon="ui-agregar"  oncomplete="wdlgDetalle.show()"  update=":frmFormulario" />
-                    <p:separator/>                     
-                    <p:commandButton value="REPORTE DISTRIBUTIVO" action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
-                </p:toolbarGroup>
-            </p:toolbar>
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Administración de Distributivo de Cursos" />
+            </div>
             <!-- CONFIGURACIÓN TABLA -->
+            <h:panelGrid columns="2">
+                <h:outputText value="Seleccione un Período Lectivo:" style="font-weight: bold"/>
+                <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}">
+                    <f:selectItems value="#{controladorCrearCurso.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                    <p:ajax event="change" listener="#{controladorCrearCurso.filtrarCursos}" update="@form"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <p:separator/>
             <h:panelGroup id="pnlTabela"> 
 
                 <p:dataTable value="#{controladorCrearCurso.lisCrearCursos}" var="tabla" rows="10" paginator="true" paginatorAlwaysVisible="false"
-                             rowIndexVar="rowNumber" >
+                             rowIndexVar="rowNumber" style="overflow: auto" paginatorPosition="bottom" >
 
                     <p:column width="60">
                         <p:commandLink     title="Modificar"
@@ -55,8 +69,8 @@
 
                     <p:column width="60" headerText="ASIGNATURAS">
                         <p:commandLink action="#{controladorCrearCurso.cargarDistributivo}" 
-                                       value="Distributivo"
-                                       title="Distributivo"
+                                       value="Distributivo Asignaturas"
+                                       title="Distributivo Asignaturas"
                                        update=":formDistri"
                                        oncomplete="wdldlgDistri.show();">
                             <f:setPropertyActionListener
@@ -65,8 +79,8 @@
                     </p:column>
                     <p:column width="60" headerText="ALUMNOS">
                         <p:commandLink action="#{controladorCrearCurso.verReporteAlumnosCursos}" 
-                                       value="Alumnos"
-                                       title="Lista de Alumnos Inscritos" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');">
+                                       value="Alumnos Inscritos"
+                                       title="Reporte de Alumnos Inscritos" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');">
                             <f:setPropertyActionListener
                                 target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
                         </p:commandLink>
@@ -105,7 +119,7 @@
                   styleClass="dialogoSemScroll" >
 
             <h:form id="frmFormulario">
-                <p:panelGrid id="pnlDetalhe" 
+                <h:panelGrid id="pnlDetalhe" 
                              columns="1" 
                              styleClass="panelGridSemBorda">
 
@@ -142,7 +156,7 @@
                         </p:toolbar>
                     </f:facet>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
 
@@ -153,10 +167,10 @@
                   resizable="false"
                   appendToBody="true"
                   closable="true" 
-                  header="Distributivo" 
+                  header="Distributivo de Asignaturas" 
                   styleClass="dialogoSemScroll" >
             <h:form id="formDistri">
-                <p:panelGrid  id="panDistr"
+                <h:panelGrid  id="panDistr"
                               columns="1" 
                               styleClass="panelGridSemBorda">
 
@@ -186,14 +200,14 @@
                             </p:toolbarGroup>
                         </p:toolbar>
                     </f:facet>
-                </p:panelGrid>    
+                </h:panelGrid>    
 
                 <p:separator/>
 
-                <p:dataTable id="tabDistri" value="#{controladorCrearCurso.lisDistributivo}" var="tabla" scrollable="true" scrollHeight="300" scrollWidth="700"
+                <p:dataTable id="tabDistri" value="#{controladorCrearCurso.lisDistributivo}" var="tabla" scrollable="true" scrollHeight="300" scrollWidth="75%"
                              rowIndexVar="rowNumber" >
 
-                    <p:column width="30">
+                    <p:column width="10">
                         <p:commandLink     title="Modificar"                                           
                                            update=":formDistri:panDistr"
                                            process=":formDistri:tabDistri">
@@ -220,7 +234,7 @@
                         <h:outputText value="#{tabla.asiCodigo.asiNombre}"/>
                     </p:column>
 
-                    <p:column headerText="DOCENTE" width="100"  >
+                    <p:column headerText="DOCENTE" width="120"  >
                         <h:outputText value="#{tabla.docCodigo.docNombres}"/>
                     </p:column>
 
