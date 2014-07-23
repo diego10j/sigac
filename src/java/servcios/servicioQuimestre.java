@@ -50,15 +50,15 @@ public class servicioQuimestre {
                     tab_imforme.setValor("for_codigo", for_codigo);
                     tab_imforme.setValor("dis_codigo", dis_codigo);
                     tab_imforme.setValor("mat_codigo", tab_suma.getValor(i, "mat_codigo"));
-                    
-                    double dou_suma=0;
+
+                    double dou_suma = 0;
                     try {
-                        dou_suma=Double.parseDouble(tab_suma.getValor(i, "not80"));
+                        dou_suma = Double.parseDouble(tab_suma.getValor(i, "not80"));
                     } catch (Exception e) {
                     }
-                    
-                    double dou_eqv80=(dou_suma*80)/300;                  
-                  
+
+                    double dou_eqv80 = (dou_suma * 80) / 300;
+
                     tab_imforme.setValor("inf_sumatoria", utilitario.getFormatoNumero(dou_suma));
                     tab_imforme.setValor("inf_eqv80", utilitario.getFormatoNumero(dou_eqv80));
                     tab_imforme.setValor("inf_exa20", "0.00");
@@ -80,27 +80,27 @@ public class servicioQuimestre {
                 if (tab_suma.isEmpty() == false) {
                     //actualiza 
                     tab_imforme.modificar(i);
-                    double dou_suma=0;
+                    double dou_suma = 0;
                     try {
-                        dou_suma=Double.parseDouble(tab_suma.getValor( "not80"));
+                        dou_suma = Double.parseDouble(tab_suma.getValor("not80"));
                     } catch (Exception e) {
                     }
-                    
-                    double dou_eqv80=(dou_suma*80)/300;                  
-                  
+
+                    double dou_eqv80 = (dou_suma * 80) / 300;
+
                     tab_imforme.setValor("inf_sumatoria", utilitario.getFormatoNumero(dou_suma));
-                    tab_imforme.setValor("inf_eqv80", utilitario.getFormatoNumero(dou_eqv80));                                     
-                    double dou_examen=0;
+                    tab_imforme.setValor("inf_eqv80", utilitario.getFormatoNumero(dou_eqv80));
+                    double dou_examen = 0;
                     try {
                         dou_examen = Double.parseDouble(tab_imforme.getValor(i, "inf_examen"));
                     } catch (Exception e) {
-                    }                    
-                    double dou20 = (dou_examen*2)/10;               
-                  
+                    }
+                    double dou20 = (dou_examen * 2) / 10;
+
                     tab_imforme.setValor("inf_nota", utilitario.getFormatoNumero((dou_eqv80 + dou20)));
                 }
             }
-        }        
+        }
         tab_imforme.guardar();
         utilitario.getConexion().ejecutarListaSql();
     }
@@ -110,7 +110,7 @@ public class servicioQuimestre {
         return utilitario.getConexion().consultar("SELECT a.inf_codigo,alu_apellidos,alu_nombres,inf_eqv80,inf_exa20,inf_examen,inf_nota,inf_sumatoria FROM informe_quimestre a "
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo\n"
-                + " WHERE a.for_codigo=" + for_codigo + " AND a.dis_codigo=" + dis_codigo+" order by alu_apellidos,alu_nombres");
+                + " WHERE a.for_codigo=" + for_codigo + " AND a.dis_codigo=" + dis_codigo + " order by alu_apellidos,alu_nombres");
     }
 
     public String guardarInformeQuimestre(List notas) {
