@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Matrículas</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoMatriculas.jsf"/>
+                    <p:menuitem value="Matricular Alumno"  icon="ui-icon-document" url="CrearMatriculas.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Lista Alumnos Matriculados"  icon="ui-icon-note" url="RepoListaAlumnosMatri.jsf"/>
+                    <p:menuitem value="Alumnos Matriculados por Curso"  icon="ui-icon-bookmark" url="RepoAlumnosCurso.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Reporte Listado de Alumnos Matriculados #{controladorMatriculas.perActivo.perNombre}" />
+        </div>
+        <p style="font-size: 12px;">Listado de Alumnos Matriculados en un Curso Lectivo </p>
+
+        <h:form>
+            <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
+                         selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}" scrollable="true" scrollWidth="100%" scrollHeight="100">
+
+
+                <p:column headerText="CURSO" >
+                    <h:outputText value="#{tabla.curCodigo.curAnio}"/>
+                </p:column>
+                <p:column headerText="PARALELO" >
+                    <h:outputText value="#{tabla.parCodigo.parNombre}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:separator/>
+
+        <p:panelGrid columns="2">
+            <f:facet name="header">
+                Formato de Salida
+            </f:facet>
+            <h:graphicImage value="../imagenes/im_excel.gif"/>
+            <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" oncomplete="window.open('#{controladorMatriculas.str_path_reporte}');" />
+            <h:graphicImage value="../imagenes/im_pdf.gif"/>
+            <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" oncomplete="window.open('#{controladorMatriculas.str_path_reporte}');" />
+
+        </p:panelGrid>
+
+    </ui:define>
+</ui:composition>

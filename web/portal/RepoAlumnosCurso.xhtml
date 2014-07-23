@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Matrículas</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="ListadoMatriculas.jsf"/>
+                    <p:menuitem value="Matricular Alumno"  icon="ui-icon-document" url="CrearMatriculas.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Lista Alumnos Matriculados"  icon="ui-icon-note" url="RepoListaAlumnosMatri.jsf"/>
+                    <p:menuitem value="Alumnos Matriculados por Curso"  icon="ui-icon-bookmark" url="RepoAlumnosCurso.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+    <ui:define name="contenido">
+
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Reporte Número de Alumons Matriculados por Curso" />
+        </div>
+        <h:form>
+
+
+            <h:panelGrid columns="2">
+                <h:outputText value="Seleccione un Período Lectivo:" style="font-weight: bold"/>
+                <p:selectOneMenu value="#{controladorMatriculas.strPeriodoSeleccionado}">
+                    <f:selectItems value="#{controladorMatriculas.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                    <p:ajax immediate="true" event="change" listener="#{controladorMatriculas.cambioPeriodoReporte}" update="@form"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <p:separator/>
+            <p:barChart id="grafico" value="#{controladorMatriculas.model}" animate="true" barMargin="10" max="50" min="0" widgetVar="chAlumnos" 
+                        legendPosition="ne" rendered="#{controladorMatriculas.model!=null}" legendCols="8" style="height: 400px;" xaxisLabel="CURSOS" yaxisLabel="NUMERO DE ALUMNOS"/>
+            <h:outputText style="font-size: 20px;color: #ff0033" value="NO EXISTE INFORMACIÓN EN EL PERIODO SELECCIONADO" rendered="#{controladorMatriculas.model==null}" />
+        </h:form>
+    </ui:define>
+</ui:composition>

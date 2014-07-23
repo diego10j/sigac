@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Reporte</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Administración"   icon="ui-icon-wrench"  url="CrearCurso.jsf"/>
+                    <p:menuitem value="Crear Distributivo Curso"  icon="ui-icon-document" url="CrearCursoD.jsf" />
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Distributivo de Cursos"  icon="ui-icon-note" url="RepoDistributivo.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+
+        <h:form prependId="false" id="frmPrincipal">
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+                <h:outputText value="Reporte Distributivo de Cursos " />
+            </div>
+            <p style="font-size: 12px;">Listado de Distributivo de Cursos por Período Lectivo</p>
+
+            <h:panelGrid columns="2">
+                <h:outputText value="Seleccione un Período Lectivo:" style="font-weight: bold"/>
+                <p:selectOneMenu value="#{controladorCrearCurso.strPeriodoSeleccionado}">
+                    <f:selectItems value="#{controladorCrearCurso.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <p:separator/>
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    Formato de Salida
+                </f:facet>
+                <h:graphicImage value="../imagenes/im_excel.gif"/>
+                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
+
+                <h:graphicImage value="../imagenes/im_pdf.gif"/>
+                <p:commandLink value="Adobe Reader(.PDF)" action="#{controladorCrearCurso.verReporteCursos}" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');" />
+
+            </p:panelGrid>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
