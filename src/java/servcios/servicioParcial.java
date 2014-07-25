@@ -48,19 +48,19 @@ public class servicioParcial {
     }
 
     public List getMatriculasCursoAlumno(String alu_codigo) {
-        return utilitario.getConexion().consultar("select d.cre_codigo,per_nombre,cu.cur_anio,pa.par_nombre,c.cur_codigo from distributivomxc d\n"
+        return utilitario.getConexion().consultar("select d.cre_codigo,per_nombre,cu.cur_anio,pa.par_nombre,c.cur_codigo,p.mat_codigo from distributivomxc d\n"
                 + " inner join crear_curso c on d.cre_codigo=c.cre_codigo \n"
                 + " INNER JOIN cursos cu on c.cur_codigo=cu.cur_codigo inner join paralelo pa on c.par_codigo=pa.par_codigo \n"
                 + " inner join matricula p on d.cre_codigo=p.cre_codigo\n"
                 + " inner join periodo_lectivo pl on c.per_codigo=pl.per_codigo\n"
                 + " where p.alu_codigo=" + alu_codigo + "\n"
-                + " group  by d.cre_codigo,per_nombre,cu.cur_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo\n"
+                + " group  by d.cre_codigo,per_nombre,cu.cur_codigo,cu.cur_anio,pa.par_nombre,c.cur_codigo,p.mat_codigo\n"
                 + " order by cu.cur_codigo,par_nombre");
 
     }
 
     public List getCursosAlumno(String alu_codigo) {
-        return utilitario.getConexion().consultar("select a.cre_codigo,cur_anio,par_nombre,c.cur_codigo from matricula a\n"
+        return utilitario.getConexion().consultar("select a.cre_codigo,cur_anio,par_nombre,c.cur_codigo,a.mat_codigo from matricula a\n"
                 + "inner join crear_curso b on a.cre_codigo=b.cre_codigo\n"
                 + "INNER JOIN cursos c on b.cur_codigo=c.cur_codigo \n"
                 + "inner join paralelo d on b.par_codigo=d.par_codigo\n"
@@ -342,7 +342,7 @@ public class servicioParcial {
     public List getListaParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
         return utilitario.getConexion().consultar("select a.reg_codigo,alu_apellidos,alu_nombres,"
                 + "reg_atrasos,reg_faltasjustificadas,reg_faltasinjustificadas,reg_totalfaltas,reg_diaslaborados,reg_dias from registroasistencia a\n"
-                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo and b.cre_codigo="+cre_codigo+" "
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
     }
