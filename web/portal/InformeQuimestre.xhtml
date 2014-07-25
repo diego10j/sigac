@@ -17,12 +17,11 @@
                 </p:submenu>
                 <p:separator />
                 <p:submenu label="Reportes">
-                    <p:menuitem value="Reporte Quimestre"  icon="ui-icon-note" url="ReporteQuimestre.jsf"/>
+                    <p:menuitem value="Reporte Evaluación de Destrezas"  icon="ui-icon-note" url="ReporteQuimestre.jsf"/>
                 </p:submenu>
             </p:panelMenu>
         </h:form>
     </ui:define>
-
 
     <ui:define name="contenido">
         <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
@@ -69,7 +68,6 @@
                     <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
                     <p:separator/>
                     <p:commandButton icon="ui-icon-refresh"  value="Actualizar Matriculados" action="#{controladorParcial.actualizarInforme}" update=":frmPrincipal:tabNotas" />  
-                    <p:commandButton value="REPORTE QUIMESTRE" action="#{controladorParcial.verReporteTodos}" />
                 </p:toolbarGroup>
             </p:toolbar>
             <p:dataTable  id="tabNotas" var="tabla" value="#{controladorParcial.lisInformeQuimestre}" editable="true" editMode="cell" scrollable="true" scrollHeight="150">
@@ -85,7 +83,7 @@
                 <p:column headerText="Eqv 80%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
                     <h:outputText style="font-size: 13px;"  value="#{tabla[3]}" />                                
                 </p:column>
-                <p:column headerText="Exámen" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cExamen">
+                <p:column headerText="Exámen" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cExamen">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                         <f:facet name="input">
@@ -94,24 +92,13 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-
                 <p:column headerText="Eqv 20%" rendered="#{controladorParcial.booMuestra}" style="width:10%">
                     <h:outputText style="font-size: 13px;" id="eqv20" value="#{tabla[4]}" />                                
                 </p:column>
-
                 <p:column headerText="Nota Quimestre" rendered="#{controladorParcial.booMuestra}" style="width:10%">
                     <h:outputText style="font-size: 14px;font-weight: bold" id="nota" value="#{tabla[6]}" />                                
                 </p:column>
-
-
             </p:dataTable>
-
-
-
-
         </h:form>
-
-
-
     </ui:define>
 </ui:composition>

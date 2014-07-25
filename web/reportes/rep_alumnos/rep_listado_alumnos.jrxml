@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_listado_alumnos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0ddcb6a-e944-405a-affc-0b1bb7e4caa9">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.9965000000000006"/>
+	<property name="ireport.x" value="513"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\reportes\\rep_alumnos\\"]]></defaultValueExpression>
@@ -23,15 +23,22 @@ where a.alu_codigo=b.alu_codigo ORDER BY alumnos ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="52" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="eabb9ee4-8970-4929-8189-40c8293643ec" x="0" y="0" width="555" height="52"/>
+				<reportElement uuid="eabb9ee4-8970-4929-8189-40c8293643ec" x="0" y="0" width="529" height="52"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement uuid="d502f95a-b3f5-47e2-9a18-8c0c90d3b982" positionType="Float" x="0" y="52" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE ALUMNOS DE LA INSTITUCIÓN]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -51,7 +58,7 @@ where a.alu_codigo=b.alu_codigo ORDER BY alumnos ASC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Alumnos]]></text>
+				<text><![CDATA[Alumno]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="dc63b84a-218c-41c8-baf0-3e4d57da50bc" x="183" y="0" width="204" height="15"/>

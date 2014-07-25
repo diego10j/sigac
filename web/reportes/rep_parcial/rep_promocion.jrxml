@@ -2,8 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_promocion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3760851-d981-430e-9ce3-6d1cdf1a9626">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="138"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="fecha_prom" class="java.util.Date"/>
+	<parameter name="matricula" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT e.alu_apellidos||' '||e.alu_nombres as nombres,round(avg(inf_nota),0) as promedio,c.asi_nombre,g.cur_anio FROM informe_quimestre a
 inner join distributivomxc b on a.dis_codigo=b.dis_codigo
@@ -12,7 +15,7 @@ inner join matricula d on a.mat_codigo=d.mat_codigo
 inner join alumnos e on d.alu_codigo=e.alu_codigo
 inner join crear_curso f on d.cre_codigo=f.cre_codigo
 inner join cursos g on f.cur_codigo=g.cur_codigo
-where a.mat_codigo=33
+where a.mat_codigo=$P{matricula}
 group by e.alu_apellidos||' '||e.alu_nombres,c.asi_nombre,g.cur_anio]]>
 	</queryString>
 	<field name="nombres" class="java.lang.String"/>

@@ -3,10 +3,19 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="quimestre" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parcial" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="matricula" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT reg_diaslaborados,reg_faltasinjustificadas,reg_faltasjustificadas,reg_atrasos,reg_observacion FROM registroasistencia
-where eva_codigo=2 and for_codigo=1
-and  mat_codigo=28]]>
+where eva_codigo=$P{parcial} and for_codigo=$P{quimestre}
+and  mat_codigo=$P{matricula}]]>
 	</queryString>
 	<field name="reg_diaslaborados" class="java.lang.Integer"/>
 	<field name="reg_faltasinjustificadas" class="java.lang.Integer"/>

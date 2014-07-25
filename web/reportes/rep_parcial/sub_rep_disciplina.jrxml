@@ -3,9 +3,16 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="matricula" class="java.lang.Integer"/>
+	<parameter name="parcial" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="quimestre" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT com_equi,com_equivalencia FROM comportamientoparcial
-where eva_codigo=2 and for_codigo=1
+where eva_codigo=$P{parcial} and for_codigo=$P{quimestre}
 and  mat_codigo=28]]>
 	</queryString>
 	<field name="com_equi" class="java.lang.String"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_docentes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f016e994-8079-4f97-b959-3dbd490ac4a1">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="169"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\TESIS\\web\\reportes\\rep_docentes\\"]]></defaultValueExpression>
@@ -22,7 +22,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="39" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="becff434-e247-4f64-89aa-6263be497b7c" x="0" y="0" width="555" height="39"/>
 				<subreportParameter name="SUBREPORT_DIR">
@@ -31,6 +31,13 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_sistema/rep_cabecera.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement uuid="94997f7f-e956-4eae-8afe-5c922a0173f6" positionType="Float" x="0" y="39" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE DOCENTES DE LA INSTITUCIÓN]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -39,7 +46,7 @@
 	<columnHeader>
 		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="13bce6b0-a3eb-4174-970c-14c1061e9b01" x="47" y="0" width="111" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="13bce6b0-a3eb-4174-970c-14c1061e9b01" x="24" y="0" width="134" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -109,7 +116,7 @@
 				<text><![CDATA[E-mail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46de6444-1936-47c8-9496-6eea7e4378ca" x="0" y="0" width="47" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="46de6444-1936-47c8-9496-6eea7e4378ca" x="0" y="0" width="24" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -127,7 +134,7 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a8313f08-c1b2-4353-8abf-0d9468ad4e29" stretchType="RelativeToBandHeight" x="47" y="0" width="111" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="a8313f08-c1b2-4353-8abf-0d9468ad4e29" stretchType="RelativeToBandHeight" x="24" y="0" width="134" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -197,7 +204,7 @@
 				<textFieldExpression><![CDATA[$F{doc_telefono}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cace92b3-a5ed-4087-b9f9-10f04b82a300" stretchType="RelativeToBandHeight" x="0" y="0" width="47" height="15"/>
+				<reportElement uuid="cace92b3-a5ed-4087-b9f9-10f04b82a300" stretchType="RelativeToBandHeight" x="0" y="0" width="24" height="15"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -216,7 +223,22 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a6b6a6b4-93d8-4d88-ade4-dadcab710f36" x="435" y="4" width="80" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="238dc6dd-38a6-4e4f-9702-e27670e0fdb5" x="515" y="4" width="40" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

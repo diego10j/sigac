@@ -34,6 +34,15 @@
             </div>
             <p style="font-size: 12px;">Listado Cursos a cargo de un Docente de la Institución </p>
 
+            <h:panelGrid columns="2">
+                <h:outputText value="Seleccione un Período Lectivo:" style="font-weight: bold"/>
+                <p:selectOneMenu required="true" requiredMessage="Debe seleccionar un Período Lectivo" value="#{controladorDocente.strPeriodoSeleccionado}">
+                    <f:selectItems value="#{controladorDocente.lisPeriodos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:separator/>
+
             <p:panelGrid columns="2">
                 <f:facet name="header">
                     Formato de Salida

@@ -69,14 +69,12 @@
 
                     <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
                     <p:separator/>
-                    <p:commandButton value="Actualizar Matriculados" icon="ui-icon-refresh"  action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
-                    <p:separator/>
                     <h:outputText value="Número de días del Parcial:"/>
                     <p:inputText id="txtDias" value="#{controladorParcial.numDias}" size="3">
                         <f:validateLongRange minimum="0"/>
-                    </p:inputText>
+                    </p:inputText>  
                     <p:separator/>
-                    <p:commandButton value="REPORTE ASISTENCIA" action="#{controladorParcial.verReporteasitencia}" />
+                    <p:commandButton value="Actualizar Matriculados" icon="ui-icon-refresh"  action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -87,7 +85,7 @@
                 <p:column headerText="Alumno" style="width:25%" >
                     #{tabla[1]} #{tabla[2]}
                 </p:column>
-                <p:column headerText="Atrasos" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cAtra">
+                <p:column headerText="Atrasos" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cAtra">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
                         <f:facet name="input">
@@ -97,7 +95,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Faltas Justificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFJusti">
+                <p:column headerText="Faltas Justificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cFJusti">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
                         <f:facet name="input">
@@ -107,7 +105,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Faltas Injustificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cFInjus">
+                <p:column headerText="Faltas Injustificadas" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cFInjus">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                         <f:facet name="input">
