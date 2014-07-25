@@ -9,14 +9,19 @@ import entidades.Alumnos;
 import entidades.CrearCurso;
 import entidades.Matricula;
 import entidades.PeriodoLectivo;
+import framework.reportes.GenerarReporte;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
-import servcios.servicioAdministracion;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import servcios.servicioAlumno;
 import servcios.servicioCrearCurso;
 import servcios.servicioMatriculas;
@@ -47,17 +52,24 @@ public class controladorMatriculas {
     private servicioAlumno servAlumno;
     private List comAlumnos;
     private Object objAlumno;
+    private String strPeriodoSeleccionado;
+    private CartesianChartModel model;
+    private List lisPeriodos;
+    private String str_path_reporte;
 
     @PostConstruct
     public void cargarDatos() {
-
+        lisPeriodos = servPeriodo.getListaPeriodos();
         perActivo = servPeriodo.getPeriodoActivo();
         if (perActivo == null) {
             utilitario.agregarMensajeError("No tiene ningun Período Lectivo Activo", "");
             return;
         }
+        str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
 
         lisCrearCursos = servCrearCurso.getCursosCreados(perActivo.getPerCodigo().toString());
+        strPeriodoSeleccionado = perActivo.getPerCodigo().toString();
+
         if (creCursoSeleccionado == null) {
             if (lisCrearCursos != null && lisCrearCursos.isEmpty() == false) {
                 creCursoSeleccionado = lisCrearCursos.get(0);
@@ -71,6 +83,7 @@ public class controladorMatriculas {
         comAlumnos = servAlumno.getListaAlumnos();
         matMatricula = new Matricula();
         matMatricula.setAluCodigo(new Alumnos());
+        objAlumno = null;
     }
 
     public void seleccionarCurso(SelectEvent evt) {
@@ -113,15 +126,36 @@ public class controladorMatriculas {
         if (objAlumno != null) {
             matMatricula.setAluCodigo(servAlumno.getAlumno(((Object[]) objAlumno)[0] + ""));
         }
+
+        boolean nuevo = true;
+        if (matMatricula.getMatCodigo() != null) {
+            nuevo = false;
+        }
+
         String str_mensaje = servMatriculas.guardarMatriculas(matMatricula);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             cargarDatos();
-            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            if (!nuevo) {
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            }
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
 
+    }
+
+    public void verReporteAlumnosCursos() {
+        if (creCursoSeleccionado != null) {
+            Map p = new HashMap();
+            p.put("cur_codigo", creCursoSeleccionado.getCurCodigo().getCurCodigo().toString());
+            p.put("par_codigo", creCursoSeleccionado.getParCodigo().getParCodigo().toString());
+            GenerarReporte generar = new GenerarReporte();
+            generar.generar(p, "/reportes/rep_alumnos/rep_distribucion_alumnos.jasper");
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        } else {
+            utilitario.agregarMensajeError("Debe seleccionar un Curso", str_path_reporte);
+        }
     }
 
     public List autocompletar(String query) {
@@ -142,6 +176,38 @@ public class controladorMatriculas {
             }
         }
         return suggestions;
+    }
+
+    public void cambioPeriodoReporte(AjaxBehaviorEvent evt) {
+        generaGrafico();
+    }
+
+    private void generaGrafico() {
+        List repNumMatriculados;
+        if (strPeriodoSeleccionado != null) {
+            repNumMatriculados = servMatriculas.getMatriculadosxCurso(strPeriodoSeleccionado);
+        } else {
+            repNumMatriculados = servMatriculas.getMatriculadosxCurso("-1");
+        }
+
+        model = new CartesianChartModel();
+
+        if (repNumMatriculados != null && repNumMatriculados.isEmpty() == false) {
+            for (int i = 0; i < repNumMatriculados.size(); i++) {
+                Object[] fila = (Object[]) repNumMatriculados.get(i);
+                ChartSeries curso = new ChartSeries();
+                curso.setLabel(fila[1] + "  " + fila[2]);
+                int num = 0;
+                try {
+                    num = Integer.parseInt(fila[3] + "");
+                } catch (Exception e) {
+                }
+                curso.set("   ", num);
+                model.addSeries(curso);
+            }
+        } else {
+            model = null;
+        }
     }
 
     public Matricula getMatMatricula() {
@@ -202,5 +268,38 @@ public class controladorMatriculas {
 
     public void setObjAlumno(Object objAlumno) {
         this.objAlumno = objAlumno;
+    }
+
+    public String getStrPeriodoSeleccionado() {
+        return strPeriodoSeleccionado;
+    }
+
+    public void setStrPeriodoSeleccionado(String strPeriodoSeleccionado) {
+        this.strPeriodoSeleccionado = strPeriodoSeleccionado;
+    }
+
+    public CartesianChartModel getModel() {
+        generaGrafico();
+        return model;
+    }
+
+    public void setModel(CartesianChartModel model) {
+        this.model = model;
+    }
+
+    public List getLisPeriodos() {
+        return lisPeriodos;
+    }
+
+    public void setLisPeriodos(List lisPeriodos) {
+        this.lisPeriodos = lisPeriodos;
+    }
+
+    public String getStr_path_reporte() {
+        return str_path_reporte;
+    }
+
+    public void setStr_path_reporte(String str_path_reporte) {
+        this.str_path_reporte = str_path_reporte;
     }
 }

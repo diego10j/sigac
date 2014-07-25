@@ -25,7 +25,7 @@ public class controladorFormaevaluar {
 
     @EJB
     private servicioFormaevaluar servFormaevaluar;
-       private Formaevaluar forEvaluar = new Formaevaluar();
+    private Formaevaluar forEvaluar = new Formaevaluar();
     private Utilitario utilitario = new Utilitario();
     private List<Formaevaluar> listaFormaevaluar;
     private List<Formaevaluar> filtroFormaevaluar;
@@ -34,12 +34,12 @@ public class controladorFormaevaluar {
     public void cargarDatos() {
         listaFormaevaluar = servFormaevaluar.getFormaevaluars();
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         forEvaluar = new Formaevaluar();
     }
-    
-     public void eliminar() {
+
+    public void eliminar() {
         if (forEvaluar.getForCodigo() != null) {
             String str_mensaje = servFormaevaluar.elimnarFormaevaluar(forEvaluar.getForCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -52,17 +52,22 @@ public class controladorFormaevaluar {
     }
 
     public void guardar() {
-        
-            String str_mensaje = servFormaevaluar.guardarFormaevaluar(forEvaluar);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                forEvaluar = new Formaevaluar();
+        boolean nuevo = true;
+        if (forEvaluar.getForCodigo() != null) {
+            nuevo = false;
+        }
+        String str_mensaje = servFormaevaluar.guardarFormaevaluar(forEvaluar);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            forEvaluar = new Formaevaluar();
+            if (!nuevo) {
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-       
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
     }
 
     public Formaevaluar getForEvaluar() {
@@ -88,7 +93,4 @@ public class controladorFormaevaluar {
     public void setFiltroFormaevaluar(List<Formaevaluar> filtroFormaevaluar) {
         this.filtroFormaevaluar = filtroFormaevaluar;
     }
-
- 
-    
 }

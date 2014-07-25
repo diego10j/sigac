@@ -30,11 +30,9 @@ public class controladorAprovechamiento {
     private EquivalenciaAprovechamiento eqvAprovechamiento = new EquivalenciaAprovechamiento();
     @EJB
     private servicioInstitucion servInstitucion;
-   
     private Utilitario utilitario = new Utilitario();
     private List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento;
-  
-    
+
     @PostConstruct
     public void cargarDatos() {
         listaEquivalenciaAprovechamiento = servAprovechamiento.getEquivalenciaAprovechamiento();
@@ -58,13 +56,19 @@ public class controladorAprovechamiento {
     }
 
     public void guardar() {
-   eqvAprovechamiento.setInsCodigo(servInstitucion.getIntitucion());
+        eqvAprovechamiento.setInsCodigo(servInstitucion.getIntitucion());
+        boolean nuevo = true;
+        if (eqvAprovechamiento.getEqaCodigo() != null) {
+            nuevo = false;
+        }
         String str_mensaje = servAprovechamiento.guardarAprovechamiento(eqvAprovechamiento);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             eqvAprovechamiento = new EquivalenciaAprovechamiento();
-            cargarDatos();
-            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            if (!nuevo) {
+                cargarDatos();
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            }
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
@@ -86,6 +90,4 @@ public class controladorAprovechamiento {
     public void setListaEquivalenciaAprovechamiento(List<EquivalenciaAprovechamiento> listaEquivalenciaAprovechamiento) {
         this.listaEquivalenciaAprovechamiento = listaEquivalenciaAprovechamiento;
     }
-
-    
 }

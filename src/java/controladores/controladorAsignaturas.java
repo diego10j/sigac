@@ -14,7 +14,6 @@ import javax.faces.bean.ViewScoped;
 import servcios.servicioAsignaturas;
 import servcios.servicioInstitucion;
 
-
 /**
  *
  * @author Diego
@@ -27,25 +26,22 @@ public class controladorAsignaturas {
     private servicioAsignaturas servAsignaturas;
     private Asignaturas asiAsignaturas = new Asignaturas();
     private Utilitario utilitario = new Utilitario();
-
-     private List<Asignaturas> listaAsignaturas;
-     private List<Asignaturas> filtroAsignaturas;
-     @EJB
-     private servicioInstitucion servInstitucion;
+    private List<Asignaturas> listaAsignaturas;
+    private List<Asignaturas> filtroAsignaturas;
+    @EJB
+    private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
         listaAsignaturas = servAsignaturas.getEquivalenciaAsignaturas();
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         asiAsignaturas = new Asignaturas();
     }
 
-      
-
-public void eliminar() {
-        if (asiAsignaturas.getAsiCodigo()!= null) {
+    public void eliminar() {
+        if (asiAsignaturas.getAsiCodigo() != null) {
             String str_mensaje = servAsignaturas.elimnarAsignaturas(asiAsignaturas.getAsiCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
@@ -55,20 +51,25 @@ public void eliminar() {
             }
         }
     }
-    
+
     public void guardar() {
-           asiAsignaturas.setInsCodigo(servInstitucion.getIntitucion());
-           String str_mensaje = servAsignaturas.guardarAsignaturas(asiAsignaturas);
-            if (str_mensaje.isEmpty()) {
-                utilitario.agregarMensaje("Se guardo correctamente", "");
-                asiAsignaturas = new Asignaturas();
+        asiAsignaturas.setInsCodigo(servInstitucion.getIntitucion());
+        boolean nuevo = true;
+        if (asiAsignaturas.getAsiCodigo() != null) {
+            nuevo = false;
+        }
+        String str_mensaje = servAsignaturas.guardarAsignaturas(asiAsignaturas);
+        if (str_mensaje.isEmpty()) {
+            utilitario.agregarMensaje("Se guardo correctamente", "");
+            asiAsignaturas = new Asignaturas();
+            if (!nuevo) {
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
-                 
-            } else {
-                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        
+        } else {
+            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
+        }
+
     }
 
     public Asignaturas getAsiAsignaturas() {
@@ -94,6 +95,4 @@ public void eliminar() {
     public void setFiltroAsignaturas(List<Asignaturas> filtroAsignaturas) {
         this.filtroAsignaturas = filtroAsignaturas;
     }
-   
-   
 }
