@@ -167,13 +167,18 @@ public class controladorCrearCurso {
             creCrearc.setPerCodigo(servPeriodo.getPeriodoLectivo(strPeriodoSeleccionado));
         }
 
-
+        boolean nuevo = true;
+        if (creCrearc.getCreCodigo() != null) {
+            nuevo = false;
+        }
         String str_mensaje = servCrearCurso.guardarCrearCurso(creCrearc);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             creCrearc = new CrearCurso();
             cargarDatos();
-            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            if (!nuevo) {
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            }
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
@@ -193,8 +198,10 @@ public class controladorCrearCurso {
         if (creCrearc != null) {
             Map p = new HashMap();
             p.put("cur_codigo", creCrearc.getCurCodigo().getCurCodigo().toString());
+            p.put("par_codigo", creCrearc.getParCodigo().getParCodigo().toString());
             GenerarReporte generar = new GenerarReporte();
-            generar.generar(p, "/reportes/rep_cursos/rep_distribucion_alumnos.jasper");
+            generar.generar(p, "/reportes/rep_alumnos/rep_distribucion_alumnos.jasper");
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
         }
     }
 

@@ -8,11 +8,14 @@ import aplicacion.Utilitario;
 import entidades.Docentes;
 import entidades.Roles;
 import entidades.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import servcios.servicioDocente;
 import servcios.servicioInstitucion;
 import servcios.servicioRoles;
@@ -51,6 +54,7 @@ public class controladorUsuarios {
 
     public void insertar() {
         usuUsuario = new Usuario();
+        usuUsuario.setUsuFechacreacion(new Date());
         usuUsuario.setDocCodigo(new Docentes());
         usuUsuario.setRolCodigo(new Roles());
     }
@@ -101,12 +105,20 @@ public class controladorUsuarios {
         if (usuUsuario.getRolCodigo().getRolCodigo() != null) {
             usuUsuario.setRolCodigo(servRoles.getRoles(usuUsuario.getRolCodigo().getRolCodigo().toString()));
         }
+
+        boolean nuevo = true;
+        if (usuUsuario.getUsuCodigo() != null) {
+            nuevo = false;
+        }
+
         String str_mensaje = servUsuarios.guardarUsuarios(usuUsuario);
         if (str_mensaje.isEmpty()) {
             utilitario.agregarMensaje("Se guardo correctamente", "");
             usuUsuario = new Usuario();
             cargarDatos();
-            utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            if (!nuevo) {
+                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            }
         } else {
             utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
         }
@@ -118,7 +130,11 @@ public class controladorUsuarios {
             utilitario.agregarMensajeInfo("El sistema se encuentra actualizado con todos los usuarios", "");
         } else if (int_num > 0) {
             utilitario.agregarMensaje("Se importaron " + int_num + " usuarios al sistema", "");
-            cargarDatos();
+
+            if (utilitario.getURLCompleto().endsWith("ListadoUsuarios.jsf")) {
+                RequestContext.getCurrentInstance().update(":frmPrincipal");
+            }
+
         } else {
             utilitario.agregarMensajeError("No se pudieron importar usuarios", "");
         }

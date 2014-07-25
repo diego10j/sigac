@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Docentes;
+import entidades.PeriodoLectivo;
 import framework.reportes.GenerarReporte;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioDocente;
 import servcios.servicioInstitucion;
+import servcios.servicioPeriodo;
 
 /**
  *
@@ -34,9 +36,21 @@ public class controladorDocente {
     @EJB
     private servicioInstitucion servInstitucion;
     private String str_path_reporte;
+    private String strPeriodoSeleccionado;
+    private List lisPeriodos;
+    @EJB
+    private servicioPeriodo servPeriodo;
+    private PeriodoLectivo perActivo;
 
     @PostConstruct
     public void cargarDatos() {
+        lisPeriodos = servPeriodo.getListaPeriodos();
+        perActivo = servPeriodo.getPeriodoActivo();
+        if (perActivo == null) {
+            utilitario.agregarMensajeError("No tiene ningun Período Lectivo Activo", "");
+            return;
+        }
+        strPeriodoSeleccionado = perActivo.getPerCodigo().toString();
         listaDocentes = servDocente.getDocentes();
         str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
     }
@@ -60,12 +74,19 @@ public class controladorDocente {
     public void guardar() {
         docDocente.setInsCodigo(servInstitucion.getIntitucion());
         if (utilitario.validarCedula(docDocente.getDocCedula())) {
+            boolean nuevo = true;
+            if (docDocente.getDocCodigo() != null) {
+                nuevo = false;
+            }
             String str_mensaje = servDocente.guardarDocente(docDocente);
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se guardo correctamente", "");
                 docDocente = new Docentes();
-                cargarDatos();
-                utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                if (!nuevo) {
+                    cargarDatos();
+                    utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+                }
+
             } else {
                 utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
@@ -83,7 +104,13 @@ public class controladorDocente {
 
     public void verReporteListadoCargoDocentes() {
         Map p = new HashMap();
-        p.put("", null);
+        int int_periodo = -1;
+        try {
+            int_periodo = Integer.parseInt(strPeriodoSeleccionado);
+        } catch (Exception e) {
+            int_periodo = -1;
+        }
+        p.put("periodo", int_periodo);
         GenerarReporte generar = new GenerarReporte();
         generar.generar(p, "/reportes/rep_docentes/rep_cargo_docente.jasper");
     }
@@ -119,4 +146,21 @@ public class controladorDocente {
     public void setStr_path_reporte(String str_path_reporte) {
         this.str_path_reporte = str_path_reporte;
     }
+
+    public String getStrPeriodoSeleccionado() {
+        return strPeriodoSeleccionado;
+    }
+
+    public void setStrPeriodoSeleccionado(String strPeriodoSeleccionado) {
+        this.strPeriodoSeleccionado = strPeriodoSeleccionado;
+    }
+
+    public List getLisPeriodos() {
+        return lisPeriodos;
+    }
+
+    public void setLisPeriodos(List lisPeriodos) {
+        this.lisPeriodos = lisPeriodos;
+    }
+    
 }
