@@ -16,6 +16,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioTipoAsignaturas;
 
+
+
 /**
  *
  * @author Diego
@@ -28,18 +30,19 @@ public class controladorTipoAsignaturas {
     private servicioTipoAsignaturas servTipoAsignaturas;
     private Tipoasignaturas tipoasignaturas = new Tipoasignaturas();
     private Utilitario utilitario = new Utilitario();
-    private List<Tipoasignaturas> listaTipoasignaturas;
-    private List<Tipoasignaturas> filtroTipoasignaturas;
+
+     private List<Tipoasignaturas> listaTipoasignaturas;
+     private List<Tipoasignaturas> filtroTipoasignaturas;
 
     @PostConstruct
     public void cargarDatos() {
         listaTipoasignaturas = servTipoAsignaturas.getTipoasignaturas();
     }
 
-    public void insertar() {
+    public void insertar(){
         tipoasignaturas = new Tipoasignaturas();
     }
-
+    
     public void eliminar() {
         if (tipoasignaturas.getTipCodigo() != null) {
             String str_mensaje = servTipoAsignaturas.elimnarTipoAsignaturas(tipoasignaturas.getTipCodigo().toString());
@@ -53,23 +56,17 @@ public class controladorTipoAsignaturas {
     }
 
     public void guardar() {
-
-        boolean nuevo = true;
-        if (tipoasignaturas.getTipCodigo() != null) {
-            nuevo = false;
-        }
-        String str_mensaje = servTipoAsignaturas.guardarTipoAsignaturas(tipoasignaturas);
-        if (str_mensaje.isEmpty()) {
-            utilitario.agregarMensaje("Se guardo correctamente", "");
-            tipoasignaturas = new Tipoasignaturas();
-            if (!nuevo) {
+        
+           String str_mensaje = servTipoAsignaturas.guardarTipoAsignaturas(tipoasignaturas);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+                tipoasignaturas = new Tipoasignaturas();
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        } else {
-            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-        }
-
+        
     }
 
     public Tipoasignaturas getTipoasignaturas() {
@@ -95,4 +92,7 @@ public class controladorTipoAsignaturas {
     public void setFiltroTipoasignaturas(List<Tipoasignaturas> filtroTipoasignaturas) {
         this.filtroTipoasignaturas = filtroTipoasignaturas;
     }
+   
+    
+   
 }

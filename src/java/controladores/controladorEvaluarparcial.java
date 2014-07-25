@@ -33,12 +33,12 @@ public class controladorEvaluarparcial {
     public void cargarDatos() {
         listaEvaluarparcial = servEvaluarparcial.getEvaluarparcials();
     }
-
-    public void insertar() {
+    
+    public void insertar(){
         evaParcial = new Evaluarparcial();
     }
-
-    public void eliminar() {
+    
+     public void eliminar() {
         if (evaParcial.getEvaCodigo() != null) {
             String str_mensaje = servEvaluarparcial.elimnarEvaluarparcial(evaParcial.getEvaCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -51,22 +51,17 @@ public class controladorEvaluarparcial {
     }
 
     public void guardar() {
-        boolean nuevo = true;
-        if (evaParcial.getEvaCodigo() != null) {
-            nuevo = false;
-        }
-        String str_mensaje = servEvaluarparcial.guardarEvaluarparcial(evaParcial);
-        if (str_mensaje.isEmpty()) {
-            utilitario.agregarMensaje("Se guardo correctamente", "");
-            evaParcial = new Evaluarparcial();
-            if (!nuevo) {
+        
+            String str_mensaje = servEvaluarparcial.guardarEvaluarparcial(evaParcial);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+                evaParcial = new Evaluarparcial();
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        } else {
-            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-        }
-
+       
     }
 
     public Evaluarparcial getEvaParcial() {
@@ -92,4 +87,6 @@ public class controladorEvaluarparcial {
     public void setFiltroEvaluarparcial(List<Evaluarparcial> filtroEvaluarparcial) {
         this.filtroEvaluarparcial = filtroEvaluarparcial;
     }
+    
+  
 }
