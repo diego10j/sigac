@@ -7,65 +7,67 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">Asistencia Parcial</ui:define>
+    <ui:define name="tituloPagina">Informe Quimestre</ui:define>
 
     <ui:define name="menuIzquierda">
         <h:form>
             <p:panelMenu >
                 <p:submenu label="Opciones">
-                    <p:menuitem value="Registrar Asistencia"   icon="ui-icon-pencil"  url="PasarAsistenciaParcial.jsf"/>
+                    <p:menuitem value="Registrar Examen"   icon="ui-icon-pencil"  url="InformeQuimestre.jsf"/>
                 </p:submenu>
                 <p:separator />
                 <p:submenu label="Reportes">
-                    <p:menuitem value="Reporte Asistencia"  icon="ui-icon-note" url="ReporteAsistenciaParcial.jsf"/>
+                    <p:menuitem value="Reporte Evaluación de Destrezas"  icon="ui-icon-note" url="ReporteQuimestre.jsf"/>
                 </p:submenu>
             </p:panelMenu>
         </h:form>
     </ui:define>
 
-
     <ui:define name="contenido">
-
         <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
-            <h:outputText value="Reporte de Asistencia" />
+            <h:outputText value="Reporte Evaluación de Destrezas " />
         </div>
-        <p style="font-size: 12px;">Reporte de Asistencia de los Alumnos de un Curso Seleccionado</p>
+        <p style="font-size: 12px;">Reporte de Evaluación de Destrezas por Asignatura </p>
 
         <h:form prependId="false" id="frmPrincipal">
+
             <h:panelGrid columns="4">
                 <h:outputText value="Docente:"/>
                 <h:outputText style="font-size: 18px;" value="#{controladorParcial.docDocente.docNombres}"/>
 
                 <h:outputText value="Periódo Lectivo:"/>
                 <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
+                <h:outputText value="Curso:"/>
+                <p:selectOneMenu value="#{controladorParcial.objCursoSeleccionado}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                    <p:ajax event="change" listener="#{controladorParcial.seleccionarCursos}" process="@this" update=":frmPrincipal:tabMaterias"/>
+                    <f:selectItem itemValue="#{null}" itemLabel="Seleccione un Curso..." />
+                    <f:selectItems value="#{controladorParcial.lisCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}   #{combo[2]}"/>
+                </p:selectOneMenu>
             </h:panelGrid>
 
-            <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
-                         selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="100" >
-                <p:column headerText="CURSO" width="75%">
+            <p:dataTable  id="tabMaterias" value="#{controladorParcial.lisAsignaturas}" var="tabla" rowKey="#{tabla[0]}"
+                          selection="#{controladorParcial.objAsignaturaSeleccionada}" selectionMode="single" scrollable="true" scrollHeight="100">
+                <p:column headerText="ASIGNATURA" >
                     #{tabla[1]}
                 </p:column>
-                <p:column headerText="PARALELO" width="25%">
-                    #{tabla[2]}
+                <p:column headerText="TIPO" >
+                    #{tabla[3]}
                 </p:column>
 
             </p:dataTable>
-            <p:separator/>
+
             <p:panelGrid columns="2">
                 <f:facet name="header">
                     Formato de Salida
                 </f:facet>
                 <h:graphicImage value="../imagenes/im_excel.gif"/>
-                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteasitencia}"  />
+                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteTodos}"  />
 
                 <h:graphicImage value="../imagenes/im_pdf.gif"/>
-                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteasitencia}" />
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteTodos}" />
 
             </p:panelGrid>
 
         </h:form>
-
-
-
     </ui:define>
 </ui:composition>

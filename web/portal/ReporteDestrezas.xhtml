@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="tituloPagina">Notas Parcial</ui:define>
+
+    <ui:define name="menuIzquierda">
+        <h:form>
+            <p:panelMenu >
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Registrar Notas Parcial"   icon="ui-icon-pencil"  url="PasarParcial.jsf"/>
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Reportes">
+                    <p:menuitem value="Reporte Destrezas por Parcial"  icon="ui-icon-note" url="ReporteDestrezas.jsf"/>
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="contenido">
+        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <h:outputText value="Reporte de Destrezas por Parcial " />
+        </div>
+        <p style="font-size: 12px;">Reporte de Evaluación de Destrezas por Parcial de una Asignatura </p>
+
+        <h:form prependId="false" id="frmPrincipal">
+            <h:panelGrid columns="4">
+                <h:outputText value="Docente:"/>
+                <h:outputText style="font-size: 18px;" value="#{controladorParcial.docDocente.docNombres}"/>
+                <h:outputText value="Periódo Lectivo:"/>
+                <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="6">
+                <h:outputText value="Quimestre:"/>
+                <p:selectOneMenu value="#{controladorParcial.strForma}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
+                    <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>    
+
+                <h:outputText value="Parcial:"/>
+                <p:selectOneMenu value="#{controladorParcial.strParcial}" required="true" requiredMessage="Debe seleccionar un Parcial">
+                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Parcial ..." />
+                    <f:selectItems value="#{controladorParcial.comParciales}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
+                </p:selectOneMenu>
+                <h:outputText value="Curso:"/>
+                <p:selectOneMenu value="#{controladorParcial.objCursoSeleccionado}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                    <p:ajax event="change" listener="#{controladorParcial.seleccionarCursos}" process="@this" update=":frmPrincipal:tabMaterias"/>
+                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Curso..." />
+                    <f:selectItems value="#{controladorParcial.lisCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}   #{combo[2]}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:dataTable id="tabMaterias" value="#{controladorParcial.lisAsignaturas}" var="tabla" rowKey="#{tabla[0]}"
+                         selection="#{controladorParcial.objAsignaturaSeleccionada}" selectionMode="single" scrollHeight="100" scrollable="true">
+                <p:column headerText="ASIGNATURA" >
+                    #{tabla[1]}
+                </p:column>
+                <p:column headerText="TIPO" >
+                    #{tabla[3]}
+                </p:column>
+
+            </p:dataTable>
+
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    Formato de Salida
+                </f:facet>
+                <h:graphicImage value="../imagenes/im_excel.gif"/>
+                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteDestrezas}"  />
+
+                <h:graphicImage value="../imagenes/im_pdf.gif"/>
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteDestrezas}" />
+
+            </p:panelGrid>
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

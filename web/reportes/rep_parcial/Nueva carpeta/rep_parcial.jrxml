@@ -2,17 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_parcial" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="002118e2-1e82-44d9-a3a9-62e6cda746b6">
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="248"/>
+	<property name="ireport.y" value="257"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="matricula" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="quimestre" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="parcial" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -31,9 +22,8 @@ INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo
 inner join formaevaluar k on k.for_codigo=a.for_codigo
 inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo
 INNER JOIN docentes m on f.doc_codigo=m.doc_codigo
-where a.eva_codigo=$P{parcial} and a.for_codigo=$P{quimestre}
-and  a.mat_codigo =$P{matricula}
-]]>
+where a.eva_codigo=2 and a.for_codigo=1
+and  a.mat_codigo in (28,27)]]>
 	</queryString>
 	<field name="per_nombre" class="java.lang.String"/>
 	<field name="nombres" class="java.lang.String"/>
@@ -249,16 +239,12 @@ and  a.mat_codigo =$P{matricula}
 	<summary>
 		<band height="379" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="e5caf223-c0ac-40e3-ab87-770cecc5ff6f" positionType="Float" x="1" y="37" width="555" height="10"/>
-				<subreportParameter name="quimestre">
-					<subreportParameterExpression><![CDATA[$P{quimestre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="parcial">
-					<subreportParameterExpression><![CDATA[$P{parcial}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="matricula">
-					<subreportParameterExpression><![CDATA[$P{matricula}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement uuid="0b3f597e-cb4e-48bd-9400-2c4d66a25c32" x="0" y="0" width="555" height="10"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_parcial/sub_rep_disciplina.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="e5caf223-c0ac-40e3-ab87-770cecc5ff6f" x="1" y="67" width="555" height="10"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_parcial/sup_rep_asistencia.jasper"]]></subreportExpression>
 			</subreport>
@@ -288,20 +274,6 @@ and  a.mat_codigo =$P{matricula}
 				<reportElement uuid="f5eb4988-faaa-452b-bceb-1fbb96826ff2" x="1" y="360" width="554" height="13"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_parcial/rep_parcial_subreport1.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="71f770b1-ec22-436c-914c-54fd3130968f" x="1" y="20" width="554" height="6"/>
-				<subreportParameter name="matricula">
-					<subreportParameterExpression><![CDATA[$P{matricula}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="parcial">
-					<subreportParameterExpression><![CDATA[$P{parcial}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="quimestre">
-					<subreportParameterExpression><![CDATA[$P{quimestre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_parcial/sub_rep_disciplina.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

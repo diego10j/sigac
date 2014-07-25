@@ -80,7 +80,7 @@
                     <p:column width="60" headerText="ALUMNOS">
                         <p:commandLink action="#{controladorCrearCurso.verReporteAlumnosCursos}" 
                                        value="Alumnos Inscritos"
-                                       title="Reporte de Alumnos Inscritos" oncomplete="window.open('#{controladorCrearCurso.str_path_reporte}');">
+                                       title="Reporte de Alumnos Inscritos" >
                             <f:setPropertyActionListener
                                 target="#{controladorCrearCurso.creCrearc}" value="#{tabla}" />
                         </p:commandLink>

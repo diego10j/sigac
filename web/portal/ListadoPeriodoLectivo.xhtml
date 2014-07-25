@@ -26,9 +26,10 @@
 
         <h:form prependId="false" id="frmPrincipal">
 
-        <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
+            <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
                 <h:outputText value="Administración de Períodos Lectivos" />
             </div>
+            <p style="font-size: 12px;">Recuerde que debe existir solo un período lectivo ACTIVO</p>
             <!-- CONFIGURACIÓN TABLA -->
             <h:panelGroup id="pnlTabela"> 
 
@@ -56,21 +57,23 @@
                         </p:commandLink>
                     </p:column>
 
-                    <p:column headerText="NOMBRE" filterBy="#{tabla.perNombre}" sortBy="#{tabla.perNombre}">
+                    <p:column headerText="NOMBRE"  sortBy="#{tabla.perNombre}">
                         <h:outputText value="#{tabla.perNombre}"/>                     
                     </p:column>
-                    <p:column headerText="FECHA DE INICIO" filterBy="#{tabla.perFechainicio}" sortBy="#{tabla.perFechainicio}" >
+                    <p:column headerText="FECHA DE INICIO"  sortBy="#{tabla.perFechainicio}" >
                         <h:outputText value="#{tabla.perFechainicio}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="FECHA FIN" filterBy="#{tabla.perFechafin}" sortBy="#{tabla.perFechafin}" >
+                    <p:column headerText="FECHA FIN" sortBy="#{tabla.perFechafin}" >
                         <h:outputText value="#{tabla.perFechafin}">
                             <f:convertDateTime type="date" dateStyle="short"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="ESTADO DEL PERIODO"  sortBy="#{tabla.perActivo}">
-                        <h:outputText value="#{tabla.perActivo}"/>                     
+                    <p:column headerText="ACTIVO"  sortBy="#{tabla.perActivo}">
+                        <h:outputText style="color: #00cc33;font-weight: bold;font-size:12px; " value="#{tabla.perActivo}" rendered="#{tabla.perActivo==true}"/>                     
+                        <h:outputText style="color:#ff0000 ;font-weight: bold;font-size:12px; " value="#{tabla.perActivo}" rendered="#{tabla.perActivo==false}"/>                     
+
                     </p:column>
 
                 </p:dataTable>
@@ -104,7 +107,7 @@
                             <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechainicio}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Inicio"/>
                             <h:outputText value="Fecha Fin :*"/>
                             <p:calendar value="#{controladorPeridoLectivo.perPeriodo.perFechafin}" pattern="dd-mm-yyyy" size="10" required="true" requiredMessage="Debe ingresar la Fecha de Fin"/>
-                            <h:outputText value="Estado :*"/>
+                            <h:outputText value="Activo:*"/>
                             <p:selectBooleanCheckbox value="#{controladorPeridoLectivo.perPeriodo.perActivo}" required="true" requiredMessage="Debe ingresar el Estado" />                   
 
                         </h:panelGrid>

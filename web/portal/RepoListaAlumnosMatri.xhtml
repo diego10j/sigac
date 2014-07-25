@@ -35,7 +35,7 @@
             <p:dataTable value="#{controladorMatriculas.lisCrearCursos}" var="tabla" rowKey="#{tabla.creCodigo}"
                          selectionMode="single" selection="#{controladorMatriculas.creCursoSeleccionado}" scrollable="true" scrollWidth="100%" scrollHeight="100">
 
-
+                <p:ajax event="rowSelect" update="@this"/>
                 <p:column headerText="CURSO" >
                     <h:outputText value="#{tabla.curCodigo.curAnio}"/>
                 </p:column>
@@ -51,9 +51,9 @@
                 Formato de Salida
             </f:facet>
             <h:graphicImage value="../imagenes/im_excel.gif"/>
-            <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" oncomplete="window.open('#{controladorMatriculas.str_path_reporte}');" />
+            <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" />
             <h:graphicImage value="../imagenes/im_pdf.gif"/>
-            <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" oncomplete="window.open('#{controladorMatriculas.str_path_reporte}');" />
+            <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" />
 
         </p:panelGrid>
 

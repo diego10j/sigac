@@ -17,7 +17,7 @@
                 </p:submenu>
                 <p:separator />
                 <p:submenu label="Reportes">
-                    <p:menuitem value="Reporte Destrezas"  icon="ui-icon-note" url="ReporteDestrezas.jsf"/>
+                    <p:menuitem value="Reporte Destrezas por Parcial"  icon="ui-icon-note" url="ReporteDestrezas.jsf"/>
                 </p:submenu>
             </p:panelMenu>
         </h:form>
@@ -94,7 +94,7 @@
                 <p:column headerText="Alumno" style="width:25%" >
                     #{tabla[1]} #{tabla[2]}
                 </p:column>
-                <p:column headerText="Trabajos" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cTrabajos">
+                <p:column headerText="Trabajos" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cTrabajos">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
                         <f:facet name="input">
@@ -103,7 +103,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Act. Ind." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cActInd">
+                <p:column headerText="Act. Ind." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cActInd">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
                         <f:facet name="input">
@@ -113,7 +113,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Act. Grup." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cActGrup">
+                <p:column headerText="Act. Grup." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cActGrup">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
                         <f:facet name="input">
@@ -123,7 +123,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Lecciones" rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cLecc">
+                <p:column headerText="Lecciones" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cLecc">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                         <f:facet name="input">
@@ -133,7 +133,7 @@
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
-                <p:column headerText="Eval. Suma." rendered="#{controladorParcial.booMuestra}" style="width:10%" id="cEval">
+                <p:column headerText="Eval. Suma." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cEval">
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
                         <f:facet name="input">
