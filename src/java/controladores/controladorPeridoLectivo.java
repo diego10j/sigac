@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import servcios.servicioInstitucion;
 import servcios.servicioPeriodo;
 
+
 /**
  *
  * @author Diego
@@ -26,53 +27,49 @@ public class controladorPeridoLectivo {
     @EJB
     private servicioPeriodo servPeriodo;
     private PeriodoLectivo perPeriodo = new PeriodoLectivo();
+   
     private Utilitario utilitario = new Utilitario();
     private List<PeriodoLectivo> listaPeriodoLectivo;
     private List<PeriodoLectivo> filtroPeriodoLectivo;
-    @EJB
+     @EJB
     private servicioInstitucion servInstitucion;
 
     @PostConstruct
     public void cargarDatos() {
         listaPeriodoLectivo = servPeriodo.getPeriodoLectivo();
-        filtroPeriodoLectivo = null;
+        filtroPeriodoLectivo=null;
     }
-
-    public void insertar() {
+    
+    public void insertar(){
         perPeriodo = new PeriodoLectivo();
     }
+  
 
-    public void eliminar() {
+   public void eliminar() {
         if (perPeriodo.getPerCodigo() != null) {
             String str_mensaje = servPeriodo.elimnarPeriodoLectivo(perPeriodo.getPerCodigo().toString());
             if (str_mensaje.isEmpty()) {
                 utilitario.agregarMensaje("Se elimino correctamente", "");
                 cargarDatos();
-
-            } else {
+                
+                } else {
                 utilitario.agregarMensajeError("No se puede eliminar " + str_mensaje, "");
             }
         }
     }
-
+    
     public void guardar() {
-        perPeriodo.setInsCodigo(servInstitucion.getIntitucion());
-        boolean nuevo = true;
-        if (perPeriodo.getPerCodigo() != null) {
-            nuevo = false;
-        }
-        String str_mensaje = servPeriodo.guardarPeriodoLectivo(perPeriodo);
-        if (str_mensaje.isEmpty()) {
-            utilitario.agregarMensaje("Se guardo correctamente", "");
-            perPeriodo = new PeriodoLectivo();
-            if (!nuevo) {
+           perPeriodo.setInsCodigo(servInstitucion.getIntitucion());
+           String str_mensaje = servPeriodo.guardarPeriodoLectivo(perPeriodo);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+                perPeriodo = new PeriodoLectivo();
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        } else {
-            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-        }
-
+        
     }
 
     public PeriodoLectivo getPerPeriodo() {
@@ -98,4 +95,6 @@ public class controladorPeridoLectivo {
     public void setListaPeriodoLectivo(List<PeriodoLectivo> listaPeriodoLectivo) {
         this.listaPeriodoLectivo = listaPeriodoLectivo;
     }
+  
+   
 }

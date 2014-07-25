@@ -30,8 +30,8 @@ public class controladorMenu {
 
     public void dibujarMenu() {
         menu.getChildren().clear();
-        rolCodigo = utilitario.getVariable("rolCodigo");
-        List lis_consulta = utilitario.getConexion().consultar("SELECT pa.pan_codigo,pan_nombre,pan_path,pan_icono from permisos pe, pantalla pa \n"
+        rolCodigo = utilitario.getVariable("rolCodigo"); 
+        List lis_consulta = utilitario.getConexion().consultar("SELECT pa.pan_codigo,pan_nombre,pan_path from permisos pe, pantalla pa \n"
                 + "where pe.pan_Codigo = pa.pan_Codigo\n"
                 + "and pe.rol_Codigo=" + rolCodigo + "\n"
                 + "and pa.pan_pan_codigo is null order by pa.pan_nombre");
@@ -40,9 +40,6 @@ public class controladorMenu {
             Submenu sub_menu = new Submenu();
             sub_menu.setId("sub_" + fila[0]);
             sub_menu.setLabel(fila[1] + "");
-            if (fila[3] != null) {
-                sub_menu.setIcon(fila[3] + "");
-            }
             formar_menu_recursivo(sub_menu, fila[0]);
             menu.getChildren().add(sub_menu);
 
@@ -50,7 +47,7 @@ public class controladorMenu {
     }
 
     private void formar_menu_recursivo(Submenu sub_menu, Object ide_opci) {
-        List lis_consulta = utilitario.getConexion().consultar("SELECT pa.pan_codigo,pan_nombre,pan_path,pan_icono from permisos pe, pantalla pa \n"
+        List lis_consulta = utilitario.getConexion().consultar("SELECT pa.pan_codigo,pan_nombre,pan_path from permisos pe, pantalla pa \n"
                 + "where pe.pan_Codigo = pa.pan_Codigo\n"
                 + "and pe.rol_Codigo=" + rolCodigo + "\n"
                 + "and pa.pan_pan_codigo=" + ide_opci + " order by pa.pan_nombre");
@@ -62,9 +59,6 @@ public class controladorMenu {
                 sub_menu_nuevo.setLabel(fila[1] + "");
                 sub_menu.setId("sub_" + fila[0]);
                 sub_menu.getChildren().add(sub_menu_nuevo);
-                if (fila[3] != null) {
-                    sub_menu.setIcon(fila[3] + "");
-                }
                 formar_menu_recursivo(sub_menu_nuevo, fila[0]);
             } else {
 
@@ -72,9 +66,6 @@ public class controladorMenu {
                 mei_item.setId("item_" + fila[0]);
                 mei_item.setValue(fila[1]);
                 mei_item.setUrl(fila[2] + "");
-                if (fila[3] != null) {
-                    mei_item.setIcon(fila[3] + "");
-                }
                 sub_menu.getChildren().add(mei_item);
             }
         }

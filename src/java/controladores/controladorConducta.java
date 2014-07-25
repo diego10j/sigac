@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import servcios.servicioConducta;
 import servcios.servicioInstitucion;
 
+
 /**
  *
  * @author Diego
@@ -27,21 +28,23 @@ public class controladorConducta {
     @EJB
     private servicioConducta servConducta;
     private EquivalenciaConducta eqvConducta = new EquivalenciaConducta();
+   
     private Utilitario utilitario = new Utilitario();
-    private List<EquivalenciaConducta> listaEquivalenciaConducta;
-    @EJB
-    private servicioInstitucion servInstitucion;
+     private List<EquivalenciaConducta> listaEquivalenciaConducta;
+      
 
+       @EJB
+    private servicioInstitucion servInstitucion;
     @PostConstruct
     public void cargarDatos() {
         listaEquivalenciaConducta = servConducta.getEquivalenciaConducta();
     }
 
-    public void insertar() {
+    public void insertar(){
         eqvConducta = new EquivalenciaConducta();
     }
-
-    public void eliminar() {
+    
+public void eliminar() {
         if (eqvConducta.getEqcCodigo() != null) {
             String str_mensaje = servConducta.elimnarConducta(eqvConducta.getEqcCodigo().toString());
             if (str_mensaje.isEmpty()) {
@@ -52,25 +55,19 @@ public class controladorConducta {
             }
         }
     }
-
+    
     public void guardar() {
-        eqvConducta.setInsCodigo(servInstitucion.getIntitucion());
-        boolean nuevo = true;
-        if (eqvConducta.getEqcCodigo() != null) {
-            nuevo = false;
-        }
-        String str_mensaje = servConducta.guardarConducta(eqvConducta);
-        if (str_mensaje.isEmpty()) {
-            utilitario.agregarMensaje("Se guardo correctamente", "");
-            eqvConducta = new EquivalenciaConducta();
-            if (!nuevo) {
+         eqvConducta.setInsCodigo(servInstitucion.getIntitucion());
+           String str_mensaje = servConducta.guardarConducta(eqvConducta);
+            if (str_mensaje.isEmpty()) {
+                utilitario.agregarMensaje("Se guardo correctamente", "");
+                eqvConducta= new EquivalenciaConducta();
                 cargarDatos();
                 utilitario.ejecutarJavaScript("wdlgDetalle.hide()");
+            } else {
+                utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
             }
-        } else {
-            utilitario.agregarMensajeError("No se pudo guardar", str_mensaje);
-        }
-
+        
     }
 
     public EquivalenciaConducta getEqvConducta() {
@@ -88,4 +85,9 @@ public class controladorConducta {
     public void setListaEquivalenciaConducta(List<EquivalenciaConducta> listaEquivalenciaConducta) {
         this.listaEquivalenciaConducta = listaEquivalenciaConducta;
     }
+
+ 
+   
+  
+   
 }
