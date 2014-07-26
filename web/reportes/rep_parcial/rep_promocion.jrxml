@@ -10,6 +10,7 @@
 	<parameter name="letraspromGeneral" class="java.lang.String"/>
 	<parameter name="equivalencia" class="java.lang.String"/>
 	<parameter name="comporta" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -36,7 +37,7 @@
 			</staticText>
 			<image>
 				<reportElement uuid="3b79ab96-5603-4140-ad2f-b7d2f7e4ac06" x="179" y="9" width="177" height="49"/>
-				<imageExpression><![CDATA["D:\\Usuarios\\dfjacome\\Documents\\NetBeansProjects\\sigac\\web\\imagenes\\ministerio.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/imagenes/ministerio.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="1ad1ac60-907a-45a5-947c-5a0dba7fc487" x="2" y="85" width="553" height="20"/>
