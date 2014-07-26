@@ -235,7 +235,7 @@ public class Utilitario extends Framework {
         String letras = getFormatoNumero(numero);
         if (letras != null) {
             try {
-                letras = recursivoNumeroLetras(Integer.parseInt(letras.substring(0, letras.lastIndexOf(".")))) + " CON" + recursivoNumeroLetras(Integer.parseInt(letras.substring((letras.lastIndexOf(".") + 1), letras.length())));
+                letras = recursivoNumeroLetras(Integer.parseInt(letras.substring(0, letras.lastIndexOf(".")))) + " CON " + (Integer.parseInt(letras.substring((letras.lastIndexOf(".") + 1), letras.length())));
                 letras = letras.toUpperCase();
                 letras = letras.trim();
             } catch (Exception e) {
