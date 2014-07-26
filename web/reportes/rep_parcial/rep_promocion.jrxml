@@ -1,90 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_promocion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3760851-d981-430e-9ce3-6d1cdf1a9626">
-	<property name="ireport.zoom" value="1.2100000000000002"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_promocion" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3760851-d981-430e-9ce3-6d1cdf1a9626">
+	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="fecha_prom" class="java.util.Date"/>
 	<parameter name="matricula" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="promGeneral" class="java.lang.String"/>
+	<parameter name="letraspromGeneral" class="java.lang.String"/>
+	<parameter name="equivalencia" class="java.lang.String"/>
+	<parameter name="comporta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT e.alu_apellidos||' '||e.alu_nombres as nombres,round(avg(inf_nota),0) as promedio,c.asi_nombre,g.cur_anio FROM informe_quimestre a
-inner join distributivomxc b on a.dis_codigo=b.dis_codigo
-inner join asignaturas c on b.asi_codigo=c.asi_codigo
-inner join matricula d on a.mat_codigo=d.mat_codigo
-inner join alumnos e on d.alu_codigo=e.alu_codigo
-inner join crear_curso f on d.cre_codigo=f.cre_codigo
-inner join cursos g on f.cur_codigo=g.cur_codigo
-where a.mat_codigo=$P{matricula}
-group by e.alu_apellidos||' '||e.alu_nombres,c.asi_nombre,g.cur_anio]]>
+		<![CDATA[]]>
 	</queryString>
 	<field name="nombres" class="java.lang.String"/>
-	<field name="promedio" class="java.math.BigDecimal"/>
+	<field name="promedio" class="java.lang.String"/>
 	<field name="asi_nombre" class="java.lang.String"/>
 	<field name="cur_anio" class="java.lang.String"/>
+	<field name="per_nombre" class="java.lang.String"/>
+	<field name="ins_director" class="java.lang.String"/>
+	<field name="ins_secretaria" class="java.lang.String"/>
+	<field name="tip_codigo" class="java.lang.String"/>
+	<field name="letras" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="44" splitType="Stretch"/>
+		<band height="161" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2dccb0d3-23bc-4c44-9eb0-abbf1b4e46f5" x="1" y="65" width="553" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO NIÑO JESUS DE PRAGA]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="3b79ab96-5603-4140-ad2f-b7d2f7e4ac06" x="179" y="9" width="177" height="49"/>
+				<imageExpression><![CDATA["D:\\Usuarios\\dfjacome\\Documents\\NetBeansProjects\\sigac\\web\\imagenes\\ministerio.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="1ad1ac60-907a-45a5-947c-5a0dba7fc487" x="2" y="85" width="553" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO DE PROMOCIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="64a1128f-08c5-4939-94d9-f1876e59bd4e" x="2" y="111" width="551" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{per_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="75e7cde0-e3c1-41ec-969f-97e424355d97" x="2" y="131" width="553" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JORNADA MATUTINA]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
 		<band height="118" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c0ae0779-2d44-403b-bda8-4b9b8d07dad7" x="0" y="37" width="553" height="19"/>
+				<reportElement uuid="c0ae0779-2d44-403b-bda8-4b9b8d07dad7" x="13" y="37" width="530" height="70"/>
 				<textElement>
-					<font size="12"/>
+					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["De conformidad por lo prescrito en la Ley Organica de Educación Intercultural y demás normativa"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="4f2cf789-8b6c-48e9-8322-1883dd53ac7e" x="0" y="56" width="123" height="19"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["vigente, certifica que:  "]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="7dd066fe-03b0-410b-81a2-48897fe4e9c6" x="123" y="56" width="397" height="19" isPrintWhenDetailOverflows="true"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="073b6a28-6246-4d65-abc9-d4ddb5867c34" x="520" y="56" width="33" height="19"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" del "]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="417e86d9-1c0a-405d-b514-e47d93d4566c" x="0" y="75" width="102" height="19" isPrintWhenDetailOverflows="true"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cur_anio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="993f407f-727f-4480-ba02-793af7eb2df6" x="102" y="75" width="441" height="19"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["AÑO DE EDUCACIÓN GENERAL BÁSICA obtuvo las siguientes calificaciones"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="1300066e-272d-41d7-8553-d339003b2acf" x="0" y="94" width="123" height="19"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["durante el presente año lectivo"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["De conformidad por lo prescrito en la Ley Organica de Educación Intercultural y demás normativas vigentes, certifica que el/la alumno/a "+$F{nombres}+" del "+$F{cur_anio}+" obtuvo las siguientes calificaciones durante el presente año lectivo"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="23" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3b772e82-500d-4353-9af4-6a7f04dcd093" x="0" y="3" width="246" height="20"/>
+				<reportElement uuid="3b772e82-500d-4353-9af4-6a7f04dcd093" x="0" y="0" width="317" height="20"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -92,12 +83,12 @@ group by e.alu_apellidos||' '||e.alu_nombres,c.asi_nombre,g.cur_anio]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ASIGNATURAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc3eeab4-1ba2-462f-a538-72822b8d9ee3" x="246" y="3" width="246" height="20"/>
+				<reportElement uuid="bc3eeab4-1ba2-462f-a538-72822b8d9ee3" x="392" y="0" width="162" height="20"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -105,57 +96,151 @@ group by e.alu_apellidos||' '||e.alu_nombres,c.asi_nombre,g.cur_anio]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PROMEDIO]]></text>
+				<text><![CDATA[LETRAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cb32bb49-6343-46ee-800c-d74620929b84" x="317" y="0" width="75" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUM.]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="eeca8a65-1357-4160-918c-c5706a2e2675" x="0" y="0" width="246" height="20"/>
-				<box leftPadding="20">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement/>
+				<reportElement uuid="55662564-05c0-4a4d-b891-c9dcc42d9bac" x="13" y="0" width="304" height="20"/>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{asi_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1c04e763-178f-4ff1-8b73-808e31c7dc4a" x="246" y="0" width="246" height="20"/>
-				<box leftPadding="20">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement/>
+				<reportElement uuid="44c01da2-c863-44b6-a8d5-28b8f74a141e" x="317" y="0" width="75" height="20"/>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{promedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="142affa7-4a14-47c3-af19-b54f3f72b632" x="392" y="0" width="161" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{letras}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="103" splitType="Stretch">
-			<textField>
-				<reportElement uuid="3db3dc8a-454f-4802-85a0-a8094c9a01f6" x="0" y="34" width="553" height="45"/>
-				<textElement>
-					<font size="12"/>
+	<columnFooter>
+		<band height="50">
+			<staticText>
+				<reportElement uuid="1c64bb42-b34a-41d4-8443-3a318e3ac68c" x="13" y="5" width="157" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Por lo tanto es promovido(a) al siguiente grado. Para certificar suscriben en unidad de acto el/la director(a) con el profesor(a) del grado."]]></textFieldExpression>
+				<text><![CDATA[PROMEDIO GENERAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bf1fe2dc-7c8b-4a36-a62d-9937cd8d305e" x="13" y="25" width="157" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPORTAMIENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="37e13f39-7a97-4d3c-a8ff-44ec0cf506bc" x="317" y="5" width="75" height="20"/>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{promGeneral}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="efaaa0d8-0309-43d0-8f61-8d7d3626487b" x="0" y="79" width="553" height="24"/>
+				<reportElement uuid="9ca189a0-3135-4cea-a222-bfb8153159c7" x="392" y="5" width="163" height="20"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{letraspromGeneral}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a530e9dc-2411-4b68-8a38-11c595919df3" x="317" y="25" width="75" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{comporta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="474fca51-b25e-40f1-9243-e1f21780f97c" x="392" y="25" width="163" height="20"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{equivalencia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="cef97025-d9eb-426d-8fb9-4c0c3c035cdc" x="2" y="4" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="795df9ce-353a-48d3-8472-a4885143f948" x="2" y="47" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="282" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3db3dc8a-454f-4802-85a0-a8094c9a01f6" x="13" y="4" width="530" height="60"/>
 				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por lo tanto es promovido(a) al siguiente grado/curso. Para certificar suscriben en unidad de acto el/la Director/a - Rector/a con el/la Secretario/a General del Plantel - Profesor/a de Grado."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7337a874-8734-47da-9797-34b11f838a78" x="62" y="133" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["En la cuidad de Quito, a los 7 días del mes julio del 2012."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ins_director}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="deea2dab-f926-4675-bbb9-1c3d6c736198" x="62" y="153" width="163" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTOR/A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3acea996-a231-4b52-88cc-ab673d32d74e" x="362" y="153" width="163" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="43992fe4-cbcc-44c2-b561-d50a5beca8e6" x="362" y="133" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ins_secretaria}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
