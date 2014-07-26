@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_promocion" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3760851-d981-430e-9ce3-6d1cdf1a9626">
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="106"/>
 	<parameter name="matricula" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -69,7 +69,7 @@
 				<textElement>
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["De conformidad por lo prescrito en la Ley Organica de Educación Intercultural y demás normativas vigentes, certifica que el/la alumno/a "+$F{nombres}+" del "+$F{cur_anio}+" obtuvo las siguientes calificaciones durante el presente año lectivo"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["De conformidad por lo prescrito en la Ley Orgánica de Educación Intercultural y demás normativas vigentes, certifica que el/la alumno/a "+$F{nombres}+" del "+$F{cur_anio}+" obtuvo las siguientes calificaciones durante el presente año lectivo"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
