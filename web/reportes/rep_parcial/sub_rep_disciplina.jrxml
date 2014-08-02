@@ -13,7 +13,7 @@
 	<queryString>
 		<![CDATA[SELECT com_equi,com_equivalencia FROM comportamientoparcial
 where eva_codigo=$P{parcial} and for_codigo=$P{quimestre}
-and  mat_codigo=28]]>
+and  mat_codigo=$P{matricula}]]>
 	</queryString>
 	<field name="com_equi" class="java.lang.String"/>
 	<field name="com_equivalencia" class="java.lang.String"/>

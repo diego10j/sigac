@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_cuadro_general" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada22081-ad02-4e9c-92c5-9fb0deb5754e">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PROFESOR" class="java.lang.String"/>
+	<parameter name="CURSO" class="java.lang.String"/>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<parameter name="PARALELO" class="java.lang.String"/>
+	<field name="mat_codigo" class="java.lang.String"/>
+	<field name="alumnos" class="java.lang.String"/>
+	<field name="dis_codigo" class="java.lang.String"/>
+	<field name="asi_nombre" class="java.lang.String"/>
+	<field name="q1" class="java.lang.String"/>
+	<field name="q2" class="java.lang.String"/>
+	<field name="p" class="java.lang.String"/>
+	<field name="num" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="13" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0f2ef6bf-1aee-4746-b09c-2dfa53da1d0f" x="20" y="45" width="134" height="15"/>
+				<box leftPadding="10"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AÑO DE BÁSICA: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9d847741-5795-4bb7-ac55-21d4ad108219" x="154" y="30" width="276" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8643c83c-1eb2-44bd-801d-9e6a3f40b3b6" x="0" y="10" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CUADRO GENERAL DE CALIFICACIONES"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98bb8264-fe4f-48a9-8995-eaa546562657" x="154" y="45" width="433" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{CURSO}+" "+$P{PARALELO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5c96e5cc-e1b6-44ce-a426-770ce4141b83" x="20" y="30" width="134" height="15"/>
+				<box leftPadding="10"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROFESOR/A: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="65953b23-ed83-4926-aba2-180bc41a9595" x="444" y="30" width="358" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="31" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="e5341353-8fca-4dcd-b82e-71336a13acf0" x="0" y="0" width="782" height="31"/>
+				<rowGroup name="alumnos" width="144" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{alumnos}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="0c86eb1f-b38f-48d2-a4cc-8003a67d97b7" style="Crosstab Data Text" x="10" y="0" width="134" height="10"/>
+								<box leftPadding="1"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{alumnos}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="6c1601bf-6f14-40f4-a587-88571af1054f" style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="0" y="0" width="10" height="10"/>
+								<box rightPadding="2">
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{numMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#FFF4E6" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="asi_nombre" height="30">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{asi_nombre}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="9b408d67-a3bb-4134-9306-0d7f70abdfc8" style="Crosstab Data Text" mode="Opaque" x="32" y="20" width="16" height="10" backcolor="#FFE2BF"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[P]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="c0c58044-2ecd-4df1-844f-0f5f14913225" style="Crosstab Data Text" x="16" y="20" width="16" height="10"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[IIQ]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="bb047077-66c2-41e2-b4d1-2942beafaf51" style="Crosstab Data Text" x="0" y="20" width="16" height="10"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement>
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[IQ]]></text>
+							</staticText>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="c4b81405-db4a-4773-aabb-34eb8a2e83ed" style="Crosstab Data Text" x="0" y="0" width="48" height="20"/>
+								<textElement verticalAlignment="Middle">
+									<font size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{asi_nombre}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="q1Measure" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{q1}]]></measureExpression>
+				</measure>
+				<measure name="q2Measure" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{q2}]]></measureExpression>
+				</measure>
+				<measure name="pMeasure" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{p}]]></measureExpression>
+				</measure>
+				<measure name="numMeasure" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{num}]]></measureExpression>
+				</measure>
+				<crosstabCell width="48" height="10">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="ffe725fc-1871-40a4-afb0-7d55812c3a70" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="16" height="10" isPrintWhenDetailOverflows="true"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{q1Measure}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="8c637a06-9d29-4fd0-bd1f-3841e462b248" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="16" y="0" width="16" height="10" isPrintWhenDetailOverflows="true"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{q2Measure}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="2a27e7ca-6d1b-490e-983c-4a26a4c33846" style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="32" y="0" width="16" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFE2BF"/>
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{pMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="48" height="6" rowTotalGroup="alumnos">
+					<cellContents backcolor="#FFF4E6" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="asi_nombre">
+					<cellContents backcolor="#FFF4E6" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="f1b31444-fab3-436c-984b-f9948440a747" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{q1Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="alumnos" columnTotalGroup="asi_nombre">
+					<cellContents backcolor="#FFF4E6" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="f98e374e-cdcf-45e1-b392-5a7fb14ed622" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{q1Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

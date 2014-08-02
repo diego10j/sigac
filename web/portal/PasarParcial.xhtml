@@ -17,6 +17,7 @@
                 </p:submenu>
                 <p:separator />
                 <p:submenu label="Reportes">
+                    
                     <p:menuitem value="Reporte Destrezas por Parcial"  icon="ui-icon-note" url="ReporteDestrezas.jsf"/>
                 </p:submenu>
             </p:panelMenu>
@@ -72,22 +73,16 @@
 
             </p:dataTable>
 
-
-
             <p:toolbar >
                 <p:toolbarGroup>
-
-                    <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
+                    <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal:tabNotas" />
                     <p:separator/>
                     <p:commandButton icon="ui-icon-refresh"  value="Actualizar Matriculados" action="#{controladorParcial.actualizarNotasParcial}" update=":frmPrincipal:tabNotas" />  
-
-
-                    <p:separator/>
-                    <p:commandButton value="REPORTE DESTREZAS" action="#{controladorParcial.verReporteDestrezas}" />
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisNotasParcial}" editable="true" editMode="cell" scrollHeight="150" scrollable="true">
+            <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisNotasParcial}" 
+                         editable="true" editMode="cell" scrollHeight="150" scrollable="true">
 
                 <p:ajax event="cellEdit" listener="#{controladorParcial.cabioNota}" /> 
 
@@ -95,19 +90,21 @@
                     #{tabla[1]} #{tabla[2]}
                 </p:column>
                 <p:column headerText="Trabajos" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cTrabajos">
+
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[11]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtTrabajos" value="#{tabla[11]}" style="color: #{tabla[11] eq '0.00' ? 'red':'green'}" /> </f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[11]}" style="width:96%"  >                                       
-                            </p:inputText>
+                            <p:inputText value="#{tabla[11]}" style="width:96%"  onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" />
+                           
                         </f:facet>  
                     </p:cellEditor>  
+
                 </p:column>
                 <p:column headerText="Act. Ind." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cActInd">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtActInd" value="#{tabla[3]}" style="color: #{tabla[3] eq '0.00' ? 'red':'green'}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[3]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[3]}" style="width:96%" onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" >
 
                             </p:inputText>
                         </f:facet>  
@@ -115,9 +112,9 @@
                 </p:column>
                 <p:column headerText="Act. Grup." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cActGrup">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtActGrup" value="#{tabla[4]}" style="color: #{tabla[4] eq '0.00' ? 'red':'green'}"/></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[4]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[4]}" style="width:96%" onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" >
 
                             </p:inputText>
                         </f:facet>  
@@ -125,9 +122,9 @@
                 </p:column>
                 <p:column headerText="Lecciones" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cLecc">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtLecciones" value="#{tabla[5]}" style="color: #{tabla[5] eq '0.00' ? 'red':'green'}"/></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[5]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[5]}" style="width:96%" onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" >
 
                             </p:inputText>
                         </f:facet>  
@@ -135,9 +132,9 @@
                 </p:column>
                 <p:column headerText="Eval. Suma." rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cEval">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[6]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtEval"  value="#{tabla[6]}" style="color: #{tabla[6] eq '0.00' ? 'red':'green'}"/></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[6]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[6]}" style="width:96%" onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" >
                             </p:inputText>
                         </f:facet>  
                     </p:cellEditor>  
@@ -150,9 +147,9 @@
                 </p:column>
                 <p:column headerText="Nota" id="cNota" rendered="#{controladorParcial.booMuestra==false}" style="width:10%">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[8]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText id="txtNota" value="#{tabla[8]}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[8]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[8]}" style="width:96%" onkeypress="return IsNumber(event);" maxlength="5" autocomplete="off" >
                             </p:inputText>
                         </f:facet>  
                     </p:cellEditor>  

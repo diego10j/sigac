@@ -7,7 +7,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+
     <ui:define name="tituloPagina">Asistencia Parcial</ui:define>
+
 
     <ui:define name="menuIzquierda">
         <h:form>
@@ -65,8 +67,7 @@
             <p:separator/>
 
             <p:toolbar >
-                <p:toolbarGroup>
-
+                <p:toolbarGroup>                   
                     <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
                     <p:separator/>
                     <h:outputText value="Número de días del Parcial:"/>
@@ -77,6 +78,8 @@
                     <p:commandButton value="Actualizar Matriculados" icon="ui-icon-refresh"  action="#{controladorParcial.actualizarAsistenciaParcial}" update=":frmPrincipal:tabNotas" />  
                 </p:toolbarGroup>
             </p:toolbar>
+
+
 
             <p:dataTable  id="tabNotas" var="tabla" value="#{controladorParcial.lisAsistenciaParcial}" editable="true" editMode="cell" scrollable="true" scrollHeight="150">
 
@@ -89,7 +92,7 @@
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[3]}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[3]}" style="width:96%"  >
+                            <p:inputText  value="#{tabla[3]}" style="width:96%" >
 
                             </p:inputText>
                         </f:facet>  
@@ -99,9 +102,7 @@
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[4]}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[4]}" style="width:96%"  >
-
-                            </p:inputText>
+                            <p:inputText styleClass="positive" value="#{tabla[4]}" style="width:96%"  />
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>
@@ -109,9 +110,7 @@
                     <p:cellEditor>  
                         <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[5]}" style="width:96%"  >
-
-                            </p:inputText>
+                            <p:inputText  value="#{tabla[5]}" style="width:96%"  />
                         </f:facet>  
                     </p:cellEditor>  
                 </p:column>

@@ -26,9 +26,9 @@
 
     <ui:define name="contenido">
         <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
-            <h:outputText value="Reporte de Parcial" />
+            <h:outputText value="Reporte Quimestre" />
         </div>
-        <p style="font-size: 12px;">Reporte de Notas de un Parcial Seleccionado</p>
+        <p style="font-size: 12px;">Reporte de Notas de un Quimestre Seleccionado</p>
 
         <h:form prependId="false" id="frmPrincipal">
 
@@ -38,13 +38,7 @@
                     <p:ajax event="change"  process="@this" update="@this"/>
                     <f:selectItem itemValue="-1" itemLabel="Seleccione un Quimestre ..." />
                     <f:selectItems value="#{controladorParcial.comFormas}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                </p:selectOneMenu>
-                <h:outputText value="Parcial:"/>
-                <p:selectOneMenu value="#{controladorParcial.strParcial}" required="true" requiredMessage="Debe seleccionar un Parcial">
-                    <p:ajax event="change"  process="@this" update="@this"/>
-                    <f:selectItem itemValue="-1" itemLabel="Seleccione un Parcial ..." />
-                    <f:selectItems value="#{controladorParcial.comParciales}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}"/>
-                </p:selectOneMenu>
+                </p:selectOneMenu>             
             </h:panelGrid>
 
             <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
@@ -71,10 +65,10 @@
                     Formato de Salida
                 </f:facet>
                 <h:graphicImage value="../imagenes/im_excel.gif"/>
-                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteParcial}"  />
+                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteQuimestre}"  />
 
                 <h:graphicImage value="../imagenes/im_pdf.gif"/>
-                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteParcial}" />
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteQuimestre}" />
 
             </p:panelGrid>
 

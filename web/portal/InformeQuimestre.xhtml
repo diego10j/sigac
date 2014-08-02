@@ -18,6 +18,7 @@
                 <p:separator />
                 <p:submenu label="Reportes">
                     <p:menuitem value="Reporte Evaluación de Destrezas"  icon="ui-icon-note" url="ReporteQuimestre.jsf"/>
+                     <p:menuitem value="Reporte CuadroGeneral"  icon="ui-icon-note" url="ReporteCuadroGeneral.jsf"/>
                     <p:menuitem value="Reporte Certificado de Promoción"  icon="ui-icon-note" url="ReporteCertificado.jsf"/>
                 </p:submenu>
             </p:panelMenu>
@@ -66,7 +67,7 @@
 
             <p:toolbar >
                 <p:toolbarGroup>
-                    <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar"/>
+                    <p:commandButton action="#{controladorParcial.guardar}" value="Guardar" icon="ui-guardar" update=":frmPrincipal:tabNotas"/>
                     <p:separator/>
                     <p:commandButton icon="ui-icon-refresh"  value="Actualizar Matriculados" action="#{controladorParcial.actualizarInforme}" update=":frmPrincipal:tabNotas" />  
                 </p:toolbarGroup>
@@ -86,9 +87,9 @@
                 </p:column>
                 <p:column headerText="Exámen" rendered="#{controladorParcial.booMuestra}" style="width:10%;background: white" id="cExamen">
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[5]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText value="#{tabla[5]}" style="color: #{tabla[5] eq '0.00' ? 'red':'green'}"/></f:facet>  
                         <f:facet name="input">
-                            <p:inputText  value="#{tabla[5]}" style="width:96%" autocomplete="off" >                                       
+                            <p:inputText  value="#{tabla[5]}" style="width:96%" autocomplete="off" onkeypress="return IsNumber(event);" maxlength="5">                                       
                             </p:inputText>
                         </f:facet>  
                     </p:cellEditor>  
@@ -98,6 +99,9 @@
                 </p:column>
                 <p:column headerText="Nota Quimestre" rendered="#{controladorParcial.booMuestra}" style="width:10%">
                     <h:outputText style="font-size: 14px;font-weight: bold" id="nota" value="#{tabla[6]}" />                                
+                </p:column>
+                 <p:column headerText="EQV" style="width:10%">
+                    <h:outputText id="eqv" value="#{tabla[8]}" />                                
                 </p:column>
             </p:dataTable>
         </h:form>

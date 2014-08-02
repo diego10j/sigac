@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="tituloPagina">Certificado de Promoción</ui:define>
+    <ui:define name="tituloPagina">Cuadro General</ui:define>
 
     <ui:define name="menuIzquierda">
         <h:form>
@@ -27,9 +27,9 @@
 
     <ui:define name="contenido">
         <div class="ui-widget-header" style="margin-bottom: 8px;font-size: 16px;padding-left: 10px;">
-            <h:outputText value="Reporte Certificado de Promoción " />
+            <h:outputText value="Reporte Cuadro General " />
         </div>
-        <p style="font-size: 12px;">Reporte Certificado de Promoción de año Lectivo </p>
+        <p style="font-size: 12px;">Reporte Cuadro General de notas de un Curso Lectivo </p>
 
         <h:form prependId="false" id="frmPrincipal">
 
@@ -54,10 +54,10 @@
                     Formato de Salida
                 </f:facet>
                 <h:graphicImage value="../imagenes/im_excel.gif"/>
-                <p:commandLink value="Microsoft Excel (.XLSX)" ajax="false"  action="#{controladorParcial.verReporteCertificado}"  />
+                <p:commandLink value="Microsoft Excel (.XLSX)"   action="#{controladorParcial.verReporteCuadroGeneral}"  />
 
                 <h:graphicImage value="../imagenes/im_pdf.gif"/>
-                <p:commandLink value="Adobe Reader(.PDF)" ajax="false" action="#{controladorParcial.verReporteCertificado}" />
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteCuadroGeneral}" />
 
             </p:panelGrid>
 
