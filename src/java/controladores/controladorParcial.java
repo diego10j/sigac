@@ -1171,8 +1171,6 @@ public class controladorParcial {
                             String val = dou_prom + "";
                             BigDecimal big = new BigDecimal(val);
                             big = big.setScale(2, RoundingMode.HALF_UP);
-                            tab_reporte.setValor("PROMEDIOFINAL", big + "");
-
                             tab_reporte.setValor("p", big + "");
                             //acumula rendimientoq1
                             dou_rendimientoq1 += Double.parseDouble(tab_reporte.getValor("q1"));
