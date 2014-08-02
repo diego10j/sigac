@@ -103,7 +103,7 @@ public class controladorParcial {
             return;
         }
         try {
-            //    docDocente = servDocente.getDocente(utilitario.getVariable("doc_codigo"));
+            docDocente = servDocente.getDocente(utilitario.getVariable("doc_codigo"));
             //    if (docDocente == null) {
             //No tiene ningun docente
             //        return;
