@@ -5,6 +5,11 @@
 package controladores;
 
 import aplicacion.Utilitario;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 import entidades.CrearCurso;
 import entidades.Docentes;
 import entidades.NotaDestrezaparcial;
@@ -15,6 +20,8 @@ import framework.reportes.GenerarReporte;
 import framework.reportes.ReporteDataSource;
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +37,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
@@ -103,7 +111,7 @@ public class controladorParcial {
         comFormas = servFormaEvaluar.getListaFormasEvaluar();
         comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf")) {
+        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")) {
             //cursos y materias
             lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
@@ -463,8 +471,29 @@ public class controladorParcial {
         fila[4] = utilitario.getFormatoNumero(dou20);
         fila[6] = utilitario.getFormatoNumero((dou20 + dou_eqv80));
 
+
+        ///Calcular la equivalencia
+        //////////
+
+        TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_aprovechamiento");
+        Object obj_resultado = null;
+        for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+            String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+            str_expresion = str_expresion.replace("nota", fila[6] + "");
+            obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+            if (obj_resultado != null) {
+                break;
+            }
+        }
+        if (obj_resultado == null) {
+            obj_resultado = "NO EQV";
+        }
+        fila[8] = obj_resultado;
+
+
         requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv20");
         requestContext.update("tabNotas:" + event.getRowIndex() + ":nota");
+        requestContext.update("tabNotas:" + event.getRowIndex() + ":eqv");
 
     }
 
@@ -481,27 +510,52 @@ public class controladorParcial {
         } catch (Exception e) {
             dou_new = -1;
         }
+
         if (dou_new > 10 || dou_new < 0) {
             if (event.getColumn().getClientId().endsWith("cTrabajos")) {
-                fila[11] = 0;
-                utilitario.agregarMensajeError("La nota de Trabajos debe estar en el rango de 0 a 10", "");
+                fila[11] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota de Trabajos debe estar en el rango de 1 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cActInd")) {
-                fila[3] = 0;
-                utilitario.agregarMensajeError("La nota de Actividades Individuales debe estar en el rango de 0 a 10", "");
+                fila[3] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota de Actividades Individuales debe estar en el rango de 1 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cActGrup")) {
-                fila[4] = 0;
-                utilitario.agregarMensajeError("La nota de Actividades en Grupo debe estar en el rango de 0 a 10", "");
+                fila[4] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota de Actividades en Grupo debe estar en el rango de 1 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cLecc")) {
-                fila[5] = 0;
-                utilitario.agregarMensajeError("La nota de Lecciones debe estar en el rango de 0 a 10", "");
+                fila[5] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota de Lecciones debe estar en el rango de 1 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cEval")) {
-                fila[6] = 0;
-                utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 0 a 10", "");
+                fila[6] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota de Evaluaciiones debe estar en el rango de 1 a 10", "");
             } else if (event.getColumn().getClientId().endsWith("cNota")) {
-                fila[8] = 0;
-                utilitario.agregarMensajeError("La nota debe estar en el rango de 0 a 10", "");
+                fila[8] = utilitario.getFormatoNumero(0);
+                utilitario.agregarMensajeError("La nota debe estar en el rango de 1 a 10", "");
             }
             requestContext.update("tabNotas");
+        } else {
+            //Si esta en el rango, pone formato 2 decimales
+            try {
+                if (event.getColumn().getClientId().endsWith("cTrabajos")) {
+                    fila[11] = utilitario.getFormatoNumero(dou_new);
+
+                } else if (event.getColumn().getClientId().endsWith("cActInd")) {
+                    fila[3] = utilitario.getFormatoNumero(dou_new);
+
+                } else if (event.getColumn().getClientId().endsWith("cActGrup")) {
+                    fila[4] = utilitario.getFormatoNumero(dou_new);
+
+                } else if (event.getColumn().getClientId().endsWith("cLecc")) {
+                    fila[5] = utilitario.getFormatoNumero(dou_new);
+
+                } else if (event.getColumn().getClientId().endsWith("cEval")) {
+                    fila[6] = utilitario.getFormatoNumero(dou_new);
+
+                } else if (event.getColumn().getClientId().endsWith("cNota")) {
+                    fila[8] = utilitario.getFormatoNumero(dou_new);
+
+                }
+            } catch (Exception e) {
+            }
         }
 
 
@@ -728,7 +782,7 @@ public class controladorParcial {
 
         TablaGenerica tab_reporte = utilitario.consultar("select '' as CUENTA,'' as NOMINA, '' as Q1P1,'' as Q1P2,'' as Q1P3,'' as Q1SUMATORIA,'' as Q1EQV80,'' as Q1EXAMEN,'' as Q1EQV20,'' as Q1NOTA,\n"
                 + "'' as Q2P1,'' as Q2P2,'' as Q2P3,'' as Q2SUMATORIA,'' as Q2EQV80,'' as Q2EXAMEN,'' as Q2EQV20,'' as Q2NOTA,'' as PROMEDIOFINAL");
-
+        tab_reporte.limpiar();
         TablaGenerica tab_alumnos = getAlumnosCurso(objCursoSeleccionado + "");
 
         for (int i = 0; i < tab_alumnos.getTotalFilas(); i++) {
@@ -910,6 +964,13 @@ public class controladorParcial {
                 + " ORDER BY b.alu_apellidos||' '|| b.alu_nombres DESC");
     }
 
+    private TablaGenerica getAlumnosCurso(String cre_codigo) {
+        return utilitario.consultar("select a.mat_codigo,b.alu_apellidos||' '|| b.alu_nombres as Alumnos from matricula a\n"
+                + "inner JOIN alumnos b on a.alu_codigo=b.alu_codigo\n"
+                + " where a.cre_codigo=" + cre_codigo + "\n "
+                + " ORDER BY b.alu_apellidos||' '|| b.alu_nombres DESC");
+    }
+
     private List consultarNotas(String alumno, String curso) {
         String str_ide_dis = "-1";
         String str_nom_dis = "";
@@ -1017,7 +1078,10 @@ public class controladorParcial {
                     dou_promedio = Double.parseDouble(tab_reporte.getValor("Q1NOTA")) + Double.parseDouble(tab_reporte.getValor("Q2NOTA"));
                 } catch (Exception e) {
                 }
-                tab_reporte.setValor("PROMEDIOFINAL", utilitario.getFormatoNumero(dou_promedio / 2));
+                String val = (dou_promedio / 2) + "";
+                BigDecimal big = new BigDecimal(val);
+                big = big.setScale(2, RoundingMode.HALF_UP);
+                tab_reporte.setValor("PROMEDIOFINAL", big + "");
             }
         }
         List lisResultado = new ArrayList();
@@ -1032,6 +1096,205 @@ public class controladorParcial {
         }
 
         return lisResultado;
+    }
+
+    private void cuadroGeneral() {
+        //inicializa tablas vacias
+        TablaGenerica tab_materias = utilitario.consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                + "LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo \n"
+                + "where d.cre_codigo=-1 and a.tip_codigo=1 order by a.tip_codigo,a.asi_nombre");
+        TablaGenerica tab_optativas = utilitario.consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                + "LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo \n"
+                + "where d.cre_codigo=-1 and a.tip_codigo=2 order by a.tip_codigo,a.asi_nombre");
+
+        TablaGenerica tab_reporte = utilitario.consultar("select '' as num, '' as mat_codigo,'' as alumnos,'' as dis_codigo,'' as asi_nombre,"
+                + " '' as q1, '' as q2, '' as p");
+        tab_reporte.limpiar();
+        //Materias del curso   
+        if (objCursoSeleccionado != null) {
+            //solo materias academicas
+            tab_materias = utilitario.consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                    + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                    + "LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo \n"
+                    + "where d.cre_codigo=" + objCursoSeleccionado + " and a.tip_codigo=1 order by a.tip_codigo,a.asi_nombre");
+            tab_optativas = utilitario.consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
+                    + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
+                    + "LEFT JOIN asignaturas c on a.asi_asi_codigo=c.asi_codigo \n"
+                    + "where d.cre_codigo=" + objCursoSeleccionado + " and a.tip_codigo=2 order by a.tip_codigo,a.asi_nombre");
+        }
+        //Alumnos del curso
+        TablaGenerica tab_alumnos = getAlumnosCurso(objCursoSeleccionado + "");
+
+        for (int i = 0; i < tab_alumnos.getTotalFilas(); i++) {
+            double dou_rendimientoq1 = 0;
+            double dou_rendimientoq2 = 0;
+            //Materias Academicas
+            if (tab_materias != null && tab_materias.isEmpty() == false) {
+                for (int j = 0; j < tab_materias.getTotalFilas(); j++) {
+                    //Busca la nota final de cada quimestre por alumno y por materia
+                    TablaGenerica tab_quimestre1 = utilitario.consultar("select * from informe_quimestre\n"
+                            + "where mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + " and for_codigo=1 \n"
+                            + "and dis_codigo=" + tab_materias.getValor(j, "dis_codigo"));
+
+                    TablaGenerica tab_quimestre2 = utilitario.consultar("select * from informe_quimestre\n"
+                            + "where mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + " and for_codigo=4 \n"
+                            + "and dis_codigo=" + tab_materias.getValor(j, "dis_codigo"));
+
+                    if (tab_materias.getValor(j, "asi_nombre") != null) {
+                        tab_reporte.insertar();
+                        tab_reporte.setValor("num", (tab_alumnos.getTotalFilas() - i) + "");
+                        tab_reporte.setValor("mat_codigo", tab_alumnos.getValor(i, "mat_codigo"));
+                        tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
+                        tab_reporte.setValor("dis_codigo", tab_materias.getValor(j, "dis_codigo"));
+                        tab_reporte.setValor("asi_nombre", tab_materias.getValor(j, "asi_nombre"));
+
+                        if (tab_quimestre1.isEmpty() == false) {
+                            tab_reporte.setValor("q1", tab_quimestre1.getValor("inf_nota"));
+                        } else {
+                            tab_reporte.setValor("q1", "0.00");
+                        }
+
+                        if (tab_quimestre2.isEmpty() == false) {
+                            tab_reporte.setValor("q2", tab_quimestre2.getValor("inf_nota"));
+                        } else {
+                            tab_reporte.setValor("q2", "0.00");
+                        }
+                        try {
+                            double dou_prom = Double.parseDouble(tab_reporte.getValor("q1")) + Double.parseDouble(tab_reporte.getValor("q2"));
+                            dou_prom = dou_prom / 2;
+                            tab_reporte.setValor("p", utilitario.getFormatoNumero(dou_prom));
+                            //acumula rendimientoq1
+                            dou_rendimientoq1 += Double.parseDouble(tab_reporte.getValor("q1"));
+                            dou_rendimientoq2 += Double.parseDouble(tab_reporte.getValor("q2"));
+                        } catch (Exception e) {
+                            tab_reporte.setValor("p", "0.00");
+                        }
+
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            //Promedio materias Optativas 
+            double op_q1 = 0;
+            double op_q2 = 0;
+            if (tab_optativas != null && tab_optativas.isEmpty() == false) {
+                for (int j = 0; j < tab_optativas.getTotalFilas(); j++) {
+                    //Busca la nota final de cada quimestre por alumno y por materia
+                    TablaGenerica tab_quimestre1 = utilitario.consultar("select * from informe_quimestre\n"
+                            + "where mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + " and for_codigo=1 \n"
+                            + "and dis_codigo=" + tab_optativas.getValor(j, "dis_codigo"));
+
+                    TablaGenerica tab_quimestre2 = utilitario.consultar("select * from informe_quimestre\n"
+                            + "where mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + " and for_codigo=4 \n"
+                            + "and dis_codigo=" + tab_optativas.getValor(j, "dis_codigo"));
+                    double vq1 = 0;
+                    double vq2 = 0;
+                    if (tab_optativas.getValor(j, "asi_nombre") != null) {
+                        if (tab_quimestre1.isEmpty() == false) {
+                            try {
+                                vq1 = Double.parseDouble(tab_quimestre1.getValor("inf_nota"));
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (tab_quimestre2.isEmpty() == false) {
+                            try {
+                                vq2 = Double.parseDouble(tab_quimestre2.getValor("inf_nota"));
+                            } catch (Exception e) {
+                            }
+                        }
+                        //acumula rendimientoq1
+                        op_q1 += vq1;
+                        op_q2 += vq2;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            if (tab_optativas != null && tab_optativas.isEmpty() == false) {
+                //////////////////////////
+                tab_reporte.insertar();
+                tab_reporte.setValor("num", (tab_alumnos.getTotalFilas() - i) + "");
+                tab_reporte.setValor("mat_codigo", tab_alumnos.getValor(i, "mat_codigo"));
+                tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
+                tab_reporte.setValor("dis_codigo", "1235");
+                tab_reporte.setValor("asi_nombre", "OPTATIVA");
+                //saca promedio q1 y q2
+                op_q1 = op_q1 / tab_optativas.getTotalFilas();
+                op_q2 = op_q2 / tab_optativas.getTotalFilas();
+
+                tab_reporte.setValor("q1", utilitario.getFormatoNumero(op_q1));
+                tab_reporte.setValor("q2", utilitario.getFormatoNumero(op_q2));
+                try {
+
+                    double dou_prom = (op_q1 + op_q2) / 2;
+                    String val = dou_prom + "";
+                    BigDecimal big = new BigDecimal(val);
+                    big = big.setScale(2, RoundingMode.HALF_UP);
+                    tab_reporte.setValor("p", big + "");
+                } catch (Exception e) {
+                    tab_reporte.setValor("p", "0.00");
+                }
+            }
+
+            //Rendimiento
+            if (tab_materias != null && tab_materias.isEmpty() == false) {
+                if (tab_optativas != null && tab_optativas.isEmpty() == false) {
+                    dou_rendimientoq1 = (dou_rendimientoq1 + op_q1) / (tab_materias.getTotalFilas() + 1);
+                    dou_rendimientoq2 = (dou_rendimientoq2 + op_q2) / (tab_materias.getTotalFilas() + 1);
+                } else {
+                    dou_rendimientoq1 = dou_rendimientoq1 / tab_materias.getTotalFilas();
+                    dou_rendimientoq2 = dou_rendimientoq2 / tab_materias.getTotalFilas();
+                }
+                tab_reporte.insertar();
+                tab_reporte.setValor("num", (tab_alumnos.getTotalFilas() - i) + "");
+                tab_reporte.setValor("mat_codigo", tab_alumnos.getValor(i, "mat_codigo"));
+                tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
+                tab_reporte.setValor("dis_codigo", "1234");
+                tab_reporte.setValor("asi_nombre", "RENDIMIENTO ACADEMICO");
+                tab_reporte.setValor("q1", utilitario.getFormatoNumero(dou_rendimientoq1));
+                tab_reporte.setValor("q2", utilitario.getFormatoNumero(dou_rendimientoq2));
+
+                try {
+                    double dou_prom = Double.parseDouble(tab_reporte.getValor("q1")) + Double.parseDouble(tab_reporte.getValor("q2"));
+                    dou_prom = dou_prom / 2;
+                    String val = dou_prom + "";
+                    BigDecimal big = new BigDecimal(val);
+                    big = big.setScale(2, RoundingMode.HALF_UP);
+                    tab_reporte.setValor("p", big + "");
+                } catch (Exception e) {
+                    tab_reporte.setValor("p", "0.00");
+                }
+            }
+        }
+        GenerarReporte genera = new GenerarReporte();
+        Map parametros = new HashMap();
+
+        if (objCursoSeleccionado != null) {
+            CrearCurso cre_curso = servCreaCurso.getCrearCurso(objCursoSeleccionado + "");
+            parametros.put("CURSO", cre_curso.getCurCodigo().getCurAnio());
+            parametros.put("PARALELO", cre_curso.getParCodigo().getParNombre());
+        }
+        parametros.put("PROFESOR", docDocente.getDocNombres());
+        parametros.put("PERIODO", perActual.getPerNombre());
+
+        genera.setDataSource(new ReporteDataSource(tab_reporte));
+        genera.generar(parametros, "/reportes/rep_parcial/rep_cuadro_general.jasper");
+
+    }
+
+    public void verReporteCuadroGeneral() {
+        if (objCursoSeleccionado != null) {
+            cuadroGeneral();
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        } else {
+            utilitario.agregarMensajeInfo("Debe seleccionar un curso", "");
+        }
+
     }
 
     public void verReporteTodos() {
@@ -1058,13 +1321,6 @@ public class controladorParcial {
                 + "and dis_codigo=" + dis_codigo + "");
     }
 
-    public TablaGenerica getAlumnosCurso(String cur_codigo) {
-        return utilitario.consultar("select a.mat_codigo,b.alu_apellidos||' '|| b.alu_nombres as Alumnos from matricula a\n"
-                + "inner JOIN alumnos b on a.alu_codigo=b.alu_codigo\n"
-                + "where a.cre_codigo=" + cur_codigo + "\n"
-                + "ORDER BY b.alu_apellidos||' '|| b.alu_nombres DESC");
-    }
-
     //Reporte esistencia
     public void generarReporteAsistencia() {
 
@@ -1081,7 +1337,7 @@ public class controladorParcial {
                 + ",'' as TQ2A,'' as TQ2FJ,'' as TQ2FI,'' as TQ2TOTAL,'' as TQ2DIAS\n"
                 + "\n"
                 + ",'' as TA,'' as TFJ,'' as TFI,'' as TTOTAL,'' as TDIAS");
-
+        tab_reporte.limpiar();
         TablaGenerica tab_alumnos = getAlumnosCurso(((Object[]) objCursoSeleccionado)[0] + "");
 
 
@@ -1358,7 +1614,7 @@ public class controladorParcial {
                 + ",''AS P3S1,''AS P3S2,''AS P3S3,''AS P3S4,''AS P3S5,''AS P3SUMA,''AS P3LETRA,''AS P3EQUI\n"
                 + ",''AS TPROM,''AS TLETRA,''AS TEQUI,''AS GRUPO");
 
-
+        tab_reporte.limpiar();
         TablaGenerica tab_alumnos = getAlumnosCurso(((Object[]) objCursoSeleccionado)[0] + "");
 
         TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
@@ -1691,6 +1947,392 @@ public class controladorParcial {
 
     }
 
+    public void verReporteParcialDocente() {
+    }
+
+    public void generarreporteParcial(String istrForma, String istrParcial, String imatCodigo) {
+        Map parametros = new HashMap();
+        //solo materias academicas
+        TablaGenerica tab_reporte = utilitario.consultar("select i.per_nombre,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,\n"
+                + "a.not_primerparcial,a.not_eqvdestreza,k.for_nombre,l.eva_nombre,m.doc_nombres, c.tip_codigo\n"
+                + "from nota_destrezaparcial a\n"
+                + "inner join distributivomxc  b on a.dis_codigo=b.dis_codigo\n"
+                + "inner join asignaturas c on b.asi_codigo=c.asi_codigo\n"
+                + "INNER JOIN matricula d on a.mat_codigo=d.mat_codigo\n"
+                + "inner join alumnos e on d.alu_codigo=e.alu_codigo\n"
+                + "INNER JOIN crear_curso f on b.cre_codigo=f.cre_codigo\n"
+                + "inner join cursos g on f.cur_codigo=g.cur_codigo\n"
+                + "INNER JOIN paralelo h on f.par_codigo=h.par_codigo\n"
+                + "inner join periodo_lectivo i on f.per_codigo=i.per_codigo\n"
+                + "INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo\n"
+                + "inner join formaevaluar k on k.for_codigo=a.for_codigo\n"
+                + "inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo\n"
+                + "INNER JOIN docentes m on f.doc_codigo=m.doc_codigo\n"
+                + "where a.eva_codigo=" + istrParcial + " and a.for_codigo=" + istrForma + "\n"
+                + "and c.tip_codigo=1 and a.mat_codigo =" + imatCodigo + "\n"
+                + "order by c.tip_codigo,c.asi_nombre");
+
+
+        TablaGenerica tab_optativas = utilitario.consultar("select i.per_nombre,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,\n"
+                + "a.not_primerparcial,a.not_eqvdestreza,k.for_nombre,l.eva_nombre,m.doc_nombres, c.tip_codigo\n"
+                + "from nota_destrezaparcial a\n"
+                + "inner join distributivomxc  b on a.dis_codigo=b.dis_codigo\n"
+                + "inner join asignaturas c on b.asi_codigo=c.asi_codigo\n"
+                + "INNER JOIN matricula d on a.mat_codigo=d.mat_codigo\n"
+                + "inner join alumnos e on d.alu_codigo=e.alu_codigo\n"
+                + "INNER JOIN crear_curso f on b.cre_codigo=f.cre_codigo\n"
+                + "inner join cursos g on f.cur_codigo=g.cur_codigo\n"
+                + "INNER JOIN paralelo h on f.par_codigo=h.par_codigo\n"
+                + "inner join periodo_lectivo i on f.per_codigo=i.per_codigo\n"
+                + "INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo\n"
+                + "inner join formaevaluar k on k.for_codigo=a.for_codigo\n"
+                + "inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo\n"
+                + "INNER JOIN docentes m on f.doc_codigo=m.doc_codigo\n"
+                + "where a.eva_codigo=" + istrParcial + " and a.for_codigo=" + istrForma + "\n"
+                + "and c.tip_codigo=2 and a.mat_codigo =" + imatCodigo + "\n"
+                + "order by c.tip_codigo,c.asi_nombre");
+
+        //Creo una linea para materias Optativas
+        if (tab_optativas.isEmpty() == false) {
+            //inserto 1 fila 
+            tab_reporte.insertar();
+            if (tab_reporte.isEmpty() == false) {
+                for (int i = 0; i < tab_reporte.getTotalColumnas(); i++) {
+                    tab_reporte.setValor(tab_reporte.getColumnas()[i].getNombre(), tab_reporte.getValor(1, tab_reporte.getColumnas()[i].getNombre()));
+                }
+            }
+            tab_reporte.setValor("asi_nombre", "OPTATIVA");
+            double dou_prom_opt = tab_optativas.getPromedioColumna("not_primerparcial");
+            tab_reporte.setValor("not_primerparcial", utilitario.getFormatoNumero(dou_prom_opt));
+
+            //consulto la equivalencia
+
+            TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_aprovechamiento");
+            Object obj_resultado = null;
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+                str_expresion = str_expresion.replace("nota", dou_prom_opt + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            tab_reporte.setValor("not_eqvdestreza", obj_resultado + "");
+
+            //PONGO AL FINAL LA NUEVA FILA
+            Fila fil_optativa = tab_reporte.getFila(0);
+            tab_reporte.getFilas().remove(0);
+            tab_reporte.getFilas().add(fil_optativa);
+
+            //Calcula el promedio y equivalencia del promedio
+            double dou_prom = tab_reporte.getPromedioColumna("not_primerparcial");
+            parametros.put("RENDIMIENTO", utilitario.getFormatoNumero(dou_prom));
+            obj_resultado = null;
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+                str_expresion = str_expresion.replace("nota", dou_prom + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            parametros.put("EQVRENDIMIENTO", obj_resultado + "");
+
+
+            //agrego las filas de materias optativas            
+            for (int i = 0; i < tab_optativas.getTotalFilas(); i++) {
+                tab_reporte.getFilas().add(tab_optativas.getFila(i));
+            }
+
+        }
+
+        GenerarReporte genera = new GenerarReporte();
+
+        if (objCursoSeleccionado != null) {
+            try {
+                parametros.put("matricula", Integer.parseInt(((Object[]) objCursoSeleccionado)[5] + ""));
+            } catch (Exception e) {
+            }
+        }
+        try {
+            parametros.put("quimestre", Integer.parseInt(strForma));
+        } catch (Exception e) {
+        }
+        try {
+            parametros.put("parcial", Integer.parseInt(strParcial));
+        } catch (Exception e) {
+        }
+        genera.setDataSource(new ReporteDataSource(tab_reporte));
+        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());
+        genera.generar(parametros, "/reportes/rep_parcial/rep_parcialD.jasper");
+    }
+
+    public void generarReporteQuimestre(String istrForma, String imatCodigo) {
+        Map parametros = new HashMap();
+        //solo materias academicas
+        String istrParcial = "1";
+        TablaGenerica tab_reporte = utilitario.consultar("select i.per_nombre,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,\n"
+                + "a.not_primerparcial,a.not_eqvdestreza,k.for_nombre,l.eva_nombre,m.doc_nombres, c.tip_codigo,a.dis_codigo,'' as p2, '' as p3,'' as eqv80,'' as exa20,'' as nota,'' as equiv,a.mat_codigo \n"
+                + "from nota_destrezaparcial a\n"
+                + "inner join distributivomxc  b on a.dis_codigo=b.dis_codigo\n"
+                + "inner join asignaturas c on b.asi_codigo=c.asi_codigo\n"
+                + "INNER JOIN matricula d on a.mat_codigo=d.mat_codigo\n"
+                + "inner join alumnos e on d.alu_codigo=e.alu_codigo\n"
+                + "INNER JOIN crear_curso f on b.cre_codigo=f.cre_codigo\n"
+                + "inner join cursos g on f.cur_codigo=g.cur_codigo\n"
+                + "INNER JOIN paralelo h on f.par_codigo=h.par_codigo\n"
+                + "inner join periodo_lectivo i on f.per_codigo=i.per_codigo\n"
+                + "INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo\n"
+                + "inner join formaevaluar k on k.for_codigo=a.for_codigo\n"
+                + "inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo\n"
+                + "INNER JOIN docentes m on f.doc_codigo=m.doc_codigo\n"
+                + "where a.eva_codigo=" + istrParcial + " and a.for_codigo=" + istrForma + "\n"
+                + "and c.tip_codigo=1 and a.mat_codigo =" + imatCodigo + "\n"
+                + "order by c.tip_codigo,c.asi_nombre");
+
+        //llena los campos de p2 y p3  de materias 
+        for (int i = 0; i < tab_reporte.getTotalFilas(); i++) {
+            TablaGenerica tab_resto = utilitario.consultar("select eva_codigo ,not_primerparcial from nota_destrezaparcial \n"
+                    + "where for_codigo=" + istrForma + " \n"
+                    + "and mat_codigo=" + tab_reporte.getValor(i, "mat_codigo") + " and dis_codigo=" + tab_reporte.getValor(i, "dis_codigo") + "\n"
+                    + "and eva_codigo>=2\n"
+                    + "order by eva_codigo ");
+            if (tab_resto.isEmpty() == false) {
+                for (int j = 0; j < tab_resto.getTotalFilas(); j++) {
+                    if (tab_resto.getValor(j, "eva_codigo") != null) {
+                        if (tab_resto.getValor(j, "eva_codigo").equals("2")) {//segundo parcial
+                            tab_reporte.setValor(i, "p2", tab_resto.getValor(j, "not_primerparcial"));
+                        } else if (tab_resto.getValor(j, "eva_codigo").equals("3")) {//tercer parcial
+                            tab_reporte.setValor(i, "p3", tab_resto.getValor(j, "not_primerparcial"));
+                        }
+                    }
+                }
+            }
+
+            //llena eqv80,exa20,nota y equiv
+            TablaGenerica tab_nq = utilitario.consultar("select inf_eqv80,inf_exa20,inf_nota,inf_eqvquimestre from informe_quimestre \n"
+                    + "where for_codigo=" + istrForma + " and mat_codigo=" + tab_reporte.getValor(i, "mat_codigo") + " and dis_codigo=" + tab_reporte.getValor(i, "dis_codigo") + "");
+            if (tab_nq.isEmpty() == false) {
+                tab_reporte.setValor(i, "eqv80", tab_nq.getValor("inf_eqv80"));
+                tab_reporte.setValor(i, "exa20", tab_nq.getValor("inf_exa20"));
+                tab_reporte.setValor(i, "nota", tab_nq.getValor("inf_nota"));
+                tab_reporte.setValor(i, "equiv", tab_nq.getValor("inf_eqvquimestre"));
+            }
+        }
+
+
+        TablaGenerica tab_optativas = utilitario.consultar("select i.per_nombre,e.alu_apellidos || ' ' || alu_nombres as nombres, g.cur_anio,h.par_nombre,c.asi_nombre,j.tip_nombre,\n"
+                + "a.not_primerparcial,a.not_eqvdestreza,k.for_nombre,l.eva_nombre,m.doc_nombres, c.tip_codigo,a.dis_codigo,'' as p2, '' as p3,'' as eqv80,'' as exa20,'' as nota,'' as equiv,a.mat_codigo \n"
+                + "from nota_destrezaparcial a\n"
+                + "inner join distributivomxc  b on a.dis_codigo=b.dis_codigo\n"
+                + "inner join asignaturas c on b.asi_codigo=c.asi_codigo\n"
+                + "INNER JOIN matricula d on a.mat_codigo=d.mat_codigo\n"
+                + "inner join alumnos e on d.alu_codigo=e.alu_codigo\n"
+                + "INNER JOIN crear_curso f on b.cre_codigo=f.cre_codigo\n"
+                + "inner join cursos g on f.cur_codigo=g.cur_codigo\n"
+                + "INNER JOIN paralelo h on f.par_codigo=h.par_codigo\n"
+                + "inner join periodo_lectivo i on f.per_codigo=i.per_codigo\n"
+                + "INNER JOIN tipoasignaturas j on c.tip_codigo=j.tip_codigo\n"
+                + "inner join formaevaluar k on k.for_codigo=a.for_codigo\n"
+                + "inner join  evaluarparcial l on l.eva_codigo=a.eva_codigo\n"
+                + "INNER JOIN docentes m on f.doc_codigo=m.doc_codigo\n"
+                + "where a.eva_codigo=" + istrParcial + " and a.for_codigo=" + istrForma + "\n"
+                + "and c.tip_codigo=2 and a.mat_codigo =" + imatCodigo + "\n"
+                + "order by c.tip_codigo,c.asi_nombre");
+
+
+        //llena los campos de p2 y p3  de materias OPTATIVAS
+        for (int i = 0; i < tab_optativas.getTotalFilas(); i++) {
+            TablaGenerica tab_resto = utilitario.consultar("select eva_codigo ,not_primerparcial from nota_destrezaparcial \n"
+                    + "where for_codigo=" + istrForma + " \n"
+                    + "and mat_codigo=" + tab_optativas.getValor(i, "mat_codigo") + " and dis_codigo=" + tab_optativas.getValor(i, "dis_codigo") + "\n"
+                    + "and eva_codigo>=2\n"
+                    + "order by eva_codigo ");
+            if (tab_resto.isEmpty() == false) {
+                for (int j = 0; j < tab_resto.getTotalFilas(); j++) {
+                    if (tab_resto.getValor(j, "eva_codigo") != null) {
+                        if (tab_resto.getValor(j, "eva_codigo").equals("2")) {//segundo parcial
+                            tab_optativas.setValor(i, "p2", tab_resto.getValor(j, "not_primerparcial"));
+                        } else if (tab_resto.getValor(j, "eva_codigo").equals("3")) {//tercer parcial
+                            tab_optativas.setValor(i, "p3", tab_resto.getValor(j, "not_primerparcial"));
+                        }
+                    }
+                }
+            }
+
+            //llena eqv80,exa20,nota y equiv
+            TablaGenerica tab_nq = utilitario.consultar("select inf_eqv80,inf_exa20,inf_nota,inf_eqvquimestre from informe_quimestre \n"
+                    + "where for_codigo=" + istrForma + " and mat_codigo=" + tab_optativas.getValor(i, "mat_codigo") + " and dis_codigo=" + tab_optativas.getValor(i, "dis_codigo") + "");
+            if (tab_nq.isEmpty() == false) {
+                tab_optativas.setValor(i, "eqv80", tab_nq.getValor("inf_eqv80"));
+                tab_optativas.setValor(i, "exa20", tab_nq.getValor("inf_exa20"));
+                tab_optativas.setValor(i, "nota", tab_nq.getValor("inf_nota"));
+                tab_optativas.setValor(i, "equiv", tab_nq.getValor("inf_eqvquimestre"));
+            }
+        }
+
+
+
+
+
+
+        //Creo una linea para materias Optativas
+        if (tab_optativas.isEmpty() == false) {
+            //inserto 1 fila 
+            tab_reporte.insertar();
+            if (tab_reporte.isEmpty() == false) {
+                for (int i = 0; i < tab_reporte.getTotalColumnas(); i++) {
+                    tab_reporte.setValor(tab_reporte.getColumnas()[i].getNombre(), tab_reporte.getValor(1, tab_reporte.getColumnas()[i].getNombre()));
+                }
+            }
+            tab_reporte.setValor("asi_nombre", "OPTATIVA");
+
+            double dou_prom_opt = tab_optativas.getPromedioColumna("not_primerparcial");
+            tab_reporte.setValor("not_primerparcial", utilitario.getFormatoNumero(dou_prom_opt));
+
+            dou_prom_opt = tab_optativas.getPromedioColumna("p2");
+            tab_reporte.setValor("p2", utilitario.getFormatoNumero(dou_prom_opt));
+
+            dou_prom_opt = tab_optativas.getPromedioColumna("p3");
+            tab_reporte.setValor("p3", utilitario.getFormatoNumero(dou_prom_opt));
+
+            dou_prom_opt = tab_optativas.getPromedioColumna("eqv80");
+            tab_reporte.setValor("eqv80", utilitario.getFormatoNumero(dou_prom_opt));
+
+            dou_prom_opt = tab_optativas.getPromedioColumna("exa20");
+            tab_reporte.setValor("exa20", utilitario.getFormatoNumero(dou_prom_opt));
+
+            dou_prom_opt = tab_optativas.getPromedioColumna("nota");
+            tab_reporte.setValor("nota", utilitario.getFormatoNumero(dou_prom_opt));
+
+            //consulto la equivalencia
+
+            TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_aprovechamiento");
+            Object obj_resultado = null;
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+                str_expresion = str_expresion.replace("nota", dou_prom_opt + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            tab_reporte.setValor("equiv", obj_resultado + "");
+
+            //PONGO AL FINAL LA NUEVA FILA
+            Fila fil_optativa = tab_reporte.getFila(0);
+            tab_reporte.getFilas().remove(0);
+            tab_reporte.getFilas().add(fil_optativa);
+
+            //Calcula el promedio y equivalencia del promedio
+            double dou_prom = tab_reporte.getPromedioColumna("nota");
+            parametros.put("RENDIMIENTO", utilitario.getFormatoNumero(dou_prom));
+            obj_resultado = null;
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+                str_expresion = str_expresion.replace("nota", dou_prom + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            parametros.put("EQVRENDIMIENTO", obj_resultado + "");
+
+
+            //agrego las filas de materias optativas            
+            for (int i = 0; i < tab_optativas.getTotalFilas(); i++) {
+                tab_reporte.getFilas().add(tab_optativas.getFila(i));
+            }
+
+        }
+
+
+        //CALCULA DISCIPLINA DEL QUIMESTRE
+
+        TablaGenerica tab_dis = utilitario.consultar("SELECT mat_codigo,round(avg(com_sumatoria),2) as prom FROM comportamientoparcial\n"
+                + "where  for_codigo=" + istrForma + "\n"
+                + "and  mat_codigo=" + imatCodigo + "\n"
+                + "group by mat_codigo");
+        if (tab_dis.isEmpty() == false) {
+            //DISCIPLINA
+            double dou_prom = 0;
+            try {
+                dou_prom = Double.parseDouble(tab_dis.getValor("prom"));
+            } catch (Exception e) {
+            }
+
+            TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
+            Object obj_resultado = null;
+            String str_eqv = "";
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqc_escala");
+                str_expresion = str_expresion.replace("nota", dou_prom + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    str_eqv = tab_equi.getValor(i, "eqc_alterno");
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            parametros.put("EQVDISCIPLINA", obj_resultado);
+            parametros.put("DISCIPLINA", str_eqv);
+
+        }
+        GenerarReporte genera = new GenerarReporte();
+
+        if (objCursoSeleccionado != null) {
+            try {
+                parametros.put("matricula", Integer.parseInt(((Object[]) objCursoSeleccionado)[5] + ""));
+            } catch (Exception e) {
+            }
+        }
+        try {
+            parametros.put("quimestre", Integer.parseInt(strForma));
+        } catch (Exception e) {
+        }
+        try {
+            parametros.put("parcial", Integer.parseInt(strParcial));
+        } catch (Exception e) {
+        }
+        genera.setDataSource(new ReporteDataSource(tab_reporte));
+        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());
+        genera.generar(parametros, "/reportes/rep_parcial/rep_parcialQ.jasper");
+    }
+
+    public void verReporteQuimestre() {
+
+        if (strForma == null) {
+            utilitario.agregarMensajeInfo("Debe seleccionar un Quimestre", "");
+            return;
+        }
+        if (strForma.equals("-1")) {
+            utilitario.agregarMensajeInfo("Debe seleccionar un Quimestre", "");
+            return;
+        }
+
+
+        if (objCursoSeleccionado != null) {
+            generarReporteQuimestre(strForma, ((Object[]) objCursoSeleccionado)[5] + "");
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        } else {
+            utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
+        }
+    }
+
     public void verReporteParcial() {
 
         if (strForma == null) {
@@ -1712,23 +2354,7 @@ public class controladorParcial {
         }
 
         if (objCursoSeleccionado != null) {
-            GenerarReporte genera = new GenerarReporte();
-            Map parametros = new HashMap();
-            if (objCursoSeleccionado != null) {
-                try {
-                    parametros.put("matricula", Integer.parseInt(((Object[]) objCursoSeleccionado)[5] + ""));
-                } catch (Exception e) {
-                }
-            }
-            try {
-                parametros.put("quimestre", Integer.parseInt(strForma));
-            } catch (Exception e) {
-            }
-            try {
-                parametros.put("parcial", Integer.parseInt(strParcial));
-            } catch (Exception e) {
-            }
-            genera.generar(parametros, "/reportes/rep_parcial/rep_parcial.jasper");
+            generarreporteParcial(strForma, strParcial, ((Object[]) objCursoSeleccionado)[5] + "");
             utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
@@ -1870,19 +2496,59 @@ public class controladorParcial {
             String str_letras_prom_general = utilitario.getLetrasNumero(dou_prom_general).toUpperCase();
 
             //paso al final la materia optativa
-            Fila fil_optativa=tab_certificado.getFila(0);
+            Fila fil_optativa = tab_certificado.getFila(0);
             tab_certificado.getFilas().remove(0);
             tab_certificado.getFilas().add(fil_optativa);
-            
-            
+
+
             GenerarReporte genera = new GenerarReporte();
             genera.setDataSource(new ReporteDataSource(tab_certificado));
             Map parametros = new HashMap();
             parametros.put("promGeneral", str_prom_general);
             parametros.put("letraspromGeneral", str_letras_prom_general);
-            parametros.put("equivalencia", str_letras_prom_general);
-            parametros.put("comporta", str_letras_prom_general);
 
+
+            ///Calcular la equivalencia
+            //////////
+
+            TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_aprovechamiento");
+            Object obj_resultado = null;
+            for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                String str_expresion = tab_equi.getValor(i, "eqa_escalacuantiva");
+                str_expresion = str_expresion.replace("nota", str_prom_general + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            parametros.put("equivalencia", obj_resultado + "");
+
+            //Calcula el comportamiento final
+
+            TablaGenerica tab_comporta = utilitario.consultar("SELECT avg(com_sumatoria)as com_final,mat_codigo FROM comportamientoparcial\n"
+                    + "where   mat_codigo=" + mat_codigo + "\n"
+                    + "group by mat_codigo");
+            if (tab_comporta.isEmpty() == false) {
+                ///BUSCA LA EQUIVALENCIA
+                tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
+                obj_resultado = null;
+                for (int i = 0; i < tab_equi.getTotalFilas(); i++) {
+                    String str_expresion = tab_equi.getValor(i, "eqc_escala");
+                    str_expresion = str_expresion.replace("nota", tab_comporta.getValor("com_final") + "");
+                    obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                    if (obj_resultado != null) {
+                        obj_resultado = tab_equi.getValor(i, "eqc_alterno");
+                        break;
+                    }
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+            parametros.put("comporta", obj_resultado + ""); ///Calcular la equivalencia
             genera.generar(parametros, "/reportes/rep_parcial/rep_promocion.jasper");
 
         }
@@ -1895,6 +2561,27 @@ public class controladorParcial {
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
         }
+    }
+
+    public void preProcessPDF(Object document) {
+        Document pdf = (Document) document;
+        pdf.setPageSize(PageSize.A4.rotate());
+        try {
+            pdf.open();
+
+            pdf.setPageSize(PageSize.A4.rotate());
+            pdf.add(new Paragraph("ALUMNO :" + utilitario.getVariable("NOMBRE")));
+            pdf.add(new Paragraph(""));
+            Paragraph paragraph = new Paragraph();
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.add("NOTAS DEL " + ((Object[]) objCursoSeleccionado)[1] + "");
+            pdf.add(new Paragraph(""));
+            pdf.add(paragraph);
+
+            // pdf.close();
+        } catch (Exception e) {
+        }
+
     }
 
     public PeriodoLectivo getPerActual() {

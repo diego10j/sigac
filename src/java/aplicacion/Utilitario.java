@@ -8,6 +8,8 @@ import framework.aplicacion.Framework;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -591,7 +593,7 @@ public class Utilitario extends Framework {
             expresion = expresion.replace("[", "(");
             expresion = expresion.replace("]", ")");
             operacion = engine.eval(expresion);
-            
+
             return operacion;
         } catch (ScriptException e) {
             System.out.println("ERROR al evaluarExpresion( " + expresion + " )  :" + e.toString());
@@ -599,20 +601,24 @@ public class Utilitario extends Framework {
         return null;
     }
 
-      public String getURLCompleto() {
+    public String getURLCompleto() {
         ExternalContext iecx = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) iecx.getRequest();
-        String path = request.getRequestURL() + "";       
+        String path = request.getRequestURL() + "";
         return path;
     }
-    
+
     public static void main(String args[]) {
         Utilitario u = new Utilitario();
         System.out.println(u.evaluarExpresionJavaScript("if(7>=7 && 7<=8){'Alcanza'}"));
         System.out.println(u.evaluarExpresionJavaScript("if(7>=5 && 7<=6){'Proximo'}"));
         System.out.println(u.evaluarExpresionJavaScript("if(7<=4){'No Alcanza'}"));
         System.out.println(u.evaluarExpresionJavaScript("if(7==10){'Supera'}"));
-        System.out.println(u.evaluarExpresionJavaScript("if(7>=9 && 7<10){'Domina'}"));       
-        
+        System.out.println(u.evaluarExpresionJavaScript("if(7>=9 && 7<10){'Domina'}"));
+        double valor = 79.625;
+        String val = valor + "";
+        BigDecimal big = new BigDecimal(val);
+        big = big.setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Número : " + big);
     }
 }

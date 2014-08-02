@@ -31,7 +31,7 @@ public class servicioTipoAsignaturas {
     private Utilitario utilitario = new Utilitario();
 
     public String guardarTipoAsignaturas(Tipoasignaturas itipoasignaturas) {
-        Tipoasignaturas tipoasignaturas=itipoasignaturas;
+        Tipoasignaturas tipoasignaturas = itipoasignaturas;
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -101,5 +101,16 @@ public class servicioTipoAsignaturas {
      */
     public List getListaTipoAsignatura() {
         return utilitario.getConexion().consultar("select tip_codigo,tip_nombre from tipoasignaturas order by tip_nombre");
+    }
+
+    public Tipoasignaturas getTipoAsignatura(String tipCodigo) {
+
+        try {
+            Query q = manejador.createNamedQuery("Tipoasignaturas.findByTipCodigo");
+            q.setParameter("tipCodigo", new Integer(tipCodigo));
+            return (Tipoasignaturas) q.getSingleResult();
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

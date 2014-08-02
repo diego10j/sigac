@@ -107,7 +107,7 @@ public class servicioQuimestre {
 
     public List getListaInformeQuimestre(String dis_codigo, String for_codigo) {        
         actualizarQuimestre(dis_codigo, for_codigo);
-        return utilitario.getConexion().consultar("SELECT a.inf_codigo,alu_apellidos,alu_nombres,inf_eqv80,inf_exa20,inf_examen,inf_nota,inf_sumatoria FROM informe_quimestre a "
+        return utilitario.getConexion().consultar("SELECT a.inf_codigo,alu_apellidos,alu_nombres,inf_eqv80,inf_exa20,inf_examen,inf_nota,inf_sumatoria,inf_eqvquimestre FROM informe_quimestre a "
                 + "inner join matricula b on a.mat_codigo =b.mat_codigo\n"
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo\n"
                 + " WHERE a.for_codigo=" + for_codigo + " AND a.dis_codigo=" + dis_codigo + " order by alu_apellidos,alu_nombres");
@@ -116,7 +116,7 @@ public class servicioQuimestre {
     public String guardarInformeQuimestre(List notas) {
         for (Object actual : notas) {
             Object[] fila = (Object[]) actual;
-            utilitario.getConexion().agregarSql("UPDATE informe_quimestre set inf_exa20=" + fila[4] + ", inf_examen=" + fila[5] + ",inf_nota=" + fila[6] + " where inf_codigo=" + fila[0]);
+            utilitario.getConexion().agregarSql("UPDATE informe_quimestre set inf_exa20=" + fila[4] + ", inf_examen=" + fila[5] + ",inf_nota=" + fila[6] + ",inf_eqvquimestre='" + fila[8] +"' where inf_codigo=" + fila[0]);
 
         }
         return utilitario.getConexion().ejecutarListaSql();

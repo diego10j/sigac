@@ -6,6 +6,7 @@ package controladores;
 
 import aplicacion.Utilitario;
 import entidades.Asignaturas;
+import entidades.Tipoasignaturas;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import servcios.servicioAsignaturas;
 import servcios.servicioInstitucion;
+import servcios.servicioTipoAsignaturas;
 
 /**
  *
@@ -30,14 +32,21 @@ public class controladorAsignaturas {
     private List<Asignaturas> filtroAsignaturas;
     @EJB
     private servicioInstitucion servInstitucion;
+    private List lisTipoAsignatura;
+    @EJB
+    private servicioTipoAsignaturas servTipoAsignatura;
 
     @PostConstruct
     public void cargarDatos() {
         listaAsignaturas = servAsignaturas.getEquivalenciaAsignaturas();
+        lisTipoAsignatura = servTipoAsignatura.getListaTipoAsignatura();
+        asiAsignaturas = new Asignaturas();
+        asiAsignaturas.setTipCodigo(new Tipoasignaturas());
     }
 
     public void insertar() {
         asiAsignaturas = new Asignaturas();
+        asiAsignaturas.setTipCodigo(new Tipoasignaturas());
     }
 
     public void eliminar() {
@@ -53,7 +62,14 @@ public class controladorAsignaturas {
     }
 
     public void guardar() {
+
         asiAsignaturas.setInsCodigo(servInstitucion.getIntitucion());
+
+        if (asiAsignaturas.getTipCodigo().getTipCodigo() != null) {
+            asiAsignaturas.setTipCodigo(servTipoAsignatura.getTipoAsignatura(asiAsignaturas.getTipCodigo().getTipCodigo().toString()));
+        }
+
+
         boolean nuevo = true;
         if (asiAsignaturas.getAsiCodigo() != null) {
             nuevo = false;
@@ -94,5 +110,13 @@ public class controladorAsignaturas {
 
     public void setFiltroAsignaturas(List<Asignaturas> filtroAsignaturas) {
         this.filtroAsignaturas = filtroAsignaturas;
+    }
+
+    public List getLisTipoAsignatura() {
+        return lisTipoAsignatura;
+    }
+
+    public void setLisTipoAsignatura(List lisTipoAsignatura) {
+        this.lisTipoAsignatura = lisTipoAsignatura;
     }
 }
