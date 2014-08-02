@@ -9,13 +9,28 @@
 
     <ui:define name="tituloPagina">Inicio</ui:define>
 
+    <ui:define  name="menuIzquierda">  
+        <p align="center" style="font-weight: bold;font-size: 21px;color: #20282b">
+            Sistema de Gestion Academica  
+        </p>
+        <br/>
+        <div align="center">
+            <p:graphicImage value="../imagenes/ups.png"/>   
+            <br/>            
+            <h:outputText value="Autora: Janneth Pachacama" />
+        </div>
+        <br/>
+        <br/>
+        <br/>
+
+        <p:graphicImage value="../imagenes/ministerio.png"/>
+    </ui:define>
 
     <ui:define name="contenido">
         <div align="center" style="padding-top: 20px;">
             <p:galleria value="#{controladorLogin.imagenes}" var="image" panelWidth="700" panelHeight="350" showCaption="false"  autoPlay="true" >  
                 <p:graphicImage value="../imagenes/fotos/#{image}" height="340"/>  
             </p:galleria>  
-
         </div>
     </ui:define>
 </ui:composition>
