@@ -17,8 +17,8 @@
                 </p:submenu>
                 <p:separator />
                 <p:submenu label="Reportes">
-                    <p:menuitem value="Reporte Parcial"  icon="ui-icon-note" url="RepoParcial.jsf"/>
-                    <p:menuitem value="Reporte Final"  icon="ui-icon-note" url="RepoFinal.jsf"/>
+                    <p:menuitem value="Reporte Parcial"  icon="ui-icon-note" url="RepoParcial.jsf"/>  
+                    <p:menuitem value="Reporte Quimestre"  icon="ui-icon-note" url="RepoQuimRepoParcial.jsf"/>            
                 </p:submenu>
             </p:panelMenu>
         </h:form>
@@ -32,13 +32,13 @@
 
         <h:form prependId="false" id="frmPrincipal">
 
-            <p:dataTable value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
+            <p:dataTable id="tabCuros" value="#{controladorParcial.lisCursos}" var="tabla" rowKey="#{tabla[0]}"
                          selection="#{controladorParcial.objCursoSeleccionado}" selectionMode="single" scrollable="true" scrollHeight="80" >
                 `
                 <p:ajax event="rowSelect" listener="#{controladorParcial.seleccionarCursos}" update=":frmPrincipal:tabNotas"/>
 
                 <p:column headerText="CURSO" width="75%">
-                    #{tabla[2]}
+                    #{tabla[2]}"
                 </p:column>
                 <p:column headerText="PARALELO" width="25%">
                     #{tabla[3]}
@@ -49,12 +49,24 @@
 
             </p:dataTable>
 
+
+
+            <h:panelGrid columns="4">
+                <h:graphicImage value="../imagenes/im_pdf.gif" width="16" height="16"/>
+                <p:commandLink value="Exportar" ajax="false" >
+                    <p:dataExporter  encoding="windows-1250" preProcessor="#{controladorParcial.preProcessPDF}" type="pdf" target="tabNotas" fileName="Notas"/>
+                </p:commandLink>
+            </h:panelGrid>
             <p:dataTable id="tabNotas" var="tabla" value="#{controladorParcial.lisConsulta}" style="overflow: auto">
                 <p:columnGroup type="header">
                     <p:row>
-                        <p:column rowspan="2"  headerText="ASIGNATURAS" />
-                        <p:column  colspan="9" headerText="QUIMESTRE I" />
-                        <p:column  colspan="9" headerText="QUIMESTRE II" />
+                        <p:column rowspan="2" >
+                            <f:facet name="header">
+                                <h:outputText value="ASIGNATURA"/>
+                            </f:facet>
+                        </p:column>
+                        <p:column  colspan="8" headerText="QUIMESTRE I" />
+                        <p:column  colspan="8" headerText="QUIMESTRE II" />
                     </p:row>
                     <p:row>
                         <p:column colspan="1"  headerText="PARCIAL1" />
@@ -79,60 +91,63 @@
                 </p:columnGroup>
 
                 <p:column headerText="MATERIA" style="width:25%" >
-                    #{tabla[1]}
+                    <h:outputText value="#{tabla[1]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL1" style="width:25%" >
-                    #{tabla[2]}
+                    <h:outputText value="#{tabla[2]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL2" style="width:25%" >
-                    #{tabla[3]}
+                    <h:outputText value="#{tabla[3]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL3" style="width:25%" >
-                    #{tabla[4]}
+                    <h:outputText value="#{tabla[4]}"/>
                 </p:column>
                 <p:column headerText="SUMATORIA" style="width:25%" >
-                    #{tabla[5]}
+                    <h:outputText value="#{tabla[5]}"/>
                 </p:column>
-                <p:column headerText="EQV. 80%" style="width:25%" >
-                    #{tabla[6]}
+                <p:column  headerText="EQV. 80%" style="width:25%" >
+                    <h:outputText value="#{tabla[6]}"/>
                 </p:column>
                 <p:column headerText="EXAMEN" style="width:25%" >
-                    #{tabla[7]}
+                    <h:outputText value="#{tabla[7]}"/>
                 </p:column>
                 <p:column headerText="EQV. 20%" style="width:25%" >
-                    #{tabla[8]}
+                    <h:outputText value="#{tabla[8]}"/>
                 </p:column>
-                <p:column headerText="NOTA" style="width:25%" >
-                    #{tabla[9]}
+                <p:column headerText="NOTA" style="width:25%;background: #ffffcc" >
+                    <h:outputText value="#{tabla[9]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL1" style="width:25%" >
-                    #{tabla[10]}
+                    <h:outputText value="#{tabla[10]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL2" style="width:25%" >
-                    #{tabla[11]}
+                    <h:outputText value="#{tabla[11]}"/>
                 </p:column>
                 <p:column headerText="PARCIAL3" style="width:25%" >
-                    #{tabla[12]}
+                    <h:outputText value="#{tabla[12]}"/>
                 </p:column>
                 <p:column headerText="SUMATORIA" style="width:25%" >
-                    #{tabla[13]}
+                    <h:outputText value="#{tabla[13]}"/>
                 </p:column>
                 <p:column headerText="EQV. 80%" style="width:25%" >
-                    #{tabla[14]}
+                    <h:outputText value="#{tabla[14]}"/>
                 </p:column>
                 <p:column headerText="EXAMEN" style="width:25%" >
-                    #{tabla[15]}
+                    <h:outputText value="#{tabla[15]}"/>
                 </p:column>
                 <p:column headerText="EQV. 20%" style="width:25%" >
-                    #{tabla[16]}
+                    <h:outputText value="#{tabla[16]}"/>
                 </p:column>
-                <p:column headerText="NOTA" style="width:25%" >
-                    #{tabla[17]}
+                <p:column headerText="NOTA" style="width:25%;background: #ffffcc" >
+                    <h:outputText value="#{tabla[17]}"/>
                 </p:column>
-                <p:column headerText="P. FINAL" style="width:25%" >
-                    #{tabla[18]}
+                <p:column headerText="P. FINAL" style="width:25%;background: #f7b64a;font-weight: bold" >
+                    <h:outputText value="#{tabla[18]}"/>
                 </p:column>                         
             </p:dataTable>
+
+
+
 
         </h:form>
 
