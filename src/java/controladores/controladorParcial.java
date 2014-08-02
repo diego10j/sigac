@@ -1169,7 +1169,12 @@ public class controladorParcial {
                         try {
                             double dou_prom = Double.parseDouble(tab_reporte.getValor("q1")) + Double.parseDouble(tab_reporte.getValor("q2"));
                             dou_prom = dou_prom / 2;
-                            tab_reporte.setValor("p", utilitario.getFormatoNumero(dou_prom));
+                            String val = dou_prom + "";
+                            BigDecimal big = new BigDecimal(val);
+                            big = big.setScale(2, RoundingMode.HALF_UP);
+                            tab_reporte.setValor("PROMEDIOFINAL", big + "");
+
+                            tab_reporte.setValor("p", big + "");
                             //acumula rendimientoq1
                             dou_rendimientoq1 += Double.parseDouble(tab_reporte.getValor("q1"));
                             dou_rendimientoq2 += Double.parseDouble(tab_reporte.getValor("q2"));
