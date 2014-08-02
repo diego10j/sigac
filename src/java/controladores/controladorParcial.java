@@ -112,39 +112,44 @@ public class controladorParcial {
             }
         }
 
+        try {
 
-        comFormas = servFormaEvaluar.getListaFormasEvaluar();
-        comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-        if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")) {
-            //cursos y materias
-            lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
+            comFormas = servFormaEvaluar.getListaFormasEvaluar();
+            comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-        } else if (utilitario.getURLCompleto().endsWith("Consultar.jsf") || utilitario.getURLCompleto().endsWith("RepoParcial.jsf")) {
-            String alumno = utilitario.getVariable("alu_codigo");
-            lisCursos = servParcial.getMatriculasCursoAlumno(alumno == null ? "-1" : alumno);
-        } else {
-            lisCursos = servParcial.getCursosDisciplinaDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
-        }
+            if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")) {
+                //cursos y materias
+                lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
-        if (objCursoSeleccionado != null) {
-            lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
-        } else {
-            lisAsignaturas = servParcial.getMateriasCursoDocente("-1", "-1");
-        }
-        str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
-
-        if (utilitario.getURLCompleto().endsWith("Consultar.jsf") || utilitario.getURLCompleto().endsWith("RepoParcial.jsf")) {
-            String alumno = utilitario.getVariable("alu_codigo");
-            if (alumno == null) {
-                alumno = "-1";
-            }
-            if (objCursoSeleccionado != null) {
-                lisCursos = servParcial.getCursosAlumno(alumno);
-                lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
+            } else if (utilitario.getURLCompleto().endsWith("Consultar.jsf") || utilitario.getURLCompleto().endsWith("RepoParcial.jsf")) {
+                String alumno = utilitario.getVariable("alu_codigo");
+                lisCursos = servParcial.getMatriculasCursoAlumno(alumno == null ? "-1" : alumno);
             } else {
-                lisConsulta = consultarNotas("-1", "-1");
+                lisCursos = servParcial.getCursosDisciplinaDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
             }
+
+            if (objCursoSeleccionado != null) {
+                lisAsignaturas = servParcial.getMateriasCursoDocente(((Object[]) objCursoSeleccionado)[0] + "", docDocente.getDocCodigo().toString());
+            } else {
+                lisAsignaturas = servParcial.getMateriasCursoDocente("-1", "-1");
+            }
+            str_path_reporte = utilitario.getURL() + "/reportes/reporte" + utilitario.getVariable("ide_usua") + ".pdf";
+
+            if (utilitario.getURLCompleto().endsWith("Consultar.jsf") || utilitario.getURLCompleto().endsWith("RepoParcial.jsf")) {
+                String alumno = utilitario.getVariable("alu_codigo");
+                if (alumno == null) {
+                    alumno = "-1";
+                }
+                if (objCursoSeleccionado != null) {
+                    lisCursos = servParcial.getCursosAlumno(alumno);
+                    lisConsulta = consultarNotas(alumno, ((Object[]) objCursoSeleccionado)[0] + "");
+                } else {
+                    lisConsulta = consultarNotas("-1", "-1");
+                }
+            }
+
+        } catch (Exception e) {
         }
     }
 
