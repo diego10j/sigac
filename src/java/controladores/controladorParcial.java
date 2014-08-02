@@ -102,18 +102,12 @@ public class controladorParcial {
             //No tiene ningun periodo activo
             return;
         }
-
-        //si no tiene  usuario asignado
-        if (utilitario.getVariable("doc_codigo") == null) {
-            docDocente = servDocente.getDocente(utilitario.getVariable("doc_codigo"));
-            if (docDocente == null) {
-                //No tiene ningun docente
-                return;
-            }
-        }
-
         try {
-
+            //    docDocente = servDocente.getDocente(utilitario.getVariable("doc_codigo"));
+            //    if (docDocente == null) {
+            //No tiene ningun docente
+            //        return;
+            //    }
 
             comFormas = servFormaEvaluar.getListaFormasEvaluar();
             comParciales = servEvaluarParcial.getListaEvaluarParcial();
