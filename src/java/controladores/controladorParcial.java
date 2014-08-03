@@ -1114,7 +1114,7 @@ public class controladorParcial {
                 + "where d.cre_codigo=-1 and a.tip_codigo=2 order by a.tip_codigo,a.asi_nombre");
 
         TablaGenerica tab_reporte = utilitario.consultar("select '' as num, '' as mat_codigo,'' as alumnos,'' as dis_codigo,'' as asi_nombre,"
-                + " '' as q1, '' as q2, '' as p");
+                + " '' as q1, '' as q2, '' as p,'' as orden");
         tab_reporte.limpiar();
         //Materias del curso   
         if (objCursoSeleccionado != null) {
@@ -1153,7 +1153,7 @@ public class controladorParcial {
                         tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
                         tab_reporte.setValor("dis_codigo", tab_materias.getValor(j, "dis_codigo"));
                         tab_reporte.setValor("asi_nombre", tab_materias.getValor(j, "asi_nombre"));
-
+                        tab_reporte.setValor("orden", j + "");
                         if (tab_quimestre1.isEmpty() == false) {
                             tab_reporte.setValor("q1", tab_quimestre1.getValor("inf_nota"));
                         } else {
@@ -1246,6 +1246,7 @@ public class controladorParcial {
                 } catch (Exception e) {
                     tab_reporte.setValor("p", "0.00");
                 }
+                tab_reporte.setValor("orden", tab_materias.getTotalFilas() + "");
             }
 
             //Rendimiento
@@ -1265,7 +1266,7 @@ public class controladorParcial {
                 tab_reporte.setValor("asi_nombre", "RENDIMIENTO ACADEMICO");
                 tab_reporte.setValor("q1", utilitario.getFormatoNumero(dou_rendimientoq1));
                 tab_reporte.setValor("q2", utilitario.getFormatoNumero(dou_rendimientoq2));
-
+                tab_reporte.setValor("orden", (tab_materias.getTotalFilas() + 1) + "");
                 try {
                     double dou_prom = Double.parseDouble(tab_reporte.getValor("q1")) + Double.parseDouble(tab_reporte.getValor("q2"));
                     dou_prom = dou_prom / 2;
@@ -1277,7 +1278,122 @@ public class controladorParcial {
                     tab_reporte.setValor("p", "0.00");
                 }
             }
+
+            //COMPORTAMIENTO
+            //CALCULA DISCIPLINA DEL QUIMESTRE
+
+            TablaGenerica tab_dis_q1 = utilitario.consultar("SELECT mat_codigo,round(avg(com_sumatoria),2) as prom FROM comportamientoparcial\n"
+                    + "where  for_codigo=1\n"
+                    + "and  mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + "\n"
+                    + "group by mat_codigo");
+            TablaGenerica tab_dis_q2 = utilitario.consultar("SELECT mat_codigo,round(avg(com_sumatoria),2) as prom FROM comportamientoparcial\n"
+                    + "where  for_codigo=4\n"
+                    + "and  mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + "\n"
+                    + "group by mat_codigo");
+            double dou_prom_q1 = 0;
+            double dou_prom_q2 = 0;
+            String str_eq1 = "";
+            String str_eq2 = "";
+            if (tab_dis_q1.isEmpty() == false) {
+                //DISCIPLINA Q1
+                try {
+                    dou_prom_q1 = Double.parseDouble(tab_dis_q1.getValor("prom"));
+                } catch (Exception e) {
+                }
+            }
+            if (tab_dis_q2.isEmpty() == false) {
+                //DISCIPLINA Q1
+                try {
+                    dou_prom_q2 = Double.parseDouble(tab_dis_q2.getValor("prom"));
+                } catch (Exception e) {
+                }
+            }
+
+
+            TablaGenerica tab_equi = utilitario.consultar("SELECT * FROM equivalencia_conducta");
+
+
+            for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                str_expresion = str_expresion.replace("nota", dou_prom_q1 + "");
+                Object obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    str_eq1 = tab_equi.getValor(j, "eqc_alterno");
+                    break;
+                }
+            }
+            for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                str_expresion = str_expresion.replace("nota", dou_prom_q2 + "");
+                Object obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    str_eq2 = tab_equi.getValor(j, "eqc_alterno");
+                    break;
+                }
+            }
+
+
+            Object obj_resultado = null;
+            String str_eqv = "";
+            for (int j = 0; j < tab_equi.getTotalFilas(); j++) {
+                String str_expresion = tab_equi.getValor(j, "eqc_escala");
+                str_expresion = str_expresion.replace("nota", ((dou_prom_q1 + dou_prom_q2) / 2) + "");
+                obj_resultado = utilitario.evaluarExpresionJavaScript(str_expresion);
+                if (obj_resultado != null) {
+                    str_eqv = tab_equi.getValor(j, "eqc_alterno");
+                    break;
+                }
+            }
+            if (obj_resultado == null) {
+                obj_resultado = "NO EQV";
+            }
+
+
+            tab_reporte.insertar();
+            tab_reporte.setValor("num", (tab_alumnos.getTotalFilas() - i) + "");
+            tab_reporte.setValor("mat_codigo", tab_alumnos.getValor(i, "mat_codigo"));
+            tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
+            tab_reporte.setValor("dis_codigo", "1236");
+            tab_reporte.setValor("asi_nombre", "COMPORTAMIENTO");
+            tab_reporte.setValor("q1", str_eq1);
+            tab_reporte.setValor("q2", str_eq2);
+            tab_reporte.setValor("p", str_eqv);
+            tab_reporte.setValor("orden", (tab_materias.getTotalFilas() + 2) + "");
+
+
+            ///ASISTENCIA
+            TablaGenerica tab_asiq1 = utilitario.consultar("SELECT sum(reg_diaslaborados)as reg_diaslaborados,sum(reg_faltasinjustificadas) as reg_faltasinjustificadas,sum(reg_faltasjustificadas) as reg_faltasjustificadas,sum(reg_atrasos) as reg_atrasos FROM registroasistencia\n"
+                    + "where  for_codigo=1\n"
+                    + "and  mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + "");
+            TablaGenerica tab_asiq2 = utilitario.consultar("SELECT sum(reg_diaslaborados)as reg_diaslaborados,sum(reg_faltasinjustificadas) as reg_faltasinjustificadas,sum(reg_faltasjustificadas) as reg_faltasjustificadas,sum(reg_atrasos) as reg_atrasos FROM registroasistencia\n"
+                    + "where  for_codigo=4\n"
+                    + "and  mat_codigo=" + tab_alumnos.getValor(i, "mat_codigo") + "");
+            int int_diasq1 = 0;
+            int int_diasq2 = 0;
+            if (tab_asiq1.isEmpty() == false) {
+                try {
+                    int_diasq1 = Integer.parseInt(tab_asiq1.getValor("reg_diaslaborados"));
+                } catch (Exception e) {
+                }
+            }
+            if (tab_asiq2.isEmpty() == false) {
+                try {
+                    int_diasq2 = Integer.parseInt(tab_asiq2.getValor("reg_diaslaborados"));
+                } catch (Exception e) {
+                }
+            }
+            tab_reporte.insertar();
+            tab_reporte.setValor("num", (tab_alumnos.getTotalFilas() - i) + "");
+            tab_reporte.setValor("mat_codigo", tab_alumnos.getValor(i, "mat_codigo"));
+            tab_reporte.setValor("alumnos", tab_alumnos.getValor(i, "Alumnos"));
+            tab_reporte.setValor("dis_codigo", "1237");
+            tab_reporte.setValor("asi_nombre", "DIAS ASISTIDOS");
+            tab_reporte.setValor("q1", int_diasq1 + "");
+            tab_reporte.setValor("q2", int_diasq2 + "");
+            tab_reporte.setValor("p", (int_diasq1 + int_diasq2) + "");
+            tab_reporte.setValor("orden", (tab_materias.getTotalFilas() + 3) + "");
         }
+
         GenerarReporte genera = new GenerarReporte();
         Map parametros = new HashMap();
 
@@ -2076,7 +2192,7 @@ public class controladorParcial {
         } catch (Exception e) {
         }
         genera.setDataSource(new ReporteDataSource(tab_reporte));
-        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());
+        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());        
         genera.generar(parametros, "/reportes/rep_parcial/rep_parcialD.jasper");
     }
 
@@ -2267,7 +2383,6 @@ public class controladorParcial {
 
 
         //CALCULA DISCIPLINA DEL QUIMESTRE
-
         TablaGenerica tab_dis = utilitario.consultar("SELECT mat_codigo,round(avg(com_sumatoria),2) as prom FROM comportamientoparcial\n"
                 + "where  for_codigo=" + istrForma + "\n"
                 + "and  mat_codigo=" + imatCodigo + "\n"
