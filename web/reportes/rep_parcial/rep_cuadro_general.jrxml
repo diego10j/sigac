@@ -16,6 +16,7 @@
 	<field name="q2" class="java.lang.String"/>
 	<field name="p" class="java.lang.String"/>
 	<field name="num" class="java.lang.String"/>
+	<field name="orden" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -45,9 +46,9 @@
 				<textFieldExpression><![CDATA["CUADRO GENERAL DE CALIFICACIONES"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="98bb8264-fe4f-48a9-8995-eaa546562657" x="154" y="45" width="433" height="15"/>
+				<reportElement uuid="98bb8264-fe4f-48a9-8995-eaa546562657" x="154" y="45" width="648" height="15"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{CURSO}+" "+$P{PARALELO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{CURSO}+" '"+$P{PARALELO}+"'"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="5c96e5cc-e1b6-44ce-a426-770ce4141b83" x="20" y="30" width="134" height="15"/>
@@ -68,7 +69,7 @@
 		<band height="31" splitType="Stretch">
 			<crosstab>
 				<reportElement uuid="e5341353-8fca-4dcd-b82e-71336a13acf0" x="0" y="0" width="782" height="31"/>
-				<rowGroup name="alumnos" width="144" totalPosition="End">
+				<rowGroup name="alumnos" width="171" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{alumnos}]]></bucketExpression>
 					</bucket>
@@ -78,10 +79,10 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField isStretchWithOverflow="true">
-								<reportElement uuid="0c86eb1f-b38f-48d2-a4cc-8003a67d97b7" style="Crosstab Data Text" x="10" y="0" width="134" height="10"/>
+								<reportElement uuid="0c86eb1f-b38f-48d2-a4cc-8003a67d97b7" style="Crosstab Data Text" x="10" y="0" width="161" height="10"/>
 								<box leftPadding="1"/>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
-									<font size="5"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{alumnos}]]></textFieldExpression>
 							</textField>
@@ -110,7 +111,7 @@
 				</rowGroup>
 				<columnGroup name="asi_nombre" height="30">
 					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{asi_nombre}]]></bucketExpression>
+						<bucketExpression><![CDATA[$F{orden}+" "+$F{asi_nombre}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
 						<cellContents backcolor="#FFFFFF" mode="Opaque">
@@ -118,7 +119,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement uuid="9b408d67-a3bb-4134-9306-0d7f70abdfc8" style="Crosstab Data Text" mode="Opaque" x="32" y="20" width="16" height="10" backcolor="#FFE2BF"/>
+								<reportElement uuid="9b408d67-a3bb-4134-9306-0d7f70abdfc8" style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="36" y="20" width="18" height="10" backcolor="#FFE2BF"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -131,7 +132,7 @@
 								<text><![CDATA[P]]></text>
 							</staticText>
 							<staticText>
-								<reportElement uuid="c0c58044-2ecd-4df1-844f-0f5f14913225" style="Crosstab Data Text" x="16" y="20" width="16" height="10"/>
+								<reportElement uuid="c0c58044-2ecd-4df1-844f-0f5f14913225" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="18" y="20" width="18" height="10"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -144,7 +145,7 @@
 								<text><![CDATA[IIQ]]></text>
 							</staticText>
 							<staticText>
-								<reportElement uuid="bb047077-66c2-41e2-b4d1-2942beafaf51" style="Crosstab Data Text" x="0" y="20" width="16" height="10"/>
+								<reportElement uuid="bb047077-66c2-41e2-b4d1-2942beafaf51" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="20" width="18" height="10"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -157,11 +158,11 @@
 								<text><![CDATA[IQ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement uuid="c4b81405-db4a-4773-aabb-34eb8a2e83ed" style="Crosstab Data Text" x="0" y="0" width="48" height="20"/>
+								<reportElement uuid="c4b81405-db4a-4773-aabb-34eb8a2e83ed" style="Crosstab Data Text" x="0" y="0" width="54" height="20"/>
 								<textElement verticalAlignment="Middle">
 									<font size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{asi_nombre}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$V{asi_nombre}.substring(1)]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabColumnHeader>
@@ -181,13 +182,13 @@
 				<measure name="numMeasure" class="java.lang.String" calculation="Count">
 					<measureExpression><![CDATA[$F{num}]]></measureExpression>
 				</measure>
-				<crosstabCell width="48" height="10">
+				<crosstabCell width="54" height="10">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField isStretchWithOverflow="true">
-							<reportElement uuid="ffe725fc-1871-40a4-afb0-7d55812c3a70" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="16" height="10" isPrintWhenDetailOverflows="true"/>
+							<reportElement uuid="ffe725fc-1871-40a4-afb0-7d55812c3a70" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="0" y="0" width="18" height="10" isPrintWhenDetailOverflows="true"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -200,7 +201,7 @@
 							<textFieldExpression><![CDATA[$V{q1Measure}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement uuid="8c637a06-9d29-4fd0-bd1f-3841e462b248" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="16" y="0" width="16" height="10" isPrintWhenDetailOverflows="true"/>
+							<reportElement uuid="8c637a06-9d29-4fd0-bd1f-3841e462b248" style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="18" y="0" width="18" height="10" isPrintWhenDetailOverflows="true"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -213,7 +214,7 @@
 							<textFieldExpression><![CDATA[$V{q2Measure}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement uuid="2a27e7ca-6d1b-490e-983c-4a26a4c33846" style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="32" y="0" width="16" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFE2BF"/>
+							<reportElement uuid="2a27e7ca-6d1b-490e-983c-4a26a4c33846" style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="36" y="0" width="18" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFE2BF"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -227,7 +228,7 @@
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="48" height="6" rowTotalGroup="alumnos">
+				<crosstabCell width="54" height="6" rowTotalGroup="alumnos">
 					<cellContents backcolor="#FFF4E6" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
