@@ -40,7 +40,7 @@
                 <h:outputText value="Periódo Lectivo:"/>
                 <h:outputText style="font-size: 18px;" value="#{controladorParcial.perActual.perNombre}"/>
                 <h:outputText value="Curso:"/>
-                <p:selectOneMenu value="#{controladorParcial.objCursoSeleccionado}" required="true" requiredMessage="Debe seleccionar un Quimestre">
+                <p:selectOneMenu value="#{controladorParcial.objCursoSeleccionado}" required="true" requiredMessage="Debe seleccionar un Curso">
                     <p:ajax event="change" process="@this" update="@this"/>
                     <f:selectItem itemValue="#{null}" itemLabel="Seleccione un Curso..." />
                     <f:selectItems value="#{controladorParcial.lisCursos}" var="combo" itemValue="#{combo[0]}" itemLabel="#{combo[1]}   #{combo[2]}"/>
