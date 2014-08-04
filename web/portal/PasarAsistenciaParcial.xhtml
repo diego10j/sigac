@@ -120,12 +120,12 @@
                 <p:column headerText="Dias Laborados" rendered="#{controladorParcial.booMuestra}" style="width:10%" >
                     <h:outputText id="dias" value="#{tabla[7]}" />
                 </p:column>
-                <p:column headerText="Observaciones" rendered="#{controladorParcial.booMuestra}" style="width:25%;background: white"  >
+                <p:column headerText="Observaciones Parcial" rendered="#{controladorParcial.booMuestra}" style="width:25%;background: white"  >
               
                     <p:cellEditor>  
-                        <f:facet name="output"><h:outputText value="#{tabla[8]}" /></f:facet>  
+                        <f:facet name="output"><h:outputText value="#{tabla[9]}" /></f:facet>  
                         <f:facet name="input">
-                            <p:inputText styleClass="positive" value="#{tabla[8]}" style="width:96%"  />
+                            <p:inputText styleClass="positive" value="#{tabla[9]}" style="width:96%"  />
                         </f:facet>  
                     </p:cellEditor> 
                     
