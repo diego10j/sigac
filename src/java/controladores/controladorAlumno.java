@@ -109,18 +109,15 @@ public class controladorAlumno {
         }
     }
 
-    public void verReporteListadoAlumnos() {
+    public void verReporteListadoAlumnos(String formato) {
         Map p = new HashMap();
         p.put("", null);
         GenerarReporte generar = new GenerarReporte();
-        generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
-    }
-
-    public void verReporteXLSListadoAlumnos() {
-        Map p = new HashMap();
-        p.put("", null);
-        GenerarReporte generar = new GenerarReporte();
-        generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            generar.generarXLS(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
+        } else {
+            generar.generar(p, "/reportes/rep_alumnos/rep_listado_alumnos.jasper");
+        }
     }
 
     public Alumnos getAluAlumno() {

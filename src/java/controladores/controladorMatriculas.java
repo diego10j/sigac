@@ -145,14 +145,18 @@ public class controladorMatriculas {
 
     }
 
-    public void verReporteAlumnosCursos() {
+    public void verReporteAlumnosCursos(String formato) {
         if (creCursoSeleccionado != null) {
             Map p = new HashMap();
             p.put("cur_codigo", creCursoSeleccionado.getCurCodigo().getCurCodigo().toString());
             p.put("par_codigo", creCursoSeleccionado.getParCodigo().getParCodigo().toString());
             GenerarReporte generar = new GenerarReporte();
-            generar.generar(p, "/reportes/rep_alumnos/rep_distribucion_alumnos.jasper");
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            if (formato == null || formato.equalsIgnoreCase("xls")) {
+                generar.generarXLS(p, "/reportes/rep_alumnos/rep_distribucion_alumnos.jasper");
+            } else {
+                generar.generar(p, "/reportes/rep_alumnos/rep_distribucion_alumnos.jasper");
+                utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            }
         } else {
             utilitario.agregarMensajeError("Debe seleccionar un Curso", str_path_reporte);
         }

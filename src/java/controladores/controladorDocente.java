@@ -95,14 +95,18 @@ public class controladorDocente {
         }
     }
 
-    public void verReporteListadoDocentes() {
+    public void verReporteListadoDocentes(String formato) {
         Map p = new HashMap();
         p.put("", null);
         GenerarReporte generar = new GenerarReporte();
-        generar.generar(p, "/reportes/rep_docentes/rep_docentes.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            generar.generarXLS(p, "/reportes/rep_docentes/rep_docentes.jasper");
+        } else {
+            generar.generar(p, "/reportes/rep_docentes/rep_docentes.jasper");
+        }
     }
 
-    public void verReporteListadoCargoDocentes() {
+    public void verReporteListadoCargoDocentes(String formato) {
         Map p = new HashMap();
         int int_periodo = -1;
         try {
@@ -112,7 +116,11 @@ public class controladorDocente {
         }
         p.put("periodo", int_periodo);
         GenerarReporte generar = new GenerarReporte();
-        generar.generar(p, "/reportes/rep_docentes/rep_cargo_docente.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            generar.generarXLS(p, "/reportes/rep_docentes/rep_cargo_docente.jasper");
+        } else {
+            generar.generar(p, "/reportes/rep_docentes/rep_cargo_docente.jasper");
+        }
     }
 
     public Docentes getDocDocente() {
@@ -162,5 +170,4 @@ public class controladorDocente {
     public void setLisPeriodos(List lisPeriodos) {
         this.lisPeriodos = lisPeriodos;
     }
-    
 }
