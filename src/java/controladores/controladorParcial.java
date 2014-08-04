@@ -112,7 +112,7 @@ public class controladorParcial {
             comFormas = servFormaEvaluar.getListaFormasEvaluar();
             comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-            if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")) {
+            if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")|| utilitario.getURLCompleto().endsWith("ReporteDestrezas.jsf")) {
                 //cursos y materias
                 lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
