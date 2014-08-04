@@ -59,10 +59,10 @@
                     Formato de Salida
                 </f:facet>
                 <h:graphicImage value="../imagenes/im_excel.gif"/>
-                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteComportamiento}"  />
+                <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorParcial.verReporteComportamiento('xls')}" ajax="false" />
 
                 <h:graphicImage value="../imagenes/im_pdf.gif"/>
-                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteComportamiento}" />
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorParcial.verReporteComportamiento('pdf')}" />
 
             </p:panelGrid>
 

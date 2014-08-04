@@ -43,19 +43,19 @@
                     <h:outputText value="#{tabla.parCodigo.parNombre}"/>
                 </p:column>
             </p:dataTable>
+
+            <p:separator/>
+
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    Formato de Salida
+                </f:facet>
+                <h:graphicImage value="../imagenes/im_excel.gif"/>
+                <p:commandLink value="Microsoft Excel (.XLSX)" ajax="false"  action="#{controladorMatriculas.verReporteAlumnosCursos('xls')}" />
+                <h:graphicImage value="../imagenes/im_pdf.gif"/>
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorMatriculas.verReporteAlumnosCursos('pdf')}" />
+
+            </p:panelGrid>
         </h:form>
-        <p:separator/>
-
-        <p:panelGrid columns="2">
-            <f:facet name="header">
-                Formato de Salida
-            </f:facet>
-            <h:graphicImage value="../imagenes/im_excel.gif"/>
-            <p:commandLink value="Microsoft Excel (.XLSX)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" />
-            <h:graphicImage value="../imagenes/im_pdf.gif"/>
-            <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorMatriculas.verReporteAlumnosCursos}" />
-
-        </p:panelGrid>
-
     </ui:define>
 </ui:composition>

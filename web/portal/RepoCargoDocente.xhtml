@@ -48,10 +48,10 @@
                     Formato de Salida
                 </f:facet>
                 <h:graphicImage value="../imagenes/im_excel.gif"/>
-                <p:commandLink value="Microsoft Excel (.XLSX)"   action="#{controladorDocente.verReporteListadoCargoDocentes()}" oncomplete="window.open('#{controladorDocente.str_path_reporte}');" />
+                <p:commandLink value="Microsoft Excel (.XLSX)" ajax="false"  action="#{controladorDocente.verReporteListadoCargoDocentes('xls')}" />
 
                 <h:graphicImage value="../imagenes/im_pdf.gif"/>
-                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorDocente.verReporteListadoCargoDocentes()}" oncomplete="window.open('#{controladorDocente.str_path_reporte}');"/>
+                <p:commandLink value="Adobe Reader(.PDF)"  action="#{controladorDocente.verReporteListadoCargoDocentes('pdf')}" oncomplete="window.open('#{controladorDocente.str_path_reporte}');"/>
 
             </p:panelGrid>
 
