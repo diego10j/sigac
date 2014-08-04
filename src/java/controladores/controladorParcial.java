@@ -112,7 +112,7 @@ public class controladorParcial {
             comFormas = servFormaEvaluar.getListaFormasEvaluar();
             comParciales = servEvaluarParcial.getListaEvaluarParcial();
 
-            if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf")|| utilitario.getURLCompleto().endsWith("ReporteDestrezas.jsf")) {
+            if (utilitario.getURLCompleto().endsWith("PasarParcial.jsf") || utilitario.getURLCompleto().endsWith("InformeQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteQuimestre.jsf") || utilitario.getURLCompleto().endsWith("ReporteDestrezas.jsf")) {
                 //cursos y materias
                 lisCursos = servParcial.getCursosDocente(perActual.getPerCodigo().toString(), docDocente.getDocCodigo().toString());
 
@@ -778,7 +778,7 @@ public class controladorParcial {
         }
     }
 
-    private void generarReportePromedio() {
+    private void generarReportePromedio(String formato) {
         String str_ide_dis = "-1";
         if (objAsignaturaSeleccionada != null) {
             str_ide_dis = ((Object[]) objAsignaturaSeleccionada)[0] + "";
@@ -957,8 +957,11 @@ public class controladorParcial {
         parametros.put("PERIODO", perActual.getPerNombre());
 
         genera.setDataSource(new ReporteDataSource(tab_reporte));
-        genera.generar(parametros, "/reportes/rep_parcial/rep_registro.jasper");
-
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            genera.generarXLS(parametros, "/reportes/rep_parcial/rep_registro.jasper");
+        } else {
+            genera.generar(parametros, "/reportes/rep_parcial/rep_registro.jasper");
+        }
     }
 
     private TablaGenerica getAlumnoCurso(String cur_codigo, String alu_codigo) {
@@ -1102,7 +1105,7 @@ public class controladorParcial {
         return lisResultado;
     }
 
-    private void cuadroGeneral() {
+    private void cuadroGeneral(String formato) {
         //inicializa tablas vacias
         TablaGenerica tab_materias = utilitario.consultar("select d.dis_codigo,a.asi_nombre,a.tip_codigo,c.asi_nombre from distributivomxc d\n"
                 + "INNER JOIN asignaturas a on d.asi_codigo=a.asi_codigo\n"
@@ -1406,24 +1409,34 @@ public class controladorParcial {
         parametros.put("PERIODO", perActual.getPerNombre());
 
         genera.setDataSource(new ReporteDataSource(tab_reporte));
-        genera.generar(parametros, "/reportes/rep_parcial/rep_cuadro_general.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            genera.generarXLS(parametros, "/reportes/rep_parcial/rep_cuadro_general.jasper");
+        } else {
+            genera.generar(parametros, "/reportes/rep_parcial/rep_cuadro_general.jasper");
+        }
 
     }
 
-    public void verReporteCuadroGeneral() {
+    public void verReporteCuadroGeneral(String formato) {
         if (objCursoSeleccionado != null) {
-            cuadroGeneral();
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            cuadroGeneral(formato);
+            if (formato.equalsIgnoreCase("pdf")) {
+                utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            }
+
         } else {
             utilitario.agregarMensajeInfo("Debe seleccionar un curso", "");
         }
 
     }
 
-    public void verReporteTodos() {
+    public void verReporteTodos(String formato) {
         if (objAsignaturaSeleccionada != null) {
-            generarReportePromedio();
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            generarReportePromedio(formato);
+            if (formato.equalsIgnoreCase("pdf")) {
+                utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            }
+
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar una asignatura", "");
         }
@@ -1445,7 +1458,7 @@ public class controladorParcial {
     }
 
     //Reporte esistencia
-    public void generarReporteAsistencia() {
+    public void generarReporteAsistencia(String formato) {
 
         TablaGenerica tab_reporte = utilitario.consultar("select '' AS CUENTA,'' as NOMINA\n"
                 + "\n"
@@ -1666,7 +1679,12 @@ public class controladorParcial {
         }
         parametros.put("PROFESOR", docDocente.getDocNombres());
         parametros.put("PERIODO", perActual.getPerNombre());
-        genera.generar(parametros, "/reportes/rep_parcial/rep_atrasos.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            genera.generarXLS(parametros, "/reportes/rep_parcial/rep_atrasos.jasper");
+        } else {
+            genera.generar(parametros, "/reportes/rep_parcial/rep_atrasos.jasper");
+        }
+
 
     }
 
@@ -1678,16 +1696,18 @@ public class controladorParcial {
                 + "order by eva_codigo");
     }
 
-    public void verReporteasitencia() {
+    public void verReporteasitencia(String formato) {
         if (objCursoSeleccionado != null) {
-            generarReporteAsistencia();
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            generarReporteAsistencia(formato);
+            if (formato.equalsIgnoreCase("pdf")) {
+                utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            }
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
         }
     }
 
-    public void verReporteDestrezas() {
+    public void verReporteDestrezas(String formato) {
         if (objCursoSeleccionado == null) {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
             return;
@@ -1705,12 +1725,15 @@ public class controladorParcial {
             return;
         }
         ///aumenta asignatura, parcial, quimestr
-        generarReporteDestrezas();
-        utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        generarReporteDestrezas(formato);
+        if (formato.equalsIgnoreCase("pdf")) {
+            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+        }
+
 
     }
 
-    private void generarReporteDestrezas() {
+    private void generarReporteDestrezas(String formato) {
         GenerarReporte genera = new GenerarReporte();
         Map parametros = new HashMap();
         CrearCurso cre_curso = servCreaCurso.getCrearCurso(objCursoSeleccionado + "");
@@ -1719,7 +1742,11 @@ public class controladorParcial {
         parametros.put("asi_codigo", ((Object[]) objAsignaturaSeleccionada)[4] + "");
         parametros.put("for_codigo", strForma);
         parametros.put("eva_codigo", strParcial);
-        genera.generar(parametros, "/reportes/rep_parcial/rep_destrezas.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            genera.generarXLS(parametros, "/reportes/rep_parcial/rep_destrezas.jasper");
+        } else {
+            genera.generar(parametros, "/reportes/rep_parcial/rep_destrezas.jasper");
+        }
     }
 
     //Reporte Comportamieto
@@ -1730,7 +1757,7 @@ public class controladorParcial {
                 + "and mat_codigo=" + mat_codigo + " order by eva_codigo");
     }
 
-    public void generarReporteComportamiento() {
+    public void generarReporteComportamiento(String formato) {
         TablaGenerica tab_reporte = utilitario.consultar("SELECT  ''AS CUENTA,''AS NOMINA\n"
                 + ",''AS P1S1,''AS P1S2,''AS P1S3,''AS P1S4,''AS P1S5,''AS P1SUMA,''AS P1LETRA,''AS P1EQUI\n"
                 + ",''AS P2S1,''AS P2S2,''AS P2S3,''AS P2S4,''AS P2S5,''AS P2SUMA,''AS P2LETRA,''AS P2EQUI\n"
@@ -2066,7 +2093,12 @@ public class controladorParcial {
         }
         parametros.put("PROFESOR", docDocente.getDocNombres());
         parametros.put("PERIODO", perActual.getPerNombre());
-        genera.generar(parametros, "/reportes/rep_parcial/rep_comportamieto.jasper");
+        if (formato == null || formato.equalsIgnoreCase("xls")) {
+            genera.generarXLS(parametros, "/reportes/rep_parcial/rep_comportamieto.jasper");
+
+        } else {
+            genera.generar(parametros, "/reportes/rep_parcial/rep_comportamieto.jasper");
+        }
 
     }
 
@@ -2192,7 +2224,7 @@ public class controladorParcial {
         } catch (Exception e) {
         }
         genera.setDataSource(new ReporteDataSource(tab_reporte));
-        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());        
+        parametros.put("REPORT_CONNECTION", utilitario.getConexion().getConnection());
         genera.generar(parametros, "/reportes/rep_parcial/rep_parcialD.jasper");
     }
 
@@ -2676,10 +2708,12 @@ public class controladorParcial {
         }
     }
 
-    public void verReporteComportamiento() {
+    public void verReporteComportamiento(String formato) {
         if (objCursoSeleccionado != null) {
-            generarReporteComportamiento();
-            utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            generarReporteComportamiento(formato);
+            if (formato.equalsIgnoreCase("pdf")) {
+                utilitario.ejecutarJavaScript("window.open('" + str_path_reporte + "');");
+            }
         } else {
             utilitario.agregarMensajeInfo("Debe selecccionar un curso", "");
         }
