@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rep_parcial" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="002118e2-1e82-44d9-a3a9-62e6cda746b6">
 	<property name="ireport.zoom" value="1.210000000000001"/>
-	<property name="ireport.x" value="6"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="227"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -400,23 +400,6 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/reportes/rep_parcial/sup_rep_asistenciaQ.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement uuid="6595834b-4123-43cf-9b43-bcaeb56cfde0" positionType="Float" x="85" y="97" width="153" height="27"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[SOR. CELIA GARCÍA DIRECTOR/A]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="ce337403-18b8-411a-bdac-f8401005bd31" positionType="Float" x="310" y="97" width="171" height="27"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{doc_nombres}
-+"PROFESOR/A"]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement uuid="9f6aea39-df96-45c2-9838-2e13a927ceb7" positionType="Float" isPrintRepeatedValues="false" x="7" y="124" width="554" height="16"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
@@ -475,6 +458,38 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{EQVDISCIPLINA}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="4bb876e7-f8ca-4647-acd2-a4e125dfd73f" positionType="Float" x="308" y="97" width="203" height="13"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{doc_nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4ca6a171-577f-428b-9967-79fc2f487696" positionType="Float" x="58" y="110" width="178" height="14"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ DIRECTOR/A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="19d36905-9bcf-4ebf-a1de-ca1f1eb3b445" positionType="Float" x="308" y="110" width="203" height="14"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PROFESOR/A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a02edd04-f2fd-47e6-8cec-980b7fa81491" positionType="Float" x="58" y="97" width="178" height="13"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SOR. CELIA GARCÍA]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
