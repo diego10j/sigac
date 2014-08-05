@@ -7,6 +7,7 @@ package servcios;
 import aplicacion.Utilitario;
 import entidades.Docentes;
 import entidades.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -25,7 +26,7 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class servicioDocente {
-
+    
     @PersistenceContext
     private EntityManager manejador;
     @Resource
@@ -37,9 +38,9 @@ public class servicioDocente {
     private servicioInstitucion servInstitucion;
     @EJB
     private servicioRoles servRoles;
-
+    
     public String guardarDocente(Docentes idocente) {
-        Docentes docente=idocente;
+        Docentes docente = idocente;
         try {
             utx.begin();
             manejador.joinTransaction();
@@ -56,12 +57,14 @@ public class servicioDocente {
                 user.setUsuClave(docente.getDocCedula());
                 user.setRolCodigo(servRoles.getRoles("6"));
                 user.setInsCodigo(servInstitucion.getIntitucion());
+                user.setDocCodigo(docente);
+                user.setUsuFechacreacion(new Date());
                 servUsuario.guardarUsuarios(user);
-
+                
             } else {
                 manejador.merge(docente);
             }
-
+            
             utx.commit();
         } catch (Exception e) {
             try {
@@ -73,7 +76,7 @@ public class servicioDocente {
         }
         return "";
     }
-
+    
     public String elimnarDocente(String docCodigo) {
         try {
             utx.begin();
@@ -89,9 +92,9 @@ public class servicioDocente {
         }
         return "";
     }
-
+    
     public Docentes getDocente(String docCodigo) {
-
+        
         try {
             Query q = manejador.createNamedQuery("Docentes.findByDocCodigo");
             q.setParameter("docCodigo", new Integer(docCodigo));
@@ -100,7 +103,7 @@ public class servicioDocente {
         }
         return null;
     }
-
+    
     public List<Docentes> getDocentes() {
         try {
             Query q = manejador.createNamedQuery("Docentes.findAll");

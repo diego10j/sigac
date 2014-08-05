@@ -8,6 +8,7 @@ import aplicacion.Utilitario;
 import entidades.Alumnos;
 import entidades.Representante;
 import entidades.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -55,6 +56,8 @@ public class servicioAlumno {
                 user.setRolCodigo(servRoles.getRoles("3"));
                 user.setUsuClave(alumno.getAluCedula());
                 user.setInsCodigo(servInstitucion.getIntitucion());
+                user.setAluCodigo(alumno);
+                user.setUsuFechacreacion(new Date());
                 servUsuario.guardarUsuarios(user);
             } else {
                 //modifica             
