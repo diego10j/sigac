@@ -322,6 +322,10 @@ public class controladorParcial {
     public void actualizarInforme() {
         if (objAsignaturaSeleccionada != null && objCursoSeleccionado != null) {
             if (strForma != null) {
+                int num_matriculados = servParcial.inscribirPasarExamen(objCursoSeleccionado + "", strForma, ((Object[]) objAsignaturaSeleccionada)[0] + "");
+                if (num_matriculados > 0) {
+                    utilitario.agregarMensaje("Se importaron " + num_matriculados + " alumnos", "");
+                }
                 cargarInforme();
             } else {
                 utilitario.agregarMensajeInfo("Seleccione un Quimestre", "");

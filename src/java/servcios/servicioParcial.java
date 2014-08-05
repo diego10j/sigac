@@ -112,6 +112,10 @@ public class servicioParcial {
         return utilitario.consultar("select * from matricula where cre_codigo=" + cre_codigo + " and mat_codigo not in (SELECT mat_codigo from nota_destrezaparcial where for_codigo=" + for_codigo + " and eva_codigo=" + eva_codigo + " and dis_codigo=" + dis_codigo + ") ");
     }
 
+    public TablaGenerica getAlumnosExamen(String cre_codigo, String for_codigo, String dis_codigo) {
+        return utilitario.consultar("select * from matricula where cre_codigo=" + cre_codigo + " and mat_codigo not in (SELECT mat_codigo from informe_quimestre where for_codigo=" + for_codigo + " and dis_codigo=" + dis_codigo + ") ");
+    }
+
     /**
      * Inscribe los alumnos en un Curso, en una Asignaura en un parcial de un
      * quimestre
@@ -145,6 +149,34 @@ public class servicioParcial {
                 tab_notas.setValor("not_actividadindividual", "0.00");
                 tab_notas.setValor("not_trabajos", "0.00");
                 tab_notas.setValor("not_observacion", " ");
+            }
+            tab_notas.guardar();
+            if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
+                return tab_alumno.getTotalFilas();
+            }
+        }
+        return 0;
+    }
+
+    public int inscribirPasarExamen(String cre_codigo, String for_codigo, String dis_codigo) {
+        TablaGenerica tab_alumno = getAlumnosExamen(cre_codigo, for_codigo, dis_codigo);
+        if (tab_alumno.isEmpty() == false) {
+            TablaGenerica tab_notas = new TablaGenerica();
+            tab_notas.setTabla("informe_quimestre", "inf_codigo", -1);
+            tab_notas.setCondicion("inf_codigo=-1");
+            tab_notas.ejecutarSql();
+
+            for (int i = 0; i < tab_alumno.getTotalFilas(); i++) {
+                tab_notas.insertar();
+                tab_notas.setValor("for_codigo", for_codigo);
+                tab_notas.setValor("mat_codigo", tab_alumno.getValor(i, "mat_codigo"));
+                tab_notas.setValor("dis_codigo", dis_codigo);
+                tab_notas.setValor("inf_eqv80", "0.00");
+                tab_notas.setValor("inf_exa20", "0.00");
+                tab_notas.setValor("inf_nota", "0.00");
+                tab_notas.setValor("inf_examen", "0.00");
+                tab_notas.setValor("inf_sumatoria", "0.00");
+                tab_notas.setValor("inf_eqvquimestre", " ");
             }
             tab_notas.guardar();
             if (utilitario.getConexion().ejecutarListaSql().isEmpty()) {
@@ -255,7 +287,7 @@ public class servicioParcial {
 
         return utilitario.getConexion().consultar("SELECT a.com_codigo,alu_apellidos,alu_nombres,com_semana1,com_semana2,\n"
                 + "com_semana3,com_semana4,com_semana5,com_sumatoria,com_equivalencia,com_equi,a.for_codigo,a.mat_codigo,a.eva_codigo from comportamientoparcial a\n"
-                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n  and b.cre_codigo="+cre_codigo+" "
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo\n  and b.cre_codigo=" + cre_codigo + " "
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
     }
@@ -342,7 +374,7 @@ public class servicioParcial {
     public List getListaParcialAsistencia(String cre_codigo, String for_codigo, String eva_codigo) {
         return utilitario.getConexion().consultar("select a.reg_codigo,alu_apellidos,alu_nombres,"
                 + "reg_atrasos,reg_faltasjustificadas,reg_faltasinjustificadas,reg_totalfaltas,reg_diaslaborados,reg_dias,reg_observacion from registroasistencia a\n"
-                + "inner join matricula b on a.mat_codigo =b.mat_codigo and b.cre_codigo="+cre_codigo+" "
+                + "inner join matricula b on a.mat_codigo =b.mat_codigo and b.cre_codigo=" + cre_codigo + " "
                 + "inner join alumnos c on b.alu_codigo=c.alu_codigo "
                 + "where a.for_codigo=" + for_codigo + " and a.eva_codigo=" + eva_codigo + " order by alu_apellidos");
     }
@@ -356,11 +388,11 @@ public class servicioParcial {
     public String guardarAsistenciaParcial(List notas) {
         for (Object actual : notas) {
             Object[] fila = (Object[]) actual;
-            if(fila[9]==null){
-                fila[9]=" ";
+            if (fila[9] == null) {
+                fila[9] = " ";
             }
             utilitario.getConexion().agregarSql("UPDATE registroasistencia set reg_atrasos=" + fila[3] + " "
-                    + ",reg_faltasjustificadas=" + fila[4] + ", reg_faltasinjustificadas=" + fila[5] + ", reg_totalfaltas=" + fila[6] + ", reg_diaslaborados=" + fila[7] +", reg_observacion='" + fila[9] + "'\n"
+                    + ",reg_faltasjustificadas=" + fila[4] + ", reg_faltasinjustificadas=" + fila[5] + ", reg_totalfaltas=" + fila[6] + ", reg_diaslaborados=" + fila[7] + ", reg_observacion='" + fila[9] + "'\n"
                     + " where reg_codigo=" + fila[0]);
 
         }
