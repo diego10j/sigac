@@ -51,15 +51,15 @@ public class servicioDocente {
                 docente.setDocCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(docente);
                 //guardo Usuario
-                Usuario user = new Usuario();
-                user.setUsuNombre(docente.getDocNombres());
-                user.setUsuNick(docente.getDocCedula());
-                user.setUsuClave(docente.getDocCedula());
-                user.setRolCodigo(servRoles.getRoles("6"));
-                user.setInsCodigo(servInstitucion.getIntitucion());
-                user.setDocCodigo(docente);
-                user.setUsuFechacreacion(new Date());
-                servUsuario.guardarUsuarios(user);
+//                Usuario user = new Usuario();
+//                user.setUsuNombre(docente.getDocNombres());
+//                user.setUsuNick(docente.getDocCedula());
+//                user.setUsuClave(docente.getDocCedula());
+//                user.setRolCodigo(servRoles.getRoles("6"));
+//                user.setInsCodigo(servInstitucion.getIntitucion());
+//                user.setDocCodigo(getDocente(lon_codigo + ""));
+//                user.setUsuFechacreacion(new Date());
+//                servUsuario.guardarUsuarios(user);
                 
             } else {
                 manejador.merge(docente);

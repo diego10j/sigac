@@ -50,15 +50,15 @@ public class servicioAlumno {
                 alumno.setAluCodigo(new Integer(String.valueOf(lon_codigo)));
                 manejador.persist(alumno);
                 //guardo Usuario
-                Usuario user = new Usuario();
-                user.setUsuNombre(alumno.getAluNombres() + " " + alumno.getAluApellidos());
-                user.setUsuNick(alumno.getAluCedula());
-                user.setRolCodigo(servRoles.getRoles("3"));
-                user.setUsuClave(alumno.getAluCedula());
-                user.setInsCodigo(servInstitucion.getIntitucion());
-                user.setAluCodigo(alumno);
-                user.setUsuFechacreacion(new Date());
-                servUsuario.guardarUsuarios(user);
+//                Usuario user = new Usuario();
+//                user.setUsuNombre(alumno.getAluNombres() + " " + alumno.getAluApellidos());
+//                user.setUsuNick(alumno.getAluCedula());
+//                user.setRolCodigo(servRoles.getRoles("3"));
+//                user.setUsuClave(alumno.getAluCedula());
+//                user.setInsCodigo(servInstitucion.getIntitucion());
+//                user.setAluCodigo(alumno);
+//                user.setUsuFechacreacion(new Date());
+//                servUsuario.guardarUsuarios(user);
             } else {
                 //modifica             
                 manejador.merge(alumno);
